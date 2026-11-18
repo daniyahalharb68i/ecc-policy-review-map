@@ -1,0 +1,16 @@
+const fs=require('fs');const B=process.argv[2];eval(fs.readFileSync(B+'/data.js','utf8').replace(/^const /gm,'global.'));
+const ref=(fs.readFileSync(process.argv[3],'utf8')+' '+JSON.stringify(ECC)+' '+fs.readFileSync(process.argv[4],'utf8')).toLowerCase();
+const freq={};ref.replace(/[a-z][a-z'’-]*/g,w=>{freq[w]=(freq[w]||0)+1});
+const SH=new Set('a an as at be by do if in is it of on or to up we us no so ie eg e.g i.e o'.split(' '));
+const issues={};const add=(id,k,x)=>{(issues[id]=issues[id]||[]).push(k+' :: '+x.slice(0,170))};
+Object.entries(GUIDE).forEach(([id,o])=>{['t','g','d'].forEach(f=>o[f].forEach(x=>{const s=x.replace(/^\[[\d-]+\]\s*/,'');
+ if(/TLP|Classification|Guide to Essential|\bObjective\b|\bControls\b(?! \()/.test(s))add(id,f+' LEAK',s);
+ if(/\b\d-\d+-\d+/.test(s))add(id,f+' ID',s);
+ if(/^[a-z]/.test(s)&&!/^(e\.g|i\.e)/.test(s))add(id,f+' LOWER',s);
+ if(s.length<25)add(id,f+' SHORT',s);
+ const toks=s.match(/\b[A-Za-z]+\b/g)||[];toks.forEach(w=>{const l=w.toLowerCase();if(l.length<=2&&!SH.has(l)&&!/^[A-Z]{2}$/.test(w))add(id,f+' FRAG['+w+']',s)});
+ toks.forEach(w=>{const l=w.toLowerCase();if(l.length>=3&&(freq[l]||0)<=1&&!/^[A-Z]+$/.test(w))add(id,f+' RARE['+w+']',s)});
+}))});
+const ks=Object.keys(issues);console.log('controls with issues',ks.length);let n=0;ks.forEach(k=>{issues[k]=[...new Set(issues[k])];n+=issues[k].length});console.log('issues',n);
+fs.writeFileSync(B+'/scan.txt',ks.map(k=>'## '+k+'\n'+issues[k].join('\n')).join('\n'));
+const byType={};ks.forEach(k=>issues[k].forEach(x=>{const t=x.split(' ')[1].replace(/\[.*$/,'');byType[t]=(byType[t]||0)+1}));console.log(byType);

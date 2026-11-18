@@ -1,0 +1,114 @@
+
+/* ===== Professional theme (enterprise GRC): ink-black rail, warm paper, royal-blue data, solid severity badges =====
+   Type: Inter for text, Archivo for headings and figures, Source Serif 4 for page titles; Arabic in IBM Plex Sans Arabic. */
+:root{
+  --bg:#f7f7f4; --surface:#ffffff; --surface2:#f0f0eb; --ink:#0b0b0b; --muted:#5c6068; --line:#e2e1db;
+  --accent:#1b3fd1; --accent-ink:#ffffff; --accent-soft:#e8ecfd;
+  --spark:#12804f; --spark-ink:#ffffff; --spark-soft:#e2f4ea; --sun:#e0a019;
+  --rail:#0b0b0b; --rail2:#0b0b0b; --rail-ink:#ffffff; --rail-muted:rgba(255,255,255,.62); --rail-line:rgba(255,255,255,.1);
+  --ok:#12804f; --warn:#c27a00; --bad:#c8312a; --na:#9aa0a6; --ai:#5b3fd1;
+  --shadow:0 1px 2px rgba(11,11,11,.04); --lift:0 8px 24px rgba(11,11,11,.08);
+  --body:"Inter","IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+  --display:"Archivo","IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+  --title:"Source Serif 4","IBM Plex Sans Arabic",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d0e10; --surface:#16181b; --surface2:#1e2125; --ink:#f3f3f0; --muted:#a4a8ae; --line:#2c2f34;
+  --accent:#8199ff; --accent-ink:#0b1030; --accent-soft:#1c2448;
+  --spark:#3ccf8a; --spark-ink:#04210f; --spark-soft:#12301f; --sun:#f0b84a;
+  --rail:#000000; --rail2:#000000; --rail-ink:#ffffff; --rail-muted:rgba(255,255,255,.6); --rail-line:rgba(255,255,255,.1);
+  --ok:#3ccf8a; --warn:#f0b44c; --bad:#ff6b61; --na:#8b9097; --ai:#b3a1ff;
+  --shadow:0 1px 2px rgba(0,0,0,.4); --lift:0 10px 28px rgba(0,0,0,.5); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d0e10; --surface:#16181b; --surface2:#1e2125; --ink:#f3f3f0; --muted:#a4a8ae; --line:#2c2f34;
+  --accent:#8199ff; --accent-ink:#0b1030; --accent-soft:#1c2448;
+  --spark:#3ccf8a; --spark-ink:#04210f; --spark-soft:#12301f; --sun:#f0b84a;
+  --rail:#000000; --rail2:#000000; --rail-ink:#ffffff; --rail-muted:rgba(255,255,255,.6); --rail-line:rgba(255,255,255,.1);
+  --ok:#3ccf8a; --warn:#f0b44c; --bad:#ff6b61; --na:#8b9097; --ai:#b3a1ff;
+  --shadow:0 1px 2px rgba(0,0,0,.4); --lift:0 10px 28px rgba(0,0,0,.5); color-scheme:dark}
+body{font-size:14.5px;letter-spacing:0}
+.head h1{font-family:var(--title);font-size:2rem;font-weight:700;letter-spacing:-.01em;line-height:1.25}
+.card>h2,.h2,.phase>header b,.dtabs b,.sname b{font-family:var(--display);font-weight:600;letter-spacing:0}
+.kpi b{font-family:var(--display);font-weight:600}
+.card{border-radius:12px;box-shadow:none}
+.card.raise{box-shadow:var(--lift)}
+/* rail: flat ink with a thin multi-tone rule under the brand */
+.rail{background:var(--rail)}
+.brand{position:relative;padding-bottom:14px}
+.brand::after{content:"";position:absolute;inset-inline:8px;bottom:0;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--spark),var(--sun))}
+.brand .mark{background:#ffffff;color:#0b0b0b;box-shadow:none;border-radius:8px;font-family:var(--display);font-weight:700}
+.brand b{font-family:var(--title);font-weight:700;font-size:1.05rem}
+.nav button{border-radius:10px;color:var(--rail-muted)}
+.nav button:hover{background:rgba(255,255,255,.07);color:#fff;transform:none}
+.app[dir=ltr] .nav button:hover{transform:none}
+.nav button.on,.app[dir=ltr] .nav button.on{background:#ffffff;color:#0b0b0b;box-shadow:none;font-weight:600}
+.nav button.on svg{color:#0b0b0b}
+.nav .bdg{background:var(--bad)}
+.ent{background:rgba(255,255,255,.04)}
+/* buttons: solid ink primary, emerald for the one main action, quiet outline secondary */
+.btn{background:var(--ink);border-color:var(--ink);color:var(--bg);border-radius:10px;font-weight:600;box-shadow:none}
+.btn:hover{box-shadow:var(--lift)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.quiet{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn.spark{background:var(--spark);border-color:var(--spark);color:var(--spark-ink)}
+.btn.ai{background:var(--ai);border-color:var(--ai);color:#fff}
+.btn.ai.ghost{background:transparent;color:var(--ai);border-color:color-mix(in srgb,var(--ai) 40%,var(--line))}
+.btn.danger{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn.danger.ghost{background:transparent;color:var(--bad)}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.kpi::after{background:var(--accent);opacity:1;width:3px}
+.kpi.alert::after{background:var(--bad)}
+.fun-r .tr i,.fun-r:nth-child(4) .tr i{background:var(--accent)}
+.fun-r:last-child .tr i{background:var(--ok)}
+.b-none{background:var(--surface2)}
+/* stepper */
+.stepper{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.step{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-align:start;transition:border-color .15s,box-shadow .15s}
+.step:hover{box-shadow:var(--lift)}
+.step .n{flex:0 0 32px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--surface2);font-family:var(--display);font-weight:700}
+.step .t b{display:block;font-family:var(--display);font-weight:600;font-size:.95rem}
+.step .t small{display:block;color:var(--muted);font-size:.78rem;line-height:1.4}
+.step.now{border-color:var(--ink);box-shadow:inset 0 -3px 0 var(--spark)}
+.step.now .n{background:var(--ink);color:var(--bg)}
+.step.done .n{background:var(--ok);color:#fff}
+.step.done .t b{color:var(--muted)}
+@media(max-width:720px){.stepper{grid-template-columns:1fr}}
+/* dashboard widgets */
+.dash h2{font-size:.95rem}
+.center{text-align:center}
+.semi{position:relative;max-width:250px;margin:6px auto 0}
+.semi svg{width:100%;display:block}
+.semi .bg{fill:none;stroke:var(--surface2);stroke-width:20}
+.semi .val{fill:none;stroke-width:20;transition:stroke-dashoffset .6s}
+.semi b{position:absolute;inset-inline:0;bottom:2px;text-align:center;font-family:var(--display);font-weight:600;font-size:2.2rem;line-height:1}
+.enter .semi .val{animation:semi 1.1s cubic-bezier(.2,.7,.2,1) both}
+@keyframes semi{from{stroke-dashoffset:251.3}}
+.donut{display:grid;grid-template-columns:118px minmax(0,1fr);gap:16px;align-items:center}
+.donut svg{width:118px;height:118px}
+.donut .dn{font-family:var(--display);font-size:22px;font-weight:600;fill:var(--ink)}
+.donut ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.donut li{display:flex;gap:8px;align-items:center;font-size:.86rem}
+.donut li i{width:10px;height:10px;border-radius:2px;flex:0 0 10px}
+.donut li b{margin-inline-start:auto;font-family:var(--display)}
+.mtrs{display:grid;gap:16px;margin-top:4px}
+.mtr span{font-size:.86rem;color:var(--muted)}
+.mtr b{font-family:var(--display);font-weight:600;font-size:1.05rem}
+.mtr .bar{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:6px}
+.mtr .bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.enter .mtr .bar i{animation:grow .9s cubic-bezier(.2,.7,.2,1) both;transform-origin:var(--grow-origin,right)}
+.dstat{display:grid}
+.drow2{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr) 56px;gap:14px;align-items:center;padding-block:10px;border-top:1px solid var(--line)}
+.drow2:first-child{border-top:0}
+.drow2 .dn2{font-size:.9rem;line-height:1.4}
+.drow2 .dv{text-align:end;font-family:var(--display);font-weight:600}
+.sbar.tall{height:16px;border-radius:4px}
+@media(max-width:640px){.drow2{grid-template-columns:minmax(0,1fr) 50px}.drow2 .dn2{grid-column:1/-1}}
+.toptbl td{vertical-align:middle}
+.clamp1{display:block;color:var(--muted);font-size:.78rem;margin-top:3px;line-height:1.4}
+.sev{display:inline-block;padding:2px 9px;border-radius:4px;font-size:.7rem;font-weight:700;letter-spacing:.03em;color:#fff;white-space:nowrap;font-family:var(--display)}
+.sev.crit{background:#8f1d1d}.sev.high{background:#e0482f}.sev.mod{background:#e8a317;color:#2a1d00}.sev.low{background:#2f8f62}
+.rs{display:inline-block;font-size:.74rem;padding:1px 9px;border-radius:99px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.rs-prog{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));color:var(--accent);background:var(--accent-soft)}
+.rs-done{border-color:color-mix(in srgb,var(--ok) 45%,var(--line));color:var(--ok);background:var(--spark-soft)}
+@media(max-width:920px){.brand::after{display:none}.brand b{font-size:.95rem}.head h1{font-size:1.5rem}}
+@media(prefers-reduced-motion:reduce){.enter .semi .val,.enter .mtr .bar i{animation:none}}

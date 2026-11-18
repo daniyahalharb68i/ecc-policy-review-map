@@ -1,0 +1,11 @@
+const fs=require('fs'),B=process.argv[2];
+const ECC=JSON.parse(fs.readFileSync(B+'/ecc-data.js','utf8').trim().replace(/^const ECC=/,'').replace(/;\s*$/,''));
+const DOCS=JSON.parse(fs.readFileSync(B+'/docs-map.json','utf8'));
+const raw=JSON.parse(fs.readFileSync(B+'/ccc-map.json','utf8'));const seen=new Set(),CCC=[];
+raw.forEach(r=>{let q=r.q;const i=q.search(/In addition|Cybersecurity risk management methodology/);if(i<0)return;q=q.slice(i);
+ const m=q.match(/ECC (?:controls?|[Ss]ubdomain|[Ss]ubcontrols?) ((?:\d-\d+(?:-\d+){0,2})(?: and \d-\d+(?:-\d+){0,2})?)/);if(!m)return;
+ const ids=m[1].split(' and ');const who=/\bCSP\b/.test(q)?'P':/\bCST\b/.test(q)?'T':'';const k=ids.join()+who;if(seen.has(k))return;seen.add(k);
+ CCC.push({e:ids,w:who,q:q.replace(/\s+/g,' ').slice(0,240)})});
+console.log('ccc',CCC.length);
+const out='const ECC='+JSON.stringify(ECC)+';\nconst XDOC='+JSON.stringify(DOCS)+';\nconst CCC='+JSON.stringify(CCC)+';\n';
+fs.writeFileSync(B+'/data.js',out);console.log('bytes',out.length);
