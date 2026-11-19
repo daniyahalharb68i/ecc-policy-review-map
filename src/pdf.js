@@ -56,14 +56,14 @@ async function makePDF(){const lang=U.repLang||U.lang;const no=repNo();
   try{await Promise.all(PDF_LIBS.map(loadScript))}catch(e){U.pdfMsg="";toast("تعذّر تحميل مكتبة PDF. تحقق من الاتصال وأعد المحاولة.");render();return}
   const host=document.createElement("div");host.style.cssText="position:fixed;left:-10000px;top:0;width:794px;z-index:-1";document.body.appendChild(host);
   try{if(document.fonts&&document.fonts.ready)await document.fonts.ready;
-    const pages=reportPages(lang,no);const pdf=new window.jspdf.jsPDF({unit:"mm",format:"a4",compress:true});
+    const pages=reportPages(lang,no);const pdf=new window.jspdf.jsPDF(Object.assign({unit:"mm",format:"a4",compress:true},U.pw?{encryption:{userPassword:U.pw,ownerPassword:U.pw+"#"+uid(),userPermissions:["print"]}}:{}));
     for(let i=0;i<pages.length;i++){U.pdfMsg=`${i+1} / ${pages.length}`;const m=$("#pdfmsg");if(m)m.textContent=U.pdfMsg;
-      host.innerHTML=pages[i];const cv=await window.html2canvas(host.firstElementChild,{scale:2,backgroundColor:"#ffffff",logging:false,useCORS:true});
+      host.innerHTML=plainAr(pages[i]);const cv=await window.html2canvas(host.firstElementChild,{scale:2,backgroundColor:"#ffffff",logging:false,useCORS:true});
       if(i)pdf.addPage();pdf.addImage(cv.toDataURL("image/jpeg",0.92),"JPEG",0,0,210,297)}
     pdf.setProperties({title:`${no} ECC-2:2024`,subject:"ECC-2:2024 review report",creator:"ECC Policy Review Map — © 2026 Daniyah Alharbi",author:"ECC Policy Review Map (Daniyah Alharbi)"});
     const blob=pdf.output("blob"),name=`${no}-${lang}.pdf`;
     // archive in the database (editors only: assets need the admin level)
-    let archived=false;if(!U.demo&&U.db&&U.assets&&canCol("reports")){try{const a=await U.assets.upload(blob);const s=stats(CTLS);putDoc("reports",no+"-"+lang,{no,lang,at:Date.now(),by:U.me||"",aid:a.id,url:a.url,comp:s.comp,gaps:gapList().length,cls:(S.cfg.rep||{}).cls||"internal",ver:(S.cfg.rep||{}).ver||"1.0"});logEv("report",no,{v:lang});archived=true}catch(e){toast("صدر التقرير، لكن تعذّر حفظه في الأرشيف.")}}
+    let archived=false;if(!U.demo&&U.db&&U.assets&&canCol("reports")){try{const a=await U.assets.upload(blob);const s=stats(CTLS);putDoc("reports",no+"-"+lang,{no,lang,at:Date.now(),by:U.me||"",aid:a.id,url:a.url,comp:s.comp,gaps:gapList().length,cls:(S.cfg.rep||{}).cls||"internal",locked:!!U.pw,ver:(S.cfg.rep||{}).ver||"1.0"});logEv("report",no,{v:lang});archived=true}catch(e){toast("صدر التقرير، لكن تعذّر حفظه في الأرشيف.")}}
     U.pdfMsg="";render();
     if(U.dl){try{await U.dl.save({filename:name,data:blob});toast(archived?"صدر التقرير وحُفظ في الأرشيف":"صدر التقرير")}catch(e){if(!(e&&e.code==="cancelled"))toast(archived?"حُفظ التقرير في الأرشيف، ويمكنك فتحه من هناك":"تعذّر تنزيل الملف")}}
     else if(!window.claude){dlFile(name,blob);toast("صدر التقرير")}

@@ -1,0 +1,24 @@
+
+/* ===== Page transition, attachments, guide translation, intro tour ===== */
+#view.enter{animation:pageIn .36s cubic-bezier(.2,.7,.2,1) both}
+.app[dir=rtl]{--pg:-18px}.app[dir=ltr]{--pg:18px}
+@keyframes pageIn{from{opacity:.2;transform:translateX(var(--pg,-18px))}}
+.nav button{transition:background .2s,color .2s,box-shadow .2s}
+.atts{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px}
+.atts li{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 8px;flex-wrap:wrap}
+.atts .ft{flex:0 0 auto;font-family:var(--display);font-weight:600;font-size:.68rem;background:var(--accent-soft);color:var(--accent);border-radius:4px;padding:3px 6px}
+.atts .an{flex:1;min-width:0;overflow-wrap:anywhere;font-size:.86rem}
+.atts small{display:block;color:var(--muted);font-size:.74rem}
+.attpick{margin-top:8px;cursor:pointer}
+.gdl span[dir=rtl]{text-align:right}
+.gl[dir=rtl]{text-align:right;padding-left:0;padding-right:18px}
+.prefd summary{cursor:pointer;font-weight:600;color:var(--head)}
+.prefd[open] summary{margin-bottom:8px}
+#tour{position:fixed;inset:0;z-index:200}
+#tour .hole{position:fixed;border-radius:12px;box-shadow:0 0 0 9999px rgba(8,16,30,.62);outline:2px solid #2FA3AD;transition:left .25s,top .25s,width .25s,height .25s;pointer-events:none}
+#tour .tcard{position:fixed;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 18px 50px rgba(0,0,0,.35);display:grid;gap:6px;font-family:var(--body)}
+#tour .tcard b{font-family:var(--display);color:var(--head);font-size:1rem}
+#tour .tcard p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.6}
+#tour .tstep{font-size:.74rem;color:var(--accent);font-weight:600}
+#tour .tbtns{display:flex;gap:6px;align-items:center;margin-top:6px}
+@media(prefers-reduced-motion:reduce){#view.enter{animation:none}#tour .hole{transition:none}}

@@ -45,7 +45,7 @@ function render(){
   if(!U.demo&&!window.claude)top+=`<div class="banner warn"><span><b>نسخة محلية.</b> بياناتك محفوظة في هذا المتصفح وعلى هذا الجهاز فقط. نزّل نسخة JSON احتياطية بانتظام من «التقارير والبيانات»، ولا تمسح بيانات المتصفح.</span><button class="btn sm quiet" data-act="dljson">تنزيل نسخة احتياطية</button></div>`;
   if(U.confirm)top+=`<div class="confirm ${U.confirm.soft?"soft":""}"><span>${U.confirm.msg}</span><span class="row"><button class="btn sm ${U.confirm.soft?"":"danger"}" data-act="cfy">${U.confirm.yes||"تأكيد"}</button><button class="btn sm quiet" data-act="cfn">إلغاء</button></span></div>`;
   const key=U.tab+(U.demo?"d":"");const enter=U._last!==key;U._last=key;const view=$("#view");
-  view.innerHTML=top+V();applyLang();window.scrollTo(0,enter?0:y);
+  view.innerHTML=top+V();applyLang();stripMarks(document.querySelector(".app"));syncHash();window.scrollTo(0,enter?0:y);
   if(enter){view.classList.remove("enter");void view.offsetWidth;view.classList.add("enter");clearTimeout(U._et);U._et=setTimeout(()=>view.classList.remove("enter"),1200);countUp()}}
 function countUp(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;document.querySelectorAll("#view [data-count]").forEach(el=>{const t=+el.dataset.count,suf=el.dataset.suf||"";if(!isFinite(t))return;const st=performance.now();
   const step=now=>{const p=Math.min(1,(now-st)/900),e=1-Math.pow(1-p,3);el.textContent=Math.round(t*e)+suf;if(p<1)requestAnimationFrame(step)};el.textContent="0"+suf;requestAnimationFrame(step)})}
@@ -120,10 +120,10 @@ function vScope(){const s=stats(CTLS),t=S.cfg.type,ob=OBLIG.has(t);
    ${COND.map(q=>`<div class="q"><span class="qt">${q.q}</span>${seg(q.o,S.cfg.cond[q.k]||"","cond",q.k,"v")}<span class="qb">${q.off?`<span class="tag off">نص رسمي صريح</span>`:`<span class="tag der">مستنَد إلى نص الضابط</span>`} ${esc(q.trig)} ${q.subs?`· يؤثر على: ${q.subs.map(idb).join(" ")}`:""}${q.ctls?`· يؤثر على: ${q.ctls.map(idb).join(" ")}`:""}</span></div>`).join("")}</section>
   <div class="grid">
    <section class="card c7"><h2>3. ما يجب تغطيته وما يفضل</h2>
-    <div class="kpis" style="margin-bottom:14px"><div class="kpi"><b>${s.m}</b><span>إلزامي</span></div><div class="kpi"><b>${s.r}</b><span>موصى به</span></div><div class="kpi"><b>${s.na}</b><span>لا ينطبق</span></div><div class="kpi"><b>${prefs.length}</b><span>بنود «يفضل» داخل ضوابط إلزامية</span></div></div>
+    <div class="kpis" style="margin-bottom:14px"><div class="kpi"><b>${s.m}</b><span>إلزامي</span></div><div class="kpi"><b>${s.r}</b><span>موصى به</span></div><div class="kpi"><b>${s.na}</b><span>لا ينطبق</span></div></div>
     <div class="tw"><table><thead><tr><th>المكوّن الفرعي</th><th>إلزامي</th><th>موصى به</th><th>لا ينطبق</th></tr></thead><tbody>${SUBS.map(x=>{const st=stats(x.c);return `<tr><td>${idb(x.id)} ${esc(tx(x))}</td><td class="num">${st.m||"—"}</td><td class="num">${st.r||"—"}</td><td class="num">${st.na||"—"}</td></tr>`}).join("")}</tbody></table></div></section>
-   <section class="card c5"><h2>بنود «يفضل» في نص الضوابط <span class="tag off">نص رسمي</span></h2><p class="lead">أجزاء داخل ضوابط إلزامية صاغتها الوثيقة بعبارة «ويفضل»، فلا تُحسب فجوة إن لم تُطبَّق.</p>
-    ${prefs.map(c=>`<div class="box" style="margin-bottom:8px"><h4>${idb(c.id)}</h4><p>${esc(U.lang==="en"?(c.prefEn||c.pref):c.pref)}</p></div>`).join("")}
+   <section class="card c5"><h2>ملاحظات النطاق</h2><details class="prefd"><summary>بنود «يفضل» في نص الضوابط (${prefs.length}) <span class="tag off">نص رسمي</span></summary><p class="note">عبارات داخل ضوابط إلزامية كتبتها الهيئة بصيغة «ويفضل»، أي أنها مستحسنة وليست شرطًا. لا تُحسب فجوة إذا لم تُطبَّق، وتظهر أيضًا داخل الضابط نفسه في شاشة المراجعة.</p>
+    ${prefs.map(c=>`<div class="box" style="margin-bottom:8px"><h4>${idb(c.id)}</h4><p>${esc(U.lang==="en"?(c.prefEn||c.pref):c.pref)}</p></div>`).join("")}</details>
     ${!ob&&t?`<h2 style="margin-top:16px">من أين تبدأ جهة غير ملزمة؟ <span class="tag meth">منهجية الأداة، غير رسمية</span></h2><p class="note">تقترح الأداة البدء بالمكونات التأسيسية التي تعتمد عليها بقية الضوابط: ${[...FOUND].map(idb).join(" ")}. خارطة المعالجة تعطيها أولوية أعلى تلقائيًا، ويمكنك تعديل المرحلة لأي ضابط.</p>`:""}
     <h2 style="margin-top:16px">استثناءات يدوية (${ovr.length})</h2>${ovr.length?`<div class="att">${ovr.map(c=>`<div>${idb(c.id)}<span>${AP[C(c.id).app][0]} — ${esc(C(c.id).appWhy||"بلا مبرر مكتوب")}${C(c.id).appWhy?"":` <span class="flag late">المدقق سيطلب مبررًا</span>`}</span><button class="btn sm quiet" data-act="appclear" data-id="${c.id}">إلغاء</button></div>`).join("")}</div>`:`<p class="note">لا توجد. يمكنك تغيير انطباق أي ضابط من شاشة المراجعة، مع كتابة المبرر.</p>`}
    </section></div></fieldset>`}
@@ -132,7 +132,7 @@ function vScope(){const s=stats(CTLS),t=S.cfg.type,ob=OBLIG.has(t);
 const FILT=[["all","كل الضوابط"],["none","لم يُقيَّم"],["gap","فجوات (جزئي أو غير ملتزم)"],["paper","التزام ورقي"],["undoc","ممارسة غير موثقة"],["m","الإلزامية فقط"],["r","الموصى بها فقط"],["na","لا ينطبق"]];
 function ctlMatch(c){const f=U.f,s=dst(c.id),a=appOf(c.id).v;
   if(f==="none"&&s)return false;if(f==="gap"&&!isGap(c.id))return false;if(f==="paper"&&!isPaper(c.id))return false;if(f==="undoc"&&!isUndoc(c.id))return false;if(["m","r","na"].includes(f)&&a!==f)return false;
-  if(U.q){const q=U.q.toLowerCase();if(![c.id,c.ar,c.en,...(c.s||[]).flatMap(x=>[x.id,x.ar,x.en]),SUBBY[c.sub].ar].join(" ").toLowerCase().includes(q))return false}return true}
+  if(U.q){const q=normQ(U.q);if(!normQ([c.id,c.ar,c.en,...(c.s||[]).flatMap(x=>[x.id,x.ar,x.en]),SUBBY[c.sub].ar,SUBBY[c.sub].en].join(" ")).includes(q))return false}return true}
 function vReview(){const glob=U.q||U.f!=="all";const subs=SUBS.filter(x=>(glob||x.dom===U.dom)&&x.c.some(ctlMatch));
   return `<div class="dtabs">${ECC.map(d=>{const st=stats(d.subs.flatMap(x=>x.c));return `<button class="${!glob&&U.dom===d.id?"on":""}" data-act="dom" data-v="${d.id}"><b>${d.id}. ${esc(tx(d))}</b>${sbar(st)}<small>${st.c+st.p+st.x} من ${st.app} مُقيَّم · ${d.subs.length} مكونات فرعية</small></button>`}).join("")}</div>
   <div class="tools"><input id="q" type="search" placeholder="ابحث برقم الضابط أو نصّه، مثل 2-2-3 أو «التشفير»" value="${esc(U.q)}" data-act="q"><select id="flt" data-act="f">${FILT.map(o=>`<option value="${o[0]}" ${U.f===o[0]?"selected":""}>${o[1]}</option>`).join("")}</select></div>
@@ -143,12 +143,12 @@ function card(x){const glob=U.q||U.f!=="all",open=U.open[x.id]||glob,st=stats(x.
    <div class="box"><h4>الوثائق المرتبطة من السجل</h4>${dl.length?dl.map(([k,d])=>`<p>• ${esc(d.name)} ${d.ver?`<span class="note">إصدار ${esc(d.ver)}</span>`:""} ${docState(d)==="late"?`<span class="flag late">متأخرة المراجعة</span>`:""}</p>`).join(""):`<p class="note">لم تُربط وثيقة بهذا المكوّن. ${xd?`مثال لما يُتوقع: ${esc(xd[U.lang==="en"?1:0])}. <span class="tag meth">اقتراح الأداة</span>`:""}</p><button class="btn sm ghost" data-act="tab" data-v="docs" style="margin-top:6px">افتح سجل الوثائق</button>`}</div></div>
    <fieldset class="fs" ${fsAttr("sub",x.id)}>${fld("ملاحظات المراجع على هذا المكوّن",ta("sub",x.id,"n",so.n,"ملاحظات عامة، أسماء من قابلتهم، نطاق العينة…"))}</fieldset>
    <div class="ctls">${x.c.filter(c=>!glob||ctlMatch(c)).map(ctlRow).join("")}</div></div>`}
-  return `<article class="sub ${open?"open":""}" id="s-${x.id}"><button class="sub-h" data-act="tg" data-id="${x.id}" aria-expanded="${!!open}"><span class="sid">${x.id}</span><span class="sname"><b>${esc(tx(x))}</b><span class="en">${esc(x.en)}</span></span><span class="mini">${sbar(st)}</span><span class="note num">${st.c+st.p+st.x}/${st.app}</span><span class="chev">▾</span></button>${b}</article>`}
+  return `<article class="sub ${open?"open":""}" id="s-${x.id}"><button class="sub-h" data-act="tg" data-id="${x.id}" aria-expanded="${!!open}"><span class="sid">${x.id}</span><span class="sname"><b>${esc(tx(x))}</b></span><span class="mini">${sbar(st)}</span><span class="note num">${st.c+st.p+st.x}/${st.app}</span><span class="chev">▾</span></button>${b}</article>`}
 function ctlRow(c){const id=c.id,o=C(id),s=dst(id),a=appOf(id),open=U.open[id];let b="";
   if(open){const cc=(CCCBY[id]||[]);const ai=U.aiOut[id]||o.ai;
    b=`<fieldset class="ctl-b fs" ${fsAttr("ctl",id)}>${c.s?`<ul class="subs">${c.s.map(z=>`<li><span class="idb">${z.id}</span><span>${esc(tx(z))}</span></li>`).join("")}</ul>`:""}
    <details><summary class="note" style="font-weight:500">النص الإنجليزي الرسمي</summary><div class="quote en">${esc(c.en)}</div></details>
-   ${guideBox(id)}
+   ${guideBox(id)}${attBox(id)}
    ${c.pref?`<div class="box"><h4>جزء «يفضل» في نص الضابط <span class="tag off">غير إلزامي</span></h4><p>${esc(U.lang==="en"?(c.prefEn||c.pref):c.pref)}</p></div>`:""}
    ${COND.filter(q=>q.note&&q.note[c.sub]&&S.cfg.cond[q.k]==="no").map(q=>`<div class="banner info"><span>${esc(q.note[c.sub])}</span></div>`).join("")}
    <div class="layers">${LAYERS.map(L=>`<div class="layer"><div class="ln"><b>${L[1]}</b><span>${L[2]}</span></div>${seg(LV,o[L[0]]||"","lay",id,L[0],"l")}<input id="f-ev-${id}-${L[0]}" ${bind("ctl",id,"ev_"+L[0])} value="${esc(o["ev_"+L[0]]||"")}" placeholder="${L[0]==="d"?"اسم الوثيقة ورقم البند، مثل: سياسة التحكم بالدخول v2 — البند 4.3":L[0]==="i"?"الدليل التشغيلي، مثل: تقرير مراجعة الصلاحيات 2026-Q3":"نتيجة المراجعة أو القياس، مثل: محضر اللجنة الإشرافية 2026-10-05"}"></div>`).join("")}</div>
@@ -162,10 +162,13 @@ function ctlRow(c){const id=c.id,o=C(id),s=dst(id),a=appOf(id),open=U.open[id];l
    ${o._by&&U.names[o._by]?`<p class="note" style="margin:0">آخر تعديل: ${esc(U.names[o._by])}${o._at?" · "+new Date(o._at).toISOString().slice(0,10):""}</p>`:""}</fieldset>`}
   return `<div class="ctl s-${s||"none"} ${open?"open":""} ${U.flash===id?"flash":""}" id="c-${id}"><button class="ctl-h" data-act="tc" data-id="${id}" aria-expanded="${!!open}"><span class="cid">${id}</span><span class="ctxt">${esc(tx(c))}<span class="flags">${flags(id)}${C(id).ai?`<span class="tag ai">فيه مقترح</span>`:""}</span></span><span class="side">${apill(a)}${lm(id)}${pill(s)}<span class="chev">▾</span></span></button>${b}</div>`}
 function guideBox(id){const g=GD(id),k=new Set(C(id).gd||[]);if(!g.d.length&&!g.g.length)return "";
-  return `<div class="box"><h4>الدليل الإرشادي لتطبيق الضوابط GECC-2:2026 <span class="tag off">نص رسمي</span><span class="note">${gdHave(id)} من ${g.d.length} مخرجات متوفرة</span></h4>
+  const tr=U.lang!=="en"?gtrOf(id):null,dl=tr?tr.d:g.d,gl=tr&&tr.g.length?tr.g:g.g,dir=tr?"rtl":"ltr";
+  return `<div class="box"><h4>الدليل الإرشادي لتطبيق الضوابط GECC-2:2026 <span class="tag off">نص رسمي</span>${tr?`<span class="tag ai">ترجمة آلية غير رسمية</span>`:""}<span class="note">${gdHave(id)} من ${g.d.length} مخرجات متوفرة</span></h4>
+  ${U.lang!=="en"&&!tr?`<div class="row" style="margin:2px 0 8px"><span class="note">النص الرسمي للدليل متاح بالإنجليزية فقط.</span>${window.claude?aiBtn("aigtr",id,"ترجم إلى العربية","ghost sm"):""}</div>`:""}
   ${g.t.length?`<div class="row" style="margin:4px 0 6px"><span class="note">أدوات الهيئة المرتبطة:</span>${g.t.map(x=>`<span class="tag" dir="ltr">${esc(x)}</span>`).join("")}</div>`:""}
-  <span class="lbl">المخرجات المتوقعة: علّم ما هو متوفر لديك</span><div class="gdl">${g.d.map((x,i)=>`<label class="${k.has(i)?"on":""}"><input type="checkbox" data-act="gd" data-id="${id}" data-v="${i}" ${k.has(i)?"checked":""}><span dir="ltr">${esc(x)}</span></label>`).join("")}</div>
-  ${g.g.length?`<details style="margin-top:6px"><summary class="note" style="font-weight:500">إرشادات التطبيق (${g.g.length})</summary><ul class="gl" dir="ltr">${g.g.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:""}</div>`}
+  <span class="lbl">المخرجات المتوقعة: علّم ما هو متوفر لديك</span><div class="gdl">${dl.map((x,i)=>`<label class="${k.has(i)?"on":""}"><input type="checkbox" data-act="gd" data-id="${id}" data-v="${i}" ${k.has(i)?"checked":""}><span dir="${dir}">${esc(x)}</span></label>`).join("")}</div>
+  ${gl.length?`<details style="margin-top:6px"><summary class="note" style="font-weight:500">إرشادات التطبيق (${gl.length})</summary><ul class="gl" dir="${dir}">${gl.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:""}
+  ${tr?`<details style="margin-top:6px"><summary class="note" style="font-weight:500">النص الإنجليزي الرسمي</summary><ul class="gl" dir="ltr">${g.d.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:""}</div>`}
 function aiBlock(id,r){return `<div class="aiout"><div class="row">${aiTag}${r.at?`<span class="note">${r.at}</span>`:""}<span style="margin-inline-start:auto" class="row"><button class="btn sm quiet" data-act="aicopy" data-id="${id}">انقل الخطوات إلى خطة المعالجة</button>${U.aiOut[id]&&!C(id).ai?`<button class="btn sm" data-act="aisave" data-id="${id}">احفظ المقترح</button>`:""}<button class="btn sm quiet" data-act="aidrop" data-id="${id}">حذف</button></span></div>
   ${r.diagnosis?`<p style="margin:0">${esc(r.diagnosis)}</p>`:""}
   ${r.quick_wins&&r.quick_wins.length?`<h5>مكاسب سريعة</h5>${list(r.quick_wins)}`:""}
@@ -179,7 +182,7 @@ function vAna(){const sel=U.anaSel,hist=Object.entries(S.ana).sort((a,b)=>(b[1].
   const n=CTLS.filter(c=>sel.has(c.sub)).length;
   return `<div class="grid"><section class="card c12"><h2>1. السياسة المراد تحليلها</h2>
    <div class="fg">${`<div><span class="lbl">اسم الوثيقة وإصدارها</span><input id="ana-name" data-act="ananame" value="${esc(U.anaName)}" placeholder="مثال: سياسة التحكم بالدخول — الإصدار 2"></div>`}</div>
-   <div style="margin-top:10px" class="drop-zone" id="dz"><label style="cursor:pointer">أفلت ملف Word (.docx) أو نصيًا (.txt / .md) هنا، أو <u>اختر ملفًا</u><input type="file" id="anafile" accept=".docx,.txt,.md" hidden></label><div class="note">ملفات PDF: انسخ نصها والصقه أدناه. يُقرأ الملف داخل متصفحك.</div></div>
+   <div style="margin-top:10px" class="drop-zone" id="dz"><label style="cursor:pointer">أفلت ملف PDF أو Word أو نصيًا هنا، أو <u>اختر ملفًا</u><input type="file" id="anafile" accept=".pdf,.docx,.txt,.md" hidden></label><div class="note">يقبل PDF وWord والنص، ويُقرأ داخل متصفحك. ملفات PDF الممسوحة ضوئيًا لا تحوي نصًا، فانسخ نصها يدويًا.</div></div>
    <textarea id="ana-txt" data-act="anatxt" style="min-height:180px;margin-top:10px" placeholder="أو الصق نص السياسة كاملًا هنا…">${esc(U.anaTxt)}</textarea>
    <p class="note" style="margin:6px 0 0">${U.anaTxt.length.toLocaleString("en")} حرفًا${U.anaTxt.length>90000?" — سيُرسل أول 90,000 حرف فقط":""}</p></section>
   <section class="card c12"><h2>2. المكونات التي تغطيها هذه السياسة <span class="act"><button class="btn sm quiet" data-act="anasug" ${U.anaTxt.length>200?"":"disabled"}>اقترح من النص</button><button class="btn sm quiet" data-act="anaclr">مسح الاختيار</button></span></h2>
@@ -223,7 +226,7 @@ function auditFindings(id){const o=C(id),f=[];LAYERS.forEach(L=>{const v=o[L[0]]
   if(isPaper(id))f.push("السياسة موجودة لكن لا دليل على التطبيق.");if(isUndoc(id))f.push("الممارسة مطبّقة دون وثيقة معتمدة.");
   if(o.d==="y"&&o.i==="y"&&!o.e)f.push("لم تُقيَّم الفاعلية: هل يُراجَع هذا الضابط دوريًا؟");
   docsFor(BY[id].sub).forEach(([k,d])=>{if(docState(d)==="late")f.push(`الوثيقة «${d.name}» تجاوزت موعد مراجعتها.`)});
-  if(appOf(id).src==="manual"&&!o.appWhy)f.push("تغيير الانطباق بلا مبرر مكتوب.");
+  if(appOf(id).src==="manual"&&!o.appWhy)f.push("تغيير الانطباق بلا مبرر مكتوب.");if(o.d==="y"&&!(o.att||[]).length)f.push("لا يوجد مرفق يثبت التوثيق (مثل الوثيقة المعتمدة).");
   const g=GD(id);if(g.d.length&&(o.d==="y"||o.i==="y")){const miss=g.d.length-gdHave(id);if(miss)f.push(`${miss} من ${g.d.length} مخرجات يتوقعها الدليل الإرشادي الرسمي غير متوفرة بعد.`)}return f}
 function vAudit(){const A=S.audit.cur;const pool=CTLS.filter(c=>appOf(c.id).v!=="na"&&(C(c.id).d||C(c.id).i));
   const head=`<section class="card"><h2>جولة تدقيق جديدة</h2><p class="lead">تسحب الأداة عيّنة عشوائية من الضوابط التي قيّمتها، وتفحص أدلتك كما يفعل المدقق: هل كل ادعاء له دليل محدد؟</p>
@@ -234,7 +237,7 @@ function vAudit(){const A=S.audit.cur;const pool=CTLS.filter(c=>appOf(c.id).v!==
    ${ids.map(id=>{const c=BY[id],o=C(id),f=auditFindings(id),q=(U.aiOut["q:"+id]||(A.q||{})[id]);return `<div class="ctl" style="margin-bottom:10px"><div class="ctl-h" style="cursor:default"><span class="cid">${id}</span><span class="ctxt">${esc(tx(c))}</span><span class="side">${lm(id)}${pill(dst(id))}</span></div><div class="ctl-b">
      <div class="tw"><table><thead><tr><th>الطبقة</th><th>الادعاء</th><th>الدليل المسجّل</th></tr></thead><tbody>${LAYERS.map(L=>`<tr><td>${L[1]}</td><td>${({y:"نعم",p:"جزئي",n:"لا"})[o[L[0]]]||"—"}</td><td>${esc(o["ev_"+L[0]]||"—")}</td></tr>`).join("")}</tbody></table></div>
      ${f.length?`<div class="box"><h4>ملاحظات التدقيق الآلية</h4>${list(f)}</div>`:`<p class="note" style="margin:0">لا ملاحظات آلية على الأدلة المسجّلة.</p>`}
-     ${guideBox(id)}
+     ${guideBox(id)}${attBox(id)}
      <div class="row">${aiBtn("aiq",id,"ما الذي سيسأله المدقق؟","ghost")}</div>
      ${q?`<div class="aiout"><div class="row">${aiTag}</div>${q.questions?`<h5>أسئلة متوقعة</h5>${list(q.questions)}`:""}${q.samples?`<h5>عيّنات قد تُطلب</h5>${list(q.samples)}`:""}${q.red_flags?`<h5>ما يُضعف موقفك</h5>${list(q.red_flags)}`:""}</div>`:""}
      <div class="row"><span class="note">حكمك بعد المراجعة:</span>${seg([["ok","جاهز"],["part","يحتاج استكمال"],["no","غير جاهز"]],mk[id]||"","audmark",id,"v")}</div></div></div>`}).join("")}
@@ -291,6 +294,7 @@ function vReport(){const c=S.cfg,rp=c.rep||{},L=U.repLang||U.lang,arch=Object.en
    ${fld("اسم الجهة",inp("cfg","","entity",c.entity,"","",'cf-entity'))}
    <div class="two">${fld("تاريخ التقييم",inp("cfg","","date",c.date,"date","",'cf-date'))}${fld("إصدار التقرير",inp("cfg","","rep.ver",rp.ver,"","1.0",'cf-ver'))}</div>
    ${fld("التصنيف",`<select id="cf-cls" ${bind("cfg","","rep.cls")}>${CLS.map(x=>`<option value="${x[0]}" ${(rp.cls||"internal")===x[0]?"selected":""}>${x[1]} · ${x[2]}</option>`).join("")}</select>`)}
+   ${["confidential","restricted"].includes(rp.cls)?fld("كلمة مرور لفتح ملف PDF (اختيارية)",`<input type="password" id="rp-pw" data-act="rppw" autocomplete="new-password" value="${esc(U.pw||"")}" placeholder="لا تُحفظ في الأداة">`)+`<p class="note" style="margin:-4px 0 0">تُطلب عند فتح الملف. لا تُحفظ في الأداة، فاحتفظ بها في مكان آمن.</p>`:""}
    ${fld("أعدّه",inp("cfg","","rep.prep",rp.prep||c.assessor,"","الاسم والمسمى الوظيفي",'cf-prep'))}
    ${fld("راجعه",inp("cfg","","rep.rev",rp.rev,"","مثل: رئيس الإدارة المعنية بالأمن السيبراني",'cf-rev'))}
    ${fld("اعتمده",inp("cfg","","rep.appr",rp.appr,"","مثل: صاحب الصلاحية",'cf-appr'))}</div></fieldset>

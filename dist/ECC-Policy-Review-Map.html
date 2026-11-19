@@ -577,6 +577,30 @@ a{color:var(--accent)}
 .banner.info{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 30%,var(--line))}
 .tag.der{color:var(--accent);background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
 .copy b{color:var(--head)}
+
+/* ===== Page transition, attachments, guide translation, intro tour ===== */
+#view.enter{animation:pageIn .36s cubic-bezier(.2,.7,.2,1) both}
+.app[dir=rtl]{--pg:-18px}.app[dir=ltr]{--pg:18px}
+@keyframes pageIn{from{opacity:.2;transform:translateX(var(--pg,-18px))}}
+.nav button{transition:background .2s,color .2s,box-shadow .2s}
+.atts{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px}
+.atts li{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 8px;flex-wrap:wrap}
+.atts .ft{flex:0 0 auto;font-family:var(--display);font-weight:600;font-size:.68rem;background:var(--accent-soft);color:var(--accent);border-radius:4px;padding:3px 6px}
+.atts .an{flex:1;min-width:0;overflow-wrap:anywhere;font-size:.86rem}
+.atts small{display:block;color:var(--muted);font-size:.74rem}
+.attpick{margin-top:8px;cursor:pointer}
+.gdl span[dir=rtl]{text-align:right}
+.gl[dir=rtl]{text-align:right;padding-left:0;padding-right:18px}
+.prefd summary{cursor:pointer;font-weight:600;color:var(--head)}
+.prefd[open] summary{margin-bottom:8px}
+#tour{position:fixed;inset:0;z-index:200}
+#tour .hole{position:fixed;border-radius:12px;box-shadow:0 0 0 9999px rgba(8,16,30,.62);outline:2px solid #2FA3AD;transition:left .25s,top .25s,width .25s,height .25s;pointer-events:none}
+#tour .tcard{position:fixed;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 18px 50px rgba(0,0,0,.35);display:grid;gap:6px;font-family:var(--body)}
+#tour .tcard b{font-family:var(--display);color:var(--head);font-size:1rem}
+#tour .tcard p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.6}
+#tour .tstep{font-size:.74rem;color:var(--accent);font-weight:600}
+#tour .tbtns{display:flex;gap:6px;align-items:center;margin-top:6px}
+@media(prefers-reduced-motion:reduce){#view.enter{animation:none}#tour .hole{transition:none}}
 </style>
 <div class="app" dir="rtl">
   <aside class="rail" id="rail">
@@ -584,7 +608,7 @@ a{color:var(--accent)}
     <button class="menu-btn" id="menu" aria-label="القائمة" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     <div class="ent" id="ent"></div>
     <nav class="nav" id="nav" aria-label="أقسام الأداة"></nav>
-    <div class="rail-foot"><div class="row"><span class="sync" id="sync"></span><button class="icon-btn" id="lang" aria-label="English" style="font-size:.78rem;font-weight:600">EN</button><button class="icon-btn" id="theme" aria-label="تبديل المظهر" title="تبديل المظهر"><svg viewBox="0 0 24 24" width="16" height="16" style="stroke:currentColor;fill:none;stroke-width:1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" style="fill:currentColor"/></svg></button></div>
+    <div class="rail-foot"><div class="row"><span class="sync" id="sync"></span><button class="icon-btn" id="tourbtn" aria-label="جولة تعريفية" title="جولة تعريفية" style="font-weight:700">?</button><button class="icon-btn" id="lang" aria-label="English" style="font-size:.78rem;font-weight:600">EN</button><button class="icon-btn" id="theme" aria-label="تبديل المظهر" title="تبديل المظهر"><svg viewBox="0 0 24 24" width="16" height="16" style="stroke:currentColor;fill:none;stroke-width:1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" style="fill:currentColor"/></svg></button></div>
       <div class="rail-copy">© 2026 <b>Daniyah Alharbi</b></div></div>
   </aside>
   <div class="main"><div class="main-in">
@@ -790,7 +814,17 @@ const I18N={d:{
 "ميزة الذكاء الاصطناعي متاحة عند فتح الصفحة داخل Claude":"AI features are available when the page is opened in Claude","نُسخ":"Copied","حذف":"Delete",
 "لم يُسمح للصفحة باستخدام Claude. يمكنك السماح من قائمة صلاحيات الصفحة.":"The page is not allowed to use Claude. You can allow it from the page's permissions menu.","طلبات كثيرة في وقت قصير. انتظر قليلًا ثم أعد المحاولة.":"Too many requests in a short time. Wait a moment and try again.","النص أطول من المسموح. قسّم السياسة واختر مجالات أقل.":"The text is too long. Split the policy and pick fewer subdomains.","جاء الرد بصيغة غير متوقعة. أعد المحاولة أو قلّل نطاق الطلب.":"The reply came in an unexpected format. Try again or narrow the request.","أُوقف الطلب.":"Request stopped.","اعتذر النموذج عن هذا الطلب.":"The model declined this request.","استخدام Claude معطّل لهذا الحساب.":"Claude use is disabled for this account.","تعذّر الوصول إلى Claude الآن. أعد المحاولة لاحقًا.":"Claude is not reachable right now. Try again later.",
 "تعذّر الحفظ في التخزين المشترك؛ بقي التعديل محفوظًا في هذا المتصفح":"Could not save to the shared database; the change is kept in this browser","لا تملك صلاحية التعديل على هذه النسخة المشتركة":"You cannot edit this shared copy",
-"وجدنا تقييمًا محفوظًا في هذا المتصفح من قبل. هل تنقله إلى التخزين المشترك؟":"An assessment was found saved in this browser. Move it to the shared database?","نقل البيانات":"Move data","تجاهل":"Ignore","تأكيد":"Confirm","نسخة محلية.":"Local copy.","بياناتك محفوظة في هذا المتصفح وعلى هذا الجهاز فقط. نزّل نسخة JSON احتياطية بانتظام من «التقارير والبيانات»، ولا تمسح بيانات المتصفح.":"Your data is saved only in this browser on this device. Download a JSON backup regularly from “Reports & data”, and do not clear the browser data.","تنزيل نسخة احتياطية":"Download backup","محفوظ في هذا المتصفح فقط":"Saved in this browser only","تم التنزيل":"Downloaded","الجهة غير ملزمة بضوابط ECC.":"The entity is not bound by ECC.","جهة أخرى · غير ملزمة بـ ECC":"Other entity · not bound by ECC",
+"وجدنا تقييمًا محفوظًا في هذا المتصفح من قبل. هل تنقله إلى التخزين المشترك؟":"An assessment was found saved in this browser. Move it to the shared database?","نقل البيانات":"Move data","تجاهل":"Ignore","تأكيد":"Confirm",
+"ملاحظات النطاق":"Scope notes","بنود «يفضل» في نص الضوابط (#)":"“Preferred” clauses in the control text (#)","عبارات داخل ضوابط إلزامية كتبتها الهيئة بصيغة «ويفضل»، أي أنها مستحسنة وليست شرطًا. لا تُحسب فجوة إذا لم تُطبَّق، وتظهر أيضًا داخل الضابط نفسه في شاشة المراجعة.":"Phrases inside mandatory controls that NCA wrote as “it is recommended”: advisable, not required. They do not count as a gap if not applied, and also appear inside the control on the review screen.",
+"المرفقات (الأدلة)":"Attachments (evidence)","# ملف":"# files","لا مرفقات بعد. أرفق الوثيقة المعتمدة أو لقطة الشاشة التي تثبت الضابط.":"No attachments yet. Attach the approved document or a screenshot that proves the control.","إرفاق ملف (PDF أو صورة)":"Attach file (PDF or image)","إرفاق ملف (PDF أو صورة أو Word)":"Attach file (PDF, image or Word)","جارٍ الرفع…":"Uploading…","فتح":"Open",
+"في النسخة المحلية تُحفظ المرفقات في هذا المتصفح فقط، ولا تدخل في النسخة الاحتياطية JSON.":"In the local copy, attachments are saved in this browser only and are not included in the JSON backup.",
+"أُرفق الملف":"File attached","تعذّر رفع الملف. تأكد من نوعه وحجمه.":"Could not upload the file. Check its type and size.","حجم الملف أكبر من 20 ميجابايت":"The file is larger than 20 MB","رفع الملفات غير متاح لصلاحيتك الحالية في هذه الأداة":"Uploading files is not available for your current access level","الملف غير موجود في هذا المتصفح":"The file is not in this browser","تعذّر فتح الملف":"Could not open the file",
+"لا يوجد مرفق يثبت التوثيق (مثل الوثيقة المعتمدة).":"No attachment proves the documentation (such as the approved document).",
+"ترجمة آلية غير رسمية":"Unofficial machine translation","النص الرسمي للدليل متاح بالإنجليزية فقط.":"The official guide text is available in English only.","ترجم إلى العربية":"Translate to Arabic","تُرجمت بنود الدليل لهذا الضابط":"Guide items translated for this control","جاءت الترجمة ناقصة. أعد المحاولة.":"The translation came back incomplete. Try again.",
+"يقبل PDF وWord والنص، ويُقرأ داخل متصفحك. ملفات PDF الممسوحة ضوئيًا لا تحوي نصًا، فانسخ نصها يدويًا.":"Accepts PDF, Word and text, read inside your browser. Scanned PDFs contain no text, so paste their text manually.","أفلت ملف PDF أو Word أو نصيًا هنا، أو":"Drop a PDF, Word or text file here, or","جارٍ قراءة ملف PDF…":"Reading the PDF…","الملف لا يحوي نصًا قابلًا للقراءة (قد يكون صورًا ممسوحة). الصق النص يدويًا.":"The file has no readable text (it may be scanned images). Paste the text manually.",
+"كلمة مرور لفتح ملف PDF (اختيارية)":"Password to open the PDF (optional)","لا تُحفظ في الأداة":"Not stored in the tool","تُطلب عند فتح الملف. لا تُحفظ في الأداة، فاحتفظ بها في مكان آمن.":"Asked for when the file is opened. It is not stored in the tool, so keep it somewhere safe.",
+"جولة تعريفية":"Intro tour","تخطي":"Skip","السابق":"Back","التالي":"Next","إنهاء":"Finish","ابدأ من هنا":"Start here","الجولة التعريفية":"Intro tour","التقارير":"Reports","اللغة":"Language",
+"ملخص الالتزام والفجوات وما يحتاج انتباهك أولًا.":"A summary of compliance, gaps and what needs your attention first.","حدّد نوع جهتك وطبيعة عملها، لتعرف الضوابط الإلزامية والموصى بها والتي لا تنطبق.":"Set your entity type and the nature of its work to see which controls are mandatory, recommended or not applicable.","قيّم كل ضابط على ثلاث طبقات: موثّق، ومطبّق، وفعّال. سجّل الدليل وأرفق ملفاته.":"Assess each control on three layers: documented, implemented and effective. Record the evidence and attach its files.","ارفع سياستك (PDF أو Word) ليقارنها Claude بالضوابط بندًا بندًا.":"Upload your policy (PDF or Word) and Claude compares it with the controls clause by clause.","الفجوات مرتبة على ثلاث مراحل، ولكل فجوة مسؤول وموعد وحالة معالجة.":"Gaps sorted into three phases, each with an owner, a date and a remediation status.","عيّنة عشوائية كما يفعل المدقق، لتعرف أين تضعف أدلتك.":"A random sample, as an auditor would take, to show where your evidence is weak.","سياساتك المعتمدة ومواعيد مراجعتها القادمة.":"Your approved policies and their next review dates.","أضف فريقك وحدّد دور كل شخص وما يحق له تعديله.":"Add your team and set each person's role and what they may edit.","أصدر تقريرًا رسميًا بصيغة PDF، ويمكن قفله بكلمة مرور إذا كان سريًا.":"Issue an official PDF report, which can be locked with a password if confidential.","بدّل بين العربية والإنجليزية في أي وقت.":"Switch between Arabic and English at any time.","أعد هذه الجولة متى شئت من هذا الزر.":"Replay this tour any time from this button.","نسخة محلية.":"Local copy.","بياناتك محفوظة في هذا المتصفح وعلى هذا الجهاز فقط. نزّل نسخة JSON احتياطية بانتظام من «التقارير والبيانات»، ولا تمسح بيانات المتصفح.":"Your data is saved only in this browser on this device. Download a JSON backup regularly from “Reports & data”, and do not clear the browser data.","تنزيل نسخة احتياطية":"Download backup","محفوظ في هذا المتصفح فقط":"Saved in this browser only","تم التنزيل":"Downloaded","الجهة غير ملزمة بضوابط ECC.":"The entity is not bound by ECC.","جهة أخرى · غير ملزمة بـ ECC":"Other entity · not bound by ECC",
 "حرجة":"Critical","عالية":"High","متوسطة":"Moderate","منخفضة":"Low","قيد التنفيذ":"In progress","منجزة":"Done","لم تبدأ":"Not started","حالة المعالجة":"Remediation status",
 "عرّف بجهتك":"Define your entity","النطاق وطبيعة العمل":"Scope and nature of work","قيّم الضوابط":"Assess the controls","ثلاث طبقات ودليل لكل طبقة":"Three layers with evidence for each","احصل على تقريرك":"Get your report","تقرير PDF رسمي وخارطة معالجة":"Official PDF report and remediation roadmap",
 "التزام الضوابط":"Controls compliance","# ملتزم من # مُقيَّم · # منطبق":"# compliant of # assessed · # applicable","نظرة على خطة المعالجة":"Action plan overview","تظهر هنا حالة معالجة الفجوات.":"Gap remediation status appears here.","# فجوة بلا مسؤول":"# gaps without an owner",
@@ -857,7 +891,7 @@ function addMonths(iso,m){if(!iso||!m)return "";const d=new Date(iso+"T00:00:00"
 const pct=(n,t)=>t?Math.round(n/t*100):0;
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const short=(t,n)=>{t=String(t||"");return t.length>n?t.slice(0,n-1)+"…":t};
-function toast(t){const e=$("#toast");e.textContent=tr(t);e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2400)}
+function toast(t){const e=$("#toast");e.textContent=plainAr(tr(t));e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2400)}
 const C=id=>S.ctl[id]||{};
 
 // ===== Applicability =====
@@ -963,10 +997,13 @@ const AR_RE=/[؀-ۿ]/;
 const NUM_RE=/\d+(?:[.,:\-\/]\d+)*/g;
 const trKey=s=>s.replace(/\s+/g," ").trim().replace(NUM_RE,"#");
 const DICT=(typeof I18N!=="undefined"&&I18N.d)||{};
+// same dictionary keyed without diacritics, so text already stripped for display still translates
+const MARKS_RE=/[ً-ْٰـ]/g;
+const DICT_N={};Object.keys(DICT).forEach(k=>{DICT_N[k.replace(MARKS_RE,"")]=DICT[k]});
 const PHR=Object.entries((typeof I18N!=="undefined"&&I18N.p)||{}).sort((a,b)=>b[0].length-a[0].length);
 function tr(s){if(U.lang!=="en"||!s||!AR_RE.test(s))return s;
   const lead=s.match(/^\s*/)[0],trail=s.match(/\s*$/)[0],core=s.replace(/\s+/g," ").trim();
-  const nums=core.match(NUM_RE)||[];let v=DICT[trKey(core)];
+  const nums=core.match(NUM_RE)||[];const k0=trKey(core);let v=DICT[k0];if(v==null)v=DICT_N[k0.replace(MARKS_RE,"")];
   if(v!=null){let i=0;v=v.replace(/#/g,()=>nums[i]!=null?nums[i++]:"#");return lead+v+trail}
   let out=core;for(const [a,b] of PHR){if(out.includes(a))out=out.split(a).join(b)}return lead+out+trail}
 function applyLang(root){const en=U.lang==="en";document.documentElement.lang=en?"en":"ar";document.documentElement.dir=en?"ltr":"rtl";
@@ -975,7 +1012,14 @@ function applyLang(root){const en=U.lang==="en";document.documentElement.lang=en
   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentElement;if(!p||/^(TEXTAREA|SCRIPT|STYLE|OPTION)$/.test(p.tagName)&&p.tagName!=="OPTION"||p.closest("[data-notr],.rp-prev"))return NodeFilter.FILTER_REJECT;return AR_RE.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP}});
   const ns=[];while(w.nextNode())ns.push(w.currentNode);ns.forEach(n=>{n.nodeValue=tr(n.nodeValue)});
   root.querySelectorAll("[placeholder],[title],[aria-label]").forEach(el=>{["placeholder","title","aria-label"].forEach(a=>{const v=el.getAttribute(a);if(v&&AR_RE.test(v))el.setAttribute(a,tr(v))})})}
-function setLang(l){U.lang=l;try{localStorage.setItem("ecc_lang",l)}catch(e){}U.repLang=null;render()}
+// Static shell text (footer, brand, rail buttons) is not re-rendered, so remember its original Arabic
+// and put it back before every language switch; otherwise English would stick after returning to Arabic.
+const SHELL_ORIG=[];
+(function(){document.querySelectorAll("footer, .brand, .rail-foot, .head .tag, #menu").forEach(root=>{
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);while(w.nextNode())SHELL_ORIG.push([w.currentNode,"#text",w.currentNode.nodeValue]);
+  [root,...root.querySelectorAll("[title],[aria-label],[placeholder]")].forEach(el=>["title","aria-label","placeholder"].forEach(a=>{if(el.hasAttribute&&el.hasAttribute(a))SHELL_ORIG.push([el,a,el.getAttribute(a)])}))})})();
+function restoreShell(){SHELL_ORIG.forEach(([n,k,v])=>{if(k==="#text")n.nodeValue=v;else n.setAttribute(k,v)})}
+function setLang(l){restoreShell();U.lang=l;try{localStorage.setItem("ecc_lang",l)}catch(e){}U.repLang=null;render()}
 const aiLang=()=>U.lang==="en"?"\n- Write every output value in clear professional English. Keep control IDs exactly as given.":"";
 
 // ===== UI atoms =====
@@ -1025,7 +1069,7 @@ function render(){
   if(!U.demo&&!window.claude)top+=`<div class="banner warn"><span><b>نسخة محلية.</b> بياناتك محفوظة في هذا المتصفح وعلى هذا الجهاز فقط. نزّل نسخة JSON احتياطية بانتظام من «التقارير والبيانات»، ولا تمسح بيانات المتصفح.</span><button class="btn sm quiet" data-act="dljson">تنزيل نسخة احتياطية</button></div>`;
   if(U.confirm)top+=`<div class="confirm ${U.confirm.soft?"soft":""}"><span>${U.confirm.msg}</span><span class="row"><button class="btn sm ${U.confirm.soft?"":"danger"}" data-act="cfy">${U.confirm.yes||"تأكيد"}</button><button class="btn sm quiet" data-act="cfn">إلغاء</button></span></div>`;
   const key=U.tab+(U.demo?"d":"");const enter=U._last!==key;U._last=key;const view=$("#view");
-  view.innerHTML=top+V();applyLang();window.scrollTo(0,enter?0:y);
+  view.innerHTML=top+V();applyLang();stripMarks(document.querySelector(".app"));syncHash();window.scrollTo(0,enter?0:y);
   if(enter){view.classList.remove("enter");void view.offsetWidth;view.classList.add("enter");clearTimeout(U._et);U._et=setTimeout(()=>view.classList.remove("enter"),1200);countUp()}}
 function countUp(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;document.querySelectorAll("#view [data-count]").forEach(el=>{const t=+el.dataset.count,suf=el.dataset.suf||"";if(!isFinite(t))return;const st=performance.now();
   const step=now=>{const p=Math.min(1,(now-st)/900),e=1-Math.pow(1-p,3);el.textContent=Math.round(t*e)+suf;if(p<1)requestAnimationFrame(step)};el.textContent="0"+suf;requestAnimationFrame(step)})}
@@ -1100,10 +1144,10 @@ function vScope(){const s=stats(CTLS),t=S.cfg.type,ob=OBLIG.has(t);
    ${COND.map(q=>`<div class="q"><span class="qt">${q.q}</span>${seg(q.o,S.cfg.cond[q.k]||"","cond",q.k,"v")}<span class="qb">${q.off?`<span class="tag off">نص رسمي صريح</span>`:`<span class="tag der">مستنَد إلى نص الضابط</span>`} ${esc(q.trig)} ${q.subs?`· يؤثر على: ${q.subs.map(idb).join(" ")}`:""}${q.ctls?`· يؤثر على: ${q.ctls.map(idb).join(" ")}`:""}</span></div>`).join("")}</section>
   <div class="grid">
    <section class="card c7"><h2>3. ما يجب تغطيته وما يفضل</h2>
-    <div class="kpis" style="margin-bottom:14px"><div class="kpi"><b>${s.m}</b><span>إلزامي</span></div><div class="kpi"><b>${s.r}</b><span>موصى به</span></div><div class="kpi"><b>${s.na}</b><span>لا ينطبق</span></div><div class="kpi"><b>${prefs.length}</b><span>بنود «يفضل» داخل ضوابط إلزامية</span></div></div>
+    <div class="kpis" style="margin-bottom:14px"><div class="kpi"><b>${s.m}</b><span>إلزامي</span></div><div class="kpi"><b>${s.r}</b><span>موصى به</span></div><div class="kpi"><b>${s.na}</b><span>لا ينطبق</span></div></div>
     <div class="tw"><table><thead><tr><th>المكوّن الفرعي</th><th>إلزامي</th><th>موصى به</th><th>لا ينطبق</th></tr></thead><tbody>${SUBS.map(x=>{const st=stats(x.c);return `<tr><td>${idb(x.id)} ${esc(tx(x))}</td><td class="num">${st.m||"—"}</td><td class="num">${st.r||"—"}</td><td class="num">${st.na||"—"}</td></tr>`}).join("")}</tbody></table></div></section>
-   <section class="card c5"><h2>بنود «يفضل» في نص الضوابط <span class="tag off">نص رسمي</span></h2><p class="lead">أجزاء داخل ضوابط إلزامية صاغتها الوثيقة بعبارة «ويفضل»، فلا تُحسب فجوة إن لم تُطبَّق.</p>
-    ${prefs.map(c=>`<div class="box" style="margin-bottom:8px"><h4>${idb(c.id)}</h4><p>${esc(U.lang==="en"?(c.prefEn||c.pref):c.pref)}</p></div>`).join("")}
+   <section class="card c5"><h2>ملاحظات النطاق</h2><details class="prefd"><summary>بنود «يفضل» في نص الضوابط (${prefs.length}) <span class="tag off">نص رسمي</span></summary><p class="note">عبارات داخل ضوابط إلزامية كتبتها الهيئة بصيغة «ويفضل»، أي أنها مستحسنة وليست شرطًا. لا تُحسب فجوة إذا لم تُطبَّق، وتظهر أيضًا داخل الضابط نفسه في شاشة المراجعة.</p>
+    ${prefs.map(c=>`<div class="box" style="margin-bottom:8px"><h4>${idb(c.id)}</h4><p>${esc(U.lang==="en"?(c.prefEn||c.pref):c.pref)}</p></div>`).join("")}</details>
     ${!ob&&t?`<h2 style="margin-top:16px">من أين تبدأ جهة غير ملزمة؟ <span class="tag meth">منهجية الأداة، غير رسمية</span></h2><p class="note">تقترح الأداة البدء بالمكونات التأسيسية التي تعتمد عليها بقية الضوابط: ${[...FOUND].map(idb).join(" ")}. خارطة المعالجة تعطيها أولوية أعلى تلقائيًا، ويمكنك تعديل المرحلة لأي ضابط.</p>`:""}
     <h2 style="margin-top:16px">استثناءات يدوية (${ovr.length})</h2>${ovr.length?`<div class="att">${ovr.map(c=>`<div>${idb(c.id)}<span>${AP[C(c.id).app][0]} — ${esc(C(c.id).appWhy||"بلا مبرر مكتوب")}${C(c.id).appWhy?"":` <span class="flag late">المدقق سيطلب مبررًا</span>`}</span><button class="btn sm quiet" data-act="appclear" data-id="${c.id}">إلغاء</button></div>`).join("")}</div>`:`<p class="note">لا توجد. يمكنك تغيير انطباق أي ضابط من شاشة المراجعة، مع كتابة المبرر.</p>`}
    </section></div></fieldset>`}
@@ -1112,7 +1156,7 @@ function vScope(){const s=stats(CTLS),t=S.cfg.type,ob=OBLIG.has(t);
 const FILT=[["all","كل الضوابط"],["none","لم يُقيَّم"],["gap","فجوات (جزئي أو غير ملتزم)"],["paper","التزام ورقي"],["undoc","ممارسة غير موثقة"],["m","الإلزامية فقط"],["r","الموصى بها فقط"],["na","لا ينطبق"]];
 function ctlMatch(c){const f=U.f,s=dst(c.id),a=appOf(c.id).v;
   if(f==="none"&&s)return false;if(f==="gap"&&!isGap(c.id))return false;if(f==="paper"&&!isPaper(c.id))return false;if(f==="undoc"&&!isUndoc(c.id))return false;if(["m","r","na"].includes(f)&&a!==f)return false;
-  if(U.q){const q=U.q.toLowerCase();if(![c.id,c.ar,c.en,...(c.s||[]).flatMap(x=>[x.id,x.ar,x.en]),SUBBY[c.sub].ar].join(" ").toLowerCase().includes(q))return false}return true}
+  if(U.q){const q=normQ(U.q);if(!normQ([c.id,c.ar,c.en,...(c.s||[]).flatMap(x=>[x.id,x.ar,x.en]),SUBBY[c.sub].ar,SUBBY[c.sub].en].join(" ")).includes(q))return false}return true}
 function vReview(){const glob=U.q||U.f!=="all";const subs=SUBS.filter(x=>(glob||x.dom===U.dom)&&x.c.some(ctlMatch));
   return `<div class="dtabs">${ECC.map(d=>{const st=stats(d.subs.flatMap(x=>x.c));return `<button class="${!glob&&U.dom===d.id?"on":""}" data-act="dom" data-v="${d.id}"><b>${d.id}. ${esc(tx(d))}</b>${sbar(st)}<small>${st.c+st.p+st.x} من ${st.app} مُقيَّم · ${d.subs.length} مكونات فرعية</small></button>`}).join("")}</div>
   <div class="tools"><input id="q" type="search" placeholder="ابحث برقم الضابط أو نصّه، مثل 2-2-3 أو «التشفير»" value="${esc(U.q)}" data-act="q"><select id="flt" data-act="f">${FILT.map(o=>`<option value="${o[0]}" ${U.f===o[0]?"selected":""}>${o[1]}</option>`).join("")}</select></div>
@@ -1123,12 +1167,12 @@ function card(x){const glob=U.q||U.f!=="all",open=U.open[x.id]||glob,st=stats(x.
    <div class="box"><h4>الوثائق المرتبطة من السجل</h4>${dl.length?dl.map(([k,d])=>`<p>• ${esc(d.name)} ${d.ver?`<span class="note">إصدار ${esc(d.ver)}</span>`:""} ${docState(d)==="late"?`<span class="flag late">متأخرة المراجعة</span>`:""}</p>`).join(""):`<p class="note">لم تُربط وثيقة بهذا المكوّن. ${xd?`مثال لما يُتوقع: ${esc(xd[U.lang==="en"?1:0])}. <span class="tag meth">اقتراح الأداة</span>`:""}</p><button class="btn sm ghost" data-act="tab" data-v="docs" style="margin-top:6px">افتح سجل الوثائق</button>`}</div></div>
    <fieldset class="fs" ${fsAttr("sub",x.id)}>${fld("ملاحظات المراجع على هذا المكوّن",ta("sub",x.id,"n",so.n,"ملاحظات عامة، أسماء من قابلتهم، نطاق العينة…"))}</fieldset>
    <div class="ctls">${x.c.filter(c=>!glob||ctlMatch(c)).map(ctlRow).join("")}</div></div>`}
-  return `<article class="sub ${open?"open":""}" id="s-${x.id}"><button class="sub-h" data-act="tg" data-id="${x.id}" aria-expanded="${!!open}"><span class="sid">${x.id}</span><span class="sname"><b>${esc(tx(x))}</b><span class="en">${esc(x.en)}</span></span><span class="mini">${sbar(st)}</span><span class="note num">${st.c+st.p+st.x}/${st.app}</span><span class="chev">▾</span></button>${b}</article>`}
+  return `<article class="sub ${open?"open":""}" id="s-${x.id}"><button class="sub-h" data-act="tg" data-id="${x.id}" aria-expanded="${!!open}"><span class="sid">${x.id}</span><span class="sname"><b>${esc(tx(x))}</b></span><span class="mini">${sbar(st)}</span><span class="note num">${st.c+st.p+st.x}/${st.app}</span><span class="chev">▾</span></button>${b}</article>`}
 function ctlRow(c){const id=c.id,o=C(id),s=dst(id),a=appOf(id),open=U.open[id];let b="";
   if(open){const cc=(CCCBY[id]||[]);const ai=U.aiOut[id]||o.ai;
    b=`<fieldset class="ctl-b fs" ${fsAttr("ctl",id)}>${c.s?`<ul class="subs">${c.s.map(z=>`<li><span class="idb">${z.id}</span><span>${esc(tx(z))}</span></li>`).join("")}</ul>`:""}
    <details><summary class="note" style="font-weight:500">النص الإنجليزي الرسمي</summary><div class="quote en">${esc(c.en)}</div></details>
-   ${guideBox(id)}
+   ${guideBox(id)}${attBox(id)}
    ${c.pref?`<div class="box"><h4>جزء «يفضل» في نص الضابط <span class="tag off">غير إلزامي</span></h4><p>${esc(U.lang==="en"?(c.prefEn||c.pref):c.pref)}</p></div>`:""}
    ${COND.filter(q=>q.note&&q.note[c.sub]&&S.cfg.cond[q.k]==="no").map(q=>`<div class="banner info"><span>${esc(q.note[c.sub])}</span></div>`).join("")}
    <div class="layers">${LAYERS.map(L=>`<div class="layer"><div class="ln"><b>${L[1]}</b><span>${L[2]}</span></div>${seg(LV,o[L[0]]||"","lay",id,L[0],"l")}<input id="f-ev-${id}-${L[0]}" ${bind("ctl",id,"ev_"+L[0])} value="${esc(o["ev_"+L[0]]||"")}" placeholder="${L[0]==="d"?"اسم الوثيقة ورقم البند، مثل: سياسة التحكم بالدخول v2 — البند 4.3":L[0]==="i"?"الدليل التشغيلي، مثل: تقرير مراجعة الصلاحيات 2026-Q3":"نتيجة المراجعة أو القياس، مثل: محضر اللجنة الإشرافية 2026-10-05"}"></div>`).join("")}</div>
@@ -1142,10 +1186,13 @@ function ctlRow(c){const id=c.id,o=C(id),s=dst(id),a=appOf(id),open=U.open[id];l
    ${o._by&&U.names[o._by]?`<p class="note" style="margin:0">آخر تعديل: ${esc(U.names[o._by])}${o._at?" · "+new Date(o._at).toISOString().slice(0,10):""}</p>`:""}</fieldset>`}
   return `<div class="ctl s-${s||"none"} ${open?"open":""} ${U.flash===id?"flash":""}" id="c-${id}"><button class="ctl-h" data-act="tc" data-id="${id}" aria-expanded="${!!open}"><span class="cid">${id}</span><span class="ctxt">${esc(tx(c))}<span class="flags">${flags(id)}${C(id).ai?`<span class="tag ai">فيه مقترح</span>`:""}</span></span><span class="side">${apill(a)}${lm(id)}${pill(s)}<span class="chev">▾</span></span></button>${b}</div>`}
 function guideBox(id){const g=GD(id),k=new Set(C(id).gd||[]);if(!g.d.length&&!g.g.length)return "";
-  return `<div class="box"><h4>الدليل الإرشادي لتطبيق الضوابط GECC-2:2026 <span class="tag off">نص رسمي</span><span class="note">${gdHave(id)} من ${g.d.length} مخرجات متوفرة</span></h4>
+  const tr=U.lang!=="en"?gtrOf(id):null,dl=tr?tr.d:g.d,gl=tr&&tr.g.length?tr.g:g.g,dir=tr?"rtl":"ltr";
+  return `<div class="box"><h4>الدليل الإرشادي لتطبيق الضوابط GECC-2:2026 <span class="tag off">نص رسمي</span>${tr?`<span class="tag ai">ترجمة آلية غير رسمية</span>`:""}<span class="note">${gdHave(id)} من ${g.d.length} مخرجات متوفرة</span></h4>
+  ${U.lang!=="en"&&!tr?`<div class="row" style="margin:2px 0 8px"><span class="note">النص الرسمي للدليل متاح بالإنجليزية فقط.</span>${window.claude?aiBtn("aigtr",id,"ترجم إلى العربية","ghost sm"):""}</div>`:""}
   ${g.t.length?`<div class="row" style="margin:4px 0 6px"><span class="note">أدوات الهيئة المرتبطة:</span>${g.t.map(x=>`<span class="tag" dir="ltr">${esc(x)}</span>`).join("")}</div>`:""}
-  <span class="lbl">المخرجات المتوقعة: علّم ما هو متوفر لديك</span><div class="gdl">${g.d.map((x,i)=>`<label class="${k.has(i)?"on":""}"><input type="checkbox" data-act="gd" data-id="${id}" data-v="${i}" ${k.has(i)?"checked":""}><span dir="ltr">${esc(x)}</span></label>`).join("")}</div>
-  ${g.g.length?`<details style="margin-top:6px"><summary class="note" style="font-weight:500">إرشادات التطبيق (${g.g.length})</summary><ul class="gl" dir="ltr">${g.g.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:""}</div>`}
+  <span class="lbl">المخرجات المتوقعة: علّم ما هو متوفر لديك</span><div class="gdl">${dl.map((x,i)=>`<label class="${k.has(i)?"on":""}"><input type="checkbox" data-act="gd" data-id="${id}" data-v="${i}" ${k.has(i)?"checked":""}><span dir="${dir}">${esc(x)}</span></label>`).join("")}</div>
+  ${gl.length?`<details style="margin-top:6px"><summary class="note" style="font-weight:500">إرشادات التطبيق (${gl.length})</summary><ul class="gl" dir="${dir}">${gl.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:""}
+  ${tr?`<details style="margin-top:6px"><summary class="note" style="font-weight:500">النص الإنجليزي الرسمي</summary><ul class="gl" dir="ltr">${g.d.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:""}</div>`}
 function aiBlock(id,r){return `<div class="aiout"><div class="row">${aiTag}${r.at?`<span class="note">${r.at}</span>`:""}<span style="margin-inline-start:auto" class="row"><button class="btn sm quiet" data-act="aicopy" data-id="${id}">انقل الخطوات إلى خطة المعالجة</button>${U.aiOut[id]&&!C(id).ai?`<button class="btn sm" data-act="aisave" data-id="${id}">احفظ المقترح</button>`:""}<button class="btn sm quiet" data-act="aidrop" data-id="${id}">حذف</button></span></div>
   ${r.diagnosis?`<p style="margin:0">${esc(r.diagnosis)}</p>`:""}
   ${r.quick_wins&&r.quick_wins.length?`<h5>مكاسب سريعة</h5>${list(r.quick_wins)}`:""}
@@ -1159,7 +1206,7 @@ function vAna(){const sel=U.anaSel,hist=Object.entries(S.ana).sort((a,b)=>(b[1].
   const n=CTLS.filter(c=>sel.has(c.sub)).length;
   return `<div class="grid"><section class="card c12"><h2>1. السياسة المراد تحليلها</h2>
    <div class="fg">${`<div><span class="lbl">اسم الوثيقة وإصدارها</span><input id="ana-name" data-act="ananame" value="${esc(U.anaName)}" placeholder="مثال: سياسة التحكم بالدخول — الإصدار 2"></div>`}</div>
-   <div style="margin-top:10px" class="drop-zone" id="dz"><label style="cursor:pointer">أفلت ملف Word (.docx) أو نصيًا (.txt / .md) هنا، أو <u>اختر ملفًا</u><input type="file" id="anafile" accept=".docx,.txt,.md" hidden></label><div class="note">ملفات PDF: انسخ نصها والصقه أدناه. يُقرأ الملف داخل متصفحك.</div></div>
+   <div style="margin-top:10px" class="drop-zone" id="dz"><label style="cursor:pointer">أفلت ملف PDF أو Word أو نصيًا هنا، أو <u>اختر ملفًا</u><input type="file" id="anafile" accept=".pdf,.docx,.txt,.md" hidden></label><div class="note">يقبل PDF وWord والنص، ويُقرأ داخل متصفحك. ملفات PDF الممسوحة ضوئيًا لا تحوي نصًا، فانسخ نصها يدويًا.</div></div>
    <textarea id="ana-txt" data-act="anatxt" style="min-height:180px;margin-top:10px" placeholder="أو الصق نص السياسة كاملًا هنا…">${esc(U.anaTxt)}</textarea>
    <p class="note" style="margin:6px 0 0">${U.anaTxt.length.toLocaleString("en")} حرفًا${U.anaTxt.length>90000?" — سيُرسل أول 90,000 حرف فقط":""}</p></section>
   <section class="card c12"><h2>2. المكونات التي تغطيها هذه السياسة <span class="act"><button class="btn sm quiet" data-act="anasug" ${U.anaTxt.length>200?"":"disabled"}>اقترح من النص</button><button class="btn sm quiet" data-act="anaclr">مسح الاختيار</button></span></h2>
@@ -1203,7 +1250,7 @@ function auditFindings(id){const o=C(id),f=[];LAYERS.forEach(L=>{const v=o[L[0]]
   if(isPaper(id))f.push("السياسة موجودة لكن لا دليل على التطبيق.");if(isUndoc(id))f.push("الممارسة مطبّقة دون وثيقة معتمدة.");
   if(o.d==="y"&&o.i==="y"&&!o.e)f.push("لم تُقيَّم الفاعلية: هل يُراجَع هذا الضابط دوريًا؟");
   docsFor(BY[id].sub).forEach(([k,d])=>{if(docState(d)==="late")f.push(`الوثيقة «${d.name}» تجاوزت موعد مراجعتها.`)});
-  if(appOf(id).src==="manual"&&!o.appWhy)f.push("تغيير الانطباق بلا مبرر مكتوب.");
+  if(appOf(id).src==="manual"&&!o.appWhy)f.push("تغيير الانطباق بلا مبرر مكتوب.");if(o.d==="y"&&!(o.att||[]).length)f.push("لا يوجد مرفق يثبت التوثيق (مثل الوثيقة المعتمدة).");
   const g=GD(id);if(g.d.length&&(o.d==="y"||o.i==="y")){const miss=g.d.length-gdHave(id);if(miss)f.push(`${miss} من ${g.d.length} مخرجات يتوقعها الدليل الإرشادي الرسمي غير متوفرة بعد.`)}return f}
 function vAudit(){const A=S.audit.cur;const pool=CTLS.filter(c=>appOf(c.id).v!=="na"&&(C(c.id).d||C(c.id).i));
   const head=`<section class="card"><h2>جولة تدقيق جديدة</h2><p class="lead">تسحب الأداة عيّنة عشوائية من الضوابط التي قيّمتها، وتفحص أدلتك كما يفعل المدقق: هل كل ادعاء له دليل محدد؟</p>
@@ -1214,7 +1261,7 @@ function vAudit(){const A=S.audit.cur;const pool=CTLS.filter(c=>appOf(c.id).v!==
    ${ids.map(id=>{const c=BY[id],o=C(id),f=auditFindings(id),q=(U.aiOut["q:"+id]||(A.q||{})[id]);return `<div class="ctl" style="margin-bottom:10px"><div class="ctl-h" style="cursor:default"><span class="cid">${id}</span><span class="ctxt">${esc(tx(c))}</span><span class="side">${lm(id)}${pill(dst(id))}</span></div><div class="ctl-b">
      <div class="tw"><table><thead><tr><th>الطبقة</th><th>الادعاء</th><th>الدليل المسجّل</th></tr></thead><tbody>${LAYERS.map(L=>`<tr><td>${L[1]}</td><td>${({y:"نعم",p:"جزئي",n:"لا"})[o[L[0]]]||"—"}</td><td>${esc(o["ev_"+L[0]]||"—")}</td></tr>`).join("")}</tbody></table></div>
      ${f.length?`<div class="box"><h4>ملاحظات التدقيق الآلية</h4>${list(f)}</div>`:`<p class="note" style="margin:0">لا ملاحظات آلية على الأدلة المسجّلة.</p>`}
-     ${guideBox(id)}
+     ${guideBox(id)}${attBox(id)}
      <div class="row">${aiBtn("aiq",id,"ما الذي سيسأله المدقق؟","ghost")}</div>
      ${q?`<div class="aiout"><div class="row">${aiTag}</div>${q.questions?`<h5>أسئلة متوقعة</h5>${list(q.questions)}`:""}${q.samples?`<h5>عيّنات قد تُطلب</h5>${list(q.samples)}`:""}${q.red_flags?`<h5>ما يُضعف موقفك</h5>${list(q.red_flags)}`:""}</div>`:""}
      <div class="row"><span class="note">حكمك بعد المراجعة:</span>${seg([["ok","جاهز"],["part","يحتاج استكمال"],["no","غير جاهز"]],mk[id]||"","audmark",id,"v")}</div></div></div>`}).join("")}
@@ -1271,6 +1318,7 @@ function vReport(){const c=S.cfg,rp=c.rep||{},L=U.repLang||U.lang,arch=Object.en
    ${fld("اسم الجهة",inp("cfg","","entity",c.entity,"","",'cf-entity'))}
    <div class="two">${fld("تاريخ التقييم",inp("cfg","","date",c.date,"date","",'cf-date'))}${fld("إصدار التقرير",inp("cfg","","rep.ver",rp.ver,"","1.0",'cf-ver'))}</div>
    ${fld("التصنيف",`<select id="cf-cls" ${bind("cfg","","rep.cls")}>${CLS.map(x=>`<option value="${x[0]}" ${(rp.cls||"internal")===x[0]?"selected":""}>${x[1]} · ${x[2]}</option>`).join("")}</select>`)}
+   ${["confidential","restricted"].includes(rp.cls)?fld("كلمة مرور لفتح ملف PDF (اختيارية)",`<input type="password" id="rp-pw" data-act="rppw" autocomplete="new-password" value="${esc(U.pw||"")}" placeholder="لا تُحفظ في الأداة">`)+`<p class="note" style="margin:-4px 0 0">تُطلب عند فتح الملف. لا تُحفظ في الأداة، فاحتفظ بها في مكان آمن.</p>`:""}
    ${fld("أعدّه",inp("cfg","","rep.prep",rp.prep||c.assessor,"","الاسم والمسمى الوظيفي",'cf-prep'))}
    ${fld("راجعه",inp("cfg","","rep.rev",rp.rev,"","مثل: رئيس الإدارة المعنية بالأمن السيبراني",'cf-rev'))}
    ${fld("اعتمده",inp("cfg","","rep.appr",rp.appr,"","مثل: صاحب الصلاحية",'cf-appr'))}</div></fieldset>
@@ -1343,20 +1391,126 @@ async function makePDF(){const lang=U.repLang||U.lang;const no=repNo();
   try{await Promise.all(PDF_LIBS.map(loadScript))}catch(e){U.pdfMsg="";toast("تعذّر تحميل مكتبة PDF. تحقق من الاتصال وأعد المحاولة.");render();return}
   const host=document.createElement("div");host.style.cssText="position:fixed;left:-10000px;top:0;width:794px;z-index:-1";document.body.appendChild(host);
   try{if(document.fonts&&document.fonts.ready)await document.fonts.ready;
-    const pages=reportPages(lang,no);const pdf=new window.jspdf.jsPDF({unit:"mm",format:"a4",compress:true});
+    const pages=reportPages(lang,no);const pdf=new window.jspdf.jsPDF(Object.assign({unit:"mm",format:"a4",compress:true},U.pw?{encryption:{userPassword:U.pw,ownerPassword:U.pw+"#"+uid(),userPermissions:["print"]}}:{}));
     for(let i=0;i<pages.length;i++){U.pdfMsg=`${i+1} / ${pages.length}`;const m=$("#pdfmsg");if(m)m.textContent=U.pdfMsg;
-      host.innerHTML=pages[i];const cv=await window.html2canvas(host.firstElementChild,{scale:2,backgroundColor:"#ffffff",logging:false,useCORS:true});
+      host.innerHTML=plainAr(pages[i]);const cv=await window.html2canvas(host.firstElementChild,{scale:2,backgroundColor:"#ffffff",logging:false,useCORS:true});
       if(i)pdf.addPage();pdf.addImage(cv.toDataURL("image/jpeg",0.92),"JPEG",0,0,210,297)}
     pdf.setProperties({title:`${no} ECC-2:2024`,subject:"ECC-2:2024 review report",creator:"ECC Policy Review Map — © 2026 Daniyah Alharbi",author:"ECC Policy Review Map (Daniyah Alharbi)"});
     const blob=pdf.output("blob"),name=`${no}-${lang}.pdf`;
     // archive in the database (editors only: assets need the admin level)
-    let archived=false;if(!U.demo&&U.db&&U.assets&&canCol("reports")){try{const a=await U.assets.upload(blob);const s=stats(CTLS);putDoc("reports",no+"-"+lang,{no,lang,at:Date.now(),by:U.me||"",aid:a.id,url:a.url,comp:s.comp,gaps:gapList().length,cls:(S.cfg.rep||{}).cls||"internal",ver:(S.cfg.rep||{}).ver||"1.0"});logEv("report",no,{v:lang});archived=true}catch(e){toast("صدر التقرير، لكن تعذّر حفظه في الأرشيف.")}}
+    let archived=false;if(!U.demo&&U.db&&U.assets&&canCol("reports")){try{const a=await U.assets.upload(blob);const s=stats(CTLS);putDoc("reports",no+"-"+lang,{no,lang,at:Date.now(),by:U.me||"",aid:a.id,url:a.url,comp:s.comp,gaps:gapList().length,cls:(S.cfg.rep||{}).cls||"internal",locked:!!U.pw,ver:(S.cfg.rep||{}).ver||"1.0"});logEv("report",no,{v:lang});archived=true}catch(e){toast("صدر التقرير، لكن تعذّر حفظه في الأرشيف.")}}
     U.pdfMsg="";render();
     if(U.dl){try{await U.dl.save({filename:name,data:blob});toast(archived?"صدر التقرير وحُفظ في الأرشيف":"صدر التقرير")}catch(e){if(!(e&&e.code==="cancelled"))toast(archived?"حُفظ التقرير في الأرشيف، ويمكنك فتحه من هناك":"تعذّر تنزيل الملف")}}
     else if(!window.claude){dlFile(name,blob);toast("صدر التقرير")}
     else toast(archived?"حُفظ التقرير في الأرشيف. افتحه من قائمة التقارير الصادرة.":"لا يتيح هذا العرض تنزيل الملفات. افتح الأداة داخل Claude.")}
   catch(e){U.pdfMsg="";toast("تعذّر إنشاء ملف PDF.");render()}
   finally{host.remove()}}
+
+// ===== Features: routing, Arabic display & search normalisation, evidence attachments, intro tour, PDF text, guide translation =====
+
+// --- Routing: one hash per screen, so Back/Forward and shared links work ---
+const TABS_OK=new Set(["home","scope","review","ana","road","audit","docs","map","snaps","team","report"]);
+{const h=location.hash.slice(1);if(TABS_OK.has(h))U.tab=h}
+function syncHash(){if(TABS_OK.has(U.tab)&&location.hash.slice(1)!==U.tab){try{location.hash=U.tab}catch(e){}}}
+window.addEventListener("hashchange",()=>{const h=location.hash.slice(1);if(TABS_OK.has(h)&&h!==U.tab){U.tab=h;U.confirm=null;const r=$("#rail");if(r)r.classList.remove("open");render();window.scrollTo(0,0)}});
+
+// --- Arabic display: strip diacritics/tatweel so marks never render detached; normalise search ---
+const TK_ONE=/[ً-ْٰـ]/;
+const TK_ALL=/[ً-ْٰـ]/g;
+const plainAr=s=>String(s==null?"":s).replace(TK_ALL,"");
+function stripMarks(root){if(!root)return;
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentElement;if(!p||/^(TEXTAREA|SCRIPT|STYLE)$/.test(p.tagName))return NodeFilter.FILTER_REJECT;return TK_ONE.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP}});
+  const ns=[];while(w.nextNode())ns.push(w.currentNode);ns.forEach(n=>{n.nodeValue=plainAr(n.nodeValue)});
+  root.querySelectorAll("[placeholder],[title]").forEach(el=>{["placeholder","title"].forEach(a=>{const v=el.getAttribute(a);if(v&&TK_ONE.test(v))el.setAttribute(a,plainAr(v))})})}
+// search: ignore diacritics, hamza forms, taa marbuta and alef maqsura
+const normQ=s=>plainAr(s).toLowerCase().replace(/[أإآٱ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ؤ/g,"و").replace(/ئ/g,"ي").replace(/\s+/g," ").trim();
+
+// --- Evidence attachments: Claude asset store when available, otherwise this browser (IndexedDB) ---
+const ATT_MAX=20*1024*1024;
+let _fdb=null;
+const fdb=()=>_fdb||(_fdb=new Promise((ok,no)=>{try{const r=indexedDB.open("ecc_files",1);r.onupgradeneeded=()=>r.result.createObjectStore("f");r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){no(e)}}));
+const fdbOp=(mode,fn)=>fdb().then(d=>new Promise((ok,no)=>{const t=d.transaction("f",mode),st=t.objectStore("f"),rq=fn(st);t.oncomplete=()=>ok(rq&&rq.result);t.onerror=()=>no(t.error)}));
+const fdbPut=(k,b)=>fdbOp("readwrite",s=>s.put(b,k));
+const fdbGet=k=>fdbOp("readonly",s=>s.get(k));
+const fdbDel=k=>fdbOp("readwrite",s=>s.delete(k));
+const fmtSize=n=>n>=1048576?(n/1048576).toFixed(1)+" MB":Math.max(1,Math.round(n/1024))+" KB";
+const extOf=n=>(String(n).split(".").pop()||"").slice(0,4).toUpperCase();
+const attAccept=()=>window.claude?".pdf,.png,.jpg,.jpeg,.webp":".pdf,.png,.jpg,.jpeg,.webp,.docx,.xlsx,.pptx";
+async function attAdd(id,file){if(!file)return;if(!canCol("ctl",id)){toast("ليست لديك صلاحية تعديل هذا الضابط");return}
+  if(file.size>ATT_MAX){toast("حجم الملف أكبر من 20 ميجابايت");return}
+  if(window.claude&&!U.assets){toast("رفع الملفات غير متاح لصلاحيتك الحالية في هذه الأداة");return}
+  U.attBusy=id;render();
+  try{const rec={name:file.name,size:file.size,type:file.type||"",at:today(),by:U.me||""};
+    if(window.claude){const a=await U.assets.upload(file);rec.aid=a.id;rec.url=a.url}
+    else{const k=uid();await fdbPut(k,file);rec.lid=k}
+    const o=S.ctl[id]=S.ctl[id]||{};o.att=(o.att||[]).concat([rec]);persist("ctl",id);logEv("att",id,{v:file.name});toast("أُرفق الملف")}
+  catch(e){toast("تعذّر رفع الملف. تأكد من نوعه وحجمه.")}
+  finally{U.attBusy=null;render()}}
+async function attOpen(id,i){const r=(C(id).att||[])[i];if(!r)return;
+  const open=href=>{const a=document.createElement("a");a.href=href;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove()};
+  if(r.url){open(r.url);return}
+  try{const b=await fdbGet(r.lid);if(!b){toast("الملف غير موجود في هذا المتصفح");return}const u=URL.createObjectURL(b);open(u);setTimeout(()=>URL.revokeObjectURL(u),120000)}catch(e){toast("تعذّر فتح الملف")}}
+function attDel(id,i){const r=(C(id).att||[])[i];if(!r)return;
+  U.confirm={msg:`حذف المرفق «${esc(r.name)}»؟`,yes:"حذف",fn:async()=>{try{if(r.aid&&U.assets)await U.assets.delete(r.aid)}catch(e){}try{if(r.lid)await fdbDel(r.lid)}catch(e){}
+    const o=S.ctl[id]=S.ctl[id]||{};o.att=(o.att||[]).filter((x,j)=>j!==i);if(!o.att.length)delete o.att;persist("ctl",id);logEv("att",id,{v:"حذف "+r.name});render()}};render()}
+function attBox(id){const L=C(id).att||[],can=canCol("ctl",id);
+  return `<div class="box"><h4>المرفقات (الأدلة) <span class="note">${L.length} ملف</span></h4>
+  ${L.length?`<ul class="atts">${L.map((r,i)=>`<li><span class="ft">${esc(extOf(r.name))}</span><span class="an">${esc(r.name)}<small>${fmtSize(r.size||0)} · ${esc(r.at||"")}${r.by&&U.names[r.by]?" · "+esc(U.names[r.by]):""}</small></span><button class="btn sm quiet" data-act="attopen" data-id="${id}" data-v="${i}">فتح</button>${can?`<button class="btn sm danger ghost" data-act="attdel" data-id="${id}" data-v="${i}">حذف</button>`:""}</li>`).join("")}</ul>`:`<p class="note" style="margin:0">لا مرفقات بعد. أرفق الوثيقة المعتمدة أو لقطة الشاشة التي تثبت الضابط.</p>`}
+  ${can?(U.attBusy===id?`<span class="thinking" style="margin-top:8px"><i></i>جارٍ الرفع…</span>`:`<label class="btn sm ghost attpick">إرفاق ملف (PDF أو صورة${window.claude?"":" أو Word"})<input type="file" data-act="attfile" data-id="${id}" accept="${attAccept()}" hidden></label>`):""}
+  ${!window.claude?`<p class="note" style="margin:6px 0 0">في النسخة المحلية تُحفظ المرفقات في هذا المتصفح فقط، ولا تدخل في النسخة الاحتياطية JSON.</p>`:""}</div>`}
+
+// --- PDF text extraction for the policy analyzer ---
+const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
+async function pdfText(file){await loadScript(PDFJS+"pdf.min.js");const lib=window.pdfjsLib;lib.GlobalWorkerOptions.workerSrc=PDFJS+"pdf.worker.min.js";
+  const doc=await lib.getDocument({data:await file.arrayBuffer()}).promise;const out=[];
+  for(let p=1;p<=doc.numPages;p++){const pg=await doc.getPage(p);const c=await pg.getTextContent();out.push(c.items.map(i=>i.str).join(" "))}
+  return out.join("\n\n").replace(/[ \t]+/g," ").trim()}
+
+// --- Arabic (unofficial) translation of the GECC guide items, Claude version only ---
+async function aiGuideTr(id){const g=GD(id);if(!g.d.length&&!g.g.length)return;
+  const r=await aiCall("aigtr:"+id,`ترجم إلى العربية الفصحى المهنية بنود «الدليل الإرشادي لتطبيق الضوابط الأساسية للأمن السيبراني» التالية للضابط ${id}. حافظ على المعنى والترتيب والعدد تمامًا، ولا تضف أو تحذف بندًا. أبقِ المصطلحات التقنية والاختصارات (مثل SIEM وMFA وVPN) بالإنجليزية، وأبقِ رموز الضوابط الفرعية بين الأقواس المربعة كما هي.
+المخرجات المتوقعة (${g.d.length}):
+${g.d.map((x,i)=>`${i+1}. ${x}`).join("\n")}
+إرشادات التطبيق (${g.g.length}):
+${g.g.map((x,i)=>`${i+1}. ${x}`).join("\n")}
+أعد JSON فقط: {"d":["..."],"g":["..."]} بنفس العدد والترتيب.`,{modelTier:"default"});
+  if(r&&Array.isArray(r.d)&&r.d.length===g.d.length){const tr={d:r.d.map(String),g:Array.isArray(r.g)&&r.g.length===g.g.length?r.g.map(String):[],at:today()};
+    if(canCol("ctl",id)){setF("ctl",id,"gtr",tr)}else{U.aiOut["gtr:"+id]=tr}toast("تُرجمت بنود الدليل لهذا الضابط");render()}
+  else if(r)toast("جاءت الترجمة ناقصة. أعد المحاولة.")}
+const gtrOf=id=>C(id).gtr||U.aiOut["gtr:"+id]||null;
+
+// --- Intro tour: highlights each section, next / back / skip ---
+const TOUR=[["tab:home","نظرة عامة","ملخص الالتزام والفجوات وما يحتاج انتباهك أولًا."],
+ ["tab:scope","ابدأ من هنا","حدّد نوع جهتك وطبيعة عملها، لتعرف الضوابط الإلزامية والموصى بها والتي لا تنطبق."],
+ ["tab:review","مراجعة الضوابط","قيّم كل ضابط على ثلاث طبقات: موثّق، ومطبّق، وفعّال. سجّل الدليل وأرفق ملفاته."],
+ ["tab:ana","محلل السياسات","ارفع سياستك (PDF أو Word) ليقارنها Claude بالضوابط بندًا بندًا."],
+ ["tab:road","خارطة المعالجة","الفجوات مرتبة على ثلاث مراحل، ولكل فجوة مسؤول وموعد وحالة معالجة."],
+ ["tab:audit","التدقيق التجريبي","عيّنة عشوائية كما يفعل المدقق، لتعرف أين تضعف أدلتك."],
+ ["tab:docs","سجل الوثائق","سياساتك المعتمدة ومواعيد مراجعتها القادمة."],
+ ["tab:team","الفريق والصلاحيات","أضف فريقك وحدّد دور كل شخص وما يحق له تعديله."],
+ ["tab:report","التقارير","أصدر تقريرًا رسميًا بصيغة PDF، ويمكن قفله بكلمة مرور إذا كان سريًا."],
+ ["#lang","اللغة","بدّل بين العربية والإنجليزية في أي وقت."],
+ ["#tourbtn","الجولة التعريفية","أعد هذه الجولة متى شئت من هذا الزر."]];
+let tourI=-1;
+const tourEl=()=>{const k=TOUR[tourI][0];return k.startsWith("tab:")?document.querySelector(`#nav [data-act=tab][data-v=${k.slice(4)}]`):document.querySelector(k)};
+function startTour(){tourI=0;const r=$("#rail");if(r&&matchMedia("(max-width:920px)").matches)r.classList.add("open");drawTour()}
+function endTour(){tourI=-1;const o=$("#tour");if(o)o.remove();try{localStorage.setItem("ecc_tour_done","1")}catch(e){}const r=$("#rail");if(r)r.classList.remove("open")}
+function drawTour(){if(tourI<0)return;let o=$("#tour");
+  if(!o){o=document.createElement("div");o.id="tour";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.innerHTML=`<div class="hole"></div><div class="tcard"></div>`;document.body.appendChild(o)}
+  o.dir=U.lang==="en"?"ltr":"rtl";
+  const el=tourEl(),[_,t,d]=TOUR[tourI],N=TOUR.length,T=s=>plainAr(tr(s));
+  const card=o.querySelector(".tcard"),hole=o.querySelector(".hole");
+  card.innerHTML=`<div class="tstep">${tourI+1} / ${N}</div><b>${esc(T(t))}</b><p>${esc(T(d))}</p><div class="tbtns"><button class="btn sm quiet" data-tour="skip">${esc(T("تخطي"))}</button><span style="flex:1"></span>${tourI?`<button class="btn sm ghost" data-tour="prev">${esc(T("السابق"))}</button>`:""}<button class="btn sm" data-tour="next">${esc(T(tourI===N-1?"إنهاء":"التالي"))}</button></div>`;
+  if(el){el.scrollIntoView({block:"nearest"});const r=el.getBoundingClientRect(),p=6;Object.assign(hole.style,{display:"block",left:(r.left-p)+"px",top:(r.top-p)+"px",width:(r.width+2*p)+"px",height:(r.height+2*p)+"px"});
+    const cw=Math.min(320,innerWidth-32),below=r.bottom+14+180<innerHeight;card.style.width=cw+"px";
+    let left=r.left+r.width/2-cw/2;left=Math.max(16,Math.min(innerWidth-cw-16,left));card.style.left=left+"px";
+    if(below){card.style.top=(r.bottom+14)+"px";card.style.bottom="auto"}else{card.style.top="auto";card.style.bottom=(innerHeight-r.top+14)+"px"}}
+  else{hole.style.display="none";card.style.width=Math.min(320,innerWidth-32)+"px";card.style.left="50%";card.style.top="50%";card.style.transform="translate(-50%,-50%)"}
+  const nb=card.querySelector("[data-tour=next]");if(nb)nb.focus()}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-tour]");if(!b)return;const a=b.dataset.tour;
+  if(a==="skip")endTour();else if(a==="next"){if(tourI>=TOUR.length-1)endTour();else{tourI++;drawTour()}}else if(a==="prev"){tourI=Math.max(0,tourI-1);drawTour()}});
+document.addEventListener("keydown",e=>{if(tourI<0)return;if(e.key==="Escape")endTour();else if(e.key==="ArrowLeft"||e.key==="ArrowRight"){const fwd=(e.key==="ArrowLeft")===(U.lang!=="en");if(fwd){if(tourI<TOUR.length-1){tourI++;drawTour()}else endTour()}else if(tourI){tourI--;drawTour()}}});
+window.addEventListener("resize",()=>{if(tourI>=0)drawTour()});
 
 // ===== AI actions =====
 async function aiRem(id){const c=BY[id],o=C(id);const lay=LAYERS.map(L=>`${L[1]}: ${({y:"نعم",p:"جزئي",n:"لا"})[o[L[0]]]||"لم يُقيَّم"}${o["ev_"+L[0]]?` (الدليل: ${o["ev_"+L[0]]})`:""}`).join("\n");
@@ -1483,7 +1637,7 @@ function demoData(){let sd=7;const rnd=()=>(sd=(sd*9301+49297)%233280)/233280;co
   D.docs={a:{name:"سياسة التحكم بالدخول",ver:"2.0",own:"الإدارة المعنية بالأمن السيبراني",apr:"صاحب الصلاحية",ad:"2025-06-10",per:12,subs:["2-2"]},b:{name:"سياسة الاستخدام المقبول",ver:"1.3",own:"الإدارة المعنية بالأمن السيبراني",apr:"صاحب الصلاحية",ad:"2026-02-01",per:12,subs:["2-1"]},c:{name:"سياسة النسخ الاحتياطي",ver:"1.0",own:"إدارة تقنية المعلومات",apr:"صاحب الصلاحية",ad:"2026-09-15",per:24,subs:["2-9"]}};
   D.snaps={s1:{at:"2026-05-01",label:"التقييم الأول",comp:38,gaps:61,paper:22},s2:{at:"2026-08-01",label:"بعد المرحلة 1",comp:47,gaps:49,paper:17}};return D}
 function toggleDemo(){if(U.demo){S=U.real;U.real=null;U.demo=false}else{U.real=S;S=demoData();U.demo=true;const s=stats(CTLS);S.snaps.s3={at:today(),label:"اليوم",comp:s.comp,gaps:gapList().length,paper:s.paper}}U.tab="home";U.confirm=null;render()}
-async function readFile(f){if(!f)return;const n=f.name.toLowerCase();try{if(n.endsWith(".docx")){if(!window.JSZip){toast("تعذّر تحميل قارئ ملفات Word. الصق النص يدويًا.");return}
+async function readFile(f){if(!f)return;const n=f.name.toLowerCase();try{if(n.endsWith(".pdf")){toast("جارٍ قراءة ملف PDF…");U.anaTxt=await pdfText(f);if(U.anaTxt.length<200)toast("الملف لا يحوي نصًا قابلًا للقراءة (قد يكون صورًا ممسوحة). الصق النص يدويًا.")}else if(n.endsWith(".docx")){if(!window.JSZip){toast("تعذّر تحميل قارئ ملفات Word. الصق النص يدويًا.");return}
     const z=await JSZip.loadAsync(f);const x=await z.file("word/document.xml").async("string");const t=x.replace(/<w:p[ >][\s\S]*?<\/w:p>/g,p=>p.replace(/<w:tab\/>/g,"\t").replace(/<[^>]+>/g,"")+"\n").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&apos;/g,"'");U.anaTxt=t.replace(/\n{3,}/g,"\n\n").trim()}
    else U.anaTxt=await f.text();if(!U.anaName)U.anaName=f.name.replace(/\.[^.]+$/,"");U.anaRes=null;render();toast("قُرئ الملف: "+U.anaTxt.length.toLocaleString("en")+" حرفًا")}catch(e){toast("تعذّرت قراءة الملف. الصق النص يدويًا.")}}
 function go(id){const c=BY[id]||null,s=c?c.sub:id;if(!SUBBY[s])return;U.tab="review";U.q="";U.f="all";U.dom=SUBBY[s].dom;U.open[s]=true;if(c)U.open[id]=true;render();setTimeout(()=>{const e=document.getElementById(c?"c-"+id:"s-"+s);if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},40)}
@@ -1492,6 +1646,9 @@ function go(id){const c=BY[id]||null,s=c?c.sub:id;if(!SUBBY[s])return;U.tab="rev
 document.addEventListener("click",e=>{const t=e.target.closest("[data-act]");if(!t||t.tagName==="INPUT"&&t.type!=="checkbox"||t.tagName==="SELECT"||t.tagName==="TEXTAREA")return;
   const a=t.dataset.act,id=t.dataset.id,v=t.dataset.v,k=t.dataset.k;
   switch(a){
+  case "attopen":attOpen(id,+v);break;
+  case "attdel":attDel(id,+v);break;
+  case "aigtr":aiGuideTr(id);break;
   case "tab":U.tab=v;U.confirm=null;$("#rail").classList.remove("open");$("#menu").setAttribute("aria-expanded","false");render();window.scrollTo(0,0);break;
   case "dom":U.dom=v;U.q="";U.f="all";render();break;
   case "tg":case "tc":U.open[id]=!U.open[id];render();break;
@@ -1558,16 +1715,17 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-act]");if(
 document.addEventListener("input",e=>{const t=e.target;
   if(t.dataset.b){const [col,id,k]=t.dataset.b.split("|");if(t.tagName==="SELECT")return;setF(col,col==="cfg"?null:id,k,t.value);return}
   const a=t.dataset.act;if(a==="q"){U.q=t.value;clearTimeout(U.qt);U.qt=setTimeout(()=>{render();const q=$("#q");if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}},220)}
-  else if(a==="tmq"){U.tmQ=t.value;clearTimeout(U.tmT);U.tmT=setTimeout(async()=>{if(!U.user)return;try{U.tmRes=await U.user.search(U.tmQ)}catch(e){U.tmRes=[]}render();const q=$("#tm-q");if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}},300)}
+  else if(a==="rppw"){U.pw=t.value}else if(a==="tmq"){U.tmQ=t.value;clearTimeout(U.tmT);U.tmT=setTimeout(async()=>{if(!U.user)return;try{U.tmRes=await U.user.search(U.tmQ)}catch(e){U.tmRes=[]}render();const q=$("#tm-q");if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}},300)}
   else if(a==="anatxt"){U.anaTxt=t.value;U.anaRes=null}else if(a==="ananame")U.anaName=t.value;else if(a==="fwtxt")U.fwText=t.value});
 document.addEventListener("change",e=>{const t=e.target;
   if(t.dataset.b&&(t.tagName==="SELECT"||t.type==="date")){const [col,id,k]=t.dataset.b.split("|");setF(col,col==="cfg"?null:id,k,t.value);render();return}
   const a=t.dataset.act;if(a==="f"){U.f=t.value;render()}else if(a==="gm"){U.gm=t.checked;render()}else if(a==="anasel"){t.checked?U.anaSel.add(t.dataset.id):U.anaSel.delete(t.dataset.id);render()}
-  else if(a==="cmp"){U["cmp"+t.dataset.k]=t.value;render()}
+  else if(a==="attfile"){attAdd(t.dataset.id,t.files[0])}else if(a==="cmp"){U["cmp"+t.dataset.k]=t.value;render()}
   else if(a==="tmrole"){const m=Object.assign({},S.team[t.dataset.id]);m.role=t.value;putDoc("team",t.dataset.id,m);logEv("team",t.dataset.id,{v:"الدور: "+ROLES[t.value][0]});render()}else if(a==="anatxt"&&U.anaTxt.length>0)render();else if(t.id==="anafile")readFile(t.files[0])});
 document.addEventListener("dragover",e=>{const z=e.target.closest&&e.target.closest("#dz");if(z){e.preventDefault();z.classList.add("over")}});
 document.addEventListener("dragleave",e=>{const z=e.target.closest&&e.target.closest("#dz");if(z)z.classList.remove("over")});
 document.addEventListener("drop",e=>{const z=e.target.closest&&e.target.closest("#dz");if(z){e.preventDefault();readFile(e.dataTransfer.files[0])}});
+$("#tourbtn").onclick=startTour;
 $("#menu").onclick=()=>{const r=$("#rail");const o=r.classList.toggle("open");$("#menu").setAttribute("aria-expanded",String(o))};
 $("#lang").onclick=()=>setLang(U.lang==="en"?"ar":"en");
 $("#theme").onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;r.dataset.theme=dark?"light":"dark";try{localStorage.setItem("ecc_theme",r.dataset.theme)}catch(e){}};
@@ -1584,5 +1742,8 @@ render();
   try{const db=await claude.use("db");if(db)startDb(db)}catch(e){}
   // resolve display names for people referenced on screen (ids only are stored)
   setInterval(async()=>{if(!U.user)return;const ids=[...new Set([...Object.values(S.ctl).map(o=>o._by),...Object.keys(S.team),...U.logs.map(l=>l.by),...Object.values(S.reports).map(r=>r.by)].filter(x=>x&&!(x in U.names)))];if(!ids.length)return;try{const ps=await U.user.profiles(ids);ids.forEach(i=>U.names[i]=(ps[i]&&ps[i].name)||"");softRender()}catch(e){}},4000)})();
+
+// first visit: intro tour
+setTimeout(()=>{try{if(!localStorage.getItem("ecc_tour_done")&&!U.demo)startTour()}catch(e){}},1400);
 </script>
 </body></html>

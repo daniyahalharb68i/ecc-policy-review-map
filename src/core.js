@@ -53,7 +53,7 @@ function addMonths(iso,m){if(!iso||!m)return "";const d=new Date(iso+"T00:00:00"
 const pct=(n,t)=>t?Math.round(n/t*100):0;
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const short=(t,n)=>{t=String(t||"");return t.length>n?t.slice(0,n-1)+"…":t};
-function toast(t){const e=$("#toast");e.textContent=tr(t);e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2400)}
+function toast(t){const e=$("#toast");e.textContent=plainAr(tr(t));e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2400)}
 const C=id=>S.ctl[id]||{};
 
 // ===== Applicability =====

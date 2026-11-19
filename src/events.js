@@ -123,7 +123,7 @@ function demoData(){let sd=7;const rnd=()=>(sd=(sd*9301+49297)%233280)/233280;co
   D.docs={a:{name:"سياسة التحكم بالدخول",ver:"2.0",own:"الإدارة المعنية بالأمن السيبراني",apr:"صاحب الصلاحية",ad:"2025-06-10",per:12,subs:["2-2"]},b:{name:"سياسة الاستخدام المقبول",ver:"1.3",own:"الإدارة المعنية بالأمن السيبراني",apr:"صاحب الصلاحية",ad:"2026-02-01",per:12,subs:["2-1"]},c:{name:"سياسة النسخ الاحتياطي",ver:"1.0",own:"إدارة تقنية المعلومات",apr:"صاحب الصلاحية",ad:"2026-09-15",per:24,subs:["2-9"]}};
   D.snaps={s1:{at:"2026-05-01",label:"التقييم الأول",comp:38,gaps:61,paper:22},s2:{at:"2026-08-01",label:"بعد المرحلة 1",comp:47,gaps:49,paper:17}};return D}
 function toggleDemo(){if(U.demo){S=U.real;U.real=null;U.demo=false}else{U.real=S;S=demoData();U.demo=true;const s=stats(CTLS);S.snaps.s3={at:today(),label:"اليوم",comp:s.comp,gaps:gapList().length,paper:s.paper}}U.tab="home";U.confirm=null;render()}
-async function readFile(f){if(!f)return;const n=f.name.toLowerCase();try{if(n.endsWith(".docx")){if(!window.JSZip){toast("تعذّر تحميل قارئ ملفات Word. الصق النص يدويًا.");return}
+async function readFile(f){if(!f)return;const n=f.name.toLowerCase();try{if(n.endsWith(".pdf")){toast("جارٍ قراءة ملف PDF…");U.anaTxt=await pdfText(f);if(U.anaTxt.length<200)toast("الملف لا يحوي نصًا قابلًا للقراءة (قد يكون صورًا ممسوحة). الصق النص يدويًا.")}else if(n.endsWith(".docx")){if(!window.JSZip){toast("تعذّر تحميل قارئ ملفات Word. الصق النص يدويًا.");return}
     const z=await JSZip.loadAsync(f);const x=await z.file("word/document.xml").async("string");const t=x.replace(/<w:p[ >][\s\S]*?<\/w:p>/g,p=>p.replace(/<w:tab\/>/g,"\t").replace(/<[^>]+>/g,"")+"\n").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&apos;/g,"'");U.anaTxt=t.replace(/\n{3,}/g,"\n\n").trim()}
    else U.anaTxt=await f.text();if(!U.anaName)U.anaName=f.name.replace(/\.[^.]+$/,"");U.anaRes=null;render();toast("قُرئ الملف: "+U.anaTxt.length.toLocaleString("en")+" حرفًا")}catch(e){toast("تعذّرت قراءة الملف. الصق النص يدويًا.")}}
 function go(id){const c=BY[id]||null,s=c?c.sub:id;if(!SUBBY[s])return;U.tab="review";U.q="";U.f="all";U.dom=SUBBY[s].dom;U.open[s]=true;if(c)U.open[id]=true;render();setTimeout(()=>{const e=document.getElementById(c?"c-"+id:"s-"+s);if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},40)}
@@ -132,6 +132,9 @@ function go(id){const c=BY[id]||null,s=c?c.sub:id;if(!SUBBY[s])return;U.tab="rev
 document.addEventListener("click",e=>{const t=e.target.closest("[data-act]");if(!t||t.tagName==="INPUT"&&t.type!=="checkbox"||t.tagName==="SELECT"||t.tagName==="TEXTAREA")return;
   const a=t.dataset.act,id=t.dataset.id,v=t.dataset.v,k=t.dataset.k;
   switch(a){
+  case "attopen":attOpen(id,+v);break;
+  case "attdel":attDel(id,+v);break;
+  case "aigtr":aiGuideTr(id);break;
   case "tab":U.tab=v;U.confirm=null;$("#rail").classList.remove("open");$("#menu").setAttribute("aria-expanded","false");render();window.scrollTo(0,0);break;
   case "dom":U.dom=v;U.q="";U.f="all";render();break;
   case "tg":case "tc":U.open[id]=!U.open[id];render();break;
@@ -198,16 +201,17 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-act]");if(
 document.addEventListener("input",e=>{const t=e.target;
   if(t.dataset.b){const [col,id,k]=t.dataset.b.split("|");if(t.tagName==="SELECT")return;setF(col,col==="cfg"?null:id,k,t.value);return}
   const a=t.dataset.act;if(a==="q"){U.q=t.value;clearTimeout(U.qt);U.qt=setTimeout(()=>{render();const q=$("#q");if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}},220)}
-  else if(a==="tmq"){U.tmQ=t.value;clearTimeout(U.tmT);U.tmT=setTimeout(async()=>{if(!U.user)return;try{U.tmRes=await U.user.search(U.tmQ)}catch(e){U.tmRes=[]}render();const q=$("#tm-q");if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}},300)}
+  else if(a==="rppw"){U.pw=t.value}else if(a==="tmq"){U.tmQ=t.value;clearTimeout(U.tmT);U.tmT=setTimeout(async()=>{if(!U.user)return;try{U.tmRes=await U.user.search(U.tmQ)}catch(e){U.tmRes=[]}render();const q=$("#tm-q");if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}},300)}
   else if(a==="anatxt"){U.anaTxt=t.value;U.anaRes=null}else if(a==="ananame")U.anaName=t.value;else if(a==="fwtxt")U.fwText=t.value});
 document.addEventListener("change",e=>{const t=e.target;
   if(t.dataset.b&&(t.tagName==="SELECT"||t.type==="date")){const [col,id,k]=t.dataset.b.split("|");setF(col,col==="cfg"?null:id,k,t.value);render();return}
   const a=t.dataset.act;if(a==="f"){U.f=t.value;render()}else if(a==="gm"){U.gm=t.checked;render()}else if(a==="anasel"){t.checked?U.anaSel.add(t.dataset.id):U.anaSel.delete(t.dataset.id);render()}
-  else if(a==="cmp"){U["cmp"+t.dataset.k]=t.value;render()}
+  else if(a==="attfile"){attAdd(t.dataset.id,t.files[0])}else if(a==="cmp"){U["cmp"+t.dataset.k]=t.value;render()}
   else if(a==="tmrole"){const m=Object.assign({},S.team[t.dataset.id]);m.role=t.value;putDoc("team",t.dataset.id,m);logEv("team",t.dataset.id,{v:"الدور: "+ROLES[t.value][0]});render()}else if(a==="anatxt"&&U.anaTxt.length>0)render();else if(t.id==="anafile")readFile(t.files[0])});
 document.addEventListener("dragover",e=>{const z=e.target.closest&&e.target.closest("#dz");if(z){e.preventDefault();z.classList.add("over")}});
 document.addEventListener("dragleave",e=>{const z=e.target.closest&&e.target.closest("#dz");if(z)z.classList.remove("over")});
 document.addEventListener("drop",e=>{const z=e.target.closest&&e.target.closest("#dz");if(z){e.preventDefault();readFile(e.dataTransfer.files[0])}});
+$("#tourbtn").onclick=startTour;
 $("#menu").onclick=()=>{const r=$("#rail");const o=r.classList.toggle("open");$("#menu").setAttribute("aria-expanded",String(o))};
 $("#lang").onclick=()=>setLang(U.lang==="en"?"ar":"en");
 $("#theme").onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;r.dataset.theme=dark?"light":"dark";try{localStorage.setItem("ecc_theme",r.dataset.theme)}catch(e){}};
@@ -224,3 +228,6 @@ render();
   try{const db=await claude.use("db");if(db)startDb(db)}catch(e){}
   // resolve display names for people referenced on screen (ids only are stored)
   setInterval(async()=>{if(!U.user)return;const ids=[...new Set([...Object.values(S.ctl).map(o=>o._by),...Object.keys(S.team),...U.logs.map(l=>l.by),...Object.values(S.reports).map(r=>r.by)].filter(x=>x&&!(x in U.names)))];if(!ids.length)return;try{const ps=await U.user.profiles(ids);ids.forEach(i=>U.names[i]=(ps[i]&&ps[i].name)||"");softRender()}catch(e){}},4000)})();
+
+// first visit: intro tour
+setTimeout(()=>{try{if(!localStorage.getItem("ecc_tour_done")&&!U.demo)startTour()}catch(e){}},1400);
