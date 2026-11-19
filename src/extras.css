@@ -57,3 +57,8 @@
 .phx[open] summary{margin-bottom:8px}
 .phx p,.phx li{margin:6px 0;font-size:.9rem;line-height:1.75;color:var(--ink)}
 .phx ul{margin:4px 0;padding-inline-start:20px}
+
+.nca-links{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.nca-links a,.nca-a{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.nca-links a:hover,.nca-a:hover{text-decoration-thickness:2px}
+@media(max-width:600px){.nca-links a{white-space:normal}}

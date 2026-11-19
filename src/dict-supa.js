@@ -50,3 +50,10 @@ Object.assign(I18N.d,{
 "في كل بطاقة:":"On each card:",
 "الشارة الملوّنة (حرجة، عالية، متوسطة، منخفضة) أولوية الفجوة. «لم تبدأ» حالة المعالجة، غيّرها إلى «جارية» أو «منجزة» مع التقدّم. «مرحلة تلقائية» تعني أن الأداة اختارت المرحلة، ويمكنك تثبيتها يدويًا على # أو # أو #. وعبارة «يعتمد على توثيق…» تعني أن السياسة الأم لم تكتمل بعد، فعالجها قبل هذا الضابط.":"The coloured badge (critical, high, medium, low) is the gap priority. “Not started” is the remediation status; change it to “In progress” or “Done” as you go. “Auto phase” means the tool chose the phase; you can pin it to 1, 2 or 3. “Depends on documenting…” means the parent policy is not complete yet, so fix it before this control."
 });
+
+Object.assign(I18N.d,{
+"الوثائق الرسمية على موقع الهيئة:":"Official documents on the NCA website:",
+"الضوابط الأساسية ECC-# ودليلها الإرشادي":"Essential Cybersecurity Controls ECC-# and implementation guide",
+"ضوابط الحوسبة السحابية CCC-# وأدلتها":"Cloud Cybersecurity Controls CCC-# and guides",
+"اقرأ وثيقة CCC-# على موقع الهيئة":"Read CCC-# on the NCA website"
+});

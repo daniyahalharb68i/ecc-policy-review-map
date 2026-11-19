@@ -636,6 +636,11 @@ a{color:var(--accent)}
 .phx[open] summary{margin-bottom:8px}
 .phx p,.phx li{margin:6px 0;font-size:.9rem;line-height:1.75;color:var(--ink)}
 .phx ul{margin:4px 0;padding-inline-start:20px}
+
+.nca-links{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.nca-links a,.nca-a{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.nca-links a:hover,.nca-a:hover{text-decoration-thickness:2px}
+@media(max-width:600px){.nca-links a{white-space:normal}}
 </style>
 <div class="app" dir="rtl">
   <aside class="rail" id="rail">
@@ -652,6 +657,7 @@ a{color:var(--accent)}
     <footer><b>مصادر المحتوى:</b> نصوص الضوابط والأهداف من النسختين العربية والإنجليزية لوثيقة ECC-2:2024 الصادرة عن الهيئة الوطنية للأمن السيبراني، والإحالات إلى CCC من نص وثيقة CCC-2:2024 الإنجليزية، والمخرجات المتوقعة وإرشادات التطبيق من «الدليل الإرشادي لتطبيق الضوابط الأساسية» GECC-2:2026 (النسخة الإنجليزية). كل حكم في الأداة يحمل وسم مصدره:
       <span class="tag off">نص رسمي</span> <span class="tag der">مستنَد إلى نص الضابط</span> <span class="tag meth">منهجية الأداة، غير رسمية</span> <span class="tag ai">مقترح ذكاء اصطناعي</span>.
       الأداة لا تمثل الهيئة ولا تحل محل أدوات التقييم الرسمية.
+      <div class="nca-links"><b>الوثائق الرسمية على موقع الهيئة:</b> <a data-nca="ecc" target="_blank" rel="noopener" href="https://nca.gov.sa/ar/regulatory-documents/controls-list/ecc/">الضوابط الأساسية ECC-2:2024 ودليلها الإرشادي <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" style="stroke:currentColor;fill:none;stroke-width:2;vertical-align:-1px"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a> <a data-nca="ccc" target="_blank" rel="noopener" href="https://nca.gov.sa/ar/regulatory-documents/controls-list/ccc/">ضوابط الحوسبة السحابية CCC-2:2024 وأدلتها <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" style="stroke:currentColor;fill:none;stroke-width:2;vertical-align:-1px"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></div>
       <div class="copy"><span>© 2026</span><b>Daniyah Alharbi</b><span>جميع الحقوق محفوظة.</span></div></footer>
   </div></div>
 </div>
@@ -923,6 +929,13 @@ Object.assign(I18N.d,{
 "في كل بطاقة:":"On each card:",
 "الشارة الملوّنة (حرجة، عالية، متوسطة، منخفضة) أولوية الفجوة. «لم تبدأ» حالة المعالجة، غيّرها إلى «جارية» أو «منجزة» مع التقدّم. «مرحلة تلقائية» تعني أن الأداة اختارت المرحلة، ويمكنك تثبيتها يدويًا على # أو # أو #. وعبارة «يعتمد على توثيق…» تعني أن السياسة الأم لم تكتمل بعد، فعالجها قبل هذا الضابط.":"The coloured badge (critical, high, medium, low) is the gap priority. “Not started” is the remediation status; change it to “In progress” or “Done” as you go. “Auto phase” means the tool chose the phase; you can pin it to 1, 2 or 3. “Depends on documenting…” means the parent policy is not complete yet, so fix it before this control."
 });
+
+Object.assign(I18N.d,{
+"الوثائق الرسمية على موقع الهيئة:":"Official documents on the NCA website:",
+"الضوابط الأساسية ECC-# ودليلها الإرشادي":"Essential Cybersecurity Controls ECC-# and implementation guide",
+"ضوابط الحوسبة السحابية CCC-# وأدلتها":"Cloud Cybersecurity Controls CCC-# and guides",
+"اقرأ وثيقة CCC-# على موقع الهيئة":"Read CCC-# on the NCA website"
+});
 </script>
 <script>document.documentElement.lang="ar";document.documentElement.dir="rtl";
 // ===== Index =====
@@ -1096,6 +1109,7 @@ function tr(s){if(U.lang!=="en"||!s||!AR_RE.test(s))return s;
   let out=core;for(const [a,b] of PHR){if(out.includes(a))out=out.split(a).join(b)}return lead+out+trail}
 function applyLang(root){const en=U.lang==="en";document.documentElement.lang=en?"en":"ar";document.documentElement.dir=en?"ltr":"rtl";
   const app=document.querySelector(".app");if(app)app.dir=en?"ltr":"rtl";const lb=$("#lang");if(lb){lb.textContent=en?"ع":"EN";lb.title=en?"العربية":"English"}
+  document.querySelectorAll("[data-nca]").forEach(a=>{a.href=`https://nca.gov.sa/${en?"en":"ar"}/regulatory-documents/controls-list/${a.dataset.nca}/`});
   if(!en)return;root=root||app||document.body;
   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentElement;if(!p||/^(TEXTAREA|SCRIPT|STYLE|OPTION)$/.test(p.tagName)&&p.tagName!=="OPTION"||p.closest("[data-notr],.rp-prev"))return NodeFilter.FILTER_REJECT;return AR_RE.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP}});
   const ns=[];while(w.nextNode())ns.push(w.currentNode);ns.forEach(n=>{n.nodeValue=tr(n.nodeValue)});
@@ -1376,7 +1390,7 @@ function vDocs(){const D=Object.entries(S.docs).sort((a,b)=>(a[1].name||"").loca
 function vMap(){const FW=Object.entries(S.fw);const fws=[...new Set(FW.map(([k,r])=>r.fw))];
   const grp={};CCC.forEach(r=>r.e.forEach(e=>{(grp[e]=grp[e]||[]).push(r)}));const keys=Object.keys(grp).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
   return `<section class="card"><h2>ECC ← CCC-2:2024 <span class="tag off">مستخرج من الوثيقة الرسمية</span><span class="act">${seg([["all","الكل"],["T","مستفيد CST"],["P","مزود CSP"]],U.cw||"all","cw","x","v")}</span></h2>
-   <p class="lead">تنص CCC-2:2024 على أن ضوابطها «امتداد ومكمّل» لضوابط ECC. هذه ${CCC.length} إحالة صريحة من نصها الإنجليزي إلى ضوابط ECC بعينها.${S.cfg.cond.cloud==="no"?" جهتك لا تستخدم السحابة حسب إجاباتك، فهذا القسم للاطلاع.":""}</p>
+   <p class="lead">تنص CCC-2:2024 على أن ضوابطها «امتداد ومكمّل» لضوابط ECC. هذه ${CCC.length} إحالة صريحة من نصها الإنجليزي إلى ضوابط ECC بعينها. <a class="nca-a" data-nca="ccc" target="_blank" rel="noopener" href="https://nca.gov.sa/${U.lang==="en"?"en":"ar"}/regulatory-documents/controls-list/ccc/">اقرأ وثيقة CCC-2:2024 على موقع الهيئة <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" style="stroke:currentColor;fill:none;stroke-width:2;vertical-align:-1px"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>${S.cfg.cond.cloud==="no"?" جهتك لا تستخدم السحابة حسب إجاباتك، فهذا القسم للاطلاع.":""}</p>
    <div class="tw"><table><thead><tr><th>ضابط ECC</th><th>الطرف</th><th>نص CCC الذي يحيل إليه</th></tr></thead><tbody>${keys.flatMap(k=>grp[k].filter(r=>!U.cw||U.cw==="all"||r.w===U.cw).map(r=>`<tr><td>${BY[k]?idb(k):`<span class="idb">${k}</span>`}</td><td>${r.w==="P"?"مزود":"مستفيد"}</td><td class="en" style="text-align:left">${esc(r.q)}</td></tr>`)).join("")}</tbody></table></div></section>
   <section class="card"><h2>أطر أخرى ${fws.length?`<span class="note">${fws.join("، ")}</span>`:""}</h2>
    ${FW.length?`<div class="tw"><table><thead><tr><th>ECC</th><th>الإطار</th><th>المرجع</th><th>المصدر</th><th>ملاحظة</th><th></th></tr></thead><tbody>${FW.sort((a,b)=>a[1].ecc.localeCompare(b[1].ecc,undefined,{numeric:true})).map(([k,r])=>`<tr><td>${BY[r.ecc]||SUBBY[r.ecc]?idb(r.ecc):esc(r.ecc)}</td><td>${esc(r.fw)}</td><td class="mono">${esc(r.ref)}</td><td>${esc(r.src)}</td><td>${esc(r.note||"")}</td><td><button class="btn sm danger ghost" data-act="fwdel" data-id="${k}">حذف</button></td></tr>`).join("")}</tbody></table></div>`:

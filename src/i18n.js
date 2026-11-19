@@ -18,6 +18,7 @@ function tr(s){if(U.lang!=="en"||!s||!AR_RE.test(s))return s;
   let out=core;for(const [a,b] of PHR){if(out.includes(a))out=out.split(a).join(b)}return lead+out+trail}
 function applyLang(root){const en=U.lang==="en";document.documentElement.lang=en?"en":"ar";document.documentElement.dir=en?"ltr":"rtl";
   const app=document.querySelector(".app");if(app)app.dir=en?"ltr":"rtl";const lb=$("#lang");if(lb){lb.textContent=en?"ع":"EN";lb.title=en?"العربية":"English"}
+  document.querySelectorAll("[data-nca]").forEach(a=>{a.href=`https://nca.gov.sa/${en?"en":"ar"}/regulatory-documents/controls-list/${a.dataset.nca}/`});
   if(!en)return;root=root||app||document.body;
   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentElement;if(!p||/^(TEXTAREA|SCRIPT|STYLE|OPTION)$/.test(p.tagName)&&p.tagName!=="OPTION"||p.closest("[data-notr],.rp-prev"))return NodeFilter.FILTER_REJECT;return AR_RE.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP}});
   const ns=[];while(w.nextNode())ns.push(w.currentNode);ns.forEach(n=>{n.nodeValue=tr(n.nodeValue)});
