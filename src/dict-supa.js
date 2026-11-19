@@ -57,3 +57,5 @@ Object.assign(I18N.d,{
 "ضوابط الحوسبة السحابية CCC-# وأدلتها":"Cloud Cybersecurity Controls CCC-# and guides",
 "اقرأ وثيقة CCC-# على موقع الهيئة":"Read CCC-# on the NCA website"
 });
+
+Object.assign(I18N.d,{"السابق":"Previous","التالي":"Next","التنقل بين الخطوات":"Step navigation"});

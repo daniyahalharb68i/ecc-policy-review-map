@@ -641,6 +641,21 @@ a{color:var(--accent)}
 .nca-links a,.nca-a{color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .nca-links a:hover,.nca-a:hover{text-decoration-thickness:2px}
 @media(max-width:600px){.nca-links a{white-space:normal}}
+
+.pager{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:22px 0 4px}
+.pager .pg{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;font:inherit;color:var(--ink);text-align:start;transition:border-color .2s,transform .2s,box-shadow .2s}
+.pager .pg:hover{border-color:var(--accent);box-shadow:0 6px 18px rgba(16,31,53,.12)}
+.pager .pg:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pager .next{justify-self:end;background:var(--accent);border-color:var(--accent);color:#fff}
+.pager .next small{color:rgba(255,255,255,.8)}
+.pager .prev{justify-self:start}
+.pager small{display:block;font-size:.72rem;color:var(--muted)}
+.pager b{font-family:var(--display);font-size:.95rem}
+.pager .pa svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;display:block}
+.app[dir=rtl] .pager .prev .pa svg{transform:scaleX(-1)}
+.app[dir=ltr] .pager .next .pa svg{transform:scaleX(-1)}
+.pager .pg-n{color:var(--muted);font-size:.8rem}
+@media(max-width:600px){.pager{grid-template-columns:1fr 1fr}.pager .pg-n{display:none}.pager .pg{padding:8px 10px}.pager b{font-size:.85rem}}
 </style>
 <div class="app" dir="rtl">
   <aside class="rail" id="rail">
@@ -936,6 +951,8 @@ Object.assign(I18N.d,{
 "ضوابط الحوسبة السحابية CCC-# وأدلتها":"Cloud Cybersecurity Controls CCC-# and guides",
 "اقرأ وثيقة CCC-# على موقع الهيئة":"Read CCC-# on the NCA website"
 });
+
+Object.assign(I18N.d,{"السابق":"Previous","التالي":"Next","التنقل بين الخطوات":"Step navigation"});
 </script>
 <script>document.documentElement.lang="ar";document.documentElement.dir="rtl";
 // ===== Index =====
@@ -1171,8 +1188,14 @@ function render(){
   if(!U.demo&&!window.claude&&!U.supa)top+=`<div class="banner warn"><span><b>نسخة محلية.</b> بياناتك محفوظة في هذا المتصفح وعلى هذا الجهاز فقط. نزّل نسخة JSON احتياطية بانتظام من «التقارير والبيانات»، ولا تمسح بيانات المتصفح.</span><span class="row"><button class="btn sm" data-act="sbsignin">تسجيل الدخول للحفظ في قاعدة البيانات</button><button class="btn sm quiet" data-act="dljson">تنزيل نسخة احتياطية</button></span></div>`;
   if(U.confirm)top+=`<div class="confirm ${U.confirm.soft?"soft":""}"><span>${U.confirm.msg}</span><span class="row"><button class="btn sm ${U.confirm.soft?"":"danger"}" data-act="cfy">${U.confirm.yes||"تأكيد"}</button><button class="btn sm quiet" data-act="cfn">إلغاء</button></span></div>`;
   const key=U.tab+(U.demo?"d":"");const enter=U._last!==key;U._last=key;const view=$("#view");
-  view.innerHTML=top+V();applyLang();stripMarks(document.querySelector(".app"));syncHash();window.scrollTo(0,enter?0:y);
+  view.innerHTML=top+V()+pager();applyLang();stripMarks(document.querySelector(".app"));syncHash();window.scrollTo(0,enter?0:y);
   if(enter){view.classList.remove("enter");void view.offsetWidth;view.classList.add("enter");clearTimeout(U._et);U._et=setTimeout(()=>view.classList.remove("enter"),1200);countUp()}}
+// Previous / next step along the sidebar order, so the user can walk the tool from start to finish
+function pager(){const L=NAV.flatMap(g=>g[1]).filter(x=>x[0]!=="admin"),i=L.findIndex(x=>x[0]===U.tab);if(i<0)return "";
+  const pv=L[i-1],nx=L[i+1],arr='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
+  return `<nav class="pager" aria-label="التنقل بين الخطوات">${pv?`<button class="pg prev" data-act="tab" data-v="${pv[0]}"><span class="pa">${arr}</span><span><small>السابق</small><b>${pv[1]}</b></span></button>`:"<span></span>"}
+   <span class="pg-n num">${i+1} / ${L.length}</span>
+   ${nx?`<button class="pg next" data-act="tab" data-v="${nx[0]}"><span><small>التالي</small><b>${nx[1]}</b></span><span class="pa">${arr}</span></button>`:"<span></span>"}</nav>`}
 function countUp(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;document.querySelectorAll("#view [data-count]").forEach(el=>{const t=+el.dataset.count,suf=el.dataset.suf||"";if(!isFinite(t))return;const st=performance.now();
   const step=now=>{const p=Math.min(1,(now-st)/900),e=1-Math.pow(1-p,3);el.textContent=Math.round(t*e)+suf;if(p<1)requestAnimationFrame(step)};el.textContent="0"+suf;requestAnimationFrame(step)})}
 
