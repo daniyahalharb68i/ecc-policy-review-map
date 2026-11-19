@@ -85,7 +85,7 @@ function sbShow(mode,msg){U.sbMode=mode;U.sbMsg=msg||"";let el=sbEl();
       <form data-sbf="org"><label><span>اسم الجهة</span><input id="sb-org" required minlength="2" maxlength="160"></label>${err}<button class="btn" type="submit">إنشاء الجهة</button></form>
       <div class="sb-links">${U.sbPA?`<button class="lnk" data-sb="padmin">لوحة المنصة فقط</button>`:""}<button class="lnk" data-sb="out">تسجيل الخروج</button></div>`,
     wait:`<p class="thinking"><i></i>جارٍ الاتصال بقاعدة البيانات…</p>`}[mode];
-  el.innerHTML=`<div class="sb-card"><div class="sb-brand"><span class="mark">ECC</span><b>خارطة مراجعة سياسات ECC</b></div>${body}<p class="sb-foot">© 2026 Daniyah Alharbi</p></div>`;
+  el.innerHTML=`<div class="sb-card"><img class="sb-banner" src="${LOGO_BANNER}" alt="ECC — Essential Cybersecurity Controls"><div class="sb-brand"><b>خارطة مراجعة سياسات ECC</b></div>${body}<p class="sb-foot">© 2026 Daniyah Alharbi</p></div>`;
   applyLang(el);el.dir=U.lang==="en"?"ltr":"rtl";const f=el.querySelector("input");if(f&&mode!=="wait")setTimeout(()=>f.focus(),30)}
 function sbHide(){const el=sbEl();if(el)el.remove();U.sbMsg="";U.sbOk=false}
 const sbV=id=>{const e=document.getElementById(id);return e?e.value.trim():""};

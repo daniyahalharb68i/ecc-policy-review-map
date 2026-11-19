@@ -21,7 +21,7 @@ function reportPages(lang,no){
   const pages=[];
   // cover
   pages.push({cover:true,body:`<div style="height:100%;display:flex;flex-direction:column;justify-content:space-between">
-    <div><div style="font-size:12px;color:#5b6676;letter-spacing:0">${R("تقرير مراجعة","Review report")} · ${no}</div>
+    <div><div style="display:flex;align-items:center;gap:12px"><img src="${LOGO_MARK}" alt="" style="width:46px;height:46px;border-radius:10px"><div style="font-size:12px;color:#5b6676;letter-spacing:0">${R("تقرير مراجعة","Review report")} · ${no}</div></div>
       <div style="height:5px;width:96px;border-radius:3px;background:linear-gradient(90deg,#176B73,#2FA3AD);margin:14px 0 26px"></div>
       <h1 style="font-family:'Source Serif 4','Changa',serif;font-size:29px;line-height:1.4;margin:0 0 10px;font-weight:800;color:#101F35">${R("تقرير مراجعة الالتزام بالضوابط الأساسية للأمن السيبراني","Essential Cybersecurity Controls Compliance Review Report")}</h1>
       <div style="font-size:15px;color:#3b4757">ECC-2:2024</div>
