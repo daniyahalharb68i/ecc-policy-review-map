@@ -35,3 +35,18 @@ Object.assign(I18N.d,{
 "تعذّر فتح الملف":"Could not open the file","تعذّر تحميل مكتبة قاعدة البيانات. تحقق من الإنترنت.":"Could not load the database library. Check your connection.",
 "تسجيل الدخول للحفظ في قاعدة البيانات":"Sign in to save to the database","أنت":"You"
 });
+
+Object.assign(I18N.d,{
+"مرحلة تلقائية":"Auto phase","حالة المعالجة":"Remediation status","أولوية الفجوة":"Gap priority","مرحلة المعالجة":"Remediation phase",
+"مرحلة المعالجة: تلقائية حسب الأولوية، أو ثبّتها يدويًا":"Remediation phase: automatic by priority, or set it manually",
+"ما هذه المراحل؟ وكيف تُرتَّب الفجوات؟":"What are these phases, and how are gaps ordered?",
+"خارطة المعالجة توزّع كل فجوة (ضابط «جزئي» أو «غير ملتزم») على خطة من":"The roadmap places every gap (a “Partial” or “Non-compliant” control) on a plan of",
+"# يومًا":"# days","بثلاث مراحل، حتى تعرف ماذا تعالج أولًا:":"in three phases, so you know what to fix first:",
+"المرحلة # (# إلى # يومًا):":"Phase # (# to # days):",
+"الأعلى أولوية؛ فجوات إلزامية عالية الأثر، أو في المكونات التأسيسية، وجهدها معقول. ابدأ بها.":"Highest priority: mandatory, high-impact gaps or gaps in foundational subdomains with reasonable effort. Start here.",
+"أولوية متوسطة.":"Medium priority.","الأقل إلحاحًا، أو ما يحتاج جهدًا كبيرًا.":"Least urgent, or requiring large effort.",
+"كيف تُحسب الأولوية:":"How priority is scored:",
+"الأثر (عالٍ #، متوسط #، منخفض #) × #، ثم +# إذا كان الضابط في المكونات التأسيسية، و+# إذا كان إلزاميًا على جهتك، و+# إذا كان ضابط توثيق (سياسة أو إجراء)، ثم يُطرح الجهد (صغير #، متوسط #، كبير #). مجموع # فأكثر = المرحلة #، ومن # إلى # = المرحلة #، وأقل = المرحلة #. الأثر والجهد تعدّلهما من شاشة «مراجعة الضوابط».":"Impact (high 3, medium 2, low 1) × 2, then +2 if the control is in a foundational subdomain, +2 if it is mandatory for your entity, +1 if it is a documentation control (policy or procedure), minus effort (small 0, medium 1, large 2). A total of 8 or more = Phase 1, 5 to 7 = Phase 2, lower = Phase 3. Set impact and effort in “Control review”.",
+"في كل بطاقة:":"On each card:",
+"الشارة الملوّنة (حرجة، عالية، متوسطة، منخفضة) أولوية الفجوة. «لم تبدأ» حالة المعالجة، غيّرها إلى «جارية» أو «منجزة» مع التقدّم. «مرحلة تلقائية» تعني أن الأداة اختارت المرحلة، ويمكنك تثبيتها يدويًا على # أو # أو #. وعبارة «يعتمد على توثيق…» تعني أن السياسة الأم لم تكتمل بعد، فعالجها قبل هذا الضابط.":"The coloured badge (critical, high, medium, low) is the gap priority. “Not started” is the remediation status; change it to “In progress” or “Done” as you go. “Auto phase” means the tool chose the phase; you can pin it to 1, 2 or 3. “Depends on documenting…” means the parent policy is not complete yet, so fix it before this control."
+});
