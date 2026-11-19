@@ -30,17 +30,17 @@ const extOf=n=>(String(n).split(".").pop()||"").slice(0,4).toUpperCase();
 const attAccept=()=>window.claude?".pdf,.png,.jpg,.jpeg,.webp":".pdf,.png,.jpg,.jpeg,.webp,.docx,.xlsx,.pptx";
 async function attAdd(id,file){if(!file)return;if(!canCol("ctl",id)){toast("ليست لديك صلاحية تعديل هذا الضابط");return}
   if(file.size>ATT_MAX){toast("حجم الملف أكبر من 20 ميجابايت");return}
-  if(window.claude&&!U.assets){toast("رفع الملفات غير متاح لصلاحيتك الحالية في هذه الأداة");return}
+  if(CLOUD()&&!U.assets){toast("رفع الملفات غير متاح لصلاحيتك الحالية في هذه الأداة");return}
   U.attBusy=id;render();
   try{const rec={name:file.name,size:file.size,type:file.type||"",at:today(),by:U.me||""};
-    if(window.claude){const a=await U.assets.upload(file);rec.aid=a.id;rec.url=a.url}
+    if(CLOUD()){const a=await U.assets.upload(file);rec.aid=a.id;rec.url=a.url}
     else{const k=uid();await fdbPut(k,file);rec.lid=k}
     const o=S.ctl[id]=S.ctl[id]||{};o.att=(o.att||[]).concat([rec]);persist("ctl",id);logEv("att",id,{v:file.name});toast("أُرفق الملف")}
   catch(e){toast("تعذّر رفع الملف. تأكد من نوعه وحجمه.")}
   finally{U.attBusy=null;render()}}
 async function attOpen(id,i){const r=(C(id).att||[])[i];if(!r)return;
   const open=href=>{const a=document.createElement("a");a.href=href;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove()};
-  if(r.url){open(r.url);return}
+  if(r.url){if(r.url.startsWith("sb:")){sbOpen(r.url.slice(3));return}open(r.url);return}
   try{const b=await fdbGet(r.lid);if(!b){toast("الملف غير موجود في هذا المتصفح");return}const u=URL.createObjectURL(b);open(u);setTimeout(()=>URL.revokeObjectURL(u),120000)}catch(e){toast("تعذّر فتح الملف")}}
 function attDel(id,i){const r=(C(id).att||[])[i];if(!r)return;
   U.confirm={msg:`حذف المرفق «${esc(r.name)}»؟`,yes:"حذف",fn:async()=>{try{if(r.aid&&U.assets)await U.assets.delete(r.aid)}catch(e){}try{if(r.lid)await fdbDel(r.lid)}catch(e){}
@@ -49,7 +49,7 @@ function attBox(id){const L=C(id).att||[],can=canCol("ctl",id);
   return `<div class="box"><h4>المرفقات (الأدلة) <span class="note">${L.length} ملف</span></h4>
   ${L.length?`<ul class="atts">${L.map((r,i)=>`<li><span class="ft">${esc(extOf(r.name))}</span><span class="an">${esc(r.name)}<small>${fmtSize(r.size||0)} · ${esc(r.at||"")}${r.by&&U.names[r.by]?" · "+esc(U.names[r.by]):""}</small></span><button class="btn sm quiet" data-act="attopen" data-id="${id}" data-v="${i}">فتح</button>${can?`<button class="btn sm danger ghost" data-act="attdel" data-id="${id}" data-v="${i}">حذف</button>`:""}</li>`).join("")}</ul>`:`<p class="note" style="margin:0">لا مرفقات بعد. أرفق الوثيقة المعتمدة أو لقطة الشاشة التي تثبت الضابط.</p>`}
   ${can?(U.attBusy===id?`<span class="thinking" style="margin-top:8px"><i></i>جارٍ الرفع…</span>`:`<label class="btn sm ghost attpick">إرفاق ملف (PDF أو صورة${window.claude?"":" أو Word"})<input type="file" data-act="attfile" data-id="${id}" accept="${attAccept()}" hidden></label>`):""}
-  ${!window.claude?`<p class="note" style="margin:6px 0 0">في النسخة المحلية تُحفظ المرفقات في هذا المتصفح فقط، ولا تدخل في النسخة الاحتياطية JSON.</p>`:""}</div>`}
+  ${!CLOUD()?`<p class="note" style="margin:6px 0 0">في النسخة المحلية تُحفظ المرفقات في هذا المتصفح فقط، ولا تدخل في النسخة الاحتياطية JSON.</p>`:""}</div>`}
 
 // --- PDF text extraction for the policy analyzer ---
 const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";

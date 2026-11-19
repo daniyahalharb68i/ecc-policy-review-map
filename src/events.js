@@ -229,5 +229,6 @@ render();
   // resolve display names for people referenced on screen (ids only are stored)
   setInterval(async()=>{if(!U.user)return;const ids=[...new Set([...Object.values(S.ctl).map(o=>o._by),...Object.keys(S.team),...U.logs.map(l=>l.by),...Object.values(S.reports).map(r=>r.by)].filter(x=>x&&!(x in U.names)))];if(!ids.length)return;try{const ps=await U.user.profiles(ids);ids.forEach(i=>U.names[i]=(ps[i]&&ps[i].name)||"");softRender()}catch(e){}},4000)})();
 
+sbStart();
 // first visit: intro tour
-setTimeout(()=>{try{if(!localStorage.getItem("ecc_tour_done")&&!U.demo)startTour()}catch(e){}},1400);
+setTimeout(()=>{try{if(!localStorage.getItem("ecc_tour_done")&&!U.demo&&!document.getElementById("sbauth"))startTour()}catch(e){}},1400);
