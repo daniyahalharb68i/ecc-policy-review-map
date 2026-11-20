@@ -71,3 +71,19 @@ Object.assign(I18N.d,{
 "الضيوف (دون حساب)":"Guests (no account)","آخر # يومًا":"Last # days","نعدّ الأجهزة لا الأشخاص، ولا نسجّل اسمًا أو بريدًا أو بيانات تقييم.":"We count devices, not people, and record no name, email or assessment data.",
 "جهاز":"Devices","منها جوال":"On phones","بالإنجليزية":"In English","عاد أكثر من يوم":"Returned on another day","كل الأجهزة منذ البداية":"All devices to date","الصفحات التي فتحها الضيوف":"Pages guests opened"
 });
+
+Object.assign(I18N.d,{
+"المشترك CST":"Tenant (CST)","مقدّم الخدمة CSP":"Provider (CSP)","مقدّم الخدمة":"Provider","المشترك":"Tenant","الطرفان":"Both",
+"مقدّم الخدمات السحابية":"Cloud service provider","المشترك في الخدمات السحابية":"Cloud service tenant","مقدّم الخدمة والمشترك":"Provider and tenant",
+"مقدّم الخدمات السحابية (CSP):":"Cloud Service Provider (CSP):","المشترك في الخدمات السحابية (CST):":"Cloud Service Tenant (CST):",
+"جهة تقدّم خدمة سحابية لغيرها، مثل شركات الاستضافة والسحابة.":"an entity that provides a cloud service to others, such as hosting and cloud companies.",
+"جهة تستخدم خدمة سحابية يقدّمها غيرها، وهذا حال أغلب الجهات.":"an entity that uses a cloud service provided by someone else, which is the case for most entities.",
+"متابعة كضيف":"Continue as a guest","عرّف بنفسك قبل البدء، ليعرف فريق الأداة من يستخدمها ويطوّرها لما يحتاجه.":"Introduce yourself before starting, so the tool’s team knows who uses it and can improve it for your needs.",
+"الجهة أو جهة العمل":"Entity or employer","البريد الإلكتروني (اختياري)":"Email (optional)",
+"نحفظ هذه البيانات لمعرفة من يستخدم الأداة فقط، ولا نشاركها مع أحد. أما تقييمك نفسه فيبقى في متصفحك ولا يُرسل.":"We keep these details only to know who uses the tool and never share them. Your assessment itself stays in your browser and is not sent.",
+"متابعة":"Continue","لديّ حساب، تسجيل الدخول":"I have an account, sign in","اكتب اسمك وجهتك للمتابعة.":"Enter your name and entity to continue.","البريد الإلكتروني غير صحيح.":"The email address is not valid.",
+"الفترة":"Period","منذ البداية":"Since the start","# يومًا":"# days","# أيام":"# days","مستخدم مسجّل (الكل)":"Registered users (all)","جهة (الكل)":"Entities (all)","مستخدم نشط":"Active users","زيارة مستخدمين":"User visits","ضيف":"Guests","ضيف عرّف بنفسه":"Guests who introduced themselves",
+"أرقام الفترة والضيوف تظهر بعد تشغيل ملف التحديث #-guest-profiles.sql في Supabase.":"Period and guest figures appear after running the #-guest-profiles.sql update in Supabase.",
+"الضيوف (#)":"Guests (#)","من جوال":"On phones","أول زيارة":"First visit","آخر زيارة":"Last visit","أيام الاستخدام":"Days used","صفحات فتحها":"Pages opened","الجهاز":"Device","جوال":"Phone","حاسب":"Computer",
+"ضيف لم يعرّف بنفسه":"Guest (not introduced)","لا ضيوف في هذه الفترة.":"No guests in this period.","لا بيانات بعد.":"No data yet.","المستخدمون المسجّلون (#)":"Registered users (#)","الاستخدام اليومي":"Daily usage"
+});

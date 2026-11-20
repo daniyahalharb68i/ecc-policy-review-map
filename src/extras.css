@@ -84,3 +84,8 @@
 
 .adm-bars rect.g{fill:#8FB8C9}
 .adm-leg{margin-top:6px}
+
+.ccc-who{display:grid;gap:4px;margin:0 0 12px;padding:10px 12px;border-radius:10px;background:var(--surface2);border:1px solid var(--line);font-size:.88rem;line-height:1.7}
+.ccc-en{margin-top:4px}.ccc-en summary{cursor:pointer;color:var(--muted);font-size:.78rem}.ccc-en p{margin:4px 0 0;color:var(--muted);font-size:.84rem;text-align:left}
+.adm-per{margin-inline-start:auto}
+#sbauth .sb-priv{font-size:.78rem;line-height:1.6}
