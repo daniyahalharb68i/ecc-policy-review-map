@@ -87,3 +87,5 @@ Object.assign(I18N.d,{
 "الضيوف (#)":"Guests (#)","من جوال":"On phones","أول زيارة":"First visit","آخر زيارة":"Last visit","أيام الاستخدام":"Days used","صفحات فتحها":"Pages opened","الجهاز":"Device","جوال":"Phone","حاسب":"Computer",
 "ضيف لم يعرّف بنفسه":"Guest (not introduced)","لا ضيوف في هذه الفترة.":"No guests in this period.","لا بيانات بعد.":"No data yet.","المستخدمون المسجّلون (#)":"Registered users (#)","الاستخدام اليومي":"Daily usage"
 });
+
+Object.assign(I18N.d,{"الجهة أو جهة العمل (اختياري)":"Entity or employer (optional)","اكتب اسمك للمتابعة.":"Enter your name to continue."});

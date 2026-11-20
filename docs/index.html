@@ -1039,6 +1039,8 @@ Object.assign(I18N.d,{
 "الضيوف (#)":"Guests (#)","من جوال":"On phones","أول زيارة":"First visit","آخر زيارة":"Last visit","أيام الاستخدام":"Days used","صفحات فتحها":"Pages opened","الجهاز":"Device","جوال":"Phone","حاسب":"Computer",
 "ضيف لم يعرّف بنفسه":"Guest (not introduced)","لا ضيوف في هذه الفترة.":"No guests in this period.","لا بيانات بعد.":"No data yet.","المستخدمون المسجّلون (#)":"Registered users (#)","الاستخدام اليومي":"Daily usage"
 });
+
+Object.assign(I18N.d,{"الجهة أو جهة العمل (اختياري)":"Entity or employer (optional)","اكتب اسمك للمتابعة.":"Enter your name to continue."});
 </script>
 <script>document.documentElement.lang="ar";document.documentElement.dir="rtl";
 // ===== Index =====
@@ -1823,7 +1825,7 @@ function sbShow(mode,msg){U.sbMode=mode;U.sbMsg=msg||"";let el=sbEl();
       <div class="sb-links">${U.sbPA?`<button class="lnk" data-sb="padmin">لوحة المنصة فقط</button>`:""}<button class="lnk" data-sb="out">تسجيل الخروج</button></div>`,
     guest:`<h2>متابعة كضيف</h2><p class="note">عرّف بنفسك قبل البدء، ليعرف فريق الأداة من يستخدمها ويطوّرها لما يحتاجه.</p>
       <form data-sbf="guest"><label><span>الاسم</span><input id="sbg-name" autocomplete="name" required minlength="2" maxlength="120" value="${esc((sbGuest()||{}).name||"")}"></label>
-      <label><span>الجهة أو جهة العمل</span><input id="sbg-org" autocomplete="organization" required minlength="2" maxlength="160" value="${esc((sbGuest()||{}).org||"")}"></label>
+      <label><span>الجهة أو جهة العمل (اختياري)</span><input id="sbg-org" autocomplete="organization" maxlength="160" value="${esc((sbGuest()||{}).org||"")}"></label>
       <label><span>البريد الإلكتروني (اختياري)</span><input id="sbg-email" type="email" autocomplete="email" dir="ltr" maxlength="200" value="${esc((sbGuest()||{}).email||"")}"></label>
       <p class="note sb-priv">نحفظ هذه البيانات لمعرفة من يستخدم الأداة فقط، ولا نشاركها مع أحد. أما تقييمك نفسه فيبقى في متصفحك ولا يُرسل.</p>${err}<button class="btn" type="submit">متابعة</button></form>
       <div class="sb-links"><button class="lnk" data-sb="in">لديّ حساب، تسجيل الدخول</button></div>`,
@@ -1836,7 +1838,7 @@ const sbErr=e=>{const m=(e&&e.message)||"";return /Invalid login/i.test(m)?"ال
 const sbBack=()=>location.origin+location.pathname;
 document.addEventListener("submit",async e=>{const f=e.target.closest("[data-sbf]");if(!f)return;e.preventDefault();const m=f.dataset.sbf;
   if(m==="guest"){const g={name:sbV("sbg-name"),org:sbV("sbg-org"),email:sbV("sbg-email").toLowerCase()};
-    if(g.name.length<2||g.org.length<2){sbShow("guest","اكتب اسمك وجهتك للمتابعة.");return}
+    if(g.name.length<2){sbShow("guest","اكتب اسمك للمتابعة.");return}
     if(g.email&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(g.email)){sbShow("guest","البريد الإلكتروني غير صحيح.");return}
     try{localStorage.setItem("ecc_guest",JSON.stringify(g));localStorage.setItem("ecc_local_mode","1")}catch(x){}
     guestRegister(g);U.guest=true;sbHide();render();return}
