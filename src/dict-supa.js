@@ -61,3 +61,13 @@ Object.assign(I18N.d,{
 Object.assign(I18N.d,{"السابق":"Previous","التالي":"Next","التنقل بين الخطوات":"Step navigation"});
 
 Object.assign(I18N.d,{"المكوّن #. حوكمة الأمن السيبراني":"Domain #. Cybersecurity Governance","المكوّن #. تعزيز الأمن السيبراني":"Domain #. Cybersecurity Defense","المكوّن #. صمود الأمن السيبراني":"Domain #. Cybersecurity Resilience","المكوّن #. الأمن السيبراني المتعلق بالأطراف الخارجية والحوسبة السحابية":"Domain #. Third-Party and Cloud Computing Cybersecurity","المكوّن # من #":"Domain # of #"});
+
+Object.assign(I18N.d,{
+"أنت تستخدم الأداة كضيف.":"You are using the tool as a guest.",
+"ما تدخله يُحفظ في هذا المتصفح على هذا الجهاز فقط؛ لو مسحت بيانات المتصفح أو فتحت الأداة من جهاز آخر فلن تجده. سجّل الدخول ليُحفظ تقييمك في حسابك، فتفتحه من أي جهاز وتعمل عليه مع فريقك.":"What you enter is saved only in this browser on this device; if you clear browser data or open the tool on another device, it will not be there. Sign in to keep your assessment in your account, open it from any device and work on it with your team.",
+"تسجيل الدخول أو إنشاء حساب":"Sign in or create an account",
+"مستخدمون مسجّلون":"Registered users","ضيوف دون حساب":"Guests without an account","ضيف آخر # أيام":"Guests, last # days","ضيف آخر # يومًا":"Guests, last # days",
+"أرقام الضيوف تظهر بعد تشغيل ملف التحديث #-guests.sql في Supabase.":"Guest figures appear after running the #-guests.sql update in Supabase.",
+"الضيوف (دون حساب)":"Guests (no account)","آخر # يومًا":"Last # days","نعدّ الأجهزة لا الأشخاص، ولا نسجّل اسمًا أو بريدًا أو بيانات تقييم.":"We count devices, not people, and record no name, email or assessment data.",
+"جهاز":"Devices","منها جوال":"On phones","بالإنجليزية":"In English","عاد أكثر من يوم":"Returned on another day","كل الأجهزة منذ البداية":"All devices to date","الصفحات التي فتحها الضيوف":"Pages guests opened"
+});
