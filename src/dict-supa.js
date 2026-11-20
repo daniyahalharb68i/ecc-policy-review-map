@@ -59,3 +59,5 @@ Object.assign(I18N.d,{
 });
 
 Object.assign(I18N.d,{"السابق":"Previous","التالي":"Next","التنقل بين الخطوات":"Step navigation"});
+
+Object.assign(I18N.d,{"المكوّن #. حوكمة الأمن السيبراني":"Domain #. Cybersecurity Governance","المكوّن #. تعزيز الأمن السيبراني":"Domain #. Cybersecurity Defense","المكوّن #. صمود الأمن السيبراني":"Domain #. Cybersecurity Resilience","المكوّن #. الأمن السيبراني المتعلق بالأطراف الخارجية والحوسبة السحابية":"Domain #. Third-Party and Cloud Computing Cybersecurity","المكوّن # من #":"Domain # of #"});

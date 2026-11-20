@@ -49,10 +49,15 @@ function render(){
   if(enter){view.classList.remove("enter");void view.offsetWidth;view.classList.add("enter");clearTimeout(U._et);U._et=setTimeout(()=>view.classList.remove("enter"),1200);countUp()}}
 // Previous / next step along the sidebar order, so the user can walk the tool from start to finish
 function pager(){const L=NAV.flatMap(g=>g[1]).filter(x=>x[0]!=="admin"),i=L.findIndex(x=>x[0]===U.tab);if(i<0)return "";
-  const pv=L[i-1],nx=L[i+1],arr='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
-  return `<nav class="pager" aria-label="التنقل بين الخطوات">${pv?`<button class="pg prev" data-act="tab" data-v="${pv[0]}"><span class="pa">${arr}</span><span><small>السابق</small><b>${pv[1]}</b></span></button>`:"<span></span>"}
-   <span class="pg-n num">${i+1} / ${L.length}</span>
-   ${nx?`<button class="pg next" data-act="tab" data-v="${nx[0]}"><span><small>التالي</small><b>${nx[1]}</b></span><span class="pa">${arr}</span></button>`:"<span></span>"}</nav>`}
+  let pv=L[i-1],nx=L[i+1],n=`${i+1} / ${L.length}`;
+  // inside control review, step through the four main domains before leaving the page
+  if(U.tab==="review"&&!(U.q||U.f!=="all")){const di=ECC.findIndex(d=>d.id===U.dom),dp=ECC[di-1],dn=ECC[di+1];
+    if(dp)pv=["dom:"+dp.id,(U.lang==="en"?"Domain ":"المكوّن ")+dp.id+". "+tx(dp)];if(dn)nx=["dom:"+dn.id,(U.lang==="en"?"Domain ":"المكوّن ")+dn.id+". "+tx(dn)];n=`المكوّن ${di+1} من ${ECC.length}`}
+  const go=x=>x[0].startsWith("dom:")?`data-act="dom" data-top="1" data-v="${x[0].slice(4)}"`:`data-act="tab" data-v="${x[0]}"`;
+  const arr='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
+  return `<nav class="pager" aria-label="التنقل بين الخطوات">${pv?`<button class="pg prev" ${go(pv)}><span class="pa">${arr}</span><span><small>السابق</small><b>${pv[1]}</b></span></button>`:"<span></span>"}
+   <span class="pg-n num">${n}</span>
+   ${nx?`<button class="pg next" ${go(nx)}><span><small>التالي</small><b>${nx[1]}</b></span><span class="pa">${arr}</span></button>`:"<span></span>"}</nav>`}
 function countUp(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;document.querySelectorAll("#view [data-count]").forEach(el=>{const t=+el.dataset.count,suf=el.dataset.suf||"";if(!isFinite(t))return;const st=performance.now();
   const step=now=>{const p=Math.min(1,(now-st)/900),e=1-Math.pow(1-p,3);el.textContent=Math.round(t*e)+suf;if(p<1)requestAnimationFrame(step)};el.textContent="0"+suf;requestAnimationFrame(step)})}
 

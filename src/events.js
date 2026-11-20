@@ -136,7 +136,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-act]");if(
   case "attdel":attDel(id,+v);break;
   case "aigtr":aiGuideTr(id);break;
   case "tab":U.tab=v;U.confirm=null;$("#rail").classList.remove("open");$("#menu").setAttribute("aria-expanded","false");render();window.scrollTo(0,0);break;
-  case "dom":U.dom=v;U.q="";U.f="all";render();break;
+  case "dom":U.dom=v;U.q="";U.f="all";render();if(t.dataset.top)window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});break;
   case "tg":case "tc":U.open[id]=!U.open[id];render();break;
   case "go":go(id);break;
   case "jumps":go(id);break;
