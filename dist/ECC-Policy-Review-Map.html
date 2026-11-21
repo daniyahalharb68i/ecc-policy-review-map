@@ -662,7 +662,7 @@ a{color:var(--accent)}
 #sbauth .sb-banner{display:block;width:calc(100% + 44px);margin:-22px -22px 4px;border-radius:16px 16px 0 0;aspect-ratio:800/330;object-fit:cover;background:#05101C}
 #sbauth .sb-brand{margin:0}
 
-.adm-bars rect.g{fill:#8FB8C9}
+.adm-bars rect.g{fill:#B8CBAA}
 .adm-leg{margin-top:6px}
 
 .ccc-who{display:grid;gap:4px;margin:0 0 12px;padding:10px 12px;border-radius:10px;background:var(--surface2);border:1px solid var(--line);font-size:.88rem;line-height:1.7}
@@ -674,12 +674,12 @@ a{color:var(--accent)}
    Dark forest is the default; the theme button switches to the light "paper" variant.
    Type: Inter Tight (Latin) + IBM Plex Sans Arabic. Headlines regular weight; tight tracking for Latin only. */
 :root:not([data-theme="light"]){
-  --bg:#111F18; --surface:#1A3326; --surface2:#213C2C; --ink:#E9EBE0; --head:#F2F1E8; --muted:#B4C3B2; --line:#2F4A3A;
-  --accent:#D3A07F; --accent-ink:#15271E; --accent-soft:rgba(211,160,127,.14);
-  --spark:#B7896F; --spark-ink:#15271E; --spark-soft:rgba(183,137,111,.16); --sun:#E0B15C;
-  --sage:#C7D1BF; --sage-ink:#15271E; --raised:#2C4E39;
-  --rail:#183124; --rail2:#183124; --rail-ink:#F2F1E8; --rail-muted:#A9BBA8; --rail-line:#2F4A3A;
-  --ok:#7CC796; --warn:#E3B45F; --bad:#EE7A68; --na:#9DAA9F; --ai:#C4B5F0;
+  --bg:#10291F; --surface:#193A2C; --surface2:#234735; --ink:#F4F0E6; --head:#F4F0E6; --muted:#B8CBAA; --line:#2C5341;
+  --accent:#D9A486; --accent-ink:#10291F; --accent-soft:rgba(217,164,134,.14);
+  --spark:#D9A486; --spark-ink:#10291F; --spark-soft:rgba(217,164,134,.16); --sun:#E3B45F;
+  --sage:#B8CBAA; --sage-ink:#10291F; --raised:#234735;
+  --rail:#193A2C; --rail2:#193A2C; --rail-ink:#F4F0E6; --rail-muted:#B8CBAA; --rail-line:#2C5341;
+  --ok:#7CC796; --warn:#E3B45F; --bad:#F58A78; --na:#9DAA9F; --ai:#C4B5F0;
   --shadow:none; --lift:0 14px 34px rgba(0,0,0,.35); color-scheme:dark}
 :root[data-theme="light"]{
   --bg:#F6F5EF; --surface:#FFFFFF; --surface2:#EEEEE5; --ink:#213C2C; --head:#1A382B; --muted:#5E685E; --line:#D9DDD2;
@@ -746,11 +746,11 @@ a{color:var(--accent)}
 .nav h6{color:var(--rail-muted);font-weight:500}
 .app[dir=ltr] .nav h6{text-transform:uppercase;letter-spacing:.14em;font-size:.62rem}
 .nav button{border-radius:5px;color:var(--rail-ink)}
-.nav button:hover{background:rgba(242,241,232,.06)}
-.nav button.on,.app[dir=ltr] .nav button.on{background:#2C4E39;color:#F2F1E8;box-shadow:inset -2px 0 0 #D8A486}
-.app[dir=ltr] .nav button.on{box-shadow:inset 2px 0 0 #D8A486}
-.nav button.on svg{color:#D8A486}
-.nav .bdg{background:#D8A486;color:#15271E}
+.nav button:hover{background:rgba(244,240,230,.06)}
+.nav button.on,.app[dir=ltr] .nav button.on{background:#234735;color:#F4F0E6;box-shadow:inset -2px 0 0 #D9A486}
+.app[dir=ltr] .nav button.on{box-shadow:inset 2px 0 0 #D9A486}
+.nav button.on svg{color:#D9A486}
+.nav .bdg{background:#D9A486;color:#10291F}
 .ent{border-color:var(--rail-line);background:rgba(242,241,232,.04);border-radius:6px}
 .rail .icon-btn{border-radius:5px;border-color:var(--rail-line);color:var(--rail-ink)}
 
@@ -764,10 +764,10 @@ a{color:var(--accent)}
 .sbar{border-radius:3px}
 
 /* --- sign-in overlay, tour --- */
-#sbauth{background:radial-gradient(1000px 520px at 80% -10%,rgba(183,137,111,.22),transparent 60%),#111F18}
+#sbauth{background:radial-gradient(1000px 520px at 80% -10%,rgba(217,164,134,.2),transparent 60%),#10291F}
 #sbauth .sb-card{border-radius:8px;border:1px solid var(--line)}
 #sbauth .sb-banner{border-radius:8px 8px 0 0}
-#tour .hole{outline-color:#D8A486;border-radius:6px}
+#tour .hole{outline-color:#D9A486;border-radius:6px}
 #tour .tcard{border-radius:8px}
 
 /* --- motion: calm --- */
@@ -2041,7 +2041,7 @@ function vAdmin(){if(!U.sbPA||!SB)return `<div class="empty"><b>غير متاح<
   if(!days.length)days.push(today0);
   const um=Object.fromEntries(((P&&P.uDaily)||[]).map(x=>[x.d,x.n])),gm=Object.fromEntries(((P&&P.gDaily)||[]).map(x=>[x.d,x.n]));
   const mx=Math.max(1,...days.map(d=>(um[d]||0)+(gm[d]||0))),W=Math.max(days.length*10,60);
-  const bars=`<svg class="adm-bars" viewBox="0 0 ${W} 90" preserveAspectRatio="none" role="img" aria-label="الاستخدام اليومي">${days.map((d,i)=>{const u=um[d]||0,g=gm[d]||0,h=u/mx*80,hg=g/mx*80;return `<rect x="${i*10+1}" y="${88-h}" width="8" height="${Math.max(h,u?2:.6)}" rx="1.5"><title>${d}: ${u}</title></rect>${g?`<rect class="g" x="${i*10+1}" y="${88-h-hg}" width="8" height="${Math.max(hg,2)}" rx="1.5"><title>${d}: ${g} ضيف</title></rect>`:""}`}).join("")}</svg><div class="legend adm-leg"><span><i style="background:var(--accent)"></i>مستخدمون مسجّلون</span><span><i style="background:#8FB8C9"></i>ضيوف دون حساب</span></div><div class="adm-axis"><span>${days[0]}</span><span>${days[days.length-1]}</span></div>`;
+  const bars=`<svg class="adm-bars" viewBox="0 0 ${W} 90" preserveAspectRatio="none" role="img" aria-label="الاستخدام اليومي">${days.map((d,i)=>{const u=um[d]||0,g=gm[d]||0,h=u/mx*80,hg=g/mx*80;return `<rect x="${i*10+1}" y="${88-h}" width="8" height="${Math.max(h,u?2:.6)}" rx="1.5"><title>${d}: ${u}</title></rect>${g?`<rect class="g" x="${i*10+1}" y="${88-h-hg}" width="8" height="${Math.max(hg,2)}" rx="1.5"><title>${d}: ${g} ضيف</title></rect>`:""}`}).join("")}</svg><div class="legend adm-leg"><span><i style="background:var(--accent)"></i>مستخدمون مسجّلون</span><span><i style="background:#B8CBAA"></i>ضيوف دون حساب</span></div><div class="adm-axis"><span>${days[0]}</span><span>${days[days.length-1]}</span></div>`;
   const ctl=(A.ctl||[]).filter(x=>BY[x.id]).map(x=>Object.assign({gap:x.p+x.x,rate:x.orgs?(x.p+x.x)/x.orgs:0},x));
   const top=ctl.filter(x=>x.gap).sort((a,b)=>b.gap-a.gap||b.rate-a.rate).slice(0,12);
   const paper=ctl.filter(x=>x.paper).sort((a,b)=>b.paper-a.paper).slice(0,6);

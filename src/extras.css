@@ -82,7 +82,7 @@
 #sbauth .sb-banner{display:block;width:calc(100% + 44px);margin:-22px -22px 4px;border-radius:16px 16px 0 0;aspect-ratio:800/330;object-fit:cover;background:#05101C}
 #sbauth .sb-brand{margin:0}
 
-.adm-bars rect.g{fill:#8FB8C9}
+.adm-bars rect.g{fill:#B8CBAA}
 .adm-leg{margin-top:6px}
 
 .ccc-who{display:grid;gap:4px;margin:0 0 12px;padding:10px 12px;border-radius:10px;background:var(--surface2);border:1px solid var(--line);font-size:.88rem;line-height:1.7}
