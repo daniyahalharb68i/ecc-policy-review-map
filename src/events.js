@@ -214,7 +214,7 @@ document.addEventListener("drop",e=>{const z=e.target.closest&&e.target.closest(
 $("#tourbtn").onclick=startTour;
 $("#menu").onclick=()=>{const r=$("#rail");const o=r.classList.toggle("open");$("#menu").setAttribute("aria-expanded",String(o))};
 $("#lang").onclick=()=>setLang(U.lang==="en"?"ar":"en");
-$("#theme").onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;r.dataset.theme=dark?"light":"dark";try{localStorage.setItem("ecc_theme",r.dataset.theme)}catch(e){}};
+$("#theme").onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme!=="light";r.dataset.theme=dark?"light":"dark";try{localStorage.setItem("ecc_theme",r.dataset.theme)}catch(e){}};
 try{const th=localStorage.getItem("ecc_theme");if(th)document.documentElement.dataset.theme=th}catch(e){}
 
 // ===== Boot =====

@@ -12,18 +12,18 @@ function reportPages(lang,no){
   const et=c.type?(en?ET_EN[c.type]:ETYPES.find(x=>x[0]===c.type)[1]):R("غير محدد","Not set");
   const cls=CLS.find(x=>x[0]===(rp.cls||"internal"));const clsT=en?cls[2]:cls[1];
   const date=c.date||today(),dir=en?"ltr":"rtl",al=en?"left":"right";
-  const css=`font-family:'Inter','Changa',Tahoma,sans-serif;color:#263445;direction:${dir};text-align:${al};letter-spacing:0`;
-  const th=`style="background:#E3F1F2;color:#101F35;font-weight:600;font-size:11px;padding:7px 8px;border-bottom:1px solid #DCE5ED;text-align:${al}"`;
+  const css=`font-family:'Inter Tight','IBM Plex Sans Arabic',Tahoma,sans-serif;color:#213C2C;direction:${dir};text-align:${al};letter-spacing:0`;
+  const th=`style="background:#F3E8E1;color:#1A382B;font-weight:600;font-size:11px;padding:7px 8px;border-bottom:1px solid #D9DDD2;text-align:${al}"`;
   const td=`style="padding:6px 8px;border-bottom:1px solid #e1e7ef;font-size:11px;vertical-align:top;text-align:${al}"`;
   const tbl=(head,rows)=>`<table style="width:100%;border-collapse:collapse;margin-top:8px"><tr>${head.map(h=>`<th ${th}>${h}</th>`).join("")}</tr>${rows.map(r=>`<tr>${r.map(x=>`<td ${td}>${x}</td>`).join("")}</tr>`).join("")}</table>`;
-  const h2=t=>`<h2 style="font-family:'Source Serif 4','Changa',serif;font-size:15px;color:#101F35;margin:18px 0 6px;font-weight:700">${t}</h2>`;
+  const h2=t=>`<h2 style="font-family:'Inter Tight','IBM Plex Sans Arabic',sans-serif;font-size:15px;color:#1A382B;margin:18px 0 6px;font-weight:700">${t}</h2>`;
   const st=k=>en?ST_EN[k]:ST[k][0];
   const pages=[];
   // cover
   pages.push({cover:true,body:`<div style="height:100%;display:flex;flex-direction:column;justify-content:space-between">
     <div><div style="display:flex;align-items:center;gap:12px"><img src="${LOGO_MARK}" alt="" style="width:46px;height:46px;border-radius:10px"><div style="font-size:12px;color:#5b6676;letter-spacing:0">${R("تقرير مراجعة","Review report")} · ${no}</div></div>
-      <div style="height:5px;width:96px;border-radius:3px;background:linear-gradient(90deg,#176B73,#2FA3AD);margin:14px 0 26px"></div>
-      <h1 style="font-family:'Source Serif 4','Changa',serif;font-size:29px;line-height:1.4;margin:0 0 10px;font-weight:800;color:#101F35">${R("تقرير مراجعة الالتزام بالضوابط الأساسية للأمن السيبراني","Essential Cybersecurity Controls Compliance Review Report")}</h1>
+      <div style="height:5px;width:96px;border-radius:3px;background:linear-gradient(90deg,#945B46,#B7896F);margin:14px 0 26px"></div>
+      <h1 style="font-family:'Inter Tight','IBM Plex Sans Arabic',sans-serif;font-size:31px;line-height:1.3;margin:0 0 10px;font-weight:500;color:#1A382B">${R("تقرير مراجعة الالتزام بالضوابط الأساسية للأمن السيبراني","Essential Cybersecurity Controls Compliance Review Report")}</h1>
       <div style="font-size:15px;color:#3b4757">ECC-2:2024</div>
       <div style="margin-top:40px;font-size:22px;font-weight:600">${esc(c.entity||R("اسم الجهة","Entity name"))}</div></div>
     <div>${tbl([R("البند","Item"),R("القيمة","Value")],[[R("رقم التقرير","Report number"),no],[R("الإصدار","Version"),esc(rp.ver||"1.0")],[R("تاريخ التقييم","Assessment date"),date],[R("تاريخ الإصدار","Issue date"),today()],[R("التصنيف","Classification"),`<b>${clsT}</b>`]])}

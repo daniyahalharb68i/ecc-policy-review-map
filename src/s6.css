@@ -1,0 +1,107 @@
+
+/* ===== Forest & copper design system (style reference: segmentsix.de; own implementation) =====
+   Dark forest is the default; the theme button switches to the light "paper" variant.
+   Type: Inter Tight (Latin) + IBM Plex Sans Arabic. Headlines regular weight; tight tracking for Latin only. */
+:root:not([data-theme="light"]){
+  --bg:#111F18; --surface:#1A3326; --surface2:#213C2C; --ink:#E9EBE0; --head:#F2F1E8; --muted:#B4C3B2; --line:#2F4A3A;
+  --accent:#D3A07F; --accent-ink:#15271E; --accent-soft:rgba(211,160,127,.14);
+  --spark:#B7896F; --spark-ink:#15271E; --spark-soft:rgba(183,137,111,.16); --sun:#E0B15C;
+  --sage:#C7D1BF; --sage-ink:#15271E; --raised:#2C4E39;
+  --rail:#183124; --rail2:#183124; --rail-ink:#F2F1E8; --rail-muted:#A9BBA8; --rail-line:#2F4A3A;
+  --ok:#7CC796; --warn:#E3B45F; --bad:#EE7A68; --na:#9DAA9F; --ai:#C4B5F0;
+  --shadow:none; --lift:0 14px 34px rgba(0,0,0,.35); color-scheme:dark}
+:root[data-theme="light"]{
+  --bg:#F6F5EF; --surface:#FFFFFF; --surface2:#EEEEE5; --ink:#213C2C; --head:#1A382B; --muted:#5E685E; --line:#D9DDD2;
+  --accent:#945B46; --accent-ink:#FFFFFF; --accent-soft:#F3E8E1;
+  --spark:#945B46; --spark-ink:#FFFFFF; --spark-soft:#F3E8E1; --sun:#A8701A;
+  --sage:#D2DFCB; --sage-ink:#1A382B; --raised:#EEEBE2;
+  --rail:#213C2C; --rail2:#213C2C; --rail-ink:#F2F1E8; --rail-muted:#C7D3C4; --rail-line:#3D5244;
+  --ok:#2F7A4A; --warn:#9A6512; --bad:#B4432F; --na:#6B746B; --ai:#5D49A8;
+  --shadow:none; --lift:0 12px 28px rgba(33,60,44,.12); color-scheme:light}
+:root{
+  --body:"Inter Tight","IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+  --display:"Inter Tight","IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+  --title:"Inter Tight","IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.22,1,.36,1)}
+body,.app{background:var(--bg);color:var(--ink);font-family:var(--body)}
+::selection{background:color-mix(in srgb,var(--spark) 45%,transparent)}
+
+/* --- headlines: regular weight, large; Latin gets tight tracking (never on Arabic: it breaks letter joining) --- */
+.head h1{font-family:var(--title);font-weight:400;font-size:clamp(1.7rem,1.2rem + 1.6vw,2.5rem);line-height:1.15;color:var(--head)}
+.app[dir=ltr] .head h1{letter-spacing:-.035em}
+.head p{color:var(--accent);font-size:.98rem;margin-top:6px}
+.app[dir=ltr] .card>h2{letter-spacing:-.015em}
+.card>h2,.h2{font-weight:500;font-size:1.05rem}
+.eyebrow{display:block;font-size:.7rem;color:var(--sage);margin-bottom:8px;font-weight:500}
+:root[data-theme="light"] .eyebrow{color:var(--muted)}
+.app[dir=ltr] .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.66rem}
+.eyebrow .num{color:var(--accent);margin-inline-start:6px}
+.head{border-bottom:1px solid var(--line);padding-bottom:18px}
+.kpi b,.semi b,.mtr b{font-weight:400}
+.app[dir=ltr] .kpi b{letter-spacing:-.03em}
+
+/* --- surfaces: flat, thin lines, small radius --- */
+.card,.kpi,.banner,.att>div,.gcard,.phase,.dtabs button,.box,.step,.confirm,.aiout{border-radius:6px;box-shadow:none}
+.card{border-color:var(--line)}
+.card.raise{box-shadow:none}
+textarea,input,select{border-radius:5px;background:color-mix(in srgb,var(--bg) 55%,var(--surface));border-color:var(--line);color:var(--ink)}
+textarea:focus,input:focus,select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
+.tag{border-radius:4px}
+.pill{border-radius:4px}
+
+/* --- buttons: copper primary, sage secondary, outlined quiet --- */
+.btn{border-radius:5px;background:var(--spark);border-color:var(--spark);color:var(--spark-ink);font-weight:500;transition:background .35s var(--ease),transform .35s var(--ease),box-shadow .35s var(--ease)}
+.btn:hover{background:color-mix(in srgb,var(--spark) 82%,#fff);box-shadow:none;transform:translateY(-1px)}
+.btn.spark{background:var(--spark);border-color:var(--spark);color:var(--spark-ink)}
+.btn.ghost{background:transparent;color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.btn.ghost:hover{background:var(--accent-soft)}
+.btn.quiet{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.quiet:hover{border-color:var(--accent);background:transparent}
+.btn.danger{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn.danger.ghost{background:transparent;color:var(--bad);border-color:color-mix(in srgb,var(--bad) 45%,var(--line))}
+.btn.ai{background:color-mix(in srgb,var(--ai) 16%,transparent);border-color:color-mix(in srgb,var(--ai) 45%,var(--line));color:var(--ai)}
+.seg{border-radius:5px;border-color:var(--line)}
+.seg button{border-radius:4px}
+.seg button.on{background:var(--sage);color:var(--sage-ink)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* --- rail --- */
+.rail{background:var(--rail);border-inline-end:1px solid var(--rail-line)}
+.brand::after{display:none}
+.brand{border-bottom:1px solid var(--rail-line);padding-bottom:14px}
+.brand b{font-family:var(--display);font-weight:500}
+.nav h6{color:var(--rail-muted);font-weight:500}
+.app[dir=ltr] .nav h6{text-transform:uppercase;letter-spacing:.14em;font-size:.62rem}
+.nav button{border-radius:5px;color:var(--rail-ink)}
+.nav button:hover{background:rgba(242,241,232,.06)}
+.nav button.on,.app[dir=ltr] .nav button.on{background:#2C4E39;color:#F2F1E8;box-shadow:inset -2px 0 0 #D8A486}
+.app[dir=ltr] .nav button.on{box-shadow:inset 2px 0 0 #D8A486}
+.nav button.on svg{color:#D8A486}
+.nav .bdg{background:#D8A486;color:#15271E}
+.ent{border-color:var(--rail-line);background:rgba(242,241,232,.04);border-radius:6px}
+.rail .icon-btn{border-radius:5px;border-color:var(--rail-line);color:var(--rail-ink)}
+
+/* --- review / roadmap details --- */
+.dtabs button.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.pager .pg{border-radius:6px}
+.pager .next{background:var(--spark);border-color:var(--spark);color:var(--spark-ink)}
+.pager .next small{color:color-mix(in srgb,var(--spark-ink) 70%,transparent)}
+.nca-links a,.nca-a{color:var(--accent)}
+.b-w,.pill.s-w::before{background:var(--sage)}
+.sbar{border-radius:3px}
+
+/* --- sign-in overlay, tour --- */
+#sbauth{background:radial-gradient(1000px 520px at 80% -10%,rgba(183,137,111,.22),transparent 60%),#111F18}
+#sbauth .sb-card{border-radius:8px;border:1px solid var(--line)}
+#sbauth .sb-banner{border-radius:8px 8px 0 0}
+#tour .hole{outline-color:#D8A486;border-radius:6px}
+#tour .tcard{border-radius:8px}
+
+/* --- motion: calm --- */
+#view.enter{animation:pageIn .5s var(--ease) both}
+@keyframes pageIn{from{opacity:0;transform:translateY(10px)}}
+.card,.kpi,.gcard{transition:border-color .35s var(--ease)}
+button.kpi:hover,.gcard:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+@media(prefers-reduced-motion:reduce){#view.enter{animation:none}.btn:hover{transform:none}}
