@@ -110,3 +110,7 @@ Object.assign(I18N.d,{
 "ألصق نص السياسة أولًا":"Paste the policy text first","اختر مكونًا واحدًا على الأقل":"Select at least one subdomain","#. المكونات التي تغطيها هذه السياسة":"#. Subdomains this policy covers"
 });
 Object.assign(I18N.d,{". التحليل يرى الرموز فقط، ثم تُعاد الأسماء الحقيقية في النتائج على جهازك.":". The analysis only sees the tokens; the real names are put back into the results on your device.","إخفاء «#» باسم:":"Hide “#” as:"});
+
+Object.assign(I18N.d,{"تنزيل المنقّاة (Word)":"Download cleaned (Word)","تنزيل المنقّاة (PDF)":"Download cleaned (PDF)","تنزيل المنقّاة (نص)":"Download cleaned (text)","جارٍ إنشاء الملف":"Creating the file",
+"نسخة PDF المنقّاة تحافظ على شكل الصفحات، لكنها تُحفظ صورًا: النص المخفي يُزال فعلًا ولا يمكن استرجاعه أو نسخه من الملف.":"The cleaned PDF keeps the page layout but is saved as images: hidden text is truly removed and cannot be recovered or copied from the file.",
+"نُزّلت نسخة PDF منقّاة بنفس شكل الأصل":"Downloaded a cleaned PDF with the original layout","نُزّل ملف Word منقّى بنفس التنسيق":"Downloaded a cleaned Word file with the same formatting","نُزّلت النسخة المنقّاة":"Downloaded the cleaned copy","تعذّر إنشاء الملف بنفس الصيغة، فنُزّلت نسخة نصية.":"Could not create the same format, so a text copy was downloaded."});

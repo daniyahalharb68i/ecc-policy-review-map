@@ -42,6 +42,7 @@ function rdMap(){const m={};Object.values(U.rd.ents).forEach(e=>{if(e.on)m["["+e
 function rdRestore(x,m){m=m||rdMap();if(typeof x==="string"){let s=x;Object.keys(m).sort((a,b)=>b.length-a.length).forEach(k=>{s=s.split(k).join(m[k])});return s}
   if(Array.isArray(x))return x.map(v=>rdRestore(v,m));if(x&&typeof x==="object"){const o={};for(const k in x)o[k]=rdRestore(x[k],m);return o}return x}
 const rdList=txt=>{const seen=new Set(),L=[];rdSpans(txt).forEach(f=>{if(seen.has(f.id))return;seen.add(f.id);const en=U.rd.ents[f.id];if(en)L.push(Object.assign({n:rdSpans(txt).filter(z=>z.id===f.id).length},en))});return L};
+const rdFmt=()=>{const f=U.anaFile;if(!f)return "(نص)";const e=(f.name.split(".").pop()||"").toLowerCase();return e==="docx"?"(Word)":e==="pdf"?"(PDF)":"(نص)"};
 const rdTypeName=t=>t==="term"?"كلمة أضفتها":(RD_TYPES.find(x=>x[0]===t)||[0,t])[1];
 
 function vRedact(){const txt=U.anaTxt||"";const has=txt.length>0;const L=has?rdList(txt):[];const on=L.filter(e=>e.on).length;
@@ -60,9 +61,10 @@ function vRedact(){const txt=U.anaTxt||"";const has=txt.length>0;const L=has?rdL
      <p class="note" style="margin:6px 0 0">أو ظلّل أي نص في المعاينة أدناه بالماوس أو بإصبعك، واختر له اسمًا.</p>
      ${U.rd.terms.length?`<div class="rd-terms">${U.rd.terms.map((t,i)=>`<span class="tag">${esc(t.val)} ← [${esc(t.label||"مخفي")}]<button class="rd-x" data-rd="delterm" data-v="${i}" aria-label="إزالة">×</button></span>`).join("")}</div>`:""}</div></div>
    ${has?`<div class="rd-bar"><span><b class="num">${on}</b> عنصرًا سيُخفى${L.length>on?` · <span class="note">${L.length-on} مستثنى</span>`:""}</span>
-     <span class="row">${seg([["mark","الأصل مع التظليل"],["clean","النسخة المنقّاة"]],U.rd.view,"rdview","x","v")}<button class="btn sm quiet" data-rd="copy">نسخ المنقّاة</button><button class="btn sm quiet" data-rd="dl">تنزيل المنقّاة</button></span></div>
+     <span class="row">${seg([["mark","الأصل مع التظليل"],["clean","النسخة المنقّاة"]],U.rd.view,"rdview","x","v")}<button class="btn sm quiet" data-rd="copy">نسخ المنقّاة</button>${U.rdBusy?`<span class="thinking"><i></i>جارٍ إنشاء الملف <span id="rd-busy" class="num">${esc(U.rdBusy)}</span></span>`:`<button class="btn sm" data-rd="dl">تنزيل المنقّاة ${rdFmt()}</button>`}</span></div>
     <div class="rd-prev" id="rd-prev" dir="auto" data-notr>${prev}${txt.length>prevSrc.length?`<span class="note">\n… تعرض المعاينة أول 60,000 حرف، والإخفاء يشمل النص كاملًا.</span>`:""}</div>
     ${L.length?`<details class="rd-list" ${L.length<=12?"open":""}><summary>العناصر المخفية (${L.length}) — غيّر اسم أي رمز أو استثنِ عنصرًا</summary><div class="tw"><table><thead><tr><th></th><th>النوع</th><th>النص الأصلي</th><th>يظهر للتحليل باسم</th><th>مرات</th></tr></thead><tbody>${L.map(e=>`<tr class="${e.on?"":"rd-off"}"><td><input type="checkbox" data-rd="ent" data-v="${esc(e.id)}" ${e.on?"checked":""} aria-label="إخفاء"></td><td class="nw">${esc(rdTypeName(e.type))}</td><td data-notr dir="auto">${esc(e.val)}</td><td><input class="rd-tok" data-rd="tok" data-v="${esc(e.id)}" value="${esc(e.tok)}" aria-label="الاسم البديل"></td><td class="num">${e.n}</td></tr>`).join("")}</tbody></table></div></details>`:`<p class="note">لم يُكتشف شيء حساس تلقائيًا. أضف كلماتك بنفسك إن لزم.</p>`}
+    ${U.anaFile&&/\.pdf$/i.test(U.anaFile.name)?`<p class="note" style="margin:8px 0 0">نسخة PDF المنقّاة تحافظ على شكل الصفحات، لكنها تُحفظ صورًا: النص المخفي يُزال فعلًا ولا يمكن استرجاعه أو نسخه من الملف.</p>`:""}
     <p class="note" style="margin:8px 0 0">الاكتشاف التلقائي يعتمد على أنماط معروفة، وقد تفوته أسماء الأشخاص والأنظمة الداخلية. راجع المعاينة قبل الإرسال؛ المراجعة النهائية مسؤوليتك.</p>`
    :`<p class="note">ارفع السياسة أو الصق نصها في الخطوة 1 لتظهر المعاينة هنا.</p>`}</section>`}
 
@@ -73,7 +75,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-rd],[data-
   if(a==="add"){const v=($("#rd-val")||{}).value||"",l=($("#rd-lab")||{}).value||"";rdAddTerm(v,l)}
   else if(a==="delterm"){U.rd.terms.splice(+t.dataset.v,1);rdSave();render()}
   else if(a==="copy"){const c=rdClean(U.anaTxt);(navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(()=>toast("نُسخت النسخة المنقّاة")).catch(()=>toast("تعذّر النسخ"))}
-  else if(a==="dl"){const nm=(rdClean(U.anaName||"")||"policy").replace(/[\\/:*?"<>|]+/g,"_").slice(0,60);save(nm+"-sanitized.txt","﻿"+rdClean(U.anaTxt),"text/plain;charset=utf-8")}});
+  else if(a==="dl")rdDownload();else if(a==="dl-old"){const nm="policy";save(nm+"-sanitized.txt","﻿"+rdClean(U.anaTxt),"text/plain;charset=utf-8")}});
 document.addEventListener("change",e=>{const t=e.target.closest("[data-rd]");if(!t)return;const a=t.dataset.rd;
   if(a==="on"){U.rd.on=t.checked;rdSave();render()}
   else if(a==="type"){U.rd.types[t.dataset.v]=t.checked?1:0;rdSave();render()}

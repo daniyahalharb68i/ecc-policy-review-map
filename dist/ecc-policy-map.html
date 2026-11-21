@@ -1188,6 +1188,10 @@ Object.assign(I18N.d,{
 "ألصق نص السياسة أولًا":"Paste the policy text first","اختر مكونًا واحدًا على الأقل":"Select at least one subdomain","#. المكونات التي تغطيها هذه السياسة":"#. Subdomains this policy covers"
 });
 Object.assign(I18N.d,{". التحليل يرى الرموز فقط، ثم تُعاد الأسماء الحقيقية في النتائج على جهازك.":". The analysis only sees the tokens; the real names are put back into the results on your device.","إخفاء «#» باسم:":"Hide “#” as:"});
+
+Object.assign(I18N.d,{"تنزيل المنقّاة (Word)":"Download cleaned (Word)","تنزيل المنقّاة (PDF)":"Download cleaned (PDF)","تنزيل المنقّاة (نص)":"Download cleaned (text)","جارٍ إنشاء الملف":"Creating the file",
+"نسخة PDF المنقّاة تحافظ على شكل الصفحات، لكنها تُحفظ صورًا: النص المخفي يُزال فعلًا ولا يمكن استرجاعه أو نسخه من الملف.":"The cleaned PDF keeps the page layout but is saved as images: hidden text is truly removed and cannot be recovered or copied from the file.",
+"نُزّلت نسخة PDF منقّاة بنفس شكل الأصل":"Downloaded a cleaned PDF with the original layout","نُزّل ملف Word منقّى بنفس التنسيق":"Downloaded a cleaned Word file with the same formatting","نُزّلت النسخة المنقّاة":"Downloaded the cleaned copy","تعذّر إنشاء الملف بنفس الصيغة، فنُزّلت نسخة نصية.":"Could not create the same format, so a text copy was downloaded."});
 </script>
 <script>document.documentElement.lang="ar";document.documentElement.dir="rtl";
 // ===== Index =====
@@ -1929,6 +1933,7 @@ function rdMap(){const m={};Object.values(U.rd.ents).forEach(e=>{if(e.on)m["["+e
 function rdRestore(x,m){m=m||rdMap();if(typeof x==="string"){let s=x;Object.keys(m).sort((a,b)=>b.length-a.length).forEach(k=>{s=s.split(k).join(m[k])});return s}
   if(Array.isArray(x))return x.map(v=>rdRestore(v,m));if(x&&typeof x==="object"){const o={};for(const k in x)o[k]=rdRestore(x[k],m);return o}return x}
 const rdList=txt=>{const seen=new Set(),L=[];rdSpans(txt).forEach(f=>{if(seen.has(f.id))return;seen.add(f.id);const en=U.rd.ents[f.id];if(en)L.push(Object.assign({n:rdSpans(txt).filter(z=>z.id===f.id).length},en))});return L};
+const rdFmt=()=>{const f=U.anaFile;if(!f)return "(نص)";const e=(f.name.split(".").pop()||"").toLowerCase();return e==="docx"?"(Word)":e==="pdf"?"(PDF)":"(نص)"};
 const rdTypeName=t=>t==="term"?"كلمة أضفتها":(RD_TYPES.find(x=>x[0]===t)||[0,t])[1];
 
 function vRedact(){const txt=U.anaTxt||"";const has=txt.length>0;const L=has?rdList(txt):[];const on=L.filter(e=>e.on).length;
@@ -1947,9 +1952,10 @@ function vRedact(){const txt=U.anaTxt||"";const has=txt.length>0;const L=has?rdL
      <p class="note" style="margin:6px 0 0">أو ظلّل أي نص في المعاينة أدناه بالماوس أو بإصبعك، واختر له اسمًا.</p>
      ${U.rd.terms.length?`<div class="rd-terms">${U.rd.terms.map((t,i)=>`<span class="tag">${esc(t.val)} ← [${esc(t.label||"مخفي")}]<button class="rd-x" data-rd="delterm" data-v="${i}" aria-label="إزالة">×</button></span>`).join("")}</div>`:""}</div></div>
    ${has?`<div class="rd-bar"><span><b class="num">${on}</b> عنصرًا سيُخفى${L.length>on?` · <span class="note">${L.length-on} مستثنى</span>`:""}</span>
-     <span class="row">${seg([["mark","الأصل مع التظليل"],["clean","النسخة المنقّاة"]],U.rd.view,"rdview","x","v")}<button class="btn sm quiet" data-rd="copy">نسخ المنقّاة</button><button class="btn sm quiet" data-rd="dl">تنزيل المنقّاة</button></span></div>
+     <span class="row">${seg([["mark","الأصل مع التظليل"],["clean","النسخة المنقّاة"]],U.rd.view,"rdview","x","v")}<button class="btn sm quiet" data-rd="copy">نسخ المنقّاة</button>${U.rdBusy?`<span class="thinking"><i></i>جارٍ إنشاء الملف <span id="rd-busy" class="num">${esc(U.rdBusy)}</span></span>`:`<button class="btn sm" data-rd="dl">تنزيل المنقّاة ${rdFmt()}</button>`}</span></div>
     <div class="rd-prev" id="rd-prev" dir="auto" data-notr>${prev}${txt.length>prevSrc.length?`<span class="note">\n… تعرض المعاينة أول 60,000 حرف، والإخفاء يشمل النص كاملًا.</span>`:""}</div>
     ${L.length?`<details class="rd-list" ${L.length<=12?"open":""}><summary>العناصر المخفية (${L.length}) — غيّر اسم أي رمز أو استثنِ عنصرًا</summary><div class="tw"><table><thead><tr><th></th><th>النوع</th><th>النص الأصلي</th><th>يظهر للتحليل باسم</th><th>مرات</th></tr></thead><tbody>${L.map(e=>`<tr class="${e.on?"":"rd-off"}"><td><input type="checkbox" data-rd="ent" data-v="${esc(e.id)}" ${e.on?"checked":""} aria-label="إخفاء"></td><td class="nw">${esc(rdTypeName(e.type))}</td><td data-notr dir="auto">${esc(e.val)}</td><td><input class="rd-tok" data-rd="tok" data-v="${esc(e.id)}" value="${esc(e.tok)}" aria-label="الاسم البديل"></td><td class="num">${e.n}</td></tr>`).join("")}</tbody></table></div></details>`:`<p class="note">لم يُكتشف شيء حساس تلقائيًا. أضف كلماتك بنفسك إن لزم.</p>`}
+    ${U.anaFile&&/\.pdf$/i.test(U.anaFile.name)?`<p class="note" style="margin:8px 0 0">نسخة PDF المنقّاة تحافظ على شكل الصفحات، لكنها تُحفظ صورًا: النص المخفي يُزال فعلًا ولا يمكن استرجاعه أو نسخه من الملف.</p>`:""}
     <p class="note" style="margin:8px 0 0">الاكتشاف التلقائي يعتمد على أنماط معروفة، وقد تفوته أسماء الأشخاص والأنظمة الداخلية. راجع المعاينة قبل الإرسال؛ المراجعة النهائية مسؤوليتك.</p>`
    :`<p class="note">ارفع السياسة أو الصق نصها في الخطوة 1 لتظهر المعاينة هنا.</p>`}</section>`}
 
@@ -1960,7 +1966,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-rd],[data-
   if(a==="add"){const v=($("#rd-val")||{}).value||"",l=($("#rd-lab")||{}).value||"";rdAddTerm(v,l)}
   else if(a==="delterm"){U.rd.terms.splice(+t.dataset.v,1);rdSave();render()}
   else if(a==="copy"){const c=rdClean(U.anaTxt);(navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(()=>toast("نُسخت النسخة المنقّاة")).catch(()=>toast("تعذّر النسخ"))}
-  else if(a==="dl"){const nm=(rdClean(U.anaName||"")||"policy").replace(/[\\/:*?"<>|]+/g,"_").slice(0,60);save(nm+"-sanitized.txt","﻿"+rdClean(U.anaTxt),"text/plain;charset=utf-8")}});
+  else if(a==="dl")rdDownload();else if(a==="dl-old"){const nm="policy";save(nm+"-sanitized.txt","﻿"+rdClean(U.anaTxt),"text/plain;charset=utf-8")}});
 document.addEventListener("change",e=>{const t=e.target.closest("[data-rd]");if(!t)return;const a=t.dataset.rd;
   if(a==="on"){U.rd.on=t.checked;rdSave();render()}
   else if(a==="type"){U.rd.types[t.dataset.v]=t.checked?1:0;rdSave();render()}
@@ -2010,6 +2016,71 @@ function vCov(){const R=U.cvRes;if(!R)return "";const c={covered:0,weak:0,missin
    <div class="verd">${R.items.sort((a,b)=>a.p-b.p).map(i=>{const v=VD[i.v];return `<div><span class="idb" data-act="go" data-id="${i.id}">${i.id}</span><div style="display:grid;gap:4px;min-width:0"><div class="row"><span class="pill ${v[1]}">${Math.round(i.p*100)}%</span><span class="note">${esc(short(tx(BY[i.id]),150))}</span></div>
      ${i.miss.length?`<span class="note"><b>كلمات لم تظهر في سياستك:</b> <span data-notr>${esc(i.miss.slice(0,10).join("، "))}</span></span>`:""}</div></div>`}).join("")}</div></section>`}
 document.addEventListener("click",e=>{const t=e.target.closest("[data-rd=cvrun],[data-rd=cvclose]");if(!t)return;if(t.dataset.rd==="cvrun")cvRun();else{U.cvRes=null;render()}});
+
+// ===== Cleaned copy in the same format as the uploaded file (Word stays Word, PDF stays PDF) =====
+// Word: text is replaced inside the document XML, so formatting, tables, headers and footers stay as they are.
+// PDF: every page is redrawn as an image with the hidden parts covered, so the hidden text is truly gone (not just covered).
+const RD_PARTS=/^word\/(document|header\d*|footer\d*|footnotes|endnotes|comments)\.xml$/;
+// cleaned replacement of one string → list of {s,e,tok} on that string
+function rdHits(str){if(!str)return [];return rdSpans(str).map(f=>{const en=U.rd.ents[f.id];return en&&en.on?{s:f.s,e:f.e,tok:"["+en.tok+"]"}:null}).filter(Boolean)}
+async function rdDocx(file){const z=await JSZip.loadAsync(file);const W="http://schemas.openxmlformats.org/wordprocessingml/2006/main";let n=0;
+  for(const path of Object.keys(z.files).filter(p=>RD_PARTS.test(p))){
+    const xml=await z.file(path).async("string");const doc=new DOMParser().parseFromString(xml,"application/xml");if(doc.getElementsByTagName("parsererror").length)continue;
+    const paras=[...doc.getElementsByTagNameNS(W,"p")];
+    for(const p of paras){const ts=[...p.getElementsByTagNameNS(W,"t")];if(!ts.length)continue;
+      const parts=ts.map(t=>t.textContent);const full=parts.join("");const hits=rdHits(full);if(!hits.length)continue;
+      // map each character of the paragraph to its <w:t> node
+      const starts=[];let acc=0;parts.forEach(s=>{starts.push(acc);acc+=s.length});
+      const nodeAt=pos=>{let i=starts.length-1;while(i>0&&starts[i]>pos)i--;return i};
+      const out=parts.slice();
+      hits.sort((a,b)=>b.s-a.s).forEach(h=>{const a=nodeAt(h.s),b=nodeAt(Math.max(h.s,h.e-1));
+        for(let i=b;i>=a;i--){const s0=starts[i],txt=out[i]==null?"":out[i];const from=Math.max(0,h.s-s0),to=Math.min(parts[i].length,h.e-s0);
+          out[i]=i===a?txt.slice(0,from)+h.tok+txt.slice(to):txt.slice(to)}n++});
+      ts.forEach((t,i)=>{t.textContent=out[i];t.setAttributeNS("http://www.w3.org/XML/1998/namespace","xml:space","preserve")})}
+    z.file(path,new XMLSerializer().serializeToString(doc))}
+  // document properties can carry names: clear author, last editor, company
+  for(const p of ["docProps/core.xml","docProps/app.xml"]){const f=z.file(p);if(!f)continue;let x=await f.async("string");
+    x=x.replace(/<(dc:creator|cp:lastModifiedBy|Company|Manager)>[\s\S]*?<\/\1>/g,"<$1></$1>").replace(/<(dc:title|dc:subject|cp:keywords|dc:description)>([\s\S]*?)<\/\1>/g,(m,t,v)=>`<${t}>${esc(rdClean(v.replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">")))}</${t}>`);z.file(p,x)}
+  return {blob:await z.generateAsync({type:"blob",mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"}),n}}
+async function rdPdf(file,onp){await loadScript(PDFJS+"pdf.min.js");for(const s of PDF_LIBS.slice(1))await loadScript(s);
+  const lib=window.pdfjsLib;lib.GlobalWorkerOptions.workerSrc=PDFJS+"pdf.worker.min.js";
+  const src=await lib.getDocument({data:await file.arrayBuffer()}).promise;let pdf=null,n=0;
+  const ink=getComputedStyle(document.documentElement).getPropertyValue("--bg").trim()||"#10291F";
+  for(let pn=1;pn<=src.numPages;pn++){if(onp)onp(pn,src.numPages);const page=await src.getPage(pn);const vp=page.getViewport({scale:2});
+    const cv=document.createElement("canvas");cv.width=Math.ceil(vp.width);cv.height=Math.ceil(vp.height);const ctx=cv.getContext("2d");
+    ctx.fillStyle="#fff";ctx.fillRect(0,0,cv.width,cv.height);await page.render({canvasContext:ctx,viewport:vp}).promise;
+    const tc=await page.getTextContent();const items=tc.items.filter(i=>i.str);
+    // page text with item boundaries, so a hit can be traced back to the items it covers
+    let full="";const pos=items.map(it=>{const s=full.length;full+=it.str+" ";return s});
+    const hits=rdHits(full);
+    hits.forEach(h=>{items.forEach((it,k)=>{const s0=pos[k],s1=s0+it.str.length;const a=Math.max(h.s,s0),b=Math.min(h.e,s1);if(a>=b)return;
+      const m=lib.Util.transform(vp.transform,it.transform);const fh=Math.hypot(m[2],m[3]);const w=it.width*vp.scale;const x0=m[4],yb=m[5];
+      const rtl=it.dir==="rtl"||/[؀-ۿ]/.test(it.str);
+      // measure real glyph widths (as a ratio of the whole item) instead of assuming equal-width characters
+      const fam=((tc.styles||{})[it.fontName]||{}).fontFamily||"sans-serif";ctx.font=`100px ${fam}`;
+      const mw=t=>ctx.measureText(t).width,tot=mw(it.str)||1;
+      let f0=mw(it.str.slice(0,a-s0))/tot,f1=mw(it.str.slice(0,b-s0))/tot;if(rtl){const t=f0;f0=1-f1;f1=1-t}
+      const pad=fh*.35,bx=x0+w*f0-pad,bw=w*(f1-f0)+pad*2,by=yb-fh*1.02,bh=fh*1.3;
+      ctx.fillStyle=ink;ctx.fillRect(bx,by,bw,bh);
+      if(a===h.s){ctx.fillStyle="#F4F0E6";let fs=Math.min(bh*.62,26);ctx.font=`500 ${fs}px "IBM Plex Sans Arabic","Inter Tight",sans-serif`;
+        while(fs>7&&ctx.measureText(h.tok).width>bw-4){fs-=1;ctx.font=`500 ${fs}px "IBM Plex Sans Arabic","Inter Tight",sans-serif`}
+        ctx.textBaseline="middle";ctx.textAlign="center";ctx.direction="rtl";ctx.fillText(h.tok,bx+bw/2,by+bh/2)}});n++});
+    const wmm=vp.width/2*25.4/72,hmm=vp.height/2*25.4/72;
+    if(!pdf)pdf=new window.jspdf.jsPDF({unit:"mm",format:[wmm,hmm],orientation:wmm>hmm?"l":"p",compress:true});else pdf.addPage([wmm,hmm],wmm>hmm?"l":"p");
+    pdf.addImage(cv.toDataURL("image/jpeg",.9),"JPEG",0,0,wmm,hmm)}
+  pdf.setProperties({title:rdClean(U.anaName||"")+" (sanitized)",creator:"ECC Policy Review Map",author:""});
+  return {blob:pdf.output("blob"),n}}
+async function rdDownload(){const f=U.anaFile,base=(rdClean(U.anaName||"")||"policy").replace(/[\\/:*?"<>|]+/g,"_").slice(0,60)+"-sanitized";
+  if(!f){save(base+".txt","﻿"+rdClean(U.anaTxt),"text/plain;charset=utf-8");return}
+  const ext=(f.name.split(".").pop()||"").toLowerCase();U.rdBusy="…";render();
+  try{let r;
+    if(ext==="docx"){if(!window.JSZip)throw new Error("zip");r=await rdDocx(f)}
+    else if(ext==="pdf"){r=await rdPdf(f,(i,t)=>{U.rdBusy=`${i}/${t}`;const b=$("#rd-busy");if(b)b.textContent=U.rdBusy})}
+    else{const t=rdClean(await f.text());r={blob:new Blob(["﻿"+t],{type:"text/plain;charset=utf-8"}),n:1}}
+    U.rdBusy=null;render();
+    if(window.claude&&U.dl){await U.dl.save({filename:base+"."+ext,data:r.blob})}else dlFile(base+"."+ext,r.blob);
+    toast(ext==="pdf"?"نُزّلت نسخة PDF منقّاة بنفس شكل الأصل":ext==="docx"?"نُزّل ملف Word منقّى بنفس التنسيق":"نُزّلت النسخة المنقّاة")}
+  catch(e){U.rdBusy=null;render();toast("تعذّر إنشاء الملف بنفس الصيغة، فنُزّلت نسخة نصية.");save(base+".txt","﻿"+rdClean(U.anaTxt),"text/plain;charset=utf-8")}}
 
 // ===== Standalone (GitHub) version: Supabase database, sign-in, organisations, platform dashboard =====
 // Runs only outside Claude. Implements the small subset of the Claude db API that startDb() uses,
@@ -2381,7 +2452,7 @@ function demoData(){let sd=7;const rnd=()=>(sd=(sd*9301+49297)%233280)/233280;co
   D.docs={a:{name:"سياسة التحكم بالدخول",ver:"2.0",own:"الإدارة المعنية بالأمن السيبراني",apr:"صاحب الصلاحية",ad:"2025-06-10",per:12,subs:["2-2"]},b:{name:"سياسة الاستخدام المقبول",ver:"1.3",own:"الإدارة المعنية بالأمن السيبراني",apr:"صاحب الصلاحية",ad:"2026-02-01",per:12,subs:["2-1"]},c:{name:"سياسة النسخ الاحتياطي",ver:"1.0",own:"إدارة تقنية المعلومات",apr:"صاحب الصلاحية",ad:"2026-09-15",per:24,subs:["2-9"]}};
   D.snaps={s1:{at:"2026-05-01",label:"التقييم الأول",comp:38,gaps:61,paper:22},s2:{at:"2026-08-01",label:"بعد المرحلة 1",comp:47,gaps:49,paper:17}};return D}
 function toggleDemo(){if(U.demo){S=U.real;U.real=null;U.demo=false}else{U.real=S;S=demoData();U.demo=true;const s=stats(CTLS);S.snaps.s3={at:today(),label:"اليوم",comp:s.comp,gaps:gapList().length,paper:s.paper}}U.tab="home";U.confirm=null;render()}
-async function readFile(f){if(!f)return;const n=f.name.toLowerCase();try{if(n.endsWith(".pdf")){toast("جارٍ قراءة ملف PDF…");U.anaTxt=await pdfText(f);if(U.anaTxt.length<200)toast("الملف لا يحوي نصًا قابلًا للقراءة (قد يكون صورًا ممسوحة). الصق النص يدويًا.")}else if(n.endsWith(".docx")){if(!window.JSZip){toast("تعذّر تحميل قارئ ملفات Word. الصق النص يدويًا.");return}
+async function readFile(f){if(!f)return;const n=f.name.toLowerCase();U.anaFile=f;try{if(n.endsWith(".pdf")){toast("جارٍ قراءة ملف PDF…");U.anaTxt=await pdfText(f);if(U.anaTxt.length<200)toast("الملف لا يحوي نصًا قابلًا للقراءة (قد يكون صورًا ممسوحة). الصق النص يدويًا.")}else if(n.endsWith(".docx")){if(!window.JSZip){toast("تعذّر تحميل قارئ ملفات Word. الصق النص يدويًا.");return}
     const z=await JSZip.loadAsync(f);const x=await z.file("word/document.xml").async("string");const t=x.replace(/<w:p[ >][\s\S]*?<\/w:p>/g,p=>p.replace(/<w:tab\/>/g,"\t").replace(/<[^>]+>/g,"")+"\n").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&apos;/g,"'");U.anaTxt=t.replace(/\n{3,}/g,"\n\n").trim()}
    else U.anaTxt=await f.text();if(!U.anaName)U.anaName=f.name.replace(/\.[^.]+$/,"");U.anaRes=null;render();toast("قُرئ الملف: "+U.anaTxt.length.toLocaleString("en")+" حرفًا")}catch(e){toast("تعذّرت قراءة الملف. الصق النص يدويًا.")}}
 function go(id){const c=BY[id]||null,s=c?c.sub:id;if(!SUBBY[s])return;U.tab="review";U.q="";U.f="all";U.dom=SUBBY[s].dom;U.open[s]=true;if(c)U.open[id]=true;render();setTimeout(()=>{const e=document.getElementById(c?"c-"+id:"s-"+s);if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},40)}
@@ -2460,7 +2531,7 @@ document.addEventListener("input",e=>{const t=e.target;
   if(t.dataset.b){const [col,id,k]=t.dataset.b.split("|");if(t.tagName==="SELECT")return;setF(col,col==="cfg"?null:id,k,t.value);return}
   const a=t.dataset.act;if(a==="q"){U.q=t.value;clearTimeout(U.qt);U.qt=setTimeout(()=>{render();const q=$("#q");if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}},220)}
   else if(a==="rppw"){U.pw=t.value}else if(a==="tmq"){U.tmQ=t.value;clearTimeout(U.tmT);U.tmT=setTimeout(async()=>{if(!U.user)return;try{U.tmRes=await U.user.search(U.tmQ)}catch(e){U.tmRes=[]}render();const q=$("#tm-q");if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}},300)}
-  else if(a==="anatxt"){U.anaTxt=t.value;U.anaRes=null}else if(a==="ananame")U.anaName=t.value;else if(a==="fwtxt")U.fwText=t.value});
+  else if(a==="anatxt"){U.anaTxt=t.value;U.anaRes=null;U.anaFile=null}else if(a==="ananame")U.anaName=t.value;else if(a==="fwtxt")U.fwText=t.value});
 document.addEventListener("change",e=>{const t=e.target;
   if(t.dataset.b&&(t.tagName==="SELECT"||t.type==="date")){const [col,id,k]=t.dataset.b.split("|");setF(col,col==="cfg"?null:id,k,t.value);render();return}
   const a=t.dataset.act;if(a==="f"){U.f=t.value;render()}else if(a==="gm"){U.gm=t.checked;render()}else if(a==="anasel"){t.checked?U.anaSel.add(t.dataset.id):U.anaSel.delete(t.dataset.id);render()}
