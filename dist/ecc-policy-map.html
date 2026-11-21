@@ -670,6 +670,24 @@ a{color:var(--accent)}
 .adm-per{margin-inline-start:auto}
 #sbauth .sb-priv{font-size:.78rem;line-height:1.6}
 
+/* ===== sanitiser ===== */
+.rd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:12px}
+.rd-add{display:grid;grid-template-columns:1fr 1fr auto;gap:6px}
+@media(max-width:600px){.rd-add{grid-template-columns:1fr}}
+.rd-terms{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.rd-x{background:none;border:0;color:var(--muted);cursor:pointer;font-size:1rem;line-height:1;padding:0 2px}
+.rd-x:hover{color:var(--bad)}
+.rd-sw{display:inline-flex;gap:6px;align-items:center;font-size:.86rem;cursor:pointer}
+.rd-bar{display:flex;flex-wrap:wrap;gap:8px 12px;justify-content:space-between;align-items:center;margin-bottom:8px}
+.rd-prev{white-space:pre-wrap;overflow-wrap:anywhere;max-height:380px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:12px 14px;background:color-mix(in srgb,var(--bg) 60%,var(--surface));font-size:.9rem;line-height:1.85}
+.rd-m{background:color-mix(in srgb,var(--accent) 28%,transparent);color:inherit;border-radius:3px;padding:0 2px;cursor:pointer;box-shadow:inset 0 -2px 0 var(--accent)}
+.rd-m.off{background:transparent;box-shadow:inset 0 -1px 0 var(--muted);opacity:.75}
+.rd-list{margin-top:10px}.rd-list summary{cursor:pointer;font-weight:500}
+.rd-off td{opacity:.55}
+.rd-tok{max-width:180px;padding:4px 8px}
+.rd-pop{position:fixed;z-index:250;display:flex;flex-wrap:wrap;gap:6px;align-items:center;max-width:min(360px,calc(100vw - 16px));background:var(--surface);color:var(--ink);border:1px solid var(--accent);border-radius:8px;padding:8px 10px;box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.rd-pop input{flex:1 1 140px;min-width:0;padding:5px 8px}
+
 /* ===== Forest & copper design system (style reference: segmentsix.de; own implementation) =====
    Dark forest is the default; the theme button switches to the light "paper" variant.
    Type: Inter Tight (Latin) + IBM Plex Sans Arabic. Headlines regular weight; tight tracking for Latin only. */
@@ -1149,6 +1167,27 @@ Object.assign(I18N.d,{
 });
 
 Object.assign(I18N.d,{"الجهة أو جهة العمل (اختياري)":"Entity or employer (optional)","اكتب اسمك للمتابعة.":"Enter your name to continue."});
+
+Object.assign(I18N.d,{
+"إخفاء المعلومات الحساسة":"Hide sensitive information","داخل جهازك، دون ذكاء اصطناعي":"On your device, no AI","أخفِها قبل أي تحليل":"Hide it before any analysis",
+"قبل أن يخرج أي نص من جهازك، تستبدل الأداة المعلومات الحساسة برموز مثل":"Before any text leaves your device, the tool replaces sensitive information with tokens such as",
+"التحليل يرى الرموز فقط، ثم تُعاد الأسماء الحقيقية في النتائج على جهازك.":"The analysis only sees the tokens; the real names are put back into the results on your device.",
+"ما تكتشفه الأداة تلقائيًا":"Detected automatically","البريد الإلكتروني":"Email addresses","الروابط":"Links","أرقام الآيبان":"IBANs","عناوين IP":"IP addresses","عناوين MAC":"MAC addresses","أرقام الجوال والهاتف":"Mobile and phone numbers","أرقام الهوية والإقامة":"National ID and Iqama numbers","النطاقات وأسماء الخوادم":"Domains and host names","المبالغ المالية":"Monetary amounts",
+"اسم الجهة من «النطاق والانطباق» يُخفى تلقائيًا أيضًا.":"The entity name from “Scope & applicability” is hidden automatically too.",
+"أضف كلمة تخفيها بنفسك":"Add a word to hide","الكلمة أو العبارة، مثل اسم نظام أو موظف":"Word or phrase, e.g. a system or employee name","الاسم البديل، مثل: النظام المالي":"Replacement name, e.g. Finance system","إخفاء":"Hide",
+"أو ظلّل أي نص في المعاينة أدناه بالماوس أو بإصبعك، واختر له اسمًا.":"Or highlight any text in the preview below with your mouse or finger and give it a name.",
+"عنصرًا سيُخفى":"items will be hidden","مستثنى":"excluded","الأصل مع التظليل":"Original, highlighted","النسخة المنقّاة":"Cleaned copy","نسخ المنقّاة":"Copy cleaned","تنزيل المنقّاة":"Download cleaned",
+"… تعرض المعاينة أول #,# حرف، والإخفاء يشمل النص كاملًا.":"… The preview shows the first #,# characters; hiding covers the whole text.",
+"العناصر المخفية (#) — غيّر اسم أي رمز أو استثنِ عنصرًا":"Hidden items (#) — rename any token or exclude an item","النوع":"Type","النص الأصلي":"Original text","يظهر للتحليل باسم":"Shown to the analysis as","مرات":"Times","كلمة أضفتها":"Your word","الاسم البديل":"Replacement name",
+"لم يُكتشف شيء حساس تلقائيًا. أضف كلماتك بنفسك إن لزم.":"Nothing sensitive was detected automatically. Add your own words if needed.",
+"الاكتشاف التلقائي يعتمد على أنماط معروفة، وقد تفوته أسماء الأشخاص والأنظمة الداخلية. راجع المعاينة قبل الإرسال؛ المراجعة النهائية مسؤوليتك.":"Automatic detection relies on known patterns and may miss people’s names and internal systems. Review the preview before sending; the final check is yours.",
+"ارفع السياسة أو الصق نصها في الخطوة # لتظهر المعاينة هنا.":"Upload or paste the policy in step # to see the preview here.",
+"نُسخت النسخة المنقّاة":"Cleaned copy copied","تعذّر النسخ":"Could not copy","اكتب كلمة من حرفين على الأقل":"Type at least two characters","هذه الكلمة مضافة مسبقًا":"This word is already added","أُضيفت، ولم تظهر في النص الحالي":"Added; it does not appear in the current text","ستُخفى في # موضعًا":"Will be hidden in # places",
+"مثل: اسم الموظف":"e.g. employee name","فحص تغطية محلي (دون ذكاء اصطناعي)":"Local coverage check (no AI)","فحص التغطية المحلي":"Local coverage check","مطابقة كلمات تقريبية، غير رسمية":"Approximate word matching, unofficial",
+"كلماته مذكورة غالبًا":"Words mostly present","مذكور جزئيًا":"Partly mentioned","لا يكاد يُذكر":"Barely mentioned","كلمات لم تظهر في سياستك:":"Words not found in your policy:","إغلاق":"Close",
+"ألصق نص السياسة أولًا":"Paste the policy text first","اختر مكونًا واحدًا على الأقل":"Select at least one subdomain","#. المكونات التي تغطيها هذه السياسة":"#. Subdomains this policy covers"
+});
+Object.assign(I18N.d,{". التحليل يرى الرموز فقط، ثم تُعاد الأسماء الحقيقية في النتائج على جهازك.":". The analysis only sees the tokens; the real names are put back into the results on your device.","إخفاء «#» باسم:":"Hide “#” as:"});
 </script>
 <script>document.documentElement.lang="ar";document.documentElement.dir="rtl";
 // ===== Index =====
@@ -1535,11 +1574,12 @@ function vAna(){const sel=U.anaSel,hist=Object.entries(S.ana).sort((a,b)=>(b[1].
    <div style="margin-top:10px" class="drop-zone" id="dz"><label style="cursor:pointer">أفلت ملف PDF أو Word أو نصيًا هنا، أو <u>اختر ملفًا</u><input type="file" id="anafile" accept=".pdf,.docx,.txt,.md" hidden></label><div class="note">يقبل PDF وWord والنص، ويُقرأ داخل متصفحك. ملفات PDF الممسوحة ضوئيًا لا تحوي نصًا، فانسخ نصها يدويًا.</div></div>
    <textarea id="ana-txt" data-act="anatxt" style="min-height:180px;margin-top:10px" placeholder="أو الصق نص السياسة كاملًا هنا…">${esc(U.anaTxt)}</textarea>
    <p class="note" style="margin:6px 0 0">${U.anaTxt.length.toLocaleString("en")} حرفًا${U.anaTxt.length>90000?" — سيُرسل أول 90,000 حرف فقط":""}</p></section>
-  <section class="card c12"><h2>2. المكونات التي تغطيها هذه السياسة <span class="act"><button class="btn sm quiet" data-act="anasug" ${U.anaTxt.length>200?"":"disabled"}>اقترح من النص</button><button class="btn sm quiet" data-act="anaclr">مسح الاختيار</button></span></h2>
+  ${vRedact()}
+  <section class="card c12"><h2>3. المكونات التي تغطيها هذه السياسة <span class="act"><button class="btn sm quiet" data-act="anasug" ${U.anaTxt.length>200?"":"disabled"}>اقترح من النص</button><button class="btn sm quiet" data-act="anaclr">مسح الاختيار</button></span></h2>
    <p class="lead">اختر مكونًا أو أكثر. الأفضل أن تحلّل كل سياسة مقابل المكونات التي تدّعي تغطيتها فقط.</p>
    ${ECC.map(d=>`<div style="margin-bottom:10px"><div class="note" style="margin-bottom:4px">${d.id}. ${esc(tx(d))}</div><div class="chk">${d.subs.map(x=>`<label class="${sel.has(x.id)?"on":""}"><input type="checkbox" data-act="anasel" data-id="${x.id}" ${sel.has(x.id)?"checked":""}><span class="mono">${x.id}</span> ${esc(tx(x))}</label>`).join("")}</div></div>`).join("")}
-   <div class="row" style="margin-top:8px">${aiBtn("anarun","x",`حلّل السياسة مقابل ${n} ضابطًا`)}<span class="note">${!sel.size?"اختر مكونًا واحدًا على الأقل.":U.anaTxt.length<200?"ألصق نص السياسة أولًا.":"قد يستغرق التحليل دقيقة إلى دقيقتين."}</span></div></section>
-  ${r?anaResult(r):""}
+   <div class="row" style="margin-top:8px"><button class="btn ghost" data-rd="cvrun" ${U.anaTxt.length>200&&sel.size?"":"disabled"}>فحص تغطية محلي (دون ذكاء اصطناعي)</button>${aiBtn("anarun","x",`حلّل السياسة مقابل ${n} ضابطًا`)}<span class="note">${!sel.size?"اختر مكونًا واحدًا على الأقل.":U.anaTxt.length<200?"ألصق نص السياسة أولًا.":"قد يستغرق التحليل دقيقة إلى دقيقتين."}</span></div></section>
+  ${vCov()}${r?anaResult(r):""}
   <section class="card c12"><h2>التحليلات السابقة (${hist.length})</h2>${hist.length?`<div class="tw"><table><thead><tr><th>الوثيقة</th><th>التاريخ</th><th>المكونات</th><th>مغطى / ضعيف / غير مغطى</th><th></th></tr></thead><tbody>${hist.map(([k,a])=>{const c=cnt(a.res);return `<tr><td>${esc(a.name)}</td><td class="num">${a.at}</td><td>${(a.subs||[]).map(x=>`<span class="idb">${x}</span>`).join(" ")}</td><td class="num">${c.covered} / ${c.weak} / ${c.missing}</td><td class="row"><button class="btn sm quiet" data-act="anaopen" data-id="${k}">عرض</button><button class="btn sm danger ghost" data-act="anadel" data-id="${k}">حذف</button></td></tr>`}).join("")}</tbody></table></div>`:`<div class="empty"><b>لا تحليلات بعد</b>كل تحليل تحفظه يظهر هنا ليعود إليه الفريق.</div>`}</section></div>`}
 const cnt=res=>{const c={covered:0,weak:0,missing:0};(res.items||[]).forEach(i=>{if(c[i.verdict]!=null)c[i.verdict]++});return c};
 const norm=t=>String(t||"").replace(/[\u064B-\u0652\u0640]/g,"").replace(/[إأآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/\s+/g," ").trim();
@@ -1844,6 +1884,132 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-tour]");if
   if(a==="skip")endTour();else if(a==="next"){if(tourI>=TOUR.length-1)endTour();else{tourI++;drawTour()}}else if(a==="prev"){tourI=Math.max(0,tourI-1);drawTour()}});
 document.addEventListener("keydown",e=>{if(tourI<0)return;if(e.key==="Escape")endTour();else if(e.key==="ArrowLeft"||e.key==="ArrowRight"){const fwd=(e.key==="ArrowLeft")===(U.lang!=="en");if(fwd){if(tourI<TOUR.length-1){tourI++;drawTour()}else endTour()}else if(tourI){tourI--;drawTour()}}});
 window.addEventListener("resize",()=>{if(tourI>=0)drawTour()});
+
+// ===== Policy sanitiser: hide sensitive data inside the browser, with no AI and no network =====
+// Rule-based detection + the user's own words (typed or selected in the preview), each with a name the user chooses.
+// Only the cleaned text is ever sent to AI; tokens are mapped back to the real values locally.
+const RD_TYPES=[
+ // [key, Arabic label, token prefix, regex]   (order = priority when matches overlap)
+ ["email","البريد الإلكتروني","بريد",/[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g],
+ ["url","الروابط","رابط",/\bhttps?:\/\/[^\s<>"'،)]+|\bwww\.[^\s<>"'،)]+/gi],
+ ["iban","أرقام الآيبان","آيبان",/\bSA\d{2}[ ]?(?:[0-9A-Z]{4}[ ]?){4}[0-9A-Z]{4}\b/gi],
+ ["ip","عناوين IP","عنوان-IP",/\b(?:25[0-5]|2[0-4]\d|1?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|1?\d?\d)){3}(?:\/\d{1,2})?\b/g],
+ ["mac","عناوين MAC","MAC",/\b(?:[0-9A-F]{2}[:\-]){5}[0-9A-F]{2}\b/gi],
+ ["phone","أرقام الجوال والهاتف","هاتف",/(?<!\d)(?:\+966|00966|966|0)?[ \-]?(?:5\d[ \-]?\d{3}[ \-]?\d{4}|1[1-7][ \-]?\d{3}[ \-]?\d{4})(?!\d)/g],
+ ["nid","أرقام الهوية والإقامة","هوية",/(?<!\d)[12]\d{9}(?!\d)/g],
+ ["host","النطاقات وأسماء الخوادم","نطاق",/\b(?:[A-Za-z0-9\-]+\.)+(?:sa|com|net|org|gov|edu|local|internal|corp|lan|intra)\b/gi],
+ ["money","المبالغ المالية","مبلغ",/(?:\d[\d,٬.]*\s?(?:ريالًا|ريالا|ريال|ر\.س|SAR|SR)(?![A-Za-z]))|(?:\b(?:SAR|SR)\s?\d(?:[\d,.]*\d)?)/gi]];
+U.rd=U.rd||{on:true,types:{email:1,url:1,iban:1,ip:1,mac:1,phone:1,nid:1,host:1,money:1},terms:[],ents:{},view:"mark"};
+try{const sv=JSON.parse(localStorage.getItem("ecc_rd")||"null");if(sv){U.rd.terms=sv.terms||[];Object.assign(U.rd.types,sv.types||{});U.rd.on=sv.on!==false}}catch(e){}
+const rdSave=()=>{try{localStorage.setItem("ecc_rd",JSON.stringify({terms:U.rd.terms,types:U.rd.types,on:U.rd.on}))}catch(e){}};
+const rdOn=()=>U.rd.on!==false;
+// Arabic-Indic digits → Latin, one character for one, so positions stay aligned with the original text
+const rdDigits=s=>s.replace(/[٠-٩]/g,d=>String(d.charCodeAt(0)-1632)).replace(/[۰-۹]/g,d=>String(d.charCodeAt(0)-1776));
+const rdEsc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+let RD_CACHE={k:"",spans:[]};
+function rdSpans(txt){const key=txt.length+"|"+txt.slice(0,200)+"|"+txt.slice(-200)+"|"+JSON.stringify([U.rd.types,U.rd.terms,S.cfg.entity||""]);
+  if(RD_CACHE.k===key)return RD_CACHE.spans;
+  const src=rdDigits(txt),found=[];
+  // 1) the user's own words and the entity name come first
+  const terms=U.rd.terms.slice();if(S.cfg.entity&&S.cfg.entity.trim().length>1&&!terms.some(t=>t.val===S.cfg.entity.trim()))terms.unshift({val:S.cfg.entity.trim(),label:"الجهة",auto:1});
+  terms.forEach((t,ti)=>{if(!t.val||t.val.length<2)return;const re=new RegExp(rdEsc(rdDigits(t.val)),"gi");let m;while((m=re.exec(src))){found.push({s:m.index,e:m.index+m[0].length,type:"term",t,label:t.label,pr:0});if(!m[0].length)re.lastIndex++}});
+  // 2) rule-based detectors
+  RD_TYPES.forEach(([k,,,re],pi)=>{if(!U.rd.types[k])return;re.lastIndex=0;let m;while((m=re.exec(src))){found.push({s:m.index,e:m.index+m[0].length,type:k,pr:pi+1});if(!m[0].length)re.lastIndex++}});
+  found.sort((a,b)=>a.s-b.s||a.pr-b.pr||(b.e-b.s)-(a.e-a.s));
+  const out=[];let end=-1;found.forEach(f=>{if(f.s>=end){out.push(f);end=f.e}});
+  // give each distinct value one stable token, keeping names/toggles the user already set
+  const cnt={};out.forEach(f=>{const val=txt.slice(f.s,f.e);const id=(f.type==="term"?"t:"+f.t.val.toLowerCase():f.type)+"|"+val.toLowerCase();
+    let en=U.rd.ents[id];if(!en){let tok;if(f.type==="term")tok=f.label||"مخفي";else{const T=RD_TYPES.find(x=>x[0]===f.type);cnt[f.type]=(cnt[f.type]||Object.values(U.rd.ents).filter(x=>x.type===f.type).length)+1;tok=T[2]+"-"+cnt[f.type]}
+      en=U.rd.ents[id]={id,type:f.type,val,tok,on:true}}
+    f.id=id});
+  RD_CACHE={k:key,spans:out};return out}
+function rdClean(txt){if(!txt)return "";const sp=rdSpans(txt);let o="",i=0;sp.forEach(f=>{const en=U.rd.ents[f.id];if(!en||!en.on)return;o+=txt.slice(i,f.s)+"["+en.tok+"]";i=f.e});return o+txt.slice(i)}
+function rdMap(){const m={};Object.values(U.rd.ents).forEach(e=>{if(e.on)m["["+e.tok+"]"]=m["["+e.tok+"]"]||e.val});return m}
+// put the real values back into AI results, locally
+function rdRestore(x,m){m=m||rdMap();if(typeof x==="string"){let s=x;Object.keys(m).sort((a,b)=>b.length-a.length).forEach(k=>{s=s.split(k).join(m[k])});return s}
+  if(Array.isArray(x))return x.map(v=>rdRestore(v,m));if(x&&typeof x==="object"){const o={};for(const k in x)o[k]=rdRestore(x[k],m);return o}return x}
+const rdList=txt=>{const seen=new Set(),L=[];rdSpans(txt).forEach(f=>{if(seen.has(f.id))return;seen.add(f.id);const en=U.rd.ents[f.id];if(en)L.push(Object.assign({n:rdSpans(txt).filter(z=>z.id===f.id).length},en))});return L};
+const rdTypeName=t=>t==="term"?"كلمة أضفتها":(RD_TYPES.find(x=>x[0]===t)||[0,t])[1];
+
+function vRedact(){const txt=U.anaTxt||"";const has=txt.length>0;const L=has?rdList(txt):[];const on=L.filter(e=>e.on).length;
+  const prevSrc=txt.slice(0,60000);let prev="";
+  if(has){const sp=rdSpans(txt).filter(f=>f.s<prevSrc.length);let i=0;
+    if(U.rd.view==="clean")prev=esc(rdClean(prevSrc));
+    else{sp.forEach(f=>{const en=U.rd.ents[f.id];prev+=esc(prevSrc.slice(i,f.s))+`<mark class="rd-m ${en&&en.on?"":"off"}" title="${esc(en?"["+en.tok+"]":"")}" data-rdtog="${esc(f.id)}">${esc(prevSrc.slice(f.s,Math.min(f.e,prevSrc.length)))}</mark>`;i=f.e});prev+=esc(prevSrc.slice(i))}}
+  return `<section class="card c12 rd"><h2>إخفاء المعلومات الحساسة <span class="tag off">داخل جهازك، دون ذكاء اصطناعي</span>
+    <span class="act"><label class="rd-sw"><input type="checkbox" data-rd="on" ${rdOn()?"checked":""}> أخفِها قبل أي تحليل</label></span></h2>
+   <p class="lead">قبل أن يخرج أي نص من جهازك، تستبدل الأداة المعلومات الحساسة برموز مثل <span class="mono">[بريد-1]</span>. التحليل يرى الرموز فقط، ثم تُعاد الأسماء الحقيقية في النتائج على جهازك.</p>
+   <div class="rd-grid">
+    <div class="box"><h4>ما تكتشفه الأداة تلقائيًا</h4><div class="chk">${RD_TYPES.map(([k,l])=>`<label class="${U.rd.types[k]?"on":""}"><input type="checkbox" data-rd="type" data-v="${k}" ${U.rd.types[k]?"checked":""}>${l}</label>`).join("")}</div>
+     <p class="note" style="margin:8px 0 0">اسم الجهة من «النطاق والانطباق» يُخفى تلقائيًا أيضًا.</p></div>
+    <div class="box"><h4>أضف كلمة تخفيها بنفسك</h4>
+     <div class="rd-add"><input id="rd-val" placeholder="الكلمة أو العبارة، مثل اسم نظام أو موظف" autocomplete="off"><input id="rd-lab" placeholder="الاسم البديل، مثل: النظام المالي" autocomplete="off"><button class="btn sm" data-rd="add">إخفاء</button></div>
+     <p class="note" style="margin:6px 0 0">أو ظلّل أي نص في المعاينة أدناه بالماوس أو بإصبعك، واختر له اسمًا.</p>
+     ${U.rd.terms.length?`<div class="rd-terms">${U.rd.terms.map((t,i)=>`<span class="tag">${esc(t.val)} ← [${esc(t.label||"مخفي")}]<button class="rd-x" data-rd="delterm" data-v="${i}" aria-label="إزالة">×</button></span>`).join("")}</div>`:""}</div></div>
+   ${has?`<div class="rd-bar"><span><b class="num">${on}</b> عنصرًا سيُخفى${L.length>on?` · <span class="note">${L.length-on} مستثنى</span>`:""}</span>
+     <span class="row">${seg([["mark","الأصل مع التظليل"],["clean","النسخة المنقّاة"]],U.rd.view,"rdview","x","v")}<button class="btn sm quiet" data-rd="copy">نسخ المنقّاة</button><button class="btn sm quiet" data-rd="dl">تنزيل المنقّاة</button></span></div>
+    <div class="rd-prev" id="rd-prev" dir="auto" data-notr>${prev}${txt.length>prevSrc.length?`<span class="note">\n… تعرض المعاينة أول 60,000 حرف، والإخفاء يشمل النص كاملًا.</span>`:""}</div>
+    ${L.length?`<details class="rd-list" ${L.length<=12?"open":""}><summary>العناصر المخفية (${L.length}) — غيّر اسم أي رمز أو استثنِ عنصرًا</summary><div class="tw"><table><thead><tr><th></th><th>النوع</th><th>النص الأصلي</th><th>يظهر للتحليل باسم</th><th>مرات</th></tr></thead><tbody>${L.map(e=>`<tr class="${e.on?"":"rd-off"}"><td><input type="checkbox" data-rd="ent" data-v="${esc(e.id)}" ${e.on?"checked":""} aria-label="إخفاء"></td><td class="nw">${esc(rdTypeName(e.type))}</td><td data-notr dir="auto">${esc(e.val)}</td><td><input class="rd-tok" data-rd="tok" data-v="${esc(e.id)}" value="${esc(e.tok)}" aria-label="الاسم البديل"></td><td class="num">${e.n}</td></tr>`).join("")}</tbody></table></div></details>`:`<p class="note">لم يُكتشف شيء حساس تلقائيًا. أضف كلماتك بنفسك إن لزم.</p>`}
+    <p class="note" style="margin:8px 0 0">الاكتشاف التلقائي يعتمد على أنماط معروفة، وقد تفوته أسماء الأشخاص والأنظمة الداخلية. راجع المعاينة قبل الإرسال؛ المراجعة النهائية مسؤوليتك.</p>`
+   :`<p class="note">ارفع السياسة أو الصق نصها في الخطوة 1 لتظهر المعاينة هنا.</p>`}</section>`}
+
+// --- events (own listeners, separate from the main handler) ---
+document.addEventListener("click",e=>{const t=e.target.closest("[data-rd],[data-rdtog]");if(!t)return;
+  if(t.dataset.rdtog&&!window.getSelection().toString()){const en=U.rd.ents[t.dataset.rdtog];if(en){en.on=!en.on;render()}return}
+  const a=t.dataset.rd;
+  if(a==="add"){const v=($("#rd-val")||{}).value||"",l=($("#rd-lab")||{}).value||"";rdAddTerm(v,l)}
+  else if(a==="delterm"){U.rd.terms.splice(+t.dataset.v,1);rdSave();render()}
+  else if(a==="copy"){const c=rdClean(U.anaTxt);(navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(()=>toast("نُسخت النسخة المنقّاة")).catch(()=>toast("تعذّر النسخ"))}
+  else if(a==="dl"){const nm=(rdClean(U.anaName||"")||"policy").replace(/[\\/:*?"<>|]+/g,"_").slice(0,60);save(nm+"-sanitized.txt","﻿"+rdClean(U.anaTxt),"text/plain;charset=utf-8")}});
+document.addEventListener("change",e=>{const t=e.target.closest("[data-rd]");if(!t)return;const a=t.dataset.rd;
+  if(a==="on"){U.rd.on=t.checked;rdSave();render()}
+  else if(a==="type"){U.rd.types[t.dataset.v]=t.checked?1:0;rdSave();render()}
+  else if(a==="ent"){const en=U.rd.ents[t.dataset.v];if(en){en.on=t.checked;render()}}
+  else if(a==="tok"){const en=U.rd.ents[t.dataset.v];const v=t.value.replace(/[\[\]]/g,"").trim();if(en&&v){en.tok=v;render()}}});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.target.id==="rd-val"||e.target.id==="rd-lab")){e.preventDefault();rdAddTerm(($("#rd-val")||{}).value||"",($("#rd-lab")||{}).value||"")}});
+document.addEventListener("click",e=>{const t=e.target.closest("[data-act=rdview]");if(!t)return;U.rd.view=t.dataset.v;render()});
+function rdAddTerm(v,l){v=String(v).trim();l=String(l).replace(/[\[\]]/g,"").trim();if(v.length<2){toast("اكتب كلمة من حرفين على الأقل");return}
+  if(U.rd.terms.some(x=>x.val.toLowerCase()===v.toLowerCase())){toast("هذه الكلمة مضافة مسبقًا");return}
+  U.rd.terms.push({val:v,label:l||"مخفي-"+(U.rd.terms.length+1)});rdSave();rdHidePop();render();
+  const n=(U.anaTxt.toLowerCase().split(v.toLowerCase()).length-1);toast(n?`ستُخفى في ${n} موضعًا`:"أُضيفت، ولم تظهر في النص الحالي")}
+
+// --- manual: select text in the preview, then name it ---
+let rdPop=null;
+function rdHidePop(){if(rdPop){rdPop.remove();rdPop=null}}
+function rdShowPop(){const s=window.getSelection();const tx0=s?s.toString().trim():"";const box=$("#rd-prev");
+  if(!tx0||tx0.length<2||tx0.length>200||!box||!s.rangeCount||!box.contains(s.anchorNode)){rdHidePop();return}
+  const r=s.getRangeAt(0).getBoundingClientRect();rdHidePop();rdPop=document.createElement("div");rdPop.className="rd-pop";rdPop.dir=U.lang==="en"?"ltr":"rtl";
+  rdPop.innerHTML=`<span class="note">إخفاء «${esc(tx0.length>40?tx0.slice(0,40)+"…":tx0)}» باسم:</span><input id="rd-pop-lab" placeholder="مثل: اسم الموظف" autocomplete="off"><button class="btn sm" id="rd-pop-go">إخفاء</button>`;
+  document.body.appendChild(rdPop);applyLang(rdPop);
+  const w=rdPop.offsetWidth,top=Math.min(window.innerHeight-rdPop.offsetHeight-8,r.bottom+8),left=Math.max(8,Math.min(window.innerWidth-w-8,r.left+r.width/2-w/2));
+  rdPop.style.top=top+"px";rdPop.style.left=left+"px";rdPop.dataset.v=tx0;rdPop.dataset.y=window.scrollY;
+  rdPop.querySelector("#rd-pop-go").onclick=()=>rdAddTerm(rdPop.dataset.v,rdPop.querySelector("#rd-pop-lab").value);
+  rdPop.querySelector("#rd-pop-lab").onkeydown=ev=>{if(ev.key==="Enter"){ev.preventDefault();rdAddTerm(rdPop.dataset.v,ev.target.value)}else if(ev.key==="Escape")rdHidePop()}}
+document.addEventListener("mouseup",e=>{if(rdPop&&rdPop.contains(e.target))return;setTimeout(rdShowPop,10)});
+document.addEventListener("touchend",e=>{if(rdPop&&rdPop.contains(e.target))return;setTimeout(rdShowPop,350)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")rdHidePop()});
+window.addEventListener("scroll",()=>{if(rdPop&&!rdPop.contains(document.activeElement)&&Math.abs(window.scrollY-(+rdPop.dataset.y||0))>120)rdHidePop()},{passive:true});
+
+// ===== Local coverage check (no AI): word matching against each control's official text =====
+const CV_STOP=new Set("يجب ان أن على في من الى إلى مع بما ذلك التي الذي الذين او أو كل عن هذه هذا بين حسب وفق لدى عند ضمن بشكل لها له تكون يكون وان وأن كما مثل اي أي غير بعد قبل حيث التالي التالية الجهة للجهة بالجهة المتعلقة المتعلق تغطي يغطي بحد ادنى الأدنى الادنى كحد ذات وذلك ايضا أيضا خلال جميع الامن الأمن السيبراني للأمن متطلبات الضوابط ضابط shall must the and for with that this which into from such any all are be of to in on or by as an a is at it its their entity cybersecurity requirements requirement controls control including include".split(" "));
+const cvNorm=s=>String(s||"").toLowerCase().replace(/[ً-ْـ]/g,"").replace(/[إأآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/[^\p{L}\p{N}\s]/gu," ");
+const cvStem=w=>{if(/[a-z]/.test(w)){return w.replace(/(ations?|ments?|ing|ies|es|s|ed)$/,"").slice(0,7)}
+  if(w.length>4)w=w.replace(/^(وال|بال|فال|كال|لل|ال|و|ب|ل|ف)/,"");if(w.length>4)w=w.replace(/(ات|ون|ين|يه|ها|ه|ي)$/,"");return w.slice(0,6)};
+let CV_STOPN=null;const cvWords=s=>{if(!CV_STOPN)CV_STOPN=new Set([...CV_STOP].map(w=>cvNorm(w).trim()));return cvNorm(s).split(/\s+/).filter(w=>w.length>2&&!CV_STOPN.has(w))};
+function cvRun(){const txt=U.anaTxt||"";if(txt.length<200){toast("ألصق نص السياسة أولًا");return}if(!U.anaSel.size){toast("اختر مكونًا واحدًا على الأقل");return}
+  const ar=(txt.match(/[؀-ۿ]/g)||[]).length>(txt.match(/[A-Za-z]/g)||[]).length;
+  const bag=new Set(cvWords(txt).map(cvStem));
+  const items=CTLS.filter(c=>U.anaSel.has(c.sub)).map(c=>{const src=ar?c.ar:(c.en||c.ar);const ws=[...new Map(cvWords(src).map(w=>[cvStem(w),w])).entries()].filter(([s])=>s.length>2);
+    const hit=ws.filter(([s])=>bag.has(s)).map(x=>x[1]),miss=ws.filter(([s])=>!bag.has(s)).map(x=>x[1]);const p=ws.length?hit.length/ws.length:0;
+    return {id:c.id,p,v:p>=.6?"covered":p>=.3?"weak":"missing",hit,miss}});
+  U.cvRes={at:today(),ar,items};render();setTimeout(()=>{const e=$("#cv-res");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},50)}
+function vCov(){const R=U.cvRes;if(!R)return "";const c={covered:0,weak:0,missing:0};R.items.forEach(i=>c[i.v]++);
+  return `<section class="card c12" id="cv-res"><h2>فحص التغطية المحلي <span class="tag meth">مطابقة كلمات تقريبية، غير رسمية</span><span class="act"><button class="btn sm quiet" data-rd="cvclose">إغلاق</button></span></h2>
+   <p class="lead">قارنت الأداة كلمات نص كل ضابط ${R.ar?"العربي":"الإنجليزي"} بكلمات سياستك، داخل جهازك ودون إرسال شيء. هي مؤشر سريع لما قد يكون ناقصًا، وليست حكمًا: كلمة موجودة لا تعني أن المتطلب مكتوب بصيغة ملزمة.</p>
+   <div class="kpis" style="margin-bottom:12px"><div class="kpi good"><b>${c.covered}</b><span>كلماته مذكورة غالبًا</span></div><div class="kpi"><b style="color:var(--warn)">${c.weak}</b><span>مذكور جزئيًا</span></div><div class="kpi alert"><b>${c.missing}</b><span>لا يكاد يُذكر</span></div></div>
+   <div class="verd">${R.items.sort((a,b)=>a.p-b.p).map(i=>{const v=VD[i.v];return `<div><span class="idb" data-act="go" data-id="${i.id}">${i.id}</span><div style="display:grid;gap:4px;min-width:0"><div class="row"><span class="pill ${v[1]}">${Math.round(i.p*100)}%</span><span class="note">${esc(short(tx(BY[i.id]),150))}</span></div>
+     ${i.miss.length?`<span class="note"><b>كلمات لم تظهر في سياستك:</b> <span data-notr>${esc(i.miss.slice(0,10).join("، "))}</span></span>`:""}</div></div>`}).join("")}</div></section>`}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-rd=cvrun],[data-rd=cvclose]");if(!t)return;if(t.dataset.rd==="cvrun")cvRun();else{U.cvRes=null;render()}});
 
 // ===== Standalone (GitHub) version: Supabase database, sign-in, organisations, platform dashboard =====
 // Runs only outside Claude. Implements the small subset of the Claude db API that startDb() uses,
@@ -2159,7 +2325,7 @@ ${profileText()}
 
 أعد JSON فقط: {"summary":"النص"}`);
   if(r&&r.summary){setF("cfg",null,lang==="en"?"execEn":"exec",r.summary);render()}}
-async function aiAna(){const ids=[...U.anaSel];const cs=CTLS.filter(c=>U.anaSel.has(c.sub));const txt=U.anaTxt.slice(0,90000);
+async function aiAna(){const ids=[...U.anaSel];const cs=CTLS.filter(c=>U.anaSel.has(c.sub));const txt=(rdOn()?rdClean(U.anaTxt):U.anaTxt).slice(0,90000);const docName=rdOn()?rdClean(U.anaName||""):U.anaName;
   const req=cs.map(c=>{const k=c.kind==="doc"?"(توثيق)":c.kind==="impl"?"(تطبيق)":c.kind==="rev"?"(مراجعة دورية)":"";const gt=guideText(c.id,true);return `[${c.id}] ${k} ${c.ar}`+(c.s?"\n"+c.s.map(z=>`  [${z.id}] ${z.ar}`).join("\n"):"")+(gt?"\n  "+gt.replace(/\n/g,"\n  "):"")}).join("\n");
   const r=await aiCall("anarun:x",`أنت مدقق سياسات أمن سيبراني. قارن نص السياسة أدناه بمتطلبات الضوابط الأساسية للأمن السيبراني ECC-2:2024 المحددة.
 ${AI_RULES}${aiLang()}
@@ -2173,20 +2339,20 @@ ${AI_RULES}${aiLang()}
 المتطلبات:
 ${req}
 
-نص السياسة (${U.anaName||"بلا اسم"}):
+نص السياسة (${docName||"بلا اسم"}):
 <<<
 ${txt}
 >>>
 
 أعد JSON فقط:
 {"summary":"فقرة قصيرة عن مدى تغطية السياسة","items":[{"id":"2-2-3-1","verdict":"covered","quote":"","clause":"","issue":"","fix":""}],"hygiene":{"approved_by_authority":"yes|no|unclear","communicated":"yes|no|unclear","review_interval":"yes|no|unclear","version_control":"yes|no|unclear","owner_defined":"yes|no|unclear","scope_defined":"yes|no|unclear"},"hygiene_notes":""}`,{modelTier:"complex"});
-  if(r&&Array.isArray(r.items)){U.anaRes={name:U.anaName,at:today(),subs:ids,res:r,txt};render();setTimeout(()=>{const e=document.querySelector(".card.raise");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},50)}}
+  if(r&&Array.isArray(r.items)){U.anaRes={name:U.anaName,at:today(),subs:ids,res:rdOn()?rdRestore(r):r,txt:U.anaTxt.slice(0,90000)};render();setTimeout(()=>{const e=document.querySelector(".card.raise");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},50)}}
 async function aiSug(){const r=await aiCall("anasug:x",`أمامك نص سياسة أمن سيبراني، وقائمة بالمكونات الفرعية للضوابط الأساسية ECC-2:2024. حدّد المكونات التي تتناولها هذه السياسة فعلًا.
 ${SUBS.map(x=>`${x.id}: ${x.ar}`).join("\n")}
 
 النص:
 <<<
-${U.anaTxt.slice(0,30000)}
+${(rdOn()?rdClean(U.anaTxt):U.anaTxt).slice(0,30000)}
 >>>
 أعد JSON فقط: {"subs":["2-2"]}`,{modelTier:"quick"});
   if(r&&Array.isArray(r.subs)){U.anaSel=new Set(r.subs.filter(x=>SUBBY[x]));toast(`اقترح Claude ${U.anaSel.size} مكونًا. راجعها قبل التحليل.`);render()}}

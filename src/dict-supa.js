@@ -89,3 +89,24 @@ Object.assign(I18N.d,{
 });
 
 Object.assign(I18N.d,{"الجهة أو جهة العمل (اختياري)":"Entity or employer (optional)","اكتب اسمك للمتابعة.":"Enter your name to continue."});
+
+Object.assign(I18N.d,{
+"إخفاء المعلومات الحساسة":"Hide sensitive information","داخل جهازك، دون ذكاء اصطناعي":"On your device, no AI","أخفِها قبل أي تحليل":"Hide it before any analysis",
+"قبل أن يخرج أي نص من جهازك، تستبدل الأداة المعلومات الحساسة برموز مثل":"Before any text leaves your device, the tool replaces sensitive information with tokens such as",
+"التحليل يرى الرموز فقط، ثم تُعاد الأسماء الحقيقية في النتائج على جهازك.":"The analysis only sees the tokens; the real names are put back into the results on your device.",
+"ما تكتشفه الأداة تلقائيًا":"Detected automatically","البريد الإلكتروني":"Email addresses","الروابط":"Links","أرقام الآيبان":"IBANs","عناوين IP":"IP addresses","عناوين MAC":"MAC addresses","أرقام الجوال والهاتف":"Mobile and phone numbers","أرقام الهوية والإقامة":"National ID and Iqama numbers","النطاقات وأسماء الخوادم":"Domains and host names","المبالغ المالية":"Monetary amounts",
+"اسم الجهة من «النطاق والانطباق» يُخفى تلقائيًا أيضًا.":"The entity name from “Scope & applicability” is hidden automatically too.",
+"أضف كلمة تخفيها بنفسك":"Add a word to hide","الكلمة أو العبارة، مثل اسم نظام أو موظف":"Word or phrase, e.g. a system or employee name","الاسم البديل، مثل: النظام المالي":"Replacement name, e.g. Finance system","إخفاء":"Hide",
+"أو ظلّل أي نص في المعاينة أدناه بالماوس أو بإصبعك، واختر له اسمًا.":"Or highlight any text in the preview below with your mouse or finger and give it a name.",
+"عنصرًا سيُخفى":"items will be hidden","مستثنى":"excluded","الأصل مع التظليل":"Original, highlighted","النسخة المنقّاة":"Cleaned copy","نسخ المنقّاة":"Copy cleaned","تنزيل المنقّاة":"Download cleaned",
+"… تعرض المعاينة أول #,# حرف، والإخفاء يشمل النص كاملًا.":"… The preview shows the first #,# characters; hiding covers the whole text.",
+"العناصر المخفية (#) — غيّر اسم أي رمز أو استثنِ عنصرًا":"Hidden items (#) — rename any token or exclude an item","النوع":"Type","النص الأصلي":"Original text","يظهر للتحليل باسم":"Shown to the analysis as","مرات":"Times","كلمة أضفتها":"Your word","الاسم البديل":"Replacement name",
+"لم يُكتشف شيء حساس تلقائيًا. أضف كلماتك بنفسك إن لزم.":"Nothing sensitive was detected automatically. Add your own words if needed.",
+"الاكتشاف التلقائي يعتمد على أنماط معروفة، وقد تفوته أسماء الأشخاص والأنظمة الداخلية. راجع المعاينة قبل الإرسال؛ المراجعة النهائية مسؤوليتك.":"Automatic detection relies on known patterns and may miss people’s names and internal systems. Review the preview before sending; the final check is yours.",
+"ارفع السياسة أو الصق نصها في الخطوة # لتظهر المعاينة هنا.":"Upload or paste the policy in step # to see the preview here.",
+"نُسخت النسخة المنقّاة":"Cleaned copy copied","تعذّر النسخ":"Could not copy","اكتب كلمة من حرفين على الأقل":"Type at least two characters","هذه الكلمة مضافة مسبقًا":"This word is already added","أُضيفت، ولم تظهر في النص الحالي":"Added; it does not appear in the current text","ستُخفى في # موضعًا":"Will be hidden in # places",
+"مثل: اسم الموظف":"e.g. employee name","فحص تغطية محلي (دون ذكاء اصطناعي)":"Local coverage check (no AI)","فحص التغطية المحلي":"Local coverage check","مطابقة كلمات تقريبية، غير رسمية":"Approximate word matching, unofficial",
+"كلماته مذكورة غالبًا":"Words mostly present","مذكور جزئيًا":"Partly mentioned","لا يكاد يُذكر":"Barely mentioned","كلمات لم تظهر في سياستك:":"Words not found in your policy:","إغلاق":"Close",
+"ألصق نص السياسة أولًا":"Paste the policy text first","اختر مكونًا واحدًا على الأقل":"Select at least one subdomain","#. المكونات التي تغطيها هذه السياسة":"#. Subdomains this policy covers"
+});
+Object.assign(I18N.d,{". التحليل يرى الرموز فقط، ثم تُعاد الأسماء الحقيقية في النتائج على جهازك.":". The analysis only sees the tokens; the real names are put back into the results on your device.","إخفاء «#» باسم:":"Hide “#” as:"});

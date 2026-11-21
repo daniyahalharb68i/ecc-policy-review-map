@@ -67,7 +67,7 @@ ${profileText()}
 
 أعد JSON فقط: {"summary":"النص"}`);
   if(r&&r.summary){setF("cfg",null,lang==="en"?"execEn":"exec",r.summary);render()}}
-async function aiAna(){const ids=[...U.anaSel];const cs=CTLS.filter(c=>U.anaSel.has(c.sub));const txt=U.anaTxt.slice(0,90000);
+async function aiAna(){const ids=[...U.anaSel];const cs=CTLS.filter(c=>U.anaSel.has(c.sub));const txt=(rdOn()?rdClean(U.anaTxt):U.anaTxt).slice(0,90000);const docName=rdOn()?rdClean(U.anaName||""):U.anaName;
   const req=cs.map(c=>{const k=c.kind==="doc"?"(توثيق)":c.kind==="impl"?"(تطبيق)":c.kind==="rev"?"(مراجعة دورية)":"";const gt=guideText(c.id,true);return `[${c.id}] ${k} ${c.ar}`+(c.s?"\n"+c.s.map(z=>`  [${z.id}] ${z.ar}`).join("\n"):"")+(gt?"\n  "+gt.replace(/\n/g,"\n  "):"")}).join("\n");
   const r=await aiCall("anarun:x",`أنت مدقق سياسات أمن سيبراني. قارن نص السياسة أدناه بمتطلبات الضوابط الأساسية للأمن السيبراني ECC-2:2024 المحددة.
 ${AI_RULES}${aiLang()}
@@ -81,20 +81,20 @@ ${AI_RULES}${aiLang()}
 المتطلبات:
 ${req}
 
-نص السياسة (${U.anaName||"بلا اسم"}):
+نص السياسة (${docName||"بلا اسم"}):
 <<<
 ${txt}
 >>>
 
 أعد JSON فقط:
 {"summary":"فقرة قصيرة عن مدى تغطية السياسة","items":[{"id":"2-2-3-1","verdict":"covered","quote":"","clause":"","issue":"","fix":""}],"hygiene":{"approved_by_authority":"yes|no|unclear","communicated":"yes|no|unclear","review_interval":"yes|no|unclear","version_control":"yes|no|unclear","owner_defined":"yes|no|unclear","scope_defined":"yes|no|unclear"},"hygiene_notes":""}`,{modelTier:"complex"});
-  if(r&&Array.isArray(r.items)){U.anaRes={name:U.anaName,at:today(),subs:ids,res:r,txt};render();setTimeout(()=>{const e=document.querySelector(".card.raise");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},50)}}
+  if(r&&Array.isArray(r.items)){U.anaRes={name:U.anaName,at:today(),subs:ids,res:rdOn()?rdRestore(r):r,txt:U.anaTxt.slice(0,90000)};render();setTimeout(()=>{const e=document.querySelector(".card.raise");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},50)}}
 async function aiSug(){const r=await aiCall("anasug:x",`أمامك نص سياسة أمن سيبراني، وقائمة بالمكونات الفرعية للضوابط الأساسية ECC-2:2024. حدّد المكونات التي تتناولها هذه السياسة فعلًا.
 ${SUBS.map(x=>`${x.id}: ${x.ar}`).join("\n")}
 
 النص:
 <<<
-${U.anaTxt.slice(0,30000)}
+${(rdOn()?rdClean(U.anaTxt):U.anaTxt).slice(0,30000)}
 >>>
 أعد JSON فقط: {"subs":["2-2"]}`,{modelTier:"quick"});
   if(r&&Array.isArray(r.subs)){U.anaSel=new Set(r.subs.filter(x=>SUBBY[x]));toast(`اقترح Claude ${U.anaSel.size} مكونًا. راجعها قبل التحليل.`);render()}}
