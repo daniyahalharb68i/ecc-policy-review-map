@@ -1,0 +1,17 @@
+{
+  "name": "خارطة مراجعة سياسات ECC",
+  "short_name": "خارطة ECC",
+  "description": "مراجعة الالتزام بالضوابط الأساسية للأمن السيبراني ECC-2:2024، وبياناتك تبقى على جهازك.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#10291F",
+  "theme_color": "#10291F",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

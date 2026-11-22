@@ -136,3 +136,17 @@
 .aix-steps textarea{min-height:110px;font-size:.82rem}
 .aix-steps details textarea{min-height:120px;margin-top:6px}
 .aix-f{justify-content:flex-start}
+
+/* ===== risk & exceptions ===== */
+.flag.exc{background:color-mix(in srgb,var(--sage) 22%,transparent);color:var(--ink);border:1px solid color-mix(in srgb,var(--sage) 55%,var(--line))}
+.risk-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;margin-bottom:12px}
+@media(max-width:760px){.risk-top{grid-template-columns:1fr}}
+.heat{display:grid;grid-template-columns:auto auto;grid-template-rows:auto auto;gap:4px;align-items:center;justify-content:center}
+.heat-y{writing-mode:vertical-rl;transform:rotate(180deg);font-size:.72rem;color:var(--muted);text-align:center}
+.heat-g{display:grid;grid-template-columns:18px repeat(5,34px);gap:3px;direction:ltr}
+.heat-x{grid-column:2;text-align:center;font-size:.72rem;color:var(--muted)}
+.hx{font-size:.7rem;color:var(--muted);display:grid;place-items:center}
+.hc{height:34px;border-radius:4px;display:grid;place-items:center;font-size:.8rem;font-weight:600;opacity:.35;color:#10291F}
+.hc.has{opacity:1}
+.hc.low{background:#9FC9A9}.hc.mod{background:#E3C26F}.hc.high{background:#E59A6B}.hc.crit{background:#E5735F}
+.exc-t textarea{min-height:54px}.exc-t td{vertical-align:top;min-width:120px}

@@ -179,3 +179,9 @@ Object.assign(I18N.d,{
 "نُسخ الطلب. الصقه في المساعد.":"Request copied. Paste it into the assistant.","انسخه يدويًا من المربع":"Copy it manually from the box",
 "لم نجد في الرد بيانات JSON صالحة. انسخ الرد كاملًا.":"No valid JSON found in the reply. Copy the full reply.","استُخدم الرد":"Reply applied"
 });
+
+Object.assign(I18N.d,{
+"المخاطر والاستثناءات":"Risks & exceptions","حوّل الفجوات إلى سجل مخاطر بدرجات وخريطة حرارية، ووثّق الاستثناءات المعتمدة وتواريخ انتهائها.":"Turn gaps into a scored risk register with a heat map, and record approved exceptions and their expiry dates.",
+"مستثنى":"Excepted","مستثنى حتى #":"Excepted until #","مسودة سياسة (Word)":"Policy draft (Word)","مسودة سياسة من النص الرسمي لضوابط هذا المكوّن":"Policy draft from this subdomain's official control text",
+"طلب الأدلة (Word)":"Evidence request (Word)","طلب الأدلة (Excel)":"Evidence request (Excel)","المواعيد في التقويم":"Dates to calendar","تصدير التقييم كاملًا (Excel)":"Export full assessment (Excel)","المواعيد في التقويم (.ics)":"Dates to calendar (.ics)"
+});
