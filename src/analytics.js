@@ -18,6 +18,7 @@ function sbStart(){if(window.claude)return;guestTrack()}
 document.addEventListener("change",async e=>{if(e.target.id!=="impfile")return;const f=e.target.files[0];e.target.value="";if(!f)return;
   try{importJSON(await f.text());setTimeout(()=>{const c=document.querySelector(".confirm");if(c)c.scrollIntoView({behavior:"smooth",block:"center"})},60)}catch(x){toast("تعذّرت قراءة الملف")}});
 document.addEventListener("click",e=>{if(!e.target.closest("[data-act=bkhow]"))return;U.tab="report";render();setTimeout(()=>{const b=$("#backup");if(b)b.scrollIntoView({behavior:"smooth",block:"start"})},80)});
+document.querySelectorAll("[data-mail]").forEach(a=>{const [u,d]=a.dataset.mail.split("|");a.href="mailto:"+u+"@"+d;a.title=u+"@"+d});
 // ===== Public gap index: opt-in sharing of gap control IDs only =====
 const GI_KEY="ecc_gap_index";
 const giLast=()=>{try{return JSON.parse(localStorage.getItem(GI_KEY)||"null")}catch(e){return null}};

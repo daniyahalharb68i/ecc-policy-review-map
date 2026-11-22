@@ -185,3 +185,5 @@ Object.assign(I18N.d,{
 "مستثنى":"Excepted","مستثنى حتى #":"Excepted until #","مسودة سياسة (Word)":"Policy draft (Word)","مسودة سياسة من النص الرسمي لضوابط هذا المكوّن":"Policy draft from this subdomain's official control text",
 "طلب الأدلة (Word)":"Evidence request (Word)","طلب الأدلة (Excel)":"Evidence request (Excel)","المواعيد في التقويم":"Dates to calendar","تصدير التقييم كاملًا (Excel)":"Export full assessment (Excel)","المواعيد في التقويم (.ics)":"Dates to calendar (.ics)"
 });
+
+Object.assign(I18N.d,{"البريد الإلكتروني":"Email","تواصل مع Daniyah Alharbi":"Contact Daniyah Alharbi"});
