@@ -704,6 +704,19 @@ a{color:var(--accent)}
 .ts-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--ok);margin-inline-end:6px;box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 25%,transparent)}
 .lnk{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font:inherit;text-decoration:underline;text-underline-offset:3px}
 
+/* ===== AI of the user's choice ===== */
+#aix{position:fixed;inset:0;z-index:260;background:rgba(6,18,12,.7);display:grid;place-items:center;padding:16px;overflow:auto}
+.aix-card{width:min(640px,100%);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:18px;display:grid;gap:10px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.aix-h{display:flex;justify-content:space-between;align-items:center;gap:10px}.aix-h h2{margin:0;font-size:1.1rem;font-weight:500;color:var(--head)}
+.aix-card .note{margin:0}
+.aix-priv{font-size:.86rem;padding:8px 10px;border-radius:6px;border:1px solid color-mix(in srgb,var(--warn) 45%,var(--line));background:color-mix(in srgb,var(--warn) 10%,transparent)}
+.aix-priv.on{border-color:color-mix(in srgb,var(--ok) 45%,var(--line));background:color-mix(in srgb,var(--ok) 10%,transparent)}
+.aix-steps{margin:0;padding-inline-start:20px;display:grid;gap:12px}
+.aix-steps li{display:grid;gap:6px}.aix-steps li>span:first-child{font-weight:500}
+.aix-steps textarea{min-height:110px;font-size:.82rem}
+.aix-steps details textarea{min-height:120px;margin-top:6px}
+.aix-f{justify-content:flex-start}
+
 /* ===== Forest & copper design system (style reference: segmentsix.de; own implementation) =====
    Dark forest is the default; the theme button switches to the light "paper" variant.
    Type: Inter Tight (Latin) + IBM Plex Sans Arabic. Headlines regular weight; tight tracking for Latin only. */
@@ -1263,6 +1276,17 @@ Object.assign(I18N.d,{
 "كلمة المرور غير صحيحة":"Wrong password","هذا الملف ليس حزمة فريق":"This is not a team package","تعذّر قراءة الحزمة":"Could not read the package"
 });
 Object.assign(I18N.d,{"الملف مشفّر بمعيار AES-# قبل أن يغادر جهازك، ويبقى داخل تخزين جهتكم لا عندنا. من دون كلمة المرور لا يمكن قراءته.":"The file is encrypted with AES-# before it leaves your device, and it stays in your entity's storage, not with us. Without the password it cannot be read."});
+
+Object.assign(I18N.d,{
+"حلّل بأداة ذكاء اصطناعي من اختيارك":"Analyse with an AI assistant of your choice",
+"الأداة لا تتصل بأي ذكاء اصطناعي. انسخ الطلب، والصقه في المساعد الذي تثق به، ثم الصق رده هنا.":"The tool does not connect to any AI. Copy the request, paste it into the assistant you trust, then paste its reply here.",
+"معلومة حساسة أُخفيت من الطلب برموز، وستُعاد الأسماء الحقيقية في النتيجة على جهازك.":"sensitive items were replaced with tokens in the request; the real names are restored in the result on your device.",
+"إخفاء المعلومات الحساسة متوقف. فعّله من «محلل السياسات» قبل إرسال بيانات جهتك.":"Hiding sensitive information is off. Turn it on in the Policy analyzer before sending your entity's data.",
+"انسخ الطلب":"Copy the request","نسخ الطلب":"Copy request","عرض الطلب قبل نسخه":"View the request before copying","افتح المساعد والصق الطلب فيه":"Open the assistant and paste the request",
+"انسخ رده كاملًا والصقه هنا":"Copy its full reply and paste it here","الصق الرد هنا…":"Paste the reply here…","استخدم الرد":"Use the reply","نُسخ ✓":"Copied ✓",
+"نُسخ الطلب. الصقه في المساعد.":"Request copied. Paste it into the assistant.","انسخه يدويًا من المربع":"Copy it manually from the box",
+"لم نجد في الرد بيانات JSON صالحة. انسخ الرد كاملًا.":"No valid JSON found in the reply. Copy the full reply.","استُخدم الرد":"Reply applied"
+});
 </script>
 <script>document.documentElement.lang="ar";document.documentElement.dir="rtl";
 // ===== Index =====
@@ -1412,7 +1436,7 @@ const AI_RULES=`قواعد ملزمة:
 - لا تخترع أرقام ضوابط أو أسماء وثائق رسمية أو متطلبات لم ترد في النص المعطى. إن احتجت مرجعًا غير موجود فقل "يحتاج تحققًا".
 - اقتراحاتك إرشادية للمختص وليست نصًا رسميًا من الهيئة الوطنية للأمن السيبراني.
 - اذكر أدوارًا وظيفية عامة (مثل: الإدارة المعنية بالأمن السيبراني، إدارة تقنية المعلومات، الموارد البشرية) لا أسماء أشخاص.`;
-async function aiCall(key,input,opts){if(!U.ai){toast("ميزة الذكاء الاصطناعي متاحة عند فتح الصفحة داخل Claude");return null}
+async function aiCall(key,input,opts){if(!U.ai&&!window.claude){if(U.busy[key])return null;return aiExternal(key,input)}if(!U.ai){toast("ميزة الذكاء الاصطناعي متاحة عند فتح الصفحة داخل Claude");return null}
   if(U.busy[key])return null;U.busy[key]=new AbortController();render();
   try{return await U.ai.json(input,Object.assign({signal:U.busy[key].signal,modelTier:"default"},opts||{}))}
   catch(e){if(e&&e.code!=="cancelled")toast(aiErr(e));return null}
@@ -1483,7 +1507,7 @@ const fld=(l,ctl)=>`<div><span class="lbl">${l}</span>${ctl}</div>`;
 const idb=id=>`<button class="idb" data-act="go" data-id="${id}">${id}</button>`;
 function sbar(s){const t=s.total||1,w=n=>(n/t*100).toFixed(2)+"%";return `<div class="sbar">${[["c",s.c],["p",s.p],["x",s.x],["w",s.w],["na",s.na]].filter(x=>x[1]).map(x=>`<i class="b-${x[0]}" style="width:${w(x[1])}"></i>`).join("")}</div>`}
 const LEG=`<div class="legend"><span><i class="b-c"></i>ملتزم</span><span><i class="b-p"></i>جزئي</span><span><i class="b-x"></i>غير ملتزم</span><span><i class="b-w"></i>قيد التقييم</span><span><i class="b-na"></i>لا ينطبق</span><span><i style="background:var(--surface2);border:1px solid var(--line)"></i>لم يُقيَّم</span></div>`;
-const aiBtn=(act,id,label,extra)=>U.busy[act+":"+id]?`<span class="thinking"><i></i>Claude يعمل على الطلب…</span> <button class="btn sm quiet" data-act="aistop" data-id="${esc(act+":"+id)}">إيقاف</button>`:`<button class="btn ai ${extra||""}" data-act="${act}" data-id="${esc(id)}" ${U.ai?"":"disabled title=\"متاح عند فتح الصفحة داخل Claude\""}>${SPARK}${label}</button>`;
+const aiBtn=(act,id,label,extra)=>U.busy[act+":"+id]?`<span class="thinking"><i></i>Claude يعمل على الطلب…</span> <button class="btn sm quiet" data-act="aistop" data-id="${esc(act+":"+id)}">إيقاف</button>`:`<button class="btn ai ${extra||""}" data-act="${act}" data-id="${esc(id)}" ${U.ai||!window.claude?"":"disabled title=\"متاح عند فتح الصفحة داخل Claude\""}>${SPARK}${label}</button>`;
 const aiTag=`<span class="tag ai">مقترح ذكاء اصطناعي — راجعه قبل الاعتماد</span>`;
 const list=a=>a&&a.length?`<ul>${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"";
 
@@ -1630,7 +1654,7 @@ function ctlRow(c){const id=c.id,o=C(id),s=dst(id),a=appOf(id),open=U.open[id];l
 function guideBox(id){const g=GD(id),k=new Set(C(id).gd||[]);if(!g.d.length&&!g.g.length)return "";
   const tr=U.lang!=="en"?gtrOf(id):null,dl=tr?tr.d:g.d,gl=tr&&tr.g.length?tr.g:g.g,dir=tr?"rtl":"ltr";
   return `<div class="box"><h4>الدليل الإرشادي لتطبيق الضوابط GECC-2:2026 <span class="tag off">نص رسمي</span>${tr?`<span class="tag ai">ترجمة آلية غير رسمية</span>`:""}<span class="note">${gdHave(id)} من ${g.d.length} مخرجات متوفرة</span></h4>
-  ${U.lang!=="en"&&!tr?`<div class="row" style="margin:2px 0 8px"><span class="note">النص الرسمي للدليل متاح بالإنجليزية فقط.</span>${window.claude?aiBtn("aigtr",id,"ترجم إلى العربية","ghost sm"):""}</div>`:""}
+  ${U.lang!=="en"&&!tr?`<div class="row" style="margin:2px 0 8px"><span class="note">النص الرسمي للدليل متاح بالإنجليزية فقط.</span>${true?aiBtn("aigtr",id,"ترجم إلى العربية","ghost sm"):""}</div>`:""}
   ${g.t.length?`<div class="row" style="margin:4px 0 6px"><span class="note">أدوات الهيئة المرتبطة:</span>${g.t.map(x=>`<span class="tag" dir="ltr">${esc(x)}</span>`).join("")}</div>`:""}
   <span class="lbl">المخرجات المتوقعة: علّم ما هو متوفر لديك</span><div class="gdl">${dl.map((x,i)=>`<label class="${k.has(i)?"on":""}"><input type="checkbox" data-act="gd" data-id="${id}" data-v="${i}" ${k.has(i)?"checked":""}><span dir="${dir}">${esc(x)}</span></label>`).join("")}</div>
   ${gl.length?`<details style="margin-top:6px"><summary class="note" style="font-weight:500">إرشادات التطبيق (${gl.length})</summary><ul class="gl" dir="${dir}">${gl.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:""}
@@ -2164,6 +2188,38 @@ async function rdDownload(){const f=U.anaFile,base=(rdClean(U.anaName||"")||"pol
     if(window.claude&&U.dl){await U.dl.save({filename:base+"."+ext,data:r.blob})}else dlFile(base+"."+ext,r.blob);
     toast(ext==="pdf"?"نُزّلت نسخة PDF منقّاة بنفس شكل الأصل":ext==="docx"?"نُزّل ملف Word منقّى بنفس التنسيق":"نُزّلت النسخة المنقّاة")}
   catch(e){U.rdBusy=null;render();toast("تعذّر إنشاء الملف بنفس الصيغة، فنُزّلت نسخة نصية.");save(base+".txt","﻿"+rdClean(U.anaTxt),"text/plain;charset=utf-8")}}
+
+// ===== AI of the user's choice (standalone version) =====
+// The tool never calls an AI service itself. It prepares the request with sensitive data hidden, the user copies it
+// into Claude, ChatGPT or any assistant they trust, then pastes the reply back. Real names are restored on the device.
+const AI_LINKS=[["Claude","https://claude.ai/new"],["ChatGPT","https://chatgpt.com/"],["Gemini","https://gemini.google.com/app"]];
+let aiX=null;
+function aiExternal(key,input){return new Promise(done=>{
+  const hidden=rdOn();const req=(hidden?rdClean(input):input)+"\n\nمهم: أعد الرد بصيغة JSON فقط داخل كتلة ```json، دون أي شرح قبلها أو بعدها.";
+  const nHidden=hidden?Object.values(U.rd.ents).filter(e=>e.on&&req.includes("["+e.tok+"]")).length:0;
+  const close=v=>{if(!aiX)return;aiX.el.remove();aiX=null;delete U.busy[key];document.body.style.overflow="";render();done(v)};
+  U.busy[key]={abort:()=>close(null)};render();
+  const el=document.createElement("div");el.id="aix";el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.dir=U.lang==="en"?"ltr":"rtl";
+  el.innerHTML=`<div class="aix-card">
+   <div class="aix-h"><h2>حلّل بأداة ذكاء اصطناعي من اختيارك</h2><button class="icon-btn" data-aix="x" aria-label="إغلاق">×</button></div>
+   <p class="note">الأداة لا تتصل بأي ذكاء اصطناعي. انسخ الطلب، والصقه في المساعد الذي تثق به، ثم الصق رده هنا.</p>
+   <div class="aix-priv ${hidden?"on":""}">${hidden?`<b>${nHidden}</b> معلومة حساسة أُخفيت من الطلب برموز، وستُعاد الأسماء الحقيقية في النتيجة على جهازك.`:`إخفاء المعلومات الحساسة متوقف. فعّله من «محلل السياسات» قبل إرسال بيانات جهتك.`}</div>
+   <ol class="aix-steps">
+    <li><span>انسخ الطلب</span><button class="btn" data-aix="copy">نسخ الطلب</button><details><summary>عرض الطلب قبل نسخه</summary><textarea readonly dir="auto" data-notr>${esc(req)}</textarea></details></li>
+    <li><span>افتح المساعد والصق الطلب فيه</span><span class="row">${AI_LINKS.map(([n,u])=>`<a class="btn quiet" href="${u}" target="_blank" rel="noopener noreferrer">${n}</a>`).join("")}</span></li>
+    <li><span>انسخ رده كاملًا والصقه هنا</span><textarea id="aix-in" dir="auto" placeholder="الصق الرد هنا…" data-notr></textarea></li></ol>
+   <div class="row aix-f"><button class="btn" data-aix="use">استخدم الرد</button><button class="btn quiet" data-aix="x">إلغاء</button></div></div>`;
+  document.body.appendChild(el);applyLang(el);el.dir=U.lang==="en"?"ltr":"rtl";document.body.style.overflow="hidden";
+  aiX={el,req,close};setTimeout(()=>{const b=el.querySelector("[data-aix=copy]");if(b)b.focus()},30)})}
+function aiParse(txt){const s=String(txt||"");const m=s.match(/```(?:json)?\s*([\s\S]*?)```/i);let body=m?m[1]:s;
+  const a=body.indexOf("{"),b=body.lastIndexOf("}");if(a<0||b<a)return null;body=body.slice(a,b+1);
+  try{return JSON.parse(body)}catch(e){try{return JSON.parse(body.replace(/,\s*([}\]])/g,"$1").replace(/[“”]/g,'"'))}catch(x){return null}}}
+document.addEventListener("click",async e=>{const t=e.target.closest("[data-aix]");if(!t||!aiX)return;const a=t.dataset.aix;
+  if(a==="x")aiX.close(null);
+  else if(a==="copy"){try{await navigator.clipboard.writeText(aiX.req);t.textContent=tr("نُسخ ✓");toast("نُسخ الطلب. الصقه في المساعد.")}catch(x){const ta=aiX.el.querySelector("details");if(ta){ta.open=true;const q=ta.querySelector("textarea");q.focus();q.select()}toast("انسخه يدويًا من المربع")}}
+  else if(a==="use"){const v=aiParse((aiX.el.querySelector("#aix-in")||{}).value);if(!v){toast("لم نجد في الرد بيانات JSON صالحة. انسخ الرد كاملًا.");return}
+    aiX.close(rdOn()?rdRestore(v):v);toast("استُخدم الرد")}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&aiX)aiX.close(null)});
 
 // ===== Standalone version: no database. Visits are counted with GoatCounter (no cookies, no personal data). =====
 // Only the page name and an optional, opt-in list of control IDs with gaps are sent. Never names, emails, entity data or text.

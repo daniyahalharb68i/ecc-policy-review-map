@@ -146,7 +146,7 @@ const AI_RULES=`قواعد ملزمة:
 - لا تخترع أرقام ضوابط أو أسماء وثائق رسمية أو متطلبات لم ترد في النص المعطى. إن احتجت مرجعًا غير موجود فقل "يحتاج تحققًا".
 - اقتراحاتك إرشادية للمختص وليست نصًا رسميًا من الهيئة الوطنية للأمن السيبراني.
 - اذكر أدوارًا وظيفية عامة (مثل: الإدارة المعنية بالأمن السيبراني، إدارة تقنية المعلومات، الموارد البشرية) لا أسماء أشخاص.`;
-async function aiCall(key,input,opts){if(!U.ai){toast("ميزة الذكاء الاصطناعي متاحة عند فتح الصفحة داخل Claude");return null}
+async function aiCall(key,input,opts){if(!U.ai&&!window.claude){if(U.busy[key])return null;return aiExternal(key,input)}if(!U.ai){toast("ميزة الذكاء الاصطناعي متاحة عند فتح الصفحة داخل Claude");return null}
   if(U.busy[key])return null;U.busy[key]=new AbortController();render();
   try{return await U.ai.json(input,Object.assign({signal:U.busy[key].signal,modelTier:"default"},opts||{}))}
   catch(e){if(e&&e.code!=="cancelled")toast(aiErr(e));return null}

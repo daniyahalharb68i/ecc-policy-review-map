@@ -168,3 +168,14 @@ Object.assign(I18N.d,{
 "كلمة المرور غير صحيحة":"Wrong password","هذا الملف ليس حزمة فريق":"This is not a team package","تعذّر قراءة الحزمة":"Could not read the package"
 });
 Object.assign(I18N.d,{"الملف مشفّر بمعيار AES-# قبل أن يغادر جهازك، ويبقى داخل تخزين جهتكم لا عندنا. من دون كلمة المرور لا يمكن قراءته.":"The file is encrypted with AES-# before it leaves your device, and it stays in your entity's storage, not with us. Without the password it cannot be read."});
+
+Object.assign(I18N.d,{
+"حلّل بأداة ذكاء اصطناعي من اختيارك":"Analyse with an AI assistant of your choice",
+"الأداة لا تتصل بأي ذكاء اصطناعي. انسخ الطلب، والصقه في المساعد الذي تثق به، ثم الصق رده هنا.":"The tool does not connect to any AI. Copy the request, paste it into the assistant you trust, then paste its reply here.",
+"معلومة حساسة أُخفيت من الطلب برموز، وستُعاد الأسماء الحقيقية في النتيجة على جهازك.":"sensitive items were replaced with tokens in the request; the real names are restored in the result on your device.",
+"إخفاء المعلومات الحساسة متوقف. فعّله من «محلل السياسات» قبل إرسال بيانات جهتك.":"Hiding sensitive information is off. Turn it on in the Policy analyzer before sending your entity's data.",
+"انسخ الطلب":"Copy the request","نسخ الطلب":"Copy request","عرض الطلب قبل نسخه":"View the request before copying","افتح المساعد والصق الطلب فيه":"Open the assistant and paste the request",
+"انسخ رده كاملًا والصقه هنا":"Copy its full reply and paste it here","الصق الرد هنا…":"Paste the reply here…","استخدم الرد":"Use the reply","نُسخ ✓":"Copied ✓",
+"نُسخ الطلب. الصقه في المساعد.":"Request copied. Paste it into the assistant.","انسخه يدويًا من المربع":"Copy it manually from the box",
+"لم نجد في الرد بيانات JSON صالحة. انسخ الرد كاملًا.":"No valid JSON found in the reply. Copy the full reply.","استُخدم الرد":"Reply applied"
+});

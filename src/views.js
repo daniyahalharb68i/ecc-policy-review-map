@@ -28,7 +28,7 @@ const fld=(l,ctl)=>`<div><span class="lbl">${l}</span>${ctl}</div>`;
 const idb=id=>`<button class="idb" data-act="go" data-id="${id}">${id}</button>`;
 function sbar(s){const t=s.total||1,w=n=>(n/t*100).toFixed(2)+"%";return `<div class="sbar">${[["c",s.c],["p",s.p],["x",s.x],["w",s.w],["na",s.na]].filter(x=>x[1]).map(x=>`<i class="b-${x[0]}" style="width:${w(x[1])}"></i>`).join("")}</div>`}
 const LEG=`<div class="legend"><span><i class="b-c"></i>ملتزم</span><span><i class="b-p"></i>جزئي</span><span><i class="b-x"></i>غير ملتزم</span><span><i class="b-w"></i>قيد التقييم</span><span><i class="b-na"></i>لا ينطبق</span><span><i style="background:var(--surface2);border:1px solid var(--line)"></i>لم يُقيَّم</span></div>`;
-const aiBtn=(act,id,label,extra)=>U.busy[act+":"+id]?`<span class="thinking"><i></i>Claude يعمل على الطلب…</span> <button class="btn sm quiet" data-act="aistop" data-id="${esc(act+":"+id)}">إيقاف</button>`:`<button class="btn ai ${extra||""}" data-act="${act}" data-id="${esc(id)}" ${U.ai?"":"disabled title=\"متاح عند فتح الصفحة داخل Claude\""}>${SPARK}${label}</button>`;
+const aiBtn=(act,id,label,extra)=>U.busy[act+":"+id]?`<span class="thinking"><i></i>Claude يعمل على الطلب…</span> <button class="btn sm quiet" data-act="aistop" data-id="${esc(act+":"+id)}">إيقاف</button>`:`<button class="btn ai ${extra||""}" data-act="${act}" data-id="${esc(id)}" ${U.ai||!window.claude?"":"disabled title=\"متاح عند فتح الصفحة داخل Claude\""}>${SPARK}${label}</button>`;
 const aiTag=`<span class="tag ai">مقترح ذكاء اصطناعي — راجعه قبل الاعتماد</span>`;
 const list=a=>a&&a.length?`<ul>${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"";
 
@@ -175,7 +175,7 @@ function ctlRow(c){const id=c.id,o=C(id),s=dst(id),a=appOf(id),open=U.open[id];l
 function guideBox(id){const g=GD(id),k=new Set(C(id).gd||[]);if(!g.d.length&&!g.g.length)return "";
   const tr=U.lang!=="en"?gtrOf(id):null,dl=tr?tr.d:g.d,gl=tr&&tr.g.length?tr.g:g.g,dir=tr?"rtl":"ltr";
   return `<div class="box"><h4>الدليل الإرشادي لتطبيق الضوابط GECC-2:2026 <span class="tag off">نص رسمي</span>${tr?`<span class="tag ai">ترجمة آلية غير رسمية</span>`:""}<span class="note">${gdHave(id)} من ${g.d.length} مخرجات متوفرة</span></h4>
-  ${U.lang!=="en"&&!tr?`<div class="row" style="margin:2px 0 8px"><span class="note">النص الرسمي للدليل متاح بالإنجليزية فقط.</span>${window.claude?aiBtn("aigtr",id,"ترجم إلى العربية","ghost sm"):""}</div>`:""}
+  ${U.lang!=="en"&&!tr?`<div class="row" style="margin:2px 0 8px"><span class="note">النص الرسمي للدليل متاح بالإنجليزية فقط.</span>${true?aiBtn("aigtr",id,"ترجم إلى العربية","ghost sm"):""}</div>`:""}
   ${g.t.length?`<div class="row" style="margin:4px 0 6px"><span class="note">أدوات الهيئة المرتبطة:</span>${g.t.map(x=>`<span class="tag" dir="ltr">${esc(x)}</span>`).join("")}</div>`:""}
   <span class="lbl">المخرجات المتوقعة: علّم ما هو متوفر لديك</span><div class="gdl">${dl.map((x,i)=>`<label class="${k.has(i)?"on":""}"><input type="checkbox" data-act="gd" data-id="${id}" data-v="${i}" ${k.has(i)?"checked":""}><span dir="${dir}">${esc(x)}</span></label>`).join("")}</div>
   ${gl.length?`<details style="margin-top:6px"><summary class="note" style="font-weight:500">إرشادات التطبيق (${gl.length})</summary><ul class="gl" dir="${dir}">${gl.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:""}
