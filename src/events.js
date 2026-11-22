@@ -101,7 +101,7 @@ ${(rdOn()?rdClean(U.anaTxt):U.anaTxt).slice(0,30000)}
 function anaApply(){const a=U.anaRes;if(!a)return;const by={};(a.res.items||[]).forEach(i=>{const p=BY[i.id]?i.id:i.id.split("-").slice(0,3).join("-");if(!BY[p])return;(by[p]=by[p]||[]).push(i)});
   const ids=Object.keys(by);U.confirm={msg:`سيُضبط «موثّق» لـ ${ids.length} ضابطًا من نتيجة التحليل، ويُكتب اسم الوثيقة في دليل التوثيق. القيم الحالية لهذه الطبقة ستُستبدل.`,soft:true,yes:"اعتمد",fn:()=>{
     ids.forEach(id=>{const v=by[id].map(i=>i.verdict);const d=v.every(x=>x==="covered")?"y":v.every(x=>x==="missing")?"n":"p";const cl=[...new Set(by[id].map(i=>i.clause).filter(Boolean))].slice(0,3).join("، ");
-      const o=S.ctl[id]=S.ctl[id]||{};o.d=d;o.ev_d=(a.name||"سياسة")+(cl?" — "+cl:"");persist("ctl",id)});logEv("ana","",{v:a.name});toast(`حُدّثت طبقة التوثيق لـ ${ids.length} ضابطًا`)}};render()}
+      const o=S.ctl[id]=S.ctl[id]||{};o.d=d;o.ev_d=(a.name||"سياسة")+(cl?" — "+cl:"");stampF(o,"d");stampF(o,"ev_d");persist("ctl",id)});logEv("ana","",{v:a.name});toast(`حُدّثت طبقة التوثيق لـ ${ids.length} ضابطًا`)}};render()}
 
 // ===== Other actions =====
 function snapNow(label){const s=stats(CTLS),per={};CTLS.forEach(c=>per[c.id]=dst(c.id));const id=uid();putDoc("snaps",id,{at:today(),label:label||"",comp:s.comp,c:s.c,p:s.p,x:s.x,gaps:gapList().length,paper:s.paper,per})}
@@ -142,11 +142,11 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-act]");if(
   case "jumps":go(id);break;
   case "jumpf":U.tab="review";U.f=v;U.q="";render();window.scrollTo(0,0);break;
   case "clrf":U.q="";U.f="all";render();break;
-  case "lay":{if(!canCol("ctl",id)){toast("ليست لديك صلاحية تعديل هذا الضابط");break}const before=dst(id);const o=S.ctl[id]=S.ctl[id]||{};if(o[k]===v)delete o[k];else o[k]=v;if(dst(id)==="c"&&before!=="c"){U.flash=id;clearTimeout(U._ft);U._ft=setTimeout(()=>{U.flash=null},1500)}persist("ctl",id);logEv("layer",id,{v:({d:"موثّق",i:"مطبّق",e:"فعّال"})[k]+": "+(({y:"نعم",p:"جزئي",n:"لا"})[o[k]]||"—")});render();break}
+  case "lay":{if(!canCol("ctl",id)){toast("ليست لديك صلاحية تعديل هذا الضابط");break}const before=dst(id);const o=S.ctl[id]=S.ctl[id]||{};if(o[k]===v)delete o[k];else o[k]=v;stampF(o,k);if(dst(id)==="c"&&before!=="c"){U.flash=id;clearTimeout(U._ft);U._ft=setTimeout(()=>{U.flash=null},1500)}persist("ctl",id);logEv("layer",id,{v:({d:"موثّق",i:"مطبّق",e:"فعّال"})[k]+": "+(({y:"نعم",p:"جزئي",n:"لا"})[o[k]]||"—")});render();break}
   case "tmadd":if(!S.team[id]){putDoc("team",id,{role:"assessor",doms:[],at:Date.now()});logEv("team",id,{v:"إضافة"});toast("أُضيف إلى الفريق. تأكد أن الأداة مشاركة معه من قائمة المشاركة.")}render();break;
   case "tmdom":{const m=Object.assign({},S.team[id]);const s=new Set(m.doms||[]);t.checked?s.add(v):s.delete(v);m.doms=[...s].sort();putDoc("team",id,m);logEv("team",id,{v:"نطاق: "+(m.doms.join("، ")||"الكل")});render();break}
   case "tmdel":U.confirm={msg:"إزالة هذا العضو من فريق الأداة؟ لإيقاف وصوله نهائيًا أزله أيضًا من قائمة المشاركة.",yes:"إزالة",fn:()=>{putDoc("team",id,null);logEv("team",id,{v:"إزالة"})}};render();break;
-  case "gd":{if(!canCol("ctl",id)){toast("ليست لديك صلاحية تعديل هذا الضابط");render();break}const o=S.ctl[id]=S.ctl[id]||{};const s=new Set(o.gd||[]);const i=+v;s.has(i)?s.delete(i):s.add(i);o.gd=[...s].sort((a,b)=>a-b);if(!o.gd.length)delete o.gd;persist("ctl",id);render();break}
+  case "gd":{if(!canCol("ctl",id)){toast("ليست لديك صلاحية تعديل هذا الضابط");render();break}const o=S.ctl[id]=S.ctl[id]||{};const s=new Set(o.gd||[]);const i=+v;s.has(i)?s.delete(i):s.add(i);o.gd=[...s].sort((a,b)=>a-b);if(!o.gd.length)delete o.gd;stampF(o,"gd");persist("ctl",id);render();break}
   case "etype":if(!canCol("cfg"))break;setF("cfg",null,"type",v);logEv("scope","",{v});render();break;
   case "cond":{if(!canCol("cfg"))break;logEv("scope",id,{v});const c=Object.assign({},S.cfg.cond);if(c[id]===v)delete c[id];else c[id]=v;setF("cfg",null,"cond",c);render();break}
   case "scopeok":setF("cfg",null,"scopeOk",t.checked);render();break;
@@ -162,7 +162,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-act]");if(
   case "aistop":{const c=U.busy[id];if(c&&c.abort)c.abort();break}
   case "aisave":setF("ctl",id,"ai",U.aiOut[id]);delete U.aiOut[id];toast("حُفظ المقترح مع الضابط");render();break;
   case "aidrop":delete U.aiOut[id];setF("ctl",id,"ai",null);render();break;
-  case "aicopy":{const r=U.aiOut[id]||C(id).ai;if(!r)break;const txt=(r.steps||[]).map((s,i)=>`${i+1}. ${s.step} — ${s.owner||""}`).join("\n");const o=S.ctl[id]=S.ctl[id]||{};o.rem=(o.rem?o.rem+"\n":"")+txt;persist("ctl",id);toast("أُضيفت الخطوات إلى خطة المعالجة");render();break}
+  case "aicopy":{const r=U.aiOut[id]||C(id).ai;if(!r)break;const txt=(r.steps||[]).map((s,i)=>`${i+1}. ${s.step} — ${s.owner||""}`).join("\n");const o=S.ctl[id]=S.ctl[id]||{};o.rem=(o.rem?o.rem+"\n":"")+txt;stampF(o,"rem");persist("ctl",id);toast("أُضيفت الخطوات إلى خطة المعالجة");render();break}
   case "copyt":try{navigator.clipboard.writeText(v).then(()=>toast("نُسخ"),()=>toast("حدد النص وانسخه يدويًا"))}catch(err){toast("حدد النص وانسخه يدويًا")}break;
   case "anaclr":U.anaSel=new Set();render();break;
   case "anaapply":anaApply();break;

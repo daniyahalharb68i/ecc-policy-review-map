@@ -115,3 +115,11 @@
 .bk{position:relative;display:grid;gap:8px;align-content:start;padding-top:16px}
 .bk h4{margin:0}.bk p{margin:0;font-size:.88rem;line-height:1.7}
 .bk-n{position:absolute;top:-10px;inset-inline-start:12px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--spark);color:var(--spark-ink);font-size:.78rem;font-weight:600}
+
+/* ===== team space ===== */
+.ts-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.ts-two .box{display:grid;gap:6px;align-content:start}.ts-two h4{margin:0}
+.ts-pw{display:grid;gap:6px}
+.ts-on{display:grid;gap:4px}
+.ts-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--ok);margin-inline-end:6px;box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 25%,transparent)}
+.lnk{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font:inherit;text-decoration:underline;text-underline-offset:3px}

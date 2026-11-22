@@ -696,6 +696,14 @@ a{color:var(--accent)}
 .bk h4{margin:0}.bk p{margin:0;font-size:.88rem;line-height:1.7}
 .bk-n{position:absolute;top:-10px;inset-inline-start:12px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--spark);color:var(--spark-ink);font-size:.78rem;font-weight:600}
 
+/* ===== team space ===== */
+.ts-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.ts-two .box{display:grid;gap:6px;align-content:start}.ts-two h4{margin:0}
+.ts-pw{display:grid;gap:6px}
+.ts-on{display:grid;gap:4px}
+.ts-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--ok);margin-inline-end:6px;box-shadow:0 0 0 3px color-mix(in srgb,var(--ok) 25%,transparent)}
+.lnk{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font:inherit;text-decoration:underline;text-underline-offset:3px}
+
 /* ===== Forest & copper design system (style reference: segmentsix.de; own implementation) =====
    Dark forest is the default; the theme button switches to the light "paper" variant.
    Type: Inter Tight (Latin) + IBM Plex Sans Arabic. Headlines regular weight; tight tracking for Latin only. */
@@ -1224,6 +1232,37 @@ Object.assign(I18N.d,{
 "استرجاع نسخة":"Restore a copy","ما تشمله النسخة:":"What the backup includes:","النطاق، وتقييم كل الضوابط وملاحظاتها، وخارطة المعالجة، وسجل الوثائق، واللقطات، والتحليلات.":"scope, every control’s assessment and notes, the remediation roadmap, the document register, snapshots and analyses.","لا تشمل":"It does not include","الملفات المرفقة كأدلة؛ احتفظ بها في مجلد خاص.":"evidence attachments; keep those in their own folder.",
 "تنزيل الفجوات CSV":"Download gaps CSV","طريقة بديلة: لصق محتوى النسخة":"Alternative: paste the backup content","افتح ملف النسخة بأي محرر نصوص، وانسخ محتواه والصقه هنا. يقبل أيضًا نسخ «خارطة مراجعة سياسات ECC» السابقة.":"Open the backup file in any text editor, copy its content and paste it here. Older ECC Policy Review Map backups are accepted too.","استرجاع واستبدال":"Restore and replace","كيف أسترجعها؟":"How do I restore it?","تعذّرت قراءة الملف":"Could not read the file"
 });
+
+Object.assign(I18N.d,{
+"مساحة الفريق":"Team space","اعملوا على تقييم واحد من ملف مشفّر في التخزين المشترك لجهتكم، دون أي خادم.":"Work on one assessment from an encrypted file in your entity's shared storage, with no server.",
+"ملف مساحة الفريق":"Team space file","دون خادم · داخل تخزين جهتكم":"No server · inside your entity's storage",
+"اسمك في الفريق":"Your name in the team","مثل: سارة — الحوكمة":"e.g. Sara — Governance","يظهر بجانب ما تعدّله، ليعرف زملاؤك من غيّر ماذا. يُحفظ في جهازك فقط.":"Shown next to what you edit so teammates know who changed what. Saved on your device only.",
+"كلمة مرور الفريق":"Team password","أعد كتابة كلمة المرور (للتصدير)":"Repeat the password (for export)",
+"الحفظ المباشر على ملف مشترك متاح في Chrome أو Edge على الحاسب. في هذا المتصفح استخدم الحزمة المشفّرة أدناه.":"Saving directly to a shared file works in Chrome or Edge on a computer. In this browser, use the encrypted package below.",
+"متصل بـ":"Connected to","جارٍ المزامنة…":"Syncing…","آخر مزامنة #":"Last sync #",
+"تُحفظ تعديلاتك في الملف تلقائيًا بعد # ثانية من آخر تعديل، وتُقرأ تعديلات زملائك كل دقيقتين.":"Your edits are saved to the file automatically # seconds after your last change, and teammates' edits are read every two minutes.",
+"مزامنة الآن":"Sync now","قطع الاتصال":"Disconnect","آخر ملف استخدمته:":"Last file you used:","الملف:":"File:",
+"اكتب كلمة مرور الفريق لفتحه. لا تُحفظ كلمة المرور في أي مكان.":"Enter the team password to open it. The password is not stored anywhere.","فتح ومزامنة":"Open and sync","ملف آخر":"Another file",
+"أنا أول من يبدأ":"I'm starting","اختر كلمة مرور للفريق، ثم احفظ الملف في مجلد مشترك لجهتكم.":"Choose a team password, then save the file in a shared folder of your entity.","إنشاء ملف مساحة الفريق":"Create the team space file",
+"زميلي أنشأ الملف":"A teammate created it","افتح الملف من المجلد المشترك، ثم اكتب كلمة مرور الفريق.":"Open the file from the shared folder, then enter the team password.","فتح ملف مساحة فريق":"Open a team space file",
+"كيف تعمل مساحة الفريق":"How the team space works",
+"ينشئ مدير التقييم ملفًا مشفّرًا ويحفظه في مجلد مشترك تعتمده جهتكم، مثل OneDrive أو SharePoint أو مجلد الشبكة.":"The assessment lead creates an encrypted file and saves it in a shared folder your entity approves, such as OneDrive, SharePoint or a network folder.",
+"يعطي الفريق مكان الملف وكلمة المرور، بقناة مختلفة عن الإيميل إن أمكن.":"They give the team the file location and the password, ideally through a channel other than email.",
+"يفتح كل عضو الملف من الأداة، ويعمل على المكونات المسندة إليه.":"Each member opens the file from the tool and works on the domains assigned to them.",
+"عند كل مزامنة تقرأ الأداة الملف، وتأخذ لكل ضابط آخر تعديل، ثم تحفظ النتيجة فيه. لا يُحذف شيء أثناء الدمج.":"On every sync the tool reads the file, keeps the latest edit of each control, and saves the result back. Nothing is deleted while merging.",
+"لماذا هذا آمن:":"Why this is safe:","الملف مشفّر بمعيار AES-#، قبل أن يغادر جهازك، ويبقى داخل تخزين جهتكم لا عندنا. من دون كلمة المرور لا يمكن قراءته.":"",
+"تنبيه:":"Note:","إن عدّل شخصان الضابط نفسه بين مزامنتين، يُعتمد التعديل الأحدث.":"If two people edit the same control between syncs, the newer edit is kept.",
+"حزمة الفريق المشفّرة":"Encrypted team package","للجوال، أو للإرسال بالبريد، أو كنسخة احتياطية كاملة مع المرفقات":"For phones, email, or a full backup with attachments",
+"تصدير":"Export","ملف واحد مشفّر فيه التقييم كاملًا والمرفقات.":"One encrypted file with the full assessment and attachments.","تصدير الحزمة":"Export package",
+"استيراد ودمج":"Import and merge","اكتب كلمة مرور الحزمة في خانة التصدير المجاورة، ثم اختر الملف. تُدمج مع تقييمك ولا تحل محله.":"Type the package password in the export field next to this, then choose the file. It merges with your assessment instead of replacing it.",
+"اختيار حزمة .ecc":"Choose a .ecc package","تحتاج نسخة كاملة مع المرفقات ومشفّرة بكلمة مرور؟":"Need a full, password-encrypted copy with attachments?","استخدم حزمة الفريق المشفّرة":"Use the encrypted team package",
+"كلمة المرور # أحرف على الأقل":"The password must be at least # characters","كلمتا المرور غير متطابقتين":"The passwords do not match","اكتب كلمة مرور الملف":"Enter the file password","لم يُسمح للأداة بتعديل الملف":"The tool was not allowed to edit the file",
+"أُنشئ ملف مساحة الفريق. شارك مكانه وكلمة المرور مع فريقك.":"Team space file created. Share its location and the password with your team.","تعذّر إنشاء الملف":"Could not create the file","تعذّر فتح الملف":"Could not open the file",
+"كلمة المرور غير صحيحة لهذا الملف":"Wrong password for this file","هذا الملف ليس ملف مساحة فريق":"This is not a team space file","تعذّرت المزامنة. تأكد أن الملف غير مفتوح للتعديل في برنامج آخر.":"Sync failed. Make sure the file isn't open for editing in another program.",
+"تمت المزامنة، ولا تعديلات جديدة من زملائك":"Synced; no new edits from teammates","صُدّرت الحزمة المشفّرة":"Encrypted package exported","تعذّر التصدير":"Export failed","اكتب كلمة مرور الحزمة أولًا":"Enter the package password first",
+"كلمة المرور غير صحيحة":"Wrong password","هذا الملف ليس حزمة فريق":"This is not a team package","تعذّر قراءة الحزمة":"Could not read the package"
+});
+Object.assign(I18N.d,{"الملف مشفّر بمعيار AES-# قبل أن يغادر جهازك، ويبقى داخل تخزين جهتكم لا عندنا. من دون كلمة المرور لا يمكن قراءته.":"The file is encrypted with AES-# before it leaves your device, and it stays in your entity's storage, not with us. Without the password it cannot be read."});
 </script>
 <script>document.documentElement.lang="ar";document.documentElement.dir="rtl";
 // ===== Index =====
@@ -1333,11 +1372,13 @@ function logEv(what,id,extra){if(U.demo||!U.db)return;try{U.db.collection("log")
 // ===== Persistence (shared db when available, else this browser) =====
 let lsT=null;const wq={},wt={};
 function saveLocal(){if(U.demo||U.supa)return;clearTimeout(lsT);lsT=setTimeout(()=>{try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}},300)}
-function persist(col,id){if(U.demo)return;if(U.db&&!canCol(col,id)){toast("ليست لديك صلاحية تعديل هذا الجزء. تواصل مع مدير التقييم.");return}saveLocal();if(!U.db)return;const p=col==="cfg"?"meta/cfg":col+"/"+id;wq[p]=1;clearTimeout(wt[p]);
+function persist(col,id){if(U.demo)return;if(!U.db){const o=col==="cfg"?S.cfg:S[col]&&S[col][id];if(o&&typeof o==="object"){o._at=Date.now();if(U.tsMe)o._by=U.tsMe}if(typeof tsTouch==="function")tsTouch()}if(U.db&&!canCol(col,id)){toast("ليست لديك صلاحية تعديل هذا الجزء. تواصل مع مدير التقييم.");return}saveLocal();if(!U.db)return;const p=col==="cfg"?"meta/cfg":col+"/"+id;wq[p]=1;clearTimeout(wt[p]);
   wt[p]=setTimeout(async()=>{const v=col==="cfg"?S.cfg:S[col][id];
     try{if(v==null)await U.db.doc(p).delete();else await U.db.doc(p).set(Object.assign({},v,{_by:U.me||"",_at:Date.now()}))}catch(e){writeErr(e)}finally{delete wq[p]}},650)}
 function writeErr(e){const c=e&&e.code;U.sync="warn";paintSync();toast(c==="not_granted"?"لا تملك صلاحية التعديل على هذه النسخة المشتركة":"تعذّر الحفظ في التخزين المشترك؛ بقي التعديل محفوظًا في هذا المتصفح")}
-function setF(col,id,k,v){if(col==="cfg"){if(k.includes(".")){const [a,b]=k.split(".");S.cfg[a]=Object.assign({},S.cfg[a],{[b]:v})}else S.cfg[k]=v;persist("cfg");return}const o=S[col][id]=S[col][id]||{};if(v===""||v==null)delete o[k];else o[k]=v;persist(col,id)}
+// per-field edit time (standalone only), so team files merge field by field
+const stampF=(o,k)=>{if(U.db||U.demo)return;o._f=Object.assign({},o._f,{[k]:Date.now()})};
+function setF(col,id,k,v){if(col==="cfg"){if(k.includes(".")){const [a,b]=k.split(".");S.cfg[a]=Object.assign({},S.cfg[a],{[b]:v});stampF(S.cfg,a)}else{S.cfg[k]=v;stampF(S.cfg,k)}persist("cfg");return}const o=S[col][id]=S[col][id]||{};if(v===""||v==null)delete o[k];else o[k]=v;stampF(o,k);persist(col,id)}
 function putDoc(col,id,val){if(val==null)delete S[col][id];else S[col][id]=val;persist(col,id)}
 const clean=o=>{const x=Object.assign({},o);delete x._by;delete x._at;return x};
 function startDb(db){U.db=db;U.sync="live";let got=0;const tm=setTimeout(()=>{if(!got){U.sync="warn";paintSync()}},10000);
@@ -1420,7 +1461,7 @@ const HEAD={home:["نظرة عامة","الصورة الكاملة: هل الا�
 const LOGT={layer:"تعديل طبقة",app:"تعديل الانطباق",gd:"تعليم دليل",report:"إصدار تقرير رسمي",team:"تعديل الفريق",snap:"حفظ لقطة",scope:"تعديل النطاق",ana:"اعتماد تحليل سياسة",import:"استيراد بيانات",reset:"مسح البيانات"};
 const roNote=col=>canCol(col)?"":`<div class="banner"><span><b>للاطلاع فقط.</b> دورك «${ROLES[role()][0]}» لا يسمح بتعديل هذا القسم.</span></div>`;
 const lvlName=()=>U.supa?ROLES[U.supa.role][0]:U.lvl.owner?"مالك الأداة":U.lvl.admin?"محرر":U.lvl.write===false?"مشاهد":"مساهم";
-function vTeam(){const r=role(),live=!!U.db&&!U.demo,lead=r==="lead"&&live,mem=Object.entries(S.team);
+function vTeam(){if(!window.claude)return vTeamSpace();const r=role(),live=!!U.db&&!U.demo,lead=r==="lead"&&live,mem=Object.entries(S.team);
   const me=`<section class="card c5"><h2>صلاحيتك</h2>${live?`<div class="att"><div><span class="ix" style="background:var(--accent-soft);color:var(--accent)">●</span><span><b>${esc(U.myName||"أنت")}</b><div class="note">${ROLES[r][0]}: ${ROLES[r][1]}</div></span><span class="tag">${lvlName()}</span></div></div>${myDoms()?`<p class="note" style="margin:8px 0 0">المكونات المسندة إليك: ${myDoms().join("، ")}</p>`:""}`:`<p class="note">${U.demo?"وضع المثال: الصلاحيات غير مفعّلة.":"هذا العرض غير متصل بقاعدة البيانات. افتح الأداة من رابطها داخل Claude لتفعيل الفريق والصلاحيات."}</p>`}</section>`;
   const roles=`<section class="card c7"><h2>الأدوار</h2><div class="tw"><table><thead><tr><th>الدور</th><th>ما يستطيعه</th><th>مستوى المشاركة المطلوب</th></tr></thead><tbody>${Object.entries(ROLES).map(([k,v])=>`<tr><td><b>${v[0]}</b></td><td>${v[1]}</td><td class="nw">${v[2]}</td></tr>`).join("")}</tbody></table></div><p class="note" style="margin:8px 0 0">قاعدة البيانات تفرض مستوى المشاركة على كل عملية حفظ، فلا يتجاوز أحد مستواه. أما حصر المقيّم في مكونات محددة فتطبّقه واجهة الأداة.</p></section>`;
   const add=lead&&!U.supa?`<div class="row" style="margin-bottom:10px"><input id="tm-q" type="search" placeholder="ابحث بالاسم لإضافة عضو" style="max-width:320px" data-act="tmq" value="${esc(U.tmQ||"")}"></div>${U.tmRes&&U.tmRes.length?`<div class="att" style="margin-bottom:12px">${U.tmRes.slice(0,8).map(p=>`<div><span class="ix" style="background:var(--surface2)">+</span><span>${esc(p.name||"بلا اسم")}</span><button class="btn sm" data-act="tmadd" data-id="${esc(p.id)}" ${S.team[p.id]?"disabled":""}>${S.team[p.id]?"مضاف":"إضافة"}</button></div>`).join("")}</div>`:""}`:"";
@@ -1746,6 +1787,7 @@ function vReport(){const c=S.cfg,rp=c.rep||{},L=U.repLang||U.lang,arch=Object.en
     <div class="box bk"><span class="bk-n num">2</span><h4>احتفظ بها في مكان آمن</h4><p>انقل الملف إلى OneDrive أو Google Drive أو مجلد العمل، لتجده إن مسحت بيانات المتصفح أو غيّرت الجهاز. احفظ نسخة جديدة بعد كل جلسة تقييم.</p></div>
     <div class="box bk"><span class="bk-n num">3</span><h4>استرجعها عند الحاجة</h4><p>افتح الأداة في أي متصفح، ثم اضغط «استرجاع نسخة» واختر الملف. يحل محتواه محل التقييم الحالي بعد تأكيدك.</p>
      <label class="btn ghost attpick" ${fsAttr("cfg")}>استرجاع نسخة<input type="file" id="impfile" accept=".json,application/json" hidden></label></div></div>
+   <p class="note" style="margin:10px 0 0">تحتاج نسخة كاملة مع المرفقات ومشفّرة بكلمة مرور؟ <button class="lnk" data-act="tab" data-v="team">استخدم حزمة الفريق المشفّرة</button>.</p>
    <p class="note" style="margin:10px 0 0"><b>ما تشمله النسخة:</b> النطاق، وتقييم كل الضوابط وملاحظاتها، وخارطة المعالجة، وسجل الوثائق، واللقطات، والتحليلات. <b>لا تشمل</b> الملفات المرفقة كأدلة؛ احتفظ بها في مجلد خاص.</p>
    <div class="row" style="margin-top:10px"><button class="btn quiet" data-act="csv">تنزيل الفجوات CSV</button>${U.demo?"":`<button class="btn quiet" data-act="demo">استعرض المثال</button>`}</div>
    <fieldset class="fs" ${fsAttr("cfg")}><details style="margin-top:12px"><summary>طريقة بديلة: لصق محتوى النسخة</summary><p class="note">افتح ملف النسخة بأي محرر نصوص، وانسخ محتواه والصقه هنا. يقبل أيضًا نسخ «خارطة مراجعة سياسات ECC» السابقة.</p><textarea id="imp" style="min-height:90px;direction:ltr;text-align:left" placeholder="{…}"></textarea><button class="btn" data-act="imp" style="margin-top:8px">استرجاع واستبدال</button></details></fieldset></section>
@@ -2165,6 +2207,128 @@ async function giShare(){const g=giGaps();if(!g.length)return;const last=giLast(
   toast("شكرًا لمشاركتك. أُرسلت أرقام الضوابط فقط.");render()}
 document.addEventListener("click",e=>{const t=e.target.closest("[data-act=gishare]");if(t)giShare()});
 
+// ===== Team space without a server =====
+// One encrypted file (.ecc) lives in the entity's own shared storage (OneDrive, SharePoint, Google Drive, network folder).
+// Everyone opens the same file with the same password; on every sync the tool reads it, merges by last edit, and writes it back.
+// Encryption: PBKDF2-SHA256 (310,000 rounds) → AES-256-GCM, in the browser. The password never leaves the device and is never stored.
+const TS_MAGIC="ECCTEAM1",TS_ITER=310000,TS_HKEY="__team_handle";
+const TS_FS=typeof window.showOpenFilePicker==="function"&&typeof window.showSaveFilePicker==="function"&&!window.claude;
+U.ts=U.ts||{h:null,name:"",pw:"",at:"",busy:false,st:null,need:null};
+try{U.tsMe=localStorage.getItem("ecc_ts_me")||""}catch(e){U.tsMe=""}
+if(!window.claude){const tt=NAV.flatMap(g=>g[1]).find(x=>x[0]==="team");if(tt)tt[1]="مساحة الفريق";HEAD.team=["مساحة الفريق","اعملوا على تقييم واحد من ملف مشفّر في التخزين المشترك لجهتكم، دون أي خادم."]}
+
+// --- crypto ---
+const enc=new TextEncoder();
+async function tsKey(pw,salt){const base=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:TS_ITER,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
+async function tsEncrypt(bytes,pw){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+  const ct=new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv},await tsKey(pw,salt),bytes));
+  const out=new Uint8Array(8+16+12+ct.length);out.set(enc.encode(TS_MAGIC),0);out.set(salt,8);out.set(iv,24);out.set(ct,36);return out}
+async function tsDecrypt(buf,pw){const b=new Uint8Array(buf);if(new TextDecoder().decode(b.slice(0,8))!==TS_MAGIC)throw new Error("format");
+  try{return new Uint8Array(await crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(24,36)},await tsKey(pw,b.slice(8,24)),b.slice(36)))}catch(e){throw new Error("password")}}
+
+// --- package: state + evidence files ---
+async function tsPack(){const z=new JSZip();z.file("state.json",JSON.stringify(S));z.file("about.txt","ECC Policy Review Map team file. Open it with the tool and the team password.");
+  const lids=new Set();Object.values(S.ctl).forEach(o=>(o.att||[]).forEach(r=>{if(r.lid)lids.add(r.lid)}));
+  for(const k of lids){try{const b=await fdbGet(k);if(b)z.file("att/"+k,b)}catch(e){}}
+  return z.generateAsync({type:"uint8array",compression:"DEFLATE"})}
+async function tsUnpack(bytes){const z=await JSZip.loadAsync(bytes);const st=JSON.parse(await z.file("state.json").async("string"));
+  const types={};Object.values(st.ctl||{}).forEach(o=>(o.att||[]).forEach(r=>{if(r.lid)types[r.lid]=r.type||""}));
+  let files=0;for(const p of Object.keys(z.files).filter(p=>p.startsWith("att/")&&!z.files[p].dir)){const k=p.slice(4);
+    try{if(!(await fdbGet(k))){const ab=await z.file(p).async("arraybuffer");await fdbPut(k,new Blob([ab],{type:types[k]||""}));files++}}catch(e){}}
+  return {st,files}}
+
+// --- merge field by field: for each field the newest edit wins (each field carries its own edit time in _f),
+//     a field cleared later stays cleared, and evidence attachments from both sides are combined ---
+const TS_META=new Set(["_at","_by","_f"]);
+const attKey=r=>r.lid||r.aid||(r.name+"|"+(r.size||"")+"|"+(r.at||""));
+function tsField(o,k){if(o._f&&o._f[k]!=null)return o._f[k];return k in o?(o._at||0):-1}
+function tsMergeItem(a,b){const out={},keys=new Set([...Object.keys(a),...Object.keys(b)].filter(k=>!TS_META.has(k)));let ch=false;
+  keys.forEach(k=>{if(k==="att"&&(a.att||b.att)){const m=new Map();(a.att||[]).concat(b.att||[]).forEach(r=>{if(!m.has(attKey(r)))m.set(attKey(r),r)});const v=[...m.values()];out.att=v;if(v.length!==(a.att||[]).length)ch=true;return}
+    const ta=tsField(a,k),tb=tsField(b,k);
+    if(tb>ta){if(k in b)out[k]=b[k];if(JSON.stringify(a[k])!==JSON.stringify(b[k]))ch=true}else if(k in a)out[k]=a[k]});
+  const f=Object.assign({},a._f||{});Object.entries(b._f||{}).forEach(([k,t])=>{if(!(f[k]>=t))f[k]=t});if(Object.keys(f).length)out._f=f;
+  out._at=Math.max(a._at||0,b._at||0);const nb=(b._at||0)>(a._at||0);out._by=nb?b._by:a._by;if(!out._by)delete out._by;if(!out._at)delete out._at;
+  return {v:out,ch}}
+function tsMerge(N){const r={add:0,upd:0,keep:0};
+  COLS.concat(["log"]).forEach(col=>{const A=S[col]=S[col]||{},Bc=N[col]||{};Object.keys(Bc).forEach(id=>{const a=A[id],b=Bc[id];
+    if(!a){A[id]=b;r.add++;return}if(typeof a!=="object"||typeof b!=="object")return;const m=tsMergeItem(a,b);A[id]=m.v;if(m.ch)r.upd++;else r.keep++})});
+  if(N.cfg){const m=tsMergeItem(S.cfg,N.cfg);S.cfg=Object.assign(blank().cfg,m.v);if(m.ch)r.upd++}
+  saveLocal();return r}
+
+// --- file handle (Chrome / Edge on a computer) ---
+async function tsRemember(h){try{await fdbOp("readwrite",s=>s.put(h,TS_HKEY))}catch(e){}}
+async function tsForget(){try{await fdbOp("readwrite",s=>s.delete(TS_HKEY))}catch(e){}}
+(async()=>{if(!TS_FS)return;try{const h=await fdbGet(TS_HKEY);if(h&&h.kind==="file"){U.ts.h=h;U.ts.name=h.name;U.ts.need="reconnect";if(U.tab==="team")render()}}catch(e){}})();
+async function tsPerm(h){const o={mode:"readwrite"};if((await h.queryPermission(o))==="granted")return true;return (await h.requestPermission(o))==="granted"}
+async function tsRead(h){const f=await h.getFile();return f.size?await f.arrayBuffer():null}
+async function tsWrite(h,bytes){const w=await h.createWritable();await w.write(bytes);await w.close()}
+
+async function tsSync(quiet){const T=U.ts;if(!T.h||!T.pw||T.busy)return;T.busy=true;if(!quiet)render();
+  try{const buf=await tsRead(T.h);let r={add:0,upd:0,keep:0},files=0;
+    if(buf){const p=await tsUnpack(await tsDecrypt(buf,T.pw));r=tsMerge(p.st);files=p.files}
+    await tsWrite(T.h,await tsEncrypt(await tsPack(),T.pw));
+    T.at=new Date().toTimeString().slice(0,5);T.st=r;T.err="";T.dirty=false;
+    if(!quiet||r.add||r.upd)toast(r.add||r.upd?`تمت المزامنة: ${r.add} جديد و${r.upd} محدّث من زملائك${files?`، و${files} مرفق`:""}`:"تمت المزامنة، ولا تعديلات جديدة من زملائك")}
+  catch(e){T.err=e.message==="password"?"كلمة المرور غير صحيحة لهذا الملف":e.message==="format"?"هذا الملف ليس ملف مساحة فريق":"تعذّرت المزامنة. تأكد أن الملف غير مفتوح للتعديل في برنامج آخر.";
+    if(e.message==="password")T.pw="";toast(T.err)}
+  finally{T.busy=false;softRender()}}
+// sync shortly after edits, and check the shared file every 2 minutes while the page is open
+let tsT=null;function tsTouch(){if(!U.ts.h||!U.ts.pw)return;U.ts.dirty=true;clearTimeout(tsT);tsT=setTimeout(()=>tsSync(true),15000)}
+setInterval(()=>{if(U.ts.h&&U.ts.pw&&document.visibilityState==="visible")tsSync(true)},120000);
+window.addEventListener("beforeunload",e=>{if(U.ts.dirty){e.preventDefault();e.returnValue=""}});
+
+// --- actions ---
+const tsPw=(p="ts")=>($("#"+p+"-pw")||{}).value||"",tsPw2=(p="ts")=>($("#"+p+"-pw2")||{}).value||"";
+function tsCheckNew(p="ts"){const a=tsPw(p),b=tsPw2(p);if(a.length<8){toast("كلمة المرور 8 أحرف على الأقل");return null}if(a!==b){toast("كلمتا المرور غير متطابقتين");return null}return a}
+const TS_TYPES=[{description:"ECC team file",accept:{"application/octet-stream":[".ecc"]}}];
+async function tsCreate(){const pw=tsCheckNew();if(!pw)return;try{
+  const h=await window.showSaveFilePicker({suggestedName:"ECC-team-"+((S.cfg.entity||"").replace(/[\\/:*?"<>|]+/g,"").slice(0,30)||"space")+".ecc",types:TS_TYPES});
+  Object.assign(U.ts,{h,name:h.name,pw,need:null,err:""});await tsRemember(h);await tsWrite(h,await tsEncrypt(await tsPack(),pw));U.ts.at=new Date().toTimeString().slice(0,5);
+  toast("أُنشئ ملف مساحة الفريق. شارك مكانه وكلمة المرور مع فريقك.");render()}catch(e){if(e.name!=="AbortError")toast("تعذّر إنشاء الملف")}}
+async function tsOpen(){try{const [h]=await window.showOpenFilePicker({types:TS_TYPES,multiple:false});Object.assign(U.ts,{h,name:h.name,pw:"",need:"password",err:""});await tsRemember(h);render();setTimeout(()=>{const p=$("#ts-pw");if(p)p.focus()},50)}catch(e){if(e.name!=="AbortError")toast("تعذّر فتح الملف")}}
+async function tsUnlock(){const pw=tsPw();if(!pw){toast("اكتب كلمة مرور الملف");return}if(!(await tsPerm(U.ts.h))){toast("لم يُسمح للأداة بتعديل الملف");return}
+  U.ts.pw=pw;U.ts.need=null;await tsSync(false)}
+async function tsClose(){await tsForget();U.ts={h:null,name:"",pw:"",at:"",busy:false,st:null,need:null};render()}
+// fallback: download / upload the package (phones, Safari, Firefox)
+async function tsExport(){const pw=tsCheckNew("tsx");if(!pw)return;try{const b=await tsEncrypt(await tsPack(),pw);
+  const nm="ECC-team-"+today()+".ecc";if(window.claude&&U.dl)await U.dl.save({filename:nm,data:new Blob([b])});else dlFile(nm,new Blob([b],{type:"application/octet-stream"}));toast("صُدّرت الحزمة المشفّرة")}catch(e){toast("تعذّر التصدير")}}
+async function tsImport(f){const pw=tsPw("tsx");if(!pw){toast("اكتب كلمة مرور الحزمة أولًا");return}
+  try{const p=await tsUnpack(await tsDecrypt(await f.arrayBuffer(),pw));const r=tsMerge(p.st);render();
+    toast(`دُمجت الحزمة: ${r.add} جديد و${r.upd} محدّث${p.files?`، و${p.files} مرفق`:""}. ما عدّلته أنت لاحقًا بقي كما هو.`)}
+  catch(e){toast(e.message==="password"?"كلمة المرور غير صحيحة":e.message==="format"?"هذا الملف ليس حزمة فريق":"تعذّر قراءة الحزمة")}}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-ts]");if(!t)return;const a=t.dataset.ts;
+  ({create:tsCreate,open:tsOpen,unlock:tsUnlock,sync:()=>tsSync(false),close:tsClose,export:tsExport,reconnect:()=>{U.ts.need="password";render();setTimeout(()=>{const p=$("#ts-pw");if(p)p.focus()},50)}}[a]||(()=>{}))()});
+document.addEventListener("change",e=>{if(e.target.id==="ts-file"){const f=e.target.files[0];e.target.value="";if(f)tsImport(f)}
+  else if(e.target.id==="ts-me"){U.tsMe=e.target.value.trim().slice(0,60);try{localStorage.setItem("ecc_ts_me",U.tsMe)}catch(x){}}});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="ts-pw"&&U.ts.need){e.preventDefault();tsUnlock()}});
+
+// --- page ---
+function vTeamSpace(){const T=U.ts,con=T.h&&T.pw;
+  const me=`<section class="card c12"><h2>اسمك في الفريق</h2><div class="row"><input id="ts-me" value="${esc(U.tsMe||"")}" placeholder="مثل: سارة — الحوكمة" style="max-width:320px" autocomplete="name"><span class="note">يظهر بجانب ما تعدّله، ليعرف زملاؤك من غيّر ماذا. يُحفظ في جهازك فقط.</span></div></section>`;
+  const pwf=(two,p="ts")=>`<div class="ts-pw"><input id="${p}-pw" type="password" placeholder="كلمة مرور الفريق" autocomplete="new-password">${two?`<input id="${p}-pw2" type="password" placeholder="أعد كتابة كلمة المرور (للتصدير)" autocomplete="new-password">`:""}</div>`;
+  let main;
+  if(!TS_FS)main=`<p class="note">الحفظ المباشر على ملف مشترك متاح في Chrome أو Edge على الحاسب. في هذا المتصفح استخدم الحزمة المشفّرة أدناه.</p>`;
+  else if(con)main=`<div class="ts-on"><div><span class="ts-dot"></span><b>متصل بـ</b> <span class="mono" dir="ltr">${esc(T.name)}</span></div>
+     <p class="note" style="margin:4px 0 0">${T.busy?"جارٍ المزامنة…":T.at?`آخر مزامنة ${T.at}${T.st?` · ${T.st.add} جديد، ${T.st.upd} محدّث من الزملاء`:""}`:""}${T.err?` · <span style="color:var(--bad)">${esc(T.err)}</span>`:""}</p>
+     <p class="note" style="margin:4px 0 0">تُحفظ تعديلاتك في الملف تلقائيًا بعد 15 ثانية من آخر تعديل، وتُقرأ تعديلات زملائك كل دقيقتين.</p>
+     <div class="row" style="margin-top:10px"><button class="btn" data-ts="sync" ${T.busy?"disabled":""}>مزامنة الآن</button><button class="btn quiet" data-ts="close">قطع الاتصال</button></div></div>`;
+  else if(T.h&&T.need)main=`<div class="ts-on"><div><b>${T.need==="reconnect"?"آخر ملف استخدمته:":"الملف:"}</b> <span class="mono" dir="ltr">${esc(T.name)}</span></div>
+     <p class="note">اكتب كلمة مرور الفريق لفتحه. لا تُحفظ كلمة المرور في أي مكان.</p>${pwf(false)}${T.err?`<p class="note" style="color:var(--bad)">${esc(T.err)}</p>`:""}
+     <div class="row" style="margin-top:8px"><button class="btn" data-ts="unlock">فتح ومزامنة</button><button class="btn quiet" data-ts="close">ملف آخر</button></div></div>`;
+  else main=`<div class="ts-two"><div class="box"><h4>أنا أول من يبدأ</h4><p class="note">اختر كلمة مرور للفريق، ثم احفظ الملف في مجلد مشترك لجهتكم.</p>${pwf(true)}<button class="btn" data-ts="create" style="margin-top:8px">إنشاء ملف مساحة الفريق</button></div>
+     <div class="box"><h4>زميلي أنشأ الملف</h4><p class="note">افتح الملف من المجلد المشترك، ثم اكتب كلمة مرور الفريق.</p><button class="btn ghost" data-ts="open" style="margin-top:8px">فتح ملف مساحة فريق</button></div></div>`;
+  const how=`<section class="card c12"><h2>كيف تعمل مساحة الفريق</h2><ol class="steps2">
+     <li>ينشئ مدير التقييم ملفًا مشفّرًا ويحفظه في مجلد مشترك تعتمده جهتكم، مثل OneDrive أو SharePoint أو مجلد الشبكة.</li>
+     <li>يعطي الفريق مكان الملف وكلمة المرور، بقناة مختلفة عن الإيميل إن أمكن.</li>
+     <li>يفتح كل عضو الملف من الأداة، ويعمل على المكونات المسندة إليه.</li>
+     <li>عند كل مزامنة تقرأ الأداة الملف، وتأخذ لكل ضابط آخر تعديل، ثم تحفظ النتيجة فيه. لا يُحذف شيء أثناء الدمج.</li></ol>
+   <p class="note" style="margin:0"><b>لماذا هذا آمن:</b> الملف مشفّر بمعيار AES-256 قبل أن يغادر جهازك، ويبقى داخل تخزين جهتكم لا عندنا. من دون كلمة المرور لا يمكن قراءته. <b>تنبيه:</b> إن عدّل شخصان الضابط نفسه بين مزامنتين، يُعتمد التعديل الأحدث.</p></section>`;
+  const pkg=`<section class="card c12" id="ts-pkg"><h2>حزمة الفريق المشفّرة <span class="note">للجوال، أو للإرسال بالبريد، أو كنسخة احتياطية كاملة مع المرفقات</span></h2>
+   <div class="ts-two"><div class="box"><h4>تصدير</h4><p class="note">ملف واحد مشفّر فيه التقييم كاملًا والمرفقات.</p>${pwf(true,"tsx")}<button class="btn" data-ts="export" style="margin-top:8px">تصدير الحزمة</button></div>
+    <div class="box"><h4>استيراد ودمج</h4><p class="note">اكتب كلمة مرور الحزمة في خانة التصدير المجاورة، ثم اختر الملف. تُدمج مع تقييمك ولا تحل محله.</p><label class="btn ghost attpick" style="margin-top:8px">اختيار حزمة .ecc<input type="file" id="ts-file" accept=".ecc" hidden></label></div></div></section>`;
+  return `<div class="grid"><section class="card c12"><h2>ملف مساحة الفريق <span class="tag off">دون خادم · داخل تخزين جهتكم</span></h2>${main}</section>${me}${how}${TS_FS&&(con||T.need)?"":pkg}</div>`}
+
 // ===== AI actions =====
 async function aiRem(id){const c=BY[id],o=C(id);const lay=LAYERS.map(L=>`${L[1]}: ${({y:"نعم",p:"جزئي",n:"لا"})[o[L[0]]]||"لم يُقيَّم"}${o["ev_"+L[0]]?` (الدليل: ${o["ev_"+L[0]]})`:""}`).join("\n");
   const r=await aiCall("airem:"+id,`أنت مستشار حوكمة ومخاطر وامتثال متخصص في الضوابط الأساسية للأمن السيبراني ECC-2:2024 الصادرة عن الهيئة الوطنية للأمن السيبراني.
@@ -2268,7 +2432,7 @@ ${(rdOn()?rdClean(U.anaTxt):U.anaTxt).slice(0,30000)}
 function anaApply(){const a=U.anaRes;if(!a)return;const by={};(a.res.items||[]).forEach(i=>{const p=BY[i.id]?i.id:i.id.split("-").slice(0,3).join("-");if(!BY[p])return;(by[p]=by[p]||[]).push(i)});
   const ids=Object.keys(by);U.confirm={msg:`سيُضبط «موثّق» لـ ${ids.length} ضابطًا من نتيجة التحليل، ويُكتب اسم الوثيقة في دليل التوثيق. القيم الحالية لهذه الطبقة ستُستبدل.`,soft:true,yes:"اعتمد",fn:()=>{
     ids.forEach(id=>{const v=by[id].map(i=>i.verdict);const d=v.every(x=>x==="covered")?"y":v.every(x=>x==="missing")?"n":"p";const cl=[...new Set(by[id].map(i=>i.clause).filter(Boolean))].slice(0,3).join("، ");
-      const o=S.ctl[id]=S.ctl[id]||{};o.d=d;o.ev_d=(a.name||"سياسة")+(cl?" — "+cl:"");persist("ctl",id)});logEv("ana","",{v:a.name});toast(`حُدّثت طبقة التوثيق لـ ${ids.length} ضابطًا`)}};render()}
+      const o=S.ctl[id]=S.ctl[id]||{};o.d=d;o.ev_d=(a.name||"سياسة")+(cl?" — "+cl:"");stampF(o,"d");stampF(o,"ev_d");persist("ctl",id)});logEv("ana","",{v:a.name});toast(`حُدّثت طبقة التوثيق لـ ${ids.length} ضابطًا`)}};render()}
 
 // ===== Other actions =====
 function snapNow(label){const s=stats(CTLS),per={};CTLS.forEach(c=>per[c.id]=dst(c.id));const id=uid();putDoc("snaps",id,{at:today(),label:label||"",comp:s.comp,c:s.c,p:s.p,x:s.x,gaps:gapList().length,paper:s.paper,per})}
@@ -2309,11 +2473,11 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-act]");if(
   case "jumps":go(id);break;
   case "jumpf":U.tab="review";U.f=v;U.q="";render();window.scrollTo(0,0);break;
   case "clrf":U.q="";U.f="all";render();break;
-  case "lay":{if(!canCol("ctl",id)){toast("ليست لديك صلاحية تعديل هذا الضابط");break}const before=dst(id);const o=S.ctl[id]=S.ctl[id]||{};if(o[k]===v)delete o[k];else o[k]=v;if(dst(id)==="c"&&before!=="c"){U.flash=id;clearTimeout(U._ft);U._ft=setTimeout(()=>{U.flash=null},1500)}persist("ctl",id);logEv("layer",id,{v:({d:"موثّق",i:"مطبّق",e:"فعّال"})[k]+": "+(({y:"نعم",p:"جزئي",n:"لا"})[o[k]]||"—")});render();break}
+  case "lay":{if(!canCol("ctl",id)){toast("ليست لديك صلاحية تعديل هذا الضابط");break}const before=dst(id);const o=S.ctl[id]=S.ctl[id]||{};if(o[k]===v)delete o[k];else o[k]=v;stampF(o,k);if(dst(id)==="c"&&before!=="c"){U.flash=id;clearTimeout(U._ft);U._ft=setTimeout(()=>{U.flash=null},1500)}persist("ctl",id);logEv("layer",id,{v:({d:"موثّق",i:"مطبّق",e:"فعّال"})[k]+": "+(({y:"نعم",p:"جزئي",n:"لا"})[o[k]]||"—")});render();break}
   case "tmadd":if(!S.team[id]){putDoc("team",id,{role:"assessor",doms:[],at:Date.now()});logEv("team",id,{v:"إضافة"});toast("أُضيف إلى الفريق. تأكد أن الأداة مشاركة معه من قائمة المشاركة.")}render();break;
   case "tmdom":{const m=Object.assign({},S.team[id]);const s=new Set(m.doms||[]);t.checked?s.add(v):s.delete(v);m.doms=[...s].sort();putDoc("team",id,m);logEv("team",id,{v:"نطاق: "+(m.doms.join("، ")||"الكل")});render();break}
   case "tmdel":U.confirm={msg:"إزالة هذا العضو من فريق الأداة؟ لإيقاف وصوله نهائيًا أزله أيضًا من قائمة المشاركة.",yes:"إزالة",fn:()=>{putDoc("team",id,null);logEv("team",id,{v:"إزالة"})}};render();break;
-  case "gd":{if(!canCol("ctl",id)){toast("ليست لديك صلاحية تعديل هذا الضابط");render();break}const o=S.ctl[id]=S.ctl[id]||{};const s=new Set(o.gd||[]);const i=+v;s.has(i)?s.delete(i):s.add(i);o.gd=[...s].sort((a,b)=>a-b);if(!o.gd.length)delete o.gd;persist("ctl",id);render();break}
+  case "gd":{if(!canCol("ctl",id)){toast("ليست لديك صلاحية تعديل هذا الضابط");render();break}const o=S.ctl[id]=S.ctl[id]||{};const s=new Set(o.gd||[]);const i=+v;s.has(i)?s.delete(i):s.add(i);o.gd=[...s].sort((a,b)=>a-b);if(!o.gd.length)delete o.gd;stampF(o,"gd");persist("ctl",id);render();break}
   case "etype":if(!canCol("cfg"))break;setF("cfg",null,"type",v);logEv("scope","",{v});render();break;
   case "cond":{if(!canCol("cfg"))break;logEv("scope",id,{v});const c=Object.assign({},S.cfg.cond);if(c[id]===v)delete c[id];else c[id]=v;setF("cfg",null,"cond",c);render();break}
   case "scopeok":setF("cfg",null,"scopeOk",t.checked);render();break;
@@ -2329,7 +2493,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-act]");if(
   case "aistop":{const c=U.busy[id];if(c&&c.abort)c.abort();break}
   case "aisave":setF("ctl",id,"ai",U.aiOut[id]);delete U.aiOut[id];toast("حُفظ المقترح مع الضابط");render();break;
   case "aidrop":delete U.aiOut[id];setF("ctl",id,"ai",null);render();break;
-  case "aicopy":{const r=U.aiOut[id]||C(id).ai;if(!r)break;const txt=(r.steps||[]).map((s,i)=>`${i+1}. ${s.step} — ${s.owner||""}`).join("\n");const o=S.ctl[id]=S.ctl[id]||{};o.rem=(o.rem?o.rem+"\n":"")+txt;persist("ctl",id);toast("أُضيفت الخطوات إلى خطة المعالجة");render();break}
+  case "aicopy":{const r=U.aiOut[id]||C(id).ai;if(!r)break;const txt=(r.steps||[]).map((s,i)=>`${i+1}. ${s.step} — ${s.owner||""}`).join("\n");const o=S.ctl[id]=S.ctl[id]||{};o.rem=(o.rem?o.rem+"\n":"")+txt;stampF(o,"rem");persist("ctl",id);toast("أُضيفت الخطوات إلى خطة المعالجة");render();break}
   case "copyt":try{navigator.clipboard.writeText(v).then(()=>toast("نُسخ"),()=>toast("حدد النص وانسخه يدويًا"))}catch(err){toast("حدد النص وانسخه يدويًا")}break;
   case "anaclr":U.anaSel=new Set();render();break;
   case "anaapply":anaApply();break;

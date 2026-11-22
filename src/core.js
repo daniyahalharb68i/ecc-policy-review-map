@@ -106,11 +106,13 @@ function logEv(what,id,extra){if(U.demo||!U.db)return;try{U.db.collection("log")
 // ===== Persistence (shared db when available, else this browser) =====
 let lsT=null;const wq={},wt={};
 function saveLocal(){if(U.demo||U.supa)return;clearTimeout(lsT);lsT=setTimeout(()=>{try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}},300)}
-function persist(col,id){if(U.demo)return;if(U.db&&!canCol(col,id)){toast("ليست لديك صلاحية تعديل هذا الجزء. تواصل مع مدير التقييم.");return}saveLocal();if(!U.db)return;const p=col==="cfg"?"meta/cfg":col+"/"+id;wq[p]=1;clearTimeout(wt[p]);
+function persist(col,id){if(U.demo)return;if(!U.db){const o=col==="cfg"?S.cfg:S[col]&&S[col][id];if(o&&typeof o==="object"){o._at=Date.now();if(U.tsMe)o._by=U.tsMe}if(typeof tsTouch==="function")tsTouch()}if(U.db&&!canCol(col,id)){toast("ليست لديك صلاحية تعديل هذا الجزء. تواصل مع مدير التقييم.");return}saveLocal();if(!U.db)return;const p=col==="cfg"?"meta/cfg":col+"/"+id;wq[p]=1;clearTimeout(wt[p]);
   wt[p]=setTimeout(async()=>{const v=col==="cfg"?S.cfg:S[col][id];
     try{if(v==null)await U.db.doc(p).delete();else await U.db.doc(p).set(Object.assign({},v,{_by:U.me||"",_at:Date.now()}))}catch(e){writeErr(e)}finally{delete wq[p]}},650)}
 function writeErr(e){const c=e&&e.code;U.sync="warn";paintSync();toast(c==="not_granted"?"لا تملك صلاحية التعديل على هذه النسخة المشتركة":"تعذّر الحفظ في التخزين المشترك؛ بقي التعديل محفوظًا في هذا المتصفح")}
-function setF(col,id,k,v){if(col==="cfg"){if(k.includes(".")){const [a,b]=k.split(".");S.cfg[a]=Object.assign({},S.cfg[a],{[b]:v})}else S.cfg[k]=v;persist("cfg");return}const o=S[col][id]=S[col][id]||{};if(v===""||v==null)delete o[k];else o[k]=v;persist(col,id)}
+// per-field edit time (standalone only), so team files merge field by field
+const stampF=(o,k)=>{if(U.db||U.demo)return;o._f=Object.assign({},o._f,{[k]:Date.now()})};
+function setF(col,id,k,v){if(col==="cfg"){if(k.includes(".")){const [a,b]=k.split(".");S.cfg[a]=Object.assign({},S.cfg[a],{[b]:v});stampF(S.cfg,a)}else{S.cfg[k]=v;stampF(S.cfg,k)}persist("cfg");return}const o=S[col][id]=S[col][id]||{};if(v===""||v==null)delete o[k];else o[k]=v;stampF(o,k);persist(col,id)}
 function putDoc(col,id,val){if(val==null)delete S[col][id];else S[col][id]=val;persist(col,id)}
 const clean=o=>{const x=Object.assign({},o);delete x._by;delete x._at;return x};
 function startDb(db){U.db=db;U.sync="live";let got=0;const tm=setTimeout(()=>{if(!got){U.sync="warn";paintSync()}},10000);

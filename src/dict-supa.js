@@ -137,3 +137,34 @@ Object.assign(I18N.d,{
 "استرجاع نسخة":"Restore a copy","ما تشمله النسخة:":"What the backup includes:","النطاق، وتقييم كل الضوابط وملاحظاتها، وخارطة المعالجة، وسجل الوثائق، واللقطات، والتحليلات.":"scope, every control’s assessment and notes, the remediation roadmap, the document register, snapshots and analyses.","لا تشمل":"It does not include","الملفات المرفقة كأدلة؛ احتفظ بها في مجلد خاص.":"evidence attachments; keep those in their own folder.",
 "تنزيل الفجوات CSV":"Download gaps CSV","طريقة بديلة: لصق محتوى النسخة":"Alternative: paste the backup content","افتح ملف النسخة بأي محرر نصوص، وانسخ محتواه والصقه هنا. يقبل أيضًا نسخ «خارطة مراجعة سياسات ECC» السابقة.":"Open the backup file in any text editor, copy its content and paste it here. Older ECC Policy Review Map backups are accepted too.","استرجاع واستبدال":"Restore and replace","كيف أسترجعها؟":"How do I restore it?","تعذّرت قراءة الملف":"Could not read the file"
 });
+
+Object.assign(I18N.d,{
+"مساحة الفريق":"Team space","اعملوا على تقييم واحد من ملف مشفّر في التخزين المشترك لجهتكم، دون أي خادم.":"Work on one assessment from an encrypted file in your entity's shared storage, with no server.",
+"ملف مساحة الفريق":"Team space file","دون خادم · داخل تخزين جهتكم":"No server · inside your entity's storage",
+"اسمك في الفريق":"Your name in the team","مثل: سارة — الحوكمة":"e.g. Sara — Governance","يظهر بجانب ما تعدّله، ليعرف زملاؤك من غيّر ماذا. يُحفظ في جهازك فقط.":"Shown next to what you edit so teammates know who changed what. Saved on your device only.",
+"كلمة مرور الفريق":"Team password","أعد كتابة كلمة المرور (للتصدير)":"Repeat the password (for export)",
+"الحفظ المباشر على ملف مشترك متاح في Chrome أو Edge على الحاسب. في هذا المتصفح استخدم الحزمة المشفّرة أدناه.":"Saving directly to a shared file works in Chrome or Edge on a computer. In this browser, use the encrypted package below.",
+"متصل بـ":"Connected to","جارٍ المزامنة…":"Syncing…","آخر مزامنة #":"Last sync #",
+"تُحفظ تعديلاتك في الملف تلقائيًا بعد # ثانية من آخر تعديل، وتُقرأ تعديلات زملائك كل دقيقتين.":"Your edits are saved to the file automatically # seconds after your last change, and teammates' edits are read every two minutes.",
+"مزامنة الآن":"Sync now","قطع الاتصال":"Disconnect","آخر ملف استخدمته:":"Last file you used:","الملف:":"File:",
+"اكتب كلمة مرور الفريق لفتحه. لا تُحفظ كلمة المرور في أي مكان.":"Enter the team password to open it. The password is not stored anywhere.","فتح ومزامنة":"Open and sync","ملف آخر":"Another file",
+"أنا أول من يبدأ":"I'm starting","اختر كلمة مرور للفريق، ثم احفظ الملف في مجلد مشترك لجهتكم.":"Choose a team password, then save the file in a shared folder of your entity.","إنشاء ملف مساحة الفريق":"Create the team space file",
+"زميلي أنشأ الملف":"A teammate created it","افتح الملف من المجلد المشترك، ثم اكتب كلمة مرور الفريق.":"Open the file from the shared folder, then enter the team password.","فتح ملف مساحة فريق":"Open a team space file",
+"كيف تعمل مساحة الفريق":"How the team space works",
+"ينشئ مدير التقييم ملفًا مشفّرًا ويحفظه في مجلد مشترك تعتمده جهتكم، مثل OneDrive أو SharePoint أو مجلد الشبكة.":"The assessment lead creates an encrypted file and saves it in a shared folder your entity approves, such as OneDrive, SharePoint or a network folder.",
+"يعطي الفريق مكان الملف وكلمة المرور، بقناة مختلفة عن الإيميل إن أمكن.":"They give the team the file location and the password, ideally through a channel other than email.",
+"يفتح كل عضو الملف من الأداة، ويعمل على المكونات المسندة إليه.":"Each member opens the file from the tool and works on the domains assigned to them.",
+"عند كل مزامنة تقرأ الأداة الملف، وتأخذ لكل ضابط آخر تعديل، ثم تحفظ النتيجة فيه. لا يُحذف شيء أثناء الدمج.":"On every sync the tool reads the file, keeps the latest edit of each control, and saves the result back. Nothing is deleted while merging.",
+"لماذا هذا آمن:":"Why this is safe:","الملف مشفّر بمعيار AES-#، قبل أن يغادر جهازك، ويبقى داخل تخزين جهتكم لا عندنا. من دون كلمة المرور لا يمكن قراءته.":"",
+"تنبيه:":"Note:","إن عدّل شخصان الضابط نفسه بين مزامنتين، يُعتمد التعديل الأحدث.":"If two people edit the same control between syncs, the newer edit is kept.",
+"حزمة الفريق المشفّرة":"Encrypted team package","للجوال، أو للإرسال بالبريد، أو كنسخة احتياطية كاملة مع المرفقات":"For phones, email, or a full backup with attachments",
+"تصدير":"Export","ملف واحد مشفّر فيه التقييم كاملًا والمرفقات.":"One encrypted file with the full assessment and attachments.","تصدير الحزمة":"Export package",
+"استيراد ودمج":"Import and merge","اكتب كلمة مرور الحزمة في خانة التصدير المجاورة، ثم اختر الملف. تُدمج مع تقييمك ولا تحل محله.":"Type the package password in the export field next to this, then choose the file. It merges with your assessment instead of replacing it.",
+"اختيار حزمة .ecc":"Choose a .ecc package","تحتاج نسخة كاملة مع المرفقات ومشفّرة بكلمة مرور؟":"Need a full, password-encrypted copy with attachments?","استخدم حزمة الفريق المشفّرة":"Use the encrypted team package",
+"كلمة المرور # أحرف على الأقل":"The password must be at least # characters","كلمتا المرور غير متطابقتين":"The passwords do not match","اكتب كلمة مرور الملف":"Enter the file password","لم يُسمح للأداة بتعديل الملف":"The tool was not allowed to edit the file",
+"أُنشئ ملف مساحة الفريق. شارك مكانه وكلمة المرور مع فريقك.":"Team space file created. Share its location and the password with your team.","تعذّر إنشاء الملف":"Could not create the file","تعذّر فتح الملف":"Could not open the file",
+"كلمة المرور غير صحيحة لهذا الملف":"Wrong password for this file","هذا الملف ليس ملف مساحة فريق":"This is not a team space file","تعذّرت المزامنة. تأكد أن الملف غير مفتوح للتعديل في برنامج آخر.":"Sync failed. Make sure the file isn't open for editing in another program.",
+"تمت المزامنة، ولا تعديلات جديدة من زملائك":"Synced; no new edits from teammates","صُدّرت الحزمة المشفّرة":"Encrypted package exported","تعذّر التصدير":"Export failed","اكتب كلمة مرور الحزمة أولًا":"Enter the package password first",
+"كلمة المرور غير صحيحة":"Wrong password","هذا الملف ليس حزمة فريق":"This is not a team package","تعذّر قراءة الحزمة":"Could not read the package"
+});
+Object.assign(I18N.d,{"الملف مشفّر بمعيار AES-# قبل أن يغادر جهازك، ويبقى داخل تخزين جهتكم لا عندنا. من دون كلمة المرور لا يمكن قراءته.":"The file is encrypted with AES-# before it leaves your device, and it stays in your entity's storage, not with us. Without the password it cannot be read."});
