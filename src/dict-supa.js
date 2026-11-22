@@ -114,3 +114,16 @@ Object.assign(I18N.d,{". التحليل يرى الرموز فقط، ثم تُع
 Object.assign(I18N.d,{"تنزيل المنقّاة (Word)":"Download cleaned (Word)","تنزيل المنقّاة (PDF)":"Download cleaned (PDF)","تنزيل المنقّاة (نص)":"Download cleaned (text)","جارٍ إنشاء الملف":"Creating the file",
 "نسخة PDF المنقّاة تحافظ على شكل الصفحات، لكنها تُحفظ صورًا: النص المخفي يُزال فعلًا ولا يمكن استرجاعه أو نسخه من الملف.":"The cleaned PDF keeps the page layout but is saved as images: hidden text is truly removed and cannot be recovered or copied from the file.",
 "نُزّلت نسخة PDF منقّاة بنفس شكل الأصل":"Downloaded a cleaned PDF with the original layout","نُزّل ملف Word منقّى بنفس التنسيق":"Downloaded a cleaned Word file with the same formatting","نُزّلت النسخة المنقّاة":"Downloaded the cleaned copy","تعذّر إنشاء الملف بنفس الصيغة، فنُزّلت نسخة نصية.":"Could not create the same format, so a text copy was downloaded."});
+
+Object.assign(I18N.d,{
+"بياناتك تبقى على جهازك.":"Your data stays on your device.",
+"ما تدخله يُحفظ في هذا المتصفح فقط ولا يُرسل إلى أي خادم؛ لو مسحت بيانات المتصفح أو انتقلت إلى جهاز آخر فلن تجده، فصدّر نسخة احتياطية بانتظام.":"What you enter is saved only in this browser and is not sent to any server. If you clear browser data or move to another device it will not be there, so export a backup regularly.",
+"خصوصيتك: تقييمك وملفاتك تبقى على جهازك ولا تُرسل إلى أي خادم. نعدّ زيارات الصفحات فقط، دون ملفات تعريف ارتباط ودون أي بيانات شخصية.":"Your privacy: your assessment and files stay on your device and are not sent to any server. We only count page visits, with no cookies and no personal data.",
+"شارك في مؤشر الفجوات العام":"Contribute to the public gap index","بيانات مُجمّعة دون أي معلومة تعرّف بجهتك":"Aggregated data with nothing that identifies your entity",
+"يجمع المؤشر أكثر ضوابط ECC التي تتعثر فيها الجهات، ليستفيد منه الجميع. المشاركة اختيارية، ولا تحتاج حسابًا.":"The index gathers the ECC controls entities struggle with most, for everyone’s benefit. Sharing is optional and needs no account.",
+"هذا بالضبط ما سيُرسل، ولا شيء غيره":"Exactly this is sent, and nothing else","أرقام الضوابط التي حالتها «جزئي» أو «غير ملتزم» (#):":"IDs of controls rated “Partial” or “Non-compliant” (#):","لا فجوات":"No gaps",
+"لا يُرسل اسم الجهة، ولا اسمك، ولا نوع الجهة، ولا نصوص أو ملاحظات أو أدلة أو ملفات. لا يمكن ربط الأرقام بجهتك.":"No entity name, no personal name, no entity type, and no text, notes, evidence or files are sent. The IDs cannot be linked to your entity.",
+"شارك التحديث":"Share the update","شارك الآن":"Share now","شاركت آخر مرة في # (# فجوة).":"Last shared on # (# gaps).",
+"يظهر خيار المشاركة بعد تقييم # ضوابط على الأقل (قيّمت #).":"Sharing becomes available after assessing at least # controls (you assessed #).",
+"شاركت اليوم بالفعل. شكرًا لك.":"You already shared today. Thank you.","شكرًا لمشاركتك. أُرسلت أرقام الضوابط فقط.":"Thank you. Only control IDs were sent."
+});
