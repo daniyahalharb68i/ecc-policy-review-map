@@ -110,3 +110,8 @@
 
 .priv-note{margin-top:10px;padding:8px 10px;border-radius:6px;border:1px solid var(--line);background:color-mix(in srgb,var(--ok) 7%,transparent);font-size:.82rem}
 .gi-ids{display:flex;flex-wrap:wrap;gap:6px}.gi-ids .mono{background:var(--surface2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:.78rem}
+
+.bk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.bk{position:relative;display:grid;gap:8px;align-content:start;padding-top:16px}
+.bk h4{margin:0}.bk p{margin:0;font-size:.88rem;line-height:1.7}
+.bk-n{position:absolute;top:-10px;inset-inline-start:12px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--spark);color:var(--spark-ink);font-size:.78rem;font-weight:600}

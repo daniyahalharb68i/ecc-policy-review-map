@@ -189,7 +189,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-act]");if(
   case "snap":snapNow($("#sn-l").value.trim());logEv("snap");toast("حُفظت اللقطة");render();break;
   case "sndel":U.confirm={msg:"حذف هذه اللقطة؟",yes:"حذف",fn:()=>putDoc("snaps",id,null)};render();break;
   case "dlrep":save(`ECC-report-${today()}.html`,`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>تقرير مراجعة ECC</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap"></head><body style="padding:24px">${reportHTML()}</body></html>`,"text/html");break;
-  case "dljson":save(`ECC-policy-map-${today()}.json`,JSON.stringify(S,null,1),"application/json");break;
+  case "dljson":save(`ECC-backup-${today()}.json`,JSON.stringify(S,null,1),"application/json");break;
   case "imp":importJSON($("#imp").value);break;
   case "demo":toggleDemo();break;
   case "reset":U.confirm={msg:"مسح كل بيانات التقييم نهائيًا؟ لا يمكن التراجع.",yes:"مسح نهائي",fn:()=>{replaceAll(blank());logEv("reset")}};render();break;

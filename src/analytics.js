@@ -13,6 +13,11 @@ function gcCount(path,title,event){if(window.claude)return;gcLoad().then(ok=>{tr
 function guestTrack(){if(window.claude||U.demo)return;if(gcLast===U.tab)return;gcLast=U.tab;gcCount("/"+U.tab,(HEAD[U.tab]||[U.tab])[0])}
 function sbStart(){if(window.claude)return;guestTrack()}
 
+// Leftovers of the removed database version (sign-in session, chosen entity, guest profile): deleted from this browser.
+(function(){try{const ks=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(/^sb-|^supabase\./.test(k)||["ecc_org","ecc_guest","ecc_device","ecc_local_mode"].includes(k))ks.push(k)}ks.forEach(k=>localStorage.removeItem(k))}catch(e){}})();
+document.addEventListener("change",async e=>{if(e.target.id!=="impfile")return;const f=e.target.files[0];e.target.value="";if(!f)return;
+  try{importJSON(await f.text());setTimeout(()=>{const c=document.querySelector(".confirm");if(c)c.scrollIntoView({behavior:"smooth",block:"center"})},60)}catch(x){toast("تعذّرت قراءة الملف")}});
+document.addEventListener("click",e=>{if(!e.target.closest("[data-act=bkhow]"))return;U.tab="report";render();setTimeout(()=>{const b=$("#backup");if(b)b.scrollIntoView({behavior:"smooth",block:"start"})},80)});
 // ===== Public gap index: opt-in sharing of gap control IDs only =====
 const GI_KEY="ecc_gap_index";
 const giLast=()=>{try{return JSON.parse(localStorage.getItem(GI_KEY)||"null")}catch(e){return null}};

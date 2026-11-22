@@ -127,3 +127,13 @@ Object.assign(I18N.d,{
 "يظهر خيار المشاركة بعد تقييم # ضوابط على الأقل (قيّمت #).":"Sharing becomes available after assessing at least # controls (you assessed #).",
 "شاركت اليوم بالفعل. شكرًا لك.":"You already shared today. Thank you.","شكرًا لمشاركتك. أُرسلت أرقام الضوابط فقط.":"Thank you. Only control IDs were sent."
 });
+
+Object.assign(I18N.d,{
+"النسخ الاحتياطي والاسترجاع":"Backup and restore",
+"بياناتك محفوظة في هذا المتصفح فقط. النسخة الاحتياطية ملف واحد على جهازك، تسترجع منه تقييمك متى شئت، أو تنقله إلى جهاز آخر.":"Your data is saved in this browser only. A backup is a single file on your device that you can restore your assessment from at any time, or move to another device.",
+"احفظ نسخة":"Save a copy","اضغط الزر، فيُنزَّل ملف اسمه مثل":"Press the button and a file named like","إلى مجلد التنزيلات في جهازك.":"is downloaded to your Downloads folder.","حفظ نسخة احتياطية":"Save a backup",
+"احتفظ بها في مكان آمن":"Keep it somewhere safe","انقل الملف إلى OneDrive أو Google Drive أو مجلد العمل، لتجده إن مسحت بيانات المتصفح أو غيّرت الجهاز. احفظ نسخة جديدة بعد كل جلسة تقييم.":"Move the file to OneDrive, Google Drive or a work folder so you can find it if you clear browser data or change devices. Save a new copy after every assessment session.",
+"استرجعها عند الحاجة":"Restore it when needed","افتح الأداة في أي متصفح، ثم اضغط «استرجاع نسخة» واختر الملف. يحل محتواه محل التقييم الحالي بعد تأكيدك.":"Open the tool in any browser, press “Restore a copy” and choose the file. Its content replaces the current assessment after you confirm.",
+"استرجاع نسخة":"Restore a copy","ما تشمله النسخة:":"What the backup includes:","النطاق، وتقييم كل الضوابط وملاحظاتها، وخارطة المعالجة، وسجل الوثائق، واللقطات، والتحليلات.":"scope, every control’s assessment and notes, the remediation roadmap, the document register, snapshots and analyses.","لا تشمل":"It does not include","الملفات المرفقة كأدلة؛ احتفظ بها في مجلد خاص.":"evidence attachments; keep those in their own folder.",
+"تنزيل الفجوات CSV":"Download gaps CSV","طريقة بديلة: لصق محتوى النسخة":"Alternative: paste the backup content","افتح ملف النسخة بأي محرر نصوص، وانسخ محتواه والصقه هنا. يقبل أيضًا نسخ «خارطة مراجعة سياسات ECC» السابقة.":"Open the backup file in any text editor, copy its content and paste it here. Older ECC Policy Review Map backups are accepted too.","استرجاع واستبدال":"Restore and replace","كيف أسترجعها؟":"How do I restore it?","تعذّرت قراءة الملف":"Could not read the file"
+});
