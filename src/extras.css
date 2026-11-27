@@ -174,3 +174,7 @@ details.priv-note ol{margin:4px 0;padding-inline-start:20px;font-size:.84rem;lin
   #view .btn,#view .seg button,.pager .pg{min-height:44px}
   #view .idb{min-height:44px!important;min-width:44px!important}
   #view select,#view input[type=text],#view input[type=search],#view input[type=date],#view input[type=password],#view input[type=email],#view input:not([type]){min-height:44px!important}}
+
+.rd-groups{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.rd-g{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:.86rem}
+.rd-g .num{color:var(--muted)}

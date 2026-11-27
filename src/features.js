@@ -53,10 +53,10 @@ function attBox(id){const L=C(id).att||[],can=canCol("ctl",id);
   ${!CLOUD()?`<p class="note" style="margin:6px 0 0">في النسخة المحلية تُحفظ المرفقات في هذا المتصفح فقط، ولا تدخل في النسخة الاحتياطية JSON.</p>`:""}</div>`}
 
 // --- PDF text extraction for the policy analyzer ---
-const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
-let pdfWorkerUrl=null;async function pdfWorker(){if(pdfWorkerUrl)return pdfWorkerUrl;const u=PDFJS+"pdf.worker.min.js";
+const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/6.5.438/";
+let pdfWorkerUrl=null;async function pdfWorker(){if(pdfWorkerUrl)return pdfWorkerUrl;const u=PDFJS+"pdf.worker.min.mjs";
   try{const r=await fetch(u,{integrity:SRI[u],mode:"cors"});if(!r.ok)throw 0;pdfWorkerUrl=URL.createObjectURL(new Blob([await r.text()],{type:"text/javascript"}))}catch(e){throw new Error("integrity")}return pdfWorkerUrl}
-async function pdfLib(){await loadScript(PDFJS+"pdf.min.js");const lib=window.pdfjsLib;lib.GlobalWorkerOptions.workerSrc=await pdfWorker();return lib}
+async function pdfLib(){await loadScript(PDFJS+"pdf.min.mjs",true);for(let i=0;i<50&&!window.pdfjsLib;i++)await new Promise(r=>setTimeout(r,20));const lib=window.pdfjsLib;if(!lib)throw new Error("pdfjs");lib.GlobalWorkerOptions.workerSrc=await pdfWorker();return lib}
 async function pdfText(file){const lib=await pdfLib();
   const doc=await lib.getDocument({data:await file.arrayBuffer(),isEvalSupported:false,stopAtErrors:false}).promise;const out=[];
   const scanned=[];for(let p=1;p<=Math.min(doc.numPages,500);p++){const pg=await doc.getPage(p);const c=await pg.getTextContent();const t=c.items.map(i=>i.str).join(" ");if(t.replace(/\s/g,"").length<15)scanned.push(p);out.push(t)}

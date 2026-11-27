@@ -1,13 +1,13 @@
 // ECC Policy Review Map — offline support. Caches the app and its libraries so it opens without internet.
 // Nothing the user enters passes through here: assessment data lives in the browser storage, not in this cache.
-const CACHE="ecc-map-v3"; // v3: old caches (which could hold opaque copies of libraries) are deleted on activation
+const CACHE="ecc-map-v5"; // v3: old caches (which could hold opaque copies of libraries) are deleted on activation
 const CORE=["./","./index.html","./manifest.webmanifest","./icons/icon-192.png","./icons/icon-512.png"];
 const LIBS=[
-  "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.2/jszip.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js",
-  "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
-  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",
-  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"];
+  "https://cdnjs.cloudflare.com/ajax/libs/jspdf/4.2.1/jspdf.umd.min.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/6.5.438/pdf.min.mjs",
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/6.5.438/pdf.worker.min.mjs"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(async c=>{
   await c.addAll(CORE).catch(()=>{});
   await Promise.all(LIBS.map(u=>fetch(u,{mode:"cors"}).then(r=>{if(r.ok)return c.put(u,r)}).catch(()=>{})))}).then(()=>self.skipWaiting()))});

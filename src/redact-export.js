@@ -23,9 +23,9 @@ async function rdDocx(file){const z=await JSZip.loadAsync(file);const W="http://
   for(const p of ["docProps/core.xml","docProps/app.xml"]){const f=z.file(p);if(!f)continue;let x=await f.async("string");
     x=x.replace(/<(dc:creator|cp:lastModifiedBy|Company|Manager)>[\s\S]*?<\/\1>/g,"<$1></$1>").replace(/<(dc:title|dc:subject|cp:keywords|dc:description)>([\s\S]*?)<\/\1>/g,(m,t,v)=>`<${t}>${esc(rdClean(v.replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">")))}</${t}>`);z.file(p,x)}
   return {blob:await z.generateAsync({type:"blob",mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"}),n}}
-async function rdPdf(file,onp){await loadScript(PDFJS+"pdf.min.js");for(const s of PDF_LIBS.slice(1))await loadScript(s);
+async function rdPdf(file,onp){for(const s of PDF_LIBS.slice(1))await loadScript(s);
   const lib=await pdfLib();const blankPages=new Set((onp&&onp.blank)||[]);
-  const src=await lib.getDocument({data:await file.arrayBuffer()}).promise;let pdf=null,n=0;
+  const src=await lib.getDocument({data:await file.arrayBuffer(),isEvalSupported:false}).promise;let pdf=null,n=0;
   const ink=getComputedStyle(document.documentElement).getPropertyValue("--bg").trim()||"#10291F";
   for(let pn=1;pn<=src.numPages;pn++){if(onp)onp(pn,src.numPages);const page=await src.getPage(pn);const vp=page.getViewport({scale:2});
     const cv=document.createElement("canvas");cv.width=Math.ceil(vp.width);cv.height=Math.ceil(vp.height);const ctx=cv.getContext("2d");
@@ -36,7 +36,7 @@ async function rdPdf(file,onp){await loadScript(PDFJS+"pdf.min.js");for(const s 
       ctx.font='400 24px "Inter Tight",sans-serif';ctx.fillText("Page withheld: scanned image, not checked for sensitive data",cv.width/2,cv.height/2+44);
       const wmm0=vp.width/2*25.4/72,hmm0=vp.height/2*25.4/72;if(!pdf)pdf=new window.jspdf.jsPDF({unit:"mm",format:[wmm0,hmm0],orientation:wmm0>hmm0?"l":"p",compress:true});else pdf.addPage([wmm0,hmm0],wmm0>hmm0?"l":"p");
       pdf.addImage(cv.toDataURL("image/jpeg",.9),"JPEG",0,0,wmm0,hmm0);continue}
-    await page.render({canvasContext:ctx,viewport:vp}).promise;
+    await page.render({canvas:ctx.canvas,canvasContext:ctx,viewport:vp}).promise;
     const tc=await page.getTextContent();const items=tc.items.filter(i=>i.str);
     // page text with item boundaries, so a hit can be traced back to the items it covers
     let full="";const pos=items.map(it=>{const s=full.length;full+=it.str+" ";return s});

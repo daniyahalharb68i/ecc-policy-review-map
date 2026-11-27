@@ -106,7 +106,7 @@ await test("XSS: اسم جهة يحوي HTML لا يُنفَّذ عند العر
 await test("التشفير المحلي: لا يبقى نص واضح بعد التفعيل",async()=>{fresh(fullScope);S.cfg.entity="جهة سرية";await quiet(()=>lockEnable("Strong-pass-2026"));await new Promise(r=>setTimeout(r,400));
   ok(!(localStorage.getItem(LK)||"").includes("جهة سرية"));ok(!(localStorage.getItem(LK_ENC)||"").includes("جهة"));await lockDisable()});
 
-await test("كل مكتبة خارجية لها بصمة سلامة (SRI)",()=>{[...PDF_LIBS,PDFJS+"pdf.min.js",PDFJS+"pdf.worker.min.js",GC_JS].forEach(u=>ok(/^sha384-/.test(SRI[u]||""),"no SRI: "+u))});
+await test("كل مكتبة خارجية لها بصمة سلامة (SRI)",()=>{[...PDF_LIBS,PDFJS+"pdf.min.mjs",PDFJS+"pdf.worker.min.mjs",GC_JS,"https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.2/jszip.min.js"].forEach(u=>ok(/^sha384-/.test(SRI[u]||""),"no SRI: "+u))});
 await test("PDF ممسوح ضوئيًا (بلا نص) يُرصد ولا يُعامل كنسخة آمنة",async()=>{await loadScript(PDF_LIBS[1]);const d=new window.jspdf.jsPDF();d.setFillColor(40,40,40);d.rect(20,20,120,60,"F");
   const sc=await rdScanned(new File([d.output("blob")],"scan.pdf"));eq(sc,[1])});
 

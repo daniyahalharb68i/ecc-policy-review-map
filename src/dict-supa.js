@@ -249,3 +249,5 @@ Object.assign(I18N.d,{"تخطَّ إلى المحتوى":"Skip to content","تص
 "تقرير مُعدّ بأداة مستقلة لأغراض المراجعة الداخلية. لا يمثّل الهيئة الوطنية للأمن السيبراني، ولا يُعد تقييمًا رسميًا صادرًا عنها أو بديلًا عن أدوات التقييم الرسمية.":"Prepared with an independent tool for internal review."});
 
 Object.assign(I18N.d,{"حجم العينة":"Sample size","طريقة اختيار العينة":"Sampling method","قارن من لقطة":"Compare from snapshot","قارن إلى لقطة":"Compare to snapshot"});
+
+Object.assign(I18N.d,{"تحليل محفوظ: لم يُتحقق من الاقتباس":"Saved analysis: quote not verified","ابحث في العناصر المخفية":"Search hidden items","يعرض الجدول أول # عنصر من #.":"The table shows the first # of #.","يعرض الجدول أول # عنصر مطابق من #.":"The table shows the first # matching of #.","قيمة":"values","موضعًا":"places"});

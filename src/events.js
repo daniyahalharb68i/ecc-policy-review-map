@@ -167,7 +167,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-act]");if(
   case "copyt":try{navigator.clipboard.writeText(v).then(()=>toast("نُسخ"),()=>toast("حدد النص وانسخه يدويًا"))}catch(err){toast("حدد النص وانسخه يدويًا")}break;
   case "anaclr":U.anaSel=new Set();render();break;
   case "anaapply":anaApply();break;
-  case "anasave":{const a=U.anaRes;if(!a)break;const id2=uid();putDoc("ana",id2,{name:a.name,at:a.at,subs:a.subs,res:a.res});a.saved=true;toast("حُفظ التحليل");render();break}
+  case "anasave":{const a=U.anaRes;if(!a)break;const id2=uid();const src=norm(a.txt||"");const res=JSON.parse(JSON.stringify(a.res));(res.items||[]).forEach(i=>{if(i.quote)i._found=src.includes(norm(i.quote).slice(0,80))});putDoc("ana",id2,{name:a.name,at:a.at,subs:a.subs,res});a.saved=true;toast("حُفظ التحليل");render();break}
   case "anaopen":{const x=S.ana[id];if(x){U.anaRes=Object.assign({saved:true,txt:""},x);render()}break}
   case "anadel":U.confirm={msg:"حذف هذا التحليل نهائيًا؟",yes:"حذف",fn:()=>putDoc("ana",id,null)};render();break;
   case "anadoc":{const a=U.anaRes;if(!a)break;const id2=uid();putDoc("docs",id2,{name:a.name||"سياسة بلا اسم",subs:a.subs.slice(),ad:"",per:""});toast("أُضيفت إلى سجل الوثائق. أكمل تاريخ الاعتماد وفترة المراجعة هناك.");render();break}

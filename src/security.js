@@ -32,7 +32,7 @@ function secDeep(v,d){if(d>8)return undefined;if(v==null)return v;const t=typeof
   if(Array.isArray(v))return v.slice(0,5000).map(x=>secDeep(x,d+1)).filter(x=>x!==undefined);
   if(t==="object"){const o={};Object.keys(v).slice(0,5000).forEach(k=>{if(SEC_BAD_KEYS.has(k))return;const x=secDeep(v[k],d+1);if(x!==undefined)o[k]=x});return o}return undefined}
 const SEC_ENUM={d:["y","p","n"],i:["y","p","n"],e:["y","p","n"],app:["m","r","na"],imp:["H","M","L"],eff:["S","M","L"],rs:["prog","done"],rt:["mit","acc","trf","avd"],ph:["1","2","3"],rl:["1","2","3","4","5"],ri:["1","2","3","4","5"]};
-const SEC_STR={n:20000,ev_d:5000,ev_i:5000,ev_e:5000,own:200,rem:20000,appWhy:2000,rk:2000,exw:5000,exc:5000,exa:200,_by:80,name:300,ver:40,label:300,at:40,ad:10,txt:250000,by:80,what:40,id:80,v:500};
+const SEC_BOOL=["_found"];const SEC_STR={n:20000,ev_d:5000,ev_i:5000,ev_e:5000,own:200,rem:20000,appWhy:2000,rk:2000,exw:5000,exc:5000,exa:200,_by:80,name:300,ver:40,label:300,at:40,ad:10,txt:250000,by:80,what:40,id:80,v:500};
 function secTypes(o){Object.keys(o).forEach(k=>{if(k in SEC_STR){if(typeof o[k]!=="string"){if(typeof o[k]==="number"&&k!=="at")o[k]=String(o[k]);else if(!(k==="at"&&typeof o[k]==="number"))delete o[k]}if(typeof o[k]==="string"&&o[k].length>SEC_STR[k])o[k]=o[k].slice(0,SEC_STR[k])}});
   if("_f" in o&&(typeof o._f!=="object"||Array.isArray(o._f)))delete o._f;if(o._f)Object.keys(o._f).forEach(k=>{if(typeof o._f[k]!=="number")delete o._f[k]});
   ["subs","items","res","ai","gtr","cond","rep"].forEach(k=>{if(k in o&&(o[k]===null||typeof o[k]!=="object"))delete o[k]});
