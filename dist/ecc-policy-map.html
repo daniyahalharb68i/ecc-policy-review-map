@@ -739,6 +739,20 @@ footer .contact a{display:inline-flex;align-items:center;gap:6px;color:var(--acc
 footer .contact a:hover span{text-decoration:underline;text-underline-offset:3px}
 footer .contact svg{width:16px;height:16px;fill:currentColor}
 
+/* ===== lock screen ===== */
+#lockov{position:fixed;inset:0;z-index:400;display:grid;place-items:center;padding:16px;background:radial-gradient(900px 480px at 80% -10%,rgba(217,164,134,.18),transparent 60%),var(--bg)}
+.lock-card{width:min(400px,100%);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:22px;display:grid;gap:10px;justify-items:start}
+.lock-card img{border-radius:12px}.lock-card h2{margin:0;font-weight:500;color:var(--head)}.lock-card .note{margin:0}.lock-card input{width:100%}
+.lock-msg{margin:0;color:var(--bad);font-size:.86rem}.lock-forgot{font-size:.86rem;width:100%}.lock-forgot summary{cursor:pointer;color:var(--muted)}
+.bk details{margin-top:2px}.bk details summary{cursor:pointer}
+
+.ddist{display:grid;gap:8px}
+.dd-row{display:grid;grid-template-columns:minmax(0,1.4fr) 2fr auto;gap:10px;align-items:center}
+.dd-n{font-size:.88rem;overflow-wrap:anywhere}.dd-bar{height:10px;border-radius:5px;background:var(--surface2);overflow:hidden}
+.dd-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--sage),var(--ok));border-radius:5px}.dd-v{min-width:48px;text-align:end}
+@media(max-width:600px){.dd-row{grid-template-columns:1fr auto}.dd-bar{grid-column:1/-1;grid-row:2}}
+.cmp-t .up{color:var(--ok)}.cmp-t .down{color:var(--bad)}.cmp-t tr.tot td{border-top:2px solid var(--line)}
+
 /* ===== Forest & copper design system (style reference: segmentsix.de; own implementation) =====
    Dark forest is the default; the theme button switches to the light "paper" variant.
    Type: Inter Tight (Latin) + IBM Plex Sans Arabic. Headlines regular weight; tight tracking for Latin only. */
@@ -1322,6 +1336,30 @@ Object.assign(I18N.d,{
 });
 
 Object.assign(I18N.d,{"البريد الإلكتروني":"Email","تواصل مع Daniyah Alharbi":"Contact Daniyah Alharbi"});
+
+Object.assign(I18N.d,{
+"نوع الملف غير مسموح هنا. المسموح: #.":"This file type isn't allowed here.","الملف فارغ.":"The file is empty.","حجم الملف أكبر من الحد المسموح (# ميجابايت).":"The file is larger than the allowed size (# MB).",
+"تعذّرت قراءة الملف.":"Could not read the file.","محتوى الملف لا يطابق امتداده، فرُفض احتياطًا.":"The file content doesn't match its extension, so it was rejected.",
+"ملف PDF محمي بكلمة مرور. أزل الحماية ثم أعد رفعه.":"The PDF is password-protected. Remove the protection and upload it again.","الملف تالف أو لا يمكن قراءته. الصق النص يدويًا.":"The file is damaged or can't be read. Paste the text manually.",
+"حماية البيانات على هذا الجهاز":"Data protection on this device",
+"بيانات التقييم محفوظة في متصفحك. فعّل الحماية لتُشفَّر (AES-#) بكلمة مرور لا تُحفظ في أي مكان، فلا يقرؤها من يفتح هذا المتصفح بعدك. تُقفل الأداة تلقائيًا بعد # دقيقة دون استخدام.":"Your assessment is saved in this browser. Turn on protection to encrypt it (AES-#) with a password that is never stored, so nobody who opens this browser after you can read it. The tool locks automatically after # minutes of inactivity.",
+"الحماية مفعّلة":"Protection on","قفل الآن":"Lock now","إلغاء الحماية":"Turn off protection","كلمة مرور جديدة (# أحرف على الأقل)":"New password (at least # characters)","أعد كتابة كلمة المرور":"Repeat the password",
+"تفعيل الحماية بكلمة مرور":"Turn on password protection","تنبيه:":"Note:","إن نسيت كلمة المرور فلا يمكن استرجاع البيانات المشفّرة. احفظ نسخة احتياطية مشفّرة أولًا.":"If you forget the password, the encrypted data cannot be recovered. Save an encrypted backup first.",
+"مسح كل بيانات الأداة من هذا الجهاز":"Erase all tool data from this device","يحذف التقييم، والمرفقات، وكلمات الإخفاء، وإعدادات الفريق من هذا المتصفح. استخدمه عند تسليم الجهاز أو الانتهاء من العمل على جهاز مشترك.":"Deletes the assessment, attachments, hidden words and team settings from this browser. Use it when handing over a device or finishing on a shared computer.","مسح نهائي من هذا الجهاز":"Erase permanently from this device",
+"التقييم محمي بكلمة مرور":"The assessment is password-protected","بيانات التقييم والملفات على هذا الجهاز مشفّرة. اكتب كلمة المرور لفتحها.":"The assessment and files on this device are encrypted. Enter the password to open them.","كلمة المرور":"Password","فتح":"Open","نسيت كلمة المرور؟":"Forgot the password?",
+"لا يمكن استرجاع البيانات المشفّرة دون كلمة المرور، ولا نملك نسخة منها. يمكنك مسح بيانات الأداة من هذا الجهاز ثم استرجاع آخر نسخة احتياطية.":"Encrypted data can't be recovered without the password, and we have no copy of it. You can erase the tool data from this device and restore your latest backup.",
+"مسح بيانات الأداة من هذا الجهاز":"Erase tool data from this device","كلمة المرور غير صحيحة":"Wrong password","فُتح التقييم":"Assessment unlocked","كلمة المرور # أحرف على الأقل":"The password must be at least # characters",
+"فُعّلت الحماية. بيانات التقييم والملفات مشفّرة الآن على هذا الجهاز.":"Protection is on. The assessment and files are now encrypted on this device.","أُلغيت الحماية بكلمة المرور.":"Password protection turned off.",
+"إلغاء الحماية؟ ستُحفظ بيانات التقييم والملفات على هذا الجهاز دون تشفير.":"Turn off protection? The assessment and files will be stored on this device without encryption.",
+"سيُحذف من هذا الجهاز كل ما حفظته الأداة: التقييم، والمرفقات، والإعدادات. لا يمكن التراجع. هل تريد المتابعة؟":"Everything the tool saved on this device will be deleted: the assessment, attachments and settings. This can't be undone. Continue?",
+"احفظ نسخة مشفّرة":"Save an encrypted copy","موصى بها":"Recommended","اختر كلمة مرور للنسخة، فيُنزَّل ملف":"Choose a password for the copy and a file","مشفّر (AES-#) ويشمل المرفقات.":"is downloaded, encrypted (AES-#) and including attachments.",
+"كلمة مرور النسخة (# أحرف على الأقل)":"Backup password (at least # characters)","حفظ نسخة مشفّرة":"Save encrypted copy","نسخة غير مشفّرة (JSON)":"Unencrypted copy (JSON)","مفيدة للنقل السريع، لكن يقرؤها أي أحد يصل إلى الملف، ولا تشمل المرفقات.":"Handy for quick transfer, but anyone with the file can read it, and it excludes attachments.","تنزيل JSON غير مشفّر":"Download unencrypted JSON",
+"افتح الأداة في أي متصفح. للنسخة المشفّرة اكتب كلمة مرورها في خانة الخطوة #، ثم اضغط «استرجاع نسخة» واختر الملف. يحل محتواه محل التقييم الحالي بعد تأكيدك.":"Open the tool in any browser. For an encrypted copy, type its password in step #, then press “Restore a copy” and choose the file. Its content replaces the current assessment after you confirm.",
+"حُفظت نسخة احتياطية مشفّرة مع المرفقات":"Encrypted backup with attachments saved","تعذّر إنشاء النسخة":"Could not create the backup","اكتب كلمة مرور النسخة في خانة كلمة المرور أولًا":"Type the backup password first","كلمة مرور النسخة غير صحيحة":"Wrong backup password","هذا الملف ليس نسخة احتياطية":"This file isn't a backup","الملف تالف أو ليس نسخة احتياطية صالحة":"The file is damaged or not a valid backup","كلمة مرور النسخة # أحرف على الأقل":"The backup password must be at least # characters","كلمتا المرور غير متطابقتين":"The passwords don't match","تعذّر الحفظ: مساحة التخزين ممتلئة":"Could not save: storage is full"
+});
+
+Object.assign(I18N.d,{"قارن الوضع الحالي بآخر لقطة":"Compare current state with the last snapshot","أو اختر:":"or choose:","الوضع الحالي":"Current state",
+"التقرير الرسمي (PDF)":"Official report (PDF)","التقرير الرسمي الكامل":"Full official report","التقرير التنفيذي (PDF)":"Executive report (PDF)","صفحات قليلة للإدارة العليا":"A few pages for senior management","التقرير التفصيلي لفريق GRC (Word)":"Detailed GRC team report (Word)","كل ضابط بتفاصيله، قابل للتعديل":"Every control in detail, editable"});
 </script>
 <script>document.documentElement.lang="ar";document.documentElement.dir="rtl";
 // ===== Index =====
@@ -1430,7 +1468,7 @@ function logEv(what,id,extra){if(U.demo||!U.db)return;try{U.db.collection("log")
 
 // ===== Persistence (shared db when available, else this browser) =====
 let lsT=null;const wq={},wt={};
-function saveLocal(){if(U.demo||U.supa)return;clearTimeout(lsT);lsT=setTimeout(()=>{try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}},300)}
+function saveLocal(){if(U.demo||U.supa)return;clearTimeout(lsT);lsT=setTimeout(()=>{if(typeof secSave==="function"&&secSave())return;try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}},300)}
 function persist(col,id){if(U.demo)return;if(!U.db){const o=col==="cfg"?S.cfg:S[col]&&S[col][id];if(o&&typeof o==="object"){o._at=Date.now();if(U.tsMe)o._by=U.tsMe}if(typeof tsTouch==="function")tsTouch()}if(U.db&&!canCol(col,id)){toast("ليست لديك صلاحية تعديل هذا الجزء. تواصل مع مدير التقييم.");return}saveLocal();if(!U.db)return;const p=col==="cfg"?"meta/cfg":col+"/"+id;wq[p]=1;clearTimeout(wt[p]);
   wt[p]=setTimeout(async()=>{const v=col==="cfg"?S.cfg:S[col][id];
     try{if(v==null)await U.db.doc(p).delete();else await U.db.doc(p).set(Object.assign({},v,{_by:U.me||"",_at:Date.now()}))}catch(e){writeErr(e)}finally{delete wq[p]}},650)}
@@ -1621,6 +1659,7 @@ function vHome(){const s=stats(CTLS),appl=CTLS.filter(c=>appOf(c.id).v!=="na");
     <section class="card c5"><h2>ما يحتاج انتباهك</h2>${att.length?`<div class="att">${att.slice(0,6).map(a=>`<div><span class="ix" style="background:${a[1]==="bad"?"color-mix(in srgb,var(--bad) 14%,var(--surface))":a[1]==="warn"?"color-mix(in srgb,var(--warn) 16%,var(--surface))":"var(--surface2)"};color:${a[1]==="bad"?"var(--bad)":a[1]==="warn"?"var(--warn)":"var(--ink)"}">${a[0]}</span><span>${a[2]}</span><button class="btn sm ghost" data-act="${a[3].includes(":")?"jumpf":"tab"}" data-v="${a[3].includes(":")?a[3].split(":")[1]:a[3]}">عرض</button></div>`).join("")}</div>`:`<div class="empty"><b>لا شيء عاجل</b>سيظهر هنا ما يتطلب تدخلك أولًا بأول.</div>`}</section>
     <section class="card c12"><h2>حالة الضوابط حسب المكوّن</h2><div class="dstat">${ECC.map(d=>{const st=stats(d.subs.flatMap(x=>x.c));return `<div class="drow2"><span class="dn2"><b>${d.id}.</b> ${esc(tx(d))}</span>${sbarFull(st)}<span class="num dv">${st.comp==null?"—":st.comp+"%"}</span></div>`}).join("")}</div>
       <div class="legend"><span><i class="b-c"></i>ملتزم</span><span><i class="b-p"></i>جزئي</span><span><i class="b-x"></i>غير ملتزم</span><span><i class="b-w"></i>قيد التقييم</span><span><i class="b-none"></i>لم يُقيَّم</span><span><i class="b-na"></i>لا ينطبق</span></div></section>
+    ${vDomainDist()}${vTopRisks()}
     <section class="card c7"><h2>من الورق إلى الواقع <span class="tag der">الطبقات الثلاث</span></h2><p class="lead">كم ضابطًا يصمد في كل طبقة؟ الفرق بين صفّين هو المسافة بين ما تقوله السياسات وما يحدث فعلًا.</p>
       <div class="fun">${fun.map((f,i)=>`<div class="fun-r"><span>${f[0]}</span><div class="tr"><i style="width:${appl.length?(f[1]/appl.length*100).toFixed(1):0}%"></i></div><span class="v">${f[1]} <small>${pct(f[1],appl.length)}%</small></span></div>${i>=2&&fun[i-1][1]-f[1]>0?`<div class="drop">−${fun[i-1][1]-f[1]} ضابطًا بين «${fun[i-1][0]}» و«${f[0]}»</div>`:""}`).join("")}</div></section>
     <section class="card c5"><h2>خريطة المكونات الفرعية <span class="note">النسبة = ملتزم ÷ المُقيَّم</span></h2><div class="heat">${SUBS.map(x=>{const st=stats(x.c),v=st.comp;const bg=v==null?"var(--surface2)":`color-mix(in srgb,${v>=80?"var(--ok)":v>=50?"var(--warn)":"var(--bad)"} ${18+Math.round((v>=50?v:100-v)/6)}%,var(--surface))`;return `<button data-act="jumps" data-id="${x.id}" title="${esc(tx(x))}" style="background:${bg}"><b>${x.id}</b><small>${v==null?(st.app?"—":"لا ينطبق"):v+"%"}</small></button>`}).join("")}</div></section>
@@ -1694,7 +1733,7 @@ function guideBox(id){const g=GD(id),k=new Set(C(id).gd||[]);if(!g.d.length&&!g.
   <span class="lbl">المخرجات المتوقعة: علّم ما هو متوفر لديك</span><div class="gdl">${dl.map((x,i)=>`<label class="${k.has(i)?"on":""}"><input type="checkbox" data-act="gd" data-id="${id}" data-v="${i}" ${k.has(i)?"checked":""}><span dir="${dir}">${esc(x)}</span></label>`).join("")}</div>
   ${gl.length?`<details style="margin-top:6px"><summary class="note" style="font-weight:500">إرشادات التطبيق (${gl.length})</summary><ul class="gl" dir="${dir}">${gl.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:""}
   ${tr?`<details style="margin-top:6px"><summary class="note" style="font-weight:500">النص الإنجليزي الرسمي</summary><ul class="gl" dir="ltr">${g.d.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:""}</div>`}
-function aiBlock(id,r){return `<div class="aiout"><div class="row">${aiTag}${r.at?`<span class="note">${r.at}</span>`:""}<span style="margin-inline-start:auto" class="row"><button class="btn sm quiet" data-act="aicopy" data-id="${id}">انقل الخطوات إلى خطة المعالجة</button>${U.aiOut[id]&&!C(id).ai?`<button class="btn sm" data-act="aisave" data-id="${id}">احفظ المقترح</button>`:""}<button class="btn sm quiet" data-act="aidrop" data-id="${id}">حذف</button></span></div>
+function aiBlock(id,r){return `<div class="aiout"><div class="row">${aiTag}${r.at?`<span class="note">${esc(r.at)}</span>`:""}<span style="margin-inline-start:auto" class="row"><button class="btn sm quiet" data-act="aicopy" data-id="${id}">انقل الخطوات إلى خطة المعالجة</button>${U.aiOut[id]&&!C(id).ai?`<button class="btn sm" data-act="aisave" data-id="${id}">احفظ المقترح</button>`:""}<button class="btn sm quiet" data-act="aidrop" data-id="${id}">حذف</button></span></div>
   ${r.diagnosis?`<p style="margin:0">${esc(r.diagnosis)}</p>`:""}
   ${r.quick_wins&&r.quick_wins.length?`<h5>مكاسب سريعة</h5>${list(r.quick_wins)}`:""}
   ${r.steps&&r.steps.length?`<h5>الخطوات</h5><div class="tw"><table><thead><tr><th>الخطوة</th><th>الدور</th><th>الجهد</th><th>المخرج / الدليل</th></tr></thead><tbody>${r.steps.map(s=>`<tr><td>${esc(s.step)}</td><td>${esc(s.owner)}</td><td>${esc(({S:"قليل",M:"متوسط",L:"كبير"})[s.effort]||s.effort||"")}</td><td>${esc(s.output)}</td></tr>`).join("")}</tbody></table></div>`:""}
@@ -1716,7 +1755,7 @@ function vAna(){const sel=U.anaSel,hist=Object.entries(S.ana).sort((a,b)=>(b[1].
    ${ECC.map(d=>`<div style="margin-bottom:10px"><div class="note" style="margin-bottom:4px">${d.id}. ${esc(tx(d))}</div><div class="chk">${d.subs.map(x=>`<label class="${sel.has(x.id)?"on":""}"><input type="checkbox" data-act="anasel" data-id="${x.id}" ${sel.has(x.id)?"checked":""}><span class="mono">${x.id}</span> ${esc(tx(x))}</label>`).join("")}</div></div>`).join("")}
    <div class="row" style="margin-top:8px"><button class="btn ghost" data-rd="cvrun" ${U.anaTxt.length>200&&sel.size?"":"disabled"}>فحص تغطية محلي (دون ذكاء اصطناعي)</button>${aiBtn("anarun","x",`حلّل السياسة مقابل ${n} ضابطًا`)}<span class="note">${!sel.size?"اختر مكونًا واحدًا على الأقل.":U.anaTxt.length<200?"ألصق نص السياسة أولًا.":"قد يستغرق التحليل دقيقة إلى دقيقتين."}</span></div></section>
   ${vCov()}${r?anaResult(r):""}
-  <section class="card c12"><h2>التحليلات السابقة (${hist.length})</h2>${hist.length?`<div class="tw"><table><thead><tr><th>الوثيقة</th><th>التاريخ</th><th>المكونات</th><th>مغطى / ضعيف / غير مغطى</th><th></th></tr></thead><tbody>${hist.map(([k,a])=>{const c=cnt(a.res);return `<tr><td>${esc(a.name)}</td><td class="num">${a.at}</td><td>${(a.subs||[]).map(x=>`<span class="idb">${x}</span>`).join(" ")}</td><td class="num">${c.covered} / ${c.weak} / ${c.missing}</td><td class="row"><button class="btn sm quiet" data-act="anaopen" data-id="${k}">عرض</button><button class="btn sm danger ghost" data-act="anadel" data-id="${k}">حذف</button></td></tr>`}).join("")}</tbody></table></div>`:`<div class="empty"><b>لا تحليلات بعد</b>كل تحليل تحفظه يظهر هنا ليعود إليه الفريق.</div>`}</section></div>`}
+  <section class="card c12"><h2>التحليلات السابقة (${hist.length})</h2>${hist.length?`<div class="tw"><table><thead><tr><th>الوثيقة</th><th>التاريخ</th><th>المكونات</th><th>مغطى / ضعيف / غير مغطى</th><th></th></tr></thead><tbody>${hist.map(([k,a])=>{const c=cnt(a.res);return `<tr><td>${esc(a.name)}</td><td class="num">${esc(a.at)}</td><td>${(a.subs||[]).map(x=>`<span class="idb">${x}</span>`).join(" ")}</td><td class="num">${c.covered} / ${c.weak} / ${c.missing}</td><td class="row"><button class="btn sm quiet" data-act="anaopen" data-id="${k}">عرض</button><button class="btn sm danger ghost" data-act="anadel" data-id="${k}">حذف</button></td></tr>`}).join("")}</tbody></table></div>`:`<div class="empty"><b>لا تحليلات بعد</b>كل تحليل تحفظه يظهر هنا ليعود إليه الفريق.</div>`}</section></div>`}
 const cnt=res=>{const c={covered:0,weak:0,missing:0};(res.items||[]).forEach(i=>{if(c[i.verdict]!=null)c[i.verdict]++});return c};
 const norm=t=>String(t||"").replace(/[\u064B-\u0652\u0640]/g,"").replace(/[إأآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/\s+/g," ").trim();
 const VD={covered:["مغطى","s-c"],weak:["ضعيف","s-p"],missing:["غير مغطى","s-x"]};
@@ -1801,13 +1840,13 @@ function vMap(){const FW=Object.entries(S.fw);const fws=[...new Set(FW.map(([k,r
 
 // ===== Snapshots =====
 function vSnaps(){const sn=Object.entries(S.snaps).sort((a,b)=>a[1].at<b[1].at?-1:1);const s=stats(CTLS);
-  let cmp="";if(U.cmpA&&U.cmpB&&S.snaps[U.cmpA]&&S.snaps[U.cmpB]){const A=S.snaps[U.cmpA],B=S.snaps[U.cmpB],rk={"":0,w:0,x:1,p:2,c:3,na:-1};const up=[],dn=[];
+  let cmp="";if(U.cmpA&&U.cmpB&&snapGet(U.cmpA)&&snapGet(U.cmpB)){const A=snapGet(U.cmpA),B=snapGet(U.cmpB),rk={"":0,w:0,x:1,p:2,c:3,na:-1};const up=[],dn=[];
    CTLS.forEach(c=>{const a=(A.per||{})[c.id]||"",b=(B.per||{})[c.id]||"";if(a===b||a==="na"||b==="na")return;(rk[b]>rk[a]?up:rk[b]<rk[a]?dn:[]).push([c.id,a,b])});
    cmp=`<div class="two" style="margin-top:12px"><div class="box"><h4>تحسّن (${up.length})</h4>${up.map(x=>`<p>${idb(x[0])} ${ST[x[1]][0]} ← ${ST[x[2]][0]}</p>`).join("")||"<p class=note>لا شيء</p>"}</div><div class="box"><h4>تراجع (${dn.length})</h4>${dn.map(x=>`<p>${idb(x[0])} ${ST[x[1]][0]} ← ${ST[x[2]][0]}</p>`).join("")||"<p class=note>لا شيء</p>"}</div></div>`}
   return `${roNote("snaps")}<fieldset class="fs fsb" ${fsAttr("snaps")}><section class="card"><h2>لقطة جديدة</h2><div class="row"><input id="sn-l" style="max-width:340px" placeholder="عنوان اللقطة، مثل: قبل التدقيق الخارجي"><button class="btn" data-act="snap">احفظ لقطة الآن</button><span class="note">الوضع الحالي: التزام ${s.comp??"—"}%، ${gapList().length} فجوة.</span></div></section></fieldset>
   ${sn.length>=2?`<section class="card"><h2>الاتجاه</h2>${trend(sn.map(x=>x[1]))}</section>`:""}
-  <section class="card"><h2>اللقطات (${sn.length})</h2>${sn.length?`<div class="tw"><table><thead><tr><th>التاريخ</th><th>العنوان</th><th>الالتزام</th><th>فجوات</th><th>ورقي</th><th></th></tr></thead><tbody>${sn.slice().reverse().map(([k,x])=>`<tr><td class="num">${x.at}</td><td>${esc(x.label||"—")}</td><td class="num">${x.comp??"—"}%</td><td class="num">${x.gaps}</td><td class="num">${x.paper}</td><td><button class="btn sm danger ghost" data-act="sndel" data-id="${k}">حذف</button></td></tr>`).join("")}</tbody></table></div>
-   ${sn.length>=2?`<div class="row" style="margin-top:12px"><span class="note">قارن:</span><select id="cmpA" data-act="cmp" data-k="A" style="width:auto"><option value="">من لقطة…</option>${sn.map(([k,x])=>`<option value="${k}" ${U.cmpA===k?"selected":""}>${x.at} ${esc(x.label||"")}</option>`).join("")}</select><select id="cmpB" data-act="cmp" data-k="B" style="width:auto"><option value="">إلى لقطة…</option>${sn.map(([k,x])=>`<option value="${k}" ${U.cmpB===k?"selected":""}>${x.at} ${esc(x.label||"")}</option>`).join("")}</select></div>${cmp}`:""}`:`<div class="empty"><b>لا لقطات بعد</b>احفظ لقطة الآن، ثم أخرى بعد كل مرحلة معالجة لترى الفرق.</div>`}</section>`}
+  <section class="card"><h2>اللقطات (${sn.length})</h2>${sn.length?`<div class="tw"><table><thead><tr><th>التاريخ</th><th>العنوان</th><th>الالتزام</th><th>فجوات</th><th>ورقي</th><th></th></tr></thead><tbody>${sn.slice().reverse().map(([k,x])=>`<tr><td class="num">${esc(x.at)}</td><td>${esc(x.label||"—")}</td><td class="num">${x.comp??"—"}%</td><td class="num">${x.gaps}</td><td class="num">${x.paper}</td><td><button class="btn sm danger ghost" data-act="sndel" data-id="${k}">حذف</button></td></tr>`).join("")}</tbody></table></div>
+   ${sn.length>=1?`<div class="row" style="margin-top:12px"><button class="btn sm" data-r2="cmpnow">قارن الوضع الحالي بآخر لقطة</button><span class="note">أو اختر:</span><select id="cmpA" data-act="cmp" data-k="A" style="width:auto"><option value="">من لقطة…</option>${sn.map(([k,x])=>`<option value="${esc(k)}" ${U.cmpA===k?"selected":""}>${esc(x.at)} ${esc(x.label||"")}</option>`).join("")}</select><select id="cmpB" data-act="cmp" data-k="B" style="width:auto"><option value="">إلى لقطة…</option><option value="__now" ${U.cmpB==="__now"?"selected":""}>الوضع الحالي</option>${sn.map(([k,x])=>`<option value="${esc(k)}" ${U.cmpB===k?"selected":""}>${esc(x.at)} ${esc(x.label||"")}</option>`).join("")}</select></div>${cmp}${vDomainCompare()}`:""}`:`<div class="empty"><b>لا لقطات بعد</b>احفظ لقطة الآن، ثم أخرى بعد كل مرحلة معالجة لترى الفرق.</div>`}</section>`}
 
 // ===== Report & data =====
 function reportHTML(){const s=stats(CTLS),gl=gapList(),c=S.cfg,t=ETYPES.find(x=>x[0]===c.type),D=Object.values(S.docs);
@@ -1834,18 +1873,22 @@ function vReport(){const c=S.cfg,rp=c.rep||{},L=U.repLang||U.lang,arch=Object.en
   <fieldset class="fs card c7" ${fsAttr("cfg")}><h2>الملخص التنفيذي</h2><p class="lead">فقرة للإدارة العليا: أين نقف، وأهم المخاطر، والقرارات المطلوبة. يظهر في التقرير باللغة المختارة.</p>
    <div class="row" style="justify-content:space-between"><span class="lbl">بالعربية</span>${aiBtn("aiexec","ar","صُغه بـ Claude","ghost sm")}</div><textarea id="cf-exec" ${bind("cfg","","exec")} style="min-height:120px">${esc(c.exec||"")}</textarea>
    <div class="row" style="justify-content:space-between;margin-top:8px"><span class="lbl">English</span>${aiBtn("aiexec","en","Draft with Claude","ghost sm")}</div><textarea id="cf-execen" dir="ltr" ${bind("cfg","","execEn")} style="min-height:120px">${esc(c.execEn||"")}</textarea></fieldset>
-  <section class="card c12"><h2>إصدار التقرير الرسمي <span class="act">${seg([["ar","العربية"],["en","English"]],L,"replang","x","v")}<button class="btn spark" data-act="pdf" ${U.pdfMsg?"disabled":""}>إصدار PDF</button><span class="note" id="pdfmsg">${esc(U.pdfMsg||"")}</span></span></h2>
+  <section class="card c12"><h2>إصدار التقرير الرسمي <span class="act">${seg([["ar","العربية"],["en","English"]],L,"replang","x","v")}<button class="btn spark" data-act="pdf" ${U.pdfMsg?"disabled":""} title="التقرير الرسمي الكامل">التقرير الرسمي (PDF)</button><button class="btn" data-r2="exec" ${U.pdfMsg?"disabled":""} title="صفحات قليلة للإدارة العليا">التقرير التنفيذي (PDF)</button><button class="btn quiet" data-r2="grc" title="كل ضابط بتفاصيله، قابل للتعديل">التقرير التفصيلي لفريق GRC (Word)</button><span class="note" id="pdfmsg">${esc(U.pdfMsg||"")}</span></span></h2>
    <p class="lead">تقرير A4 بغلاف يحمل رقمًا تسلسليًا وتصنيفًا، وخانات الإعداد والمراجعة والاعتماد والتوقيع، وترقيم للصفحات. ${canArch?"يُحفظ كل تقرير تصدره في أرشيف الأداة.":"الأرشفة متاحة لمدير التقييم عند فتح الأداة داخل Claude."}</p>
    <div class="rp-prev">${prev}</div><p class="note" style="margin:8px 0 0">معاينة أول ثلاث صفحات.</p></section>
   <section class="card c12"><h2>أرشيف التقارير الصادرة (${arch.length})</h2>${arch.length?`<div class="tw"><table><thead><tr><th>رقم التقرير</th><th>اللغة</th><th>الإصدار</th><th>التاريخ</th><th>الالتزام</th><th>فجوات</th><th>أصدره</th><th></th></tr></thead><tbody>${arch.map(([k,r])=>`<tr><td class="mono">${esc(r.no)}</td><td>${r.lang==="en"?"English":"العربية"}</td><td class="num">${esc(r.ver||"")}</td><td class="num nw">${new Date(r.at).toISOString().slice(0,10)}</td><td class="num">${r.comp??"—"}%</td><td class="num">${r.gaps}</td><td>${esc(U.names[r.by]||"—")}</td><td>${r.url?(r.url.startsWith("sb:")?`<button class="btn sm quiet" data-act="sbopen" data-v="${esc(r.url.slice(3))}">فتح</button>`:`<a class="btn sm quiet" href="${esc(r.url)}" target="_blank" rel="noopener">فتح</a>`):""}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty"><b>لم يصدر تقرير بعد</b>كل تقرير يصدره مدير التقييم يُحفظ هنا برقمه وتاريخه ومن أصدره.</div>`}</section>
   ${vGapIndex()}
+  ${typeof vSecurity==="function"?vSecurity():""}
   <section class="card c12" id="backup"><h2>النسخ الاحتياطي والاسترجاع</h2>
    <p class="lead">بياناتك محفوظة في هذا المتصفح فقط. النسخة الاحتياطية ملف واحد على جهازك، تسترجع منه تقييمك متى شئت، أو تنقله إلى جهاز آخر.</p>
    <div class="bk-grid">
-    <div class="box bk"><span class="bk-n num">1</span><h4>احفظ نسخة</h4><p>اضغط الزر، فيُنزَّل ملف اسمه مثل <span class="mono" dir="ltr">ECC-backup-${today()}.json</span> إلى مجلد التنزيلات في جهازك.</p><button class="btn" data-act="dljson">حفظ نسخة احتياطية</button></div>
+    <div class="box bk"><span class="bk-n num">1</span><h4>احفظ نسخة مشفّرة <span class="tag off">موصى بها</span></h4><p>اختر كلمة مرور للنسخة، فيُنزَّل ملف <span class="mono" dir="ltr">ECC-backup-${today()}.ecc</span> مشفّر (AES-256) ويشمل المرفقات.</p>
+     <div class="ts-pw"><input id="bk-pw" type="password" autocomplete="new-password" placeholder="كلمة مرور النسخة (10 أحرف على الأقل)"><input id="bk-pw2" type="password" autocomplete="new-password" placeholder="أعد كتابة كلمة المرور"></div>
+     <button class="btn" data-sec="bkenc">حفظ نسخة مشفّرة</button>
+     <details><summary class="note">نسخة غير مشفّرة (JSON)</summary><p class="note">مفيدة للنقل السريع، لكن يقرؤها أي أحد يصل إلى الملف، ولا تشمل المرفقات.</p><button class="btn sm quiet" data-act="dljson">تنزيل JSON غير مشفّر</button></details></div>
     <div class="box bk"><span class="bk-n num">2</span><h4>احتفظ بها في مكان آمن</h4><p>انقل الملف إلى OneDrive أو Google Drive أو مجلد العمل، لتجده إن مسحت بيانات المتصفح أو غيّرت الجهاز. احفظ نسخة جديدة بعد كل جلسة تقييم.</p></div>
-    <div class="box bk"><span class="bk-n num">3</span><h4>استرجعها عند الحاجة</h4><p>افتح الأداة في أي متصفح، ثم اضغط «استرجاع نسخة» واختر الملف. يحل محتواه محل التقييم الحالي بعد تأكيدك.</p>
-     <label class="btn ghost attpick" ${fsAttr("cfg")}>استرجاع نسخة<input type="file" id="impfile" accept=".json,application/json" hidden></label></div></div>
+    <div class="box bk"><span class="bk-n num">3</span><h4>استرجعها عند الحاجة</h4><p>افتح الأداة في أي متصفح. للنسخة المشفّرة اكتب كلمة مرورها في خانة الخطوة 1، ثم اضغط «استرجاع نسخة» واختر الملف. يحل محتواه محل التقييم الحالي بعد تأكيدك.</p>
+     <label class="btn ghost attpick" ${fsAttr("cfg")}>استرجاع نسخة<input type="file" id="impfile" accept=".ecc,.json,application/json" hidden></label></div></div>
    <p class="note" style="margin:10px 0 0">تحتاج نسخة كاملة مع المرفقات ومشفّرة بكلمة مرور؟ <button class="lnk" data-act="tab" data-v="team">استخدم حزمة الفريق المشفّرة</button>.</p>
    <p class="note" style="margin:10px 0 0"><b>ما تشمله النسخة:</b> النطاق، وتقييم كل الضوابط وملاحظاتها، وخارطة المعالجة، وسجل الوثائق، واللقطات، والتحليلات. <b>لا تشمل</b> الملفات المرفقة كأدلة؛ احتفظ بها في مجلد خاص.</p>
    <div class="row" style="margin-top:10px"><button class="btn" data-g="fullx">تصدير التقييم كاملًا (Excel)</button><button class="btn quiet" data-act="csv">تنزيل الفجوات CSV</button><button class="btn quiet" data-g="ics">المواعيد في التقويم (.ics)</button>${U.demo?"":`<button class="btn quiet" data-act="demo">استعرض المثال</button>`}</div>
@@ -1861,7 +1904,7 @@ const AP_EN={m:"Mandatory",r:"Recommended",na:"Not applicable"};
 const ET_EN={gov:"Government entity",govco:"Government-affiliated company or entity",cni:"Private-sector entity owning, operating or hosting CNI",other:"Other entity (not in ECC scope)"};
 const ML_EN={"التوثيق":"Documentation","التطبيق":"Implementation","الفاعلية":"Effectiveness","":"—"};
 const repNo=()=>{const y=new Date().getFullYear();const n=Object.values(S.reports).filter(r=>(r.no||"").includes("-"+y+"-")).length+1;return `ECC-RPT-${y}-${String(n).padStart(3,"0")}`};
-function reportPages(lang,no){
+function reportPages(lang,no,kind){
   const en=lang==="en",R=(a,b)=>en?b:a,T=o=>en?(o.en||o.ar):o.ar,c=S.cfg,rp=c.rep||{},s=stats(CTLS),ev=evStat(CTLS),gl=gapList();
   const et=c.type?(en?ET_EN[c.type]:ETYPES.find(x=>x[0]===c.type)[1]):R("غير محدد","Not set");
   const cls=CLS.find(x=>x[0]===(rp.cls||"internal"));const clsT=en?cls[2]:cls[1];
@@ -1877,7 +1920,7 @@ function reportPages(lang,no){
   pages.push({cover:true,body:`<div style="height:100%;display:flex;flex-direction:column;justify-content:space-between">
     <div><div style="display:flex;align-items:center;gap:12px"><img src="${LOGO_MARK}" alt="" style="width:46px;height:46px;border-radius:10px"><div style="font-size:12px;color:#5b6676;letter-spacing:0">${R("تقرير مراجعة","Review report")} · ${no}</div></div>
       <div style="height:5px;width:96px;border-radius:3px;background:linear-gradient(90deg,#945B46,#B7896F);margin:14px 0 26px"></div>
-      <h1 style="font-family:'Inter Tight','IBM Plex Sans Arabic',sans-serif;font-size:31px;line-height:1.3;margin:0 0 10px;font-weight:500;color:#1A382B">${R("تقرير مراجعة الالتزام بالضوابط الأساسية للأمن السيبراني","Essential Cybersecurity Controls Compliance Review Report")}</h1>
+      <h1 style="font-family:'Inter Tight','IBM Plex Sans Arabic',sans-serif;font-size:31px;line-height:1.3;margin:0 0 10px;font-weight:500;color:#1A382B">${(kind==="exec"?R("التقرير التنفيذي: الالتزام بالضوابط الأساسية للأمن السيبراني","Executive report: Essential Cybersecurity Controls compliance"):R("تقرير مراجعة الالتزام بالضوابط الأساسية للأمن السيبراني","Essential Cybersecurity Controls Compliance Review Report"))}</h1>
       <div style="font-size:15px;color:#3b4757">ECC-2:2024</div>
       <div style="margin-top:40px;font-size:22px;font-weight:600">${esc(c.entity||R("اسم الجهة","Entity name"))}</div></div>
     <div>${tbl([R("البند","Item"),R("القيمة","Value")],[[R("رقم التقرير","Report number"),no],[R("الإصدار","Version"),esc(rp.ver||"1.0")],[R("تاريخ التقييم","Assessment date"),date],[R("تاريخ الإصدار","Issue date"),today()],[R("التصنيف","Classification"),`<b>${clsT}</b>`]])}
@@ -1889,6 +1932,15 @@ function reportPages(lang,no){
     ${h2(R("2. النطاق","2. Scope"))}<div style="font-size:12px;line-height:1.8">${R("نوع الجهة","Entity type")}: <b>${esc(et)}</b> — ${c.type?(OBLIG.has(c.type)?R("ضمن نطاق عمل الضوابط (ملزمة)","within the ECC scope (mandatory)"):R("خارج نطاق الإلزام بـ ECC (الضوابط موصى بها)","outside the mandatory ECC scope (controls recommended)")):""}<br>${R("المرجع: ECC-2:2024، قسم «نطاق العمل وقابلية التطبيق».","Reference: ECC-2:2024, “Scope of Work and Applicability”.")}</div>
     ${h2(R("3. المؤشرات الرئيسية","3. Key indicators"))}${tbl([R("المؤشر","Indicator"),R("القيمة","Value")],kp)}
     ${h2(R("4. الالتزام حسب المكونات الأساسية","4. Compliance by main domain"))}${tbl([R("المكوّن","Domain"),R("منطبق","Applicable"),R("الالتزام","Compliance"),R("ملتزم","Compliant"),R("جزئي","Partial"),R("غير ملتزم","Non-compliant")],ECC.map(d=>{const t=stats(d.subs.flatMap(x=>x.c));return [`${d.id}. ${esc(T(d))}`,t.app,(t.comp??"—")+"%",t.c,t.p,t.x]}))}`});
+  if(kind==="exec"){const RR=riskRows().slice(0,10),EX=excRows(),late=Object.values(S.docs).filter(d=>docState(d)==="late").length,p1=gl.filter(g=>g.ph===1),p1n=p1.filter(g=>!C(g.c.id).own).length,crit=riskRows().filter(r=>r.lvl[0]==="crit").length,expd=EX.filter(e=>e.st[0]==="x").length;
+    const dec=[];if(crit)dec.push(R(`اعتماد معالجة ${crit} خطرًا حرجًا وتخصيص الموارد لها.`,`Approve treatment and resources for ${crit} critical risks.`));if(p1n)dec.push(R(`تعيين مسؤولين لـ ${p1n} فجوة في المرحلة الأولى (0–30 يومًا).`,`Assign owners to ${p1n} phase-1 gaps (0–30 days).`));if(s.paper)dec.push(R(`${s.paper} ضابطًا موثّقة دون دليل تطبيق: توجيه الإدارات بتطبيقها.`,`${s.paper} controls documented without evidence of implementation: direct departments to implement them.`));if(late)dec.push(R(`${late} وثيقة تجاوزت موعد مراجعتها: اعتماد تحديثها.`,`${late} documents are past their review date: approve their update.`));if(expd)dec.push(R(`${expd} استثناء منتهٍ: تجديده أو إغلاقه.`,`${expd} expired exceptions: renew or close them.`));if(!dec.length)dec.push(R("لا قرارات عاجلة في هذه المرحلة.","No urgent decisions at this stage."));
+    const sn=Object.values(S.snaps).sort((a,b)=>a.at<b.at?-1:1),last=sn[sn.length-1];
+    pages.push({body:`${h2(R("5. أعلى المخاطر","5. Top risks"))}${RR.length?tbl([R("الضابط","Control"),R("الخطر","Risk"),R("الدرجة","Score"),R("المسؤول","Owner")],RR.map(r=>[`<b style="font-family:'IBM Plex Mono',monospace">${r.id}</b>`,esc(short(r.stmt,120)),`${r.s} · ${r.lvl[1]}`,esc(r.own||"—")])):`<div style="font-size:12px">${R("لا مخاطر مفتوحة.","No open risks.")}</div>`}
+      ${h2(R("6. قرارات مطلوبة من الإدارة العليا","6. Decisions needed from senior management"))}<ul style="font-size:12px;line-height:1.9;margin:4px 0;padding-${al==="right"?"right":"left"}:18px">${dec.map(d=>`<li>${esc(d)}</li>`).join("")}</ul>
+      ${h2(R("7. خطة المعالجة باختصار","7. Remediation at a glance"))}${tbl([R("المرحلة","Phase"),R("المدة","Window"),R("فجوات","Gaps")],[1,2,3].map(p=>[R("المرحلة ","Phase ")+p,R(PH[p][1],["0–30 days","31–60 days","61–90 days"][p-1]),String(gl.filter(g=>g.ph===p).length)]))}
+      ${last?`${h2(R("8. التقدم منذ آخر لقطة","8. Progress since the last snapshot"))}<div style="font-size:12px;line-height:1.8">${R("آخر لقطة","Last snapshot")} (${esc(last.at)}): <b>${last.comp??"—"}%</b> ← ${R("الآن","now")}: <b>${s.comp??"—"}%</b>. ${R("الفجوات","Gaps")}: ${last.gaps} ← ${gl.length}.</div>`:""}
+      <div style="margin-top:14px;font-size:10.5px;color:#5b6676">${R("التفاصيل الكاملة لكل ضابط في التقرير التفصيلي لفريق GRC. درجات المخاطر وترتيب الأولويات منهجية الأداة وليست نصًا رسميًا.","Full control details are in the detailed GRC report. Risk scores and priorities are the tool's method, not official text.")}</div>`})}
+  if(kind!=="exec"){
   // subdomains
   const subRows=SUBS.map(x=>{const t=stats(x.c),e=evStat(x.c);return [`<b>${x.id}</b> ${esc(T(x))}`,t.app,(t.comp??"—")+(t.comp==null?"":"%"),t.paper||"—",e.t?e.p+"%":"—"]});
   for(let i=0;i<subRows.length;i+=16)pages.push({body:`${h2(i?R("5. الالتزام حسب المكونات الفرعية (تابع)","5. Compliance by subdomain (cont.)"):R("5. الالتزام حسب المكونات الفرعية","5. Compliance by subdomain"))}${tbl([R("المكوّن الفرعي","Subdomain"),R("منطبق","Applicable"),R("الالتزام","Compliance"),R("ورقي","Paper"),R("الأدلة","Evidence")],subRows.slice(i,i+16))}`});
@@ -1900,17 +1952,18 @@ function reportPages(lang,no){
   const D=Object.values(S.docs);
   pages.push({body:`${h2(R("7. سجل الوثائق","7. Document register"))}${D.length?tbl([R("الوثيقة","Document"),R("الإصدار","Version"),R("الاعتماد","Approved"),R("المراجعة القادمة","Next review")],D.map(d=>[esc(d.name),esc(d.ver||"—"),esc(d.ad||"—"),(docNext(d)||"—")+(docState(d)==="late"?` <b style="color:#DC2626">${R("متأخرة","Overdue")}</b>`:"")])):`<div style="font-size:12px">${R("لا توجد وثائق مسجلة.","No documents registered.")}</div>`}
     ${h2(R("8. المنهجية والمصادر","8. Method and sources"))}<div style="font-size:11.5px;line-height:1.85">${R("قُيّم كل ضابط على ثلاث طبقات: موثّق، ومطبّق، وفعّال. يُعد الضابط ملتزمًا إذا كان موثّقًا ومطبّقًا. نصوص الضوابط من وثيقة ECC-2:2024، والمخرجات المتوقعة من الدليل الإرشادي GECC-2:2026 الصادرين عن الهيئة الوطنية للأمن السيبراني. هذا التقرير تقييم داخلي أعدته الجهة، ولا يحل محل أداة التقييم وقياس الالتزام الرسمية التي تصدرها الهيئة.","Each control was assessed on three layers: documented, implemented and effective. A control is compliant when it is both documented and implemented. Control texts are from ECC-2:2024 and expected deliverables from the GECC-2:2026 implementation guide, both issued by the National Cybersecurity Authority. This report is an internal assessment prepared by the entity and does not replace NCA's official Assessment and Compliance Tool.")}</div>`});
+  }
   const N=pages.length;
   return pages.map((p,i)=>`<div class="rp-page" style="width:794px;height:1123px;box-sizing:border-box;padding:46px 54px 40px;background:#fff;position:relative;overflow:hidden;${css}">
     ${p.cover?"":`<div style="display:flex;justify-content:space-between;font-size:10px;color:#5b6676;border-bottom:1px solid #d9dfe8;padding-bottom:8px"><span>${esc(c.entity||"")} · ${R("تقرير مراجعة ECC-2:2024","ECC-2:2024 review report")}</span><span>${no}</span></div>`}
     <div style="${p.cover?"height:1010px":""}">${p.body}</div>
     <div style="position:absolute;bottom:22px;left:54px;right:54px;display:flex;justify-content:space-between;font-size:9.5px;color:#5b6676;border-top:1px solid #d9dfe8;padding-top:7px"><span>${R("التصنيف","Classification")}: <b>${clsT}</b></span><span>${R("صفحة","Page")} ${i+1} ${R("من","of")} ${N}</span><span>${R("صدر","Issued")} ${today()}</span></div></div>`)}
-async function makePDF(){const lang=U.repLang||U.lang;const no=repNo();
+async function makePDF(kind){kind=kind==="exec"?"exec":"";const lang=U.repLang||U.lang;const no=repNo()+(kind?"-EX":"");
   U.pdfMsg=lang==="en"?"Preparing…":"جارٍ تجهيز التقرير…";render();
   try{await Promise.all(PDF_LIBS.map(loadScript))}catch(e){U.pdfMsg="";toast("تعذّر تحميل مكتبة PDF. تحقق من الاتصال وأعد المحاولة.");render();return}
   const host=document.createElement("div");host.style.cssText="position:fixed;left:-10000px;top:0;width:794px;z-index:-1";document.body.appendChild(host);
   try{if(document.fonts&&document.fonts.ready)await document.fonts.ready;
-    const pages=reportPages(lang,no);const pdf=new window.jspdf.jsPDF(Object.assign({unit:"mm",format:"a4",compress:true},U.pw?{encryption:{userPassword:U.pw,ownerPassword:U.pw+"#"+uid(),userPermissions:["print"]}}:{}));
+    const pages=reportPages(lang,no,kind);const pdf=new window.jspdf.jsPDF(Object.assign({unit:"mm",format:"a4",compress:true},U.pw?{encryption:{userPassword:U.pw,ownerPassword:U.pw+"#"+uid(),userPermissions:["print"]}}:{}));
     for(let i=0;i<pages.length;i++){U.pdfMsg=`${i+1} / ${pages.length}`;const m=$("#pdfmsg");if(m)m.textContent=U.pdfMsg;
       host.innerHTML=plainAr(pages[i]);const cv=await window.html2canvas(host.firstElementChild,{scale:2,backgroundColor:"#ffffff",logging:false,useCORS:true});
       if(i)pdf.addPage();pdf.addImage(cv.toDataURL("image/jpeg",0.92),"JPEG",0,0,210,297)}
@@ -1949,14 +2002,14 @@ const ATT_MAX=20*1024*1024;
 let _fdb=null;
 const fdb=()=>_fdb||(_fdb=new Promise((ok,no)=>{try{const r=indexedDB.open("ecc_files",1);r.onupgradeneeded=()=>r.result.createObjectStore("f");r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){no(e)}}));
 const fdbOp=(mode,fn)=>fdb().then(d=>new Promise((ok,no)=>{const t=d.transaction("f",mode),st=t.objectStore("f"),rq=fn(st);t.oncomplete=()=>ok(rq&&rq.result);t.onerror=()=>no(t.error)}));
-const fdbPut=(k,b)=>fdbOp("readwrite",s=>s.put(b,k));
-const fdbGet=k=>fdbOp("readonly",s=>s.get(k));
+const fdbPut=(k,b)=>Promise.resolve(typeof secWrapPut==="function"?secWrapPut(b):b).then(v=>fdbOp("readwrite",s=>s.put(v,k)));
+const fdbGet=k=>fdbOp("readonly",s=>s.get(k)).then(v=>typeof secUnwrapGet==="function"?secUnwrapGet(v):v);
 const fdbDel=k=>fdbOp("readwrite",s=>s.delete(k));
 const fmtSize=n=>n>=1048576?(n/1048576).toFixed(1)+" MB":Math.max(1,Math.round(n/1024))+" KB";
 const extOf=n=>(String(n).split(".").pop()||"").slice(0,4).toUpperCase();
 const attAccept=()=>window.claude?".pdf,.png,.jpg,.jpeg,.webp":".pdf,.png,.jpg,.jpeg,.webp,.docx,.xlsx,.pptx";
 async function attAdd(id,file){if(!file)return;if(!canCol("ctl",id)){toast("ليست لديك صلاحية تعديل هذا الضابط");return}
-  if(file.size>ATT_MAX){toast("حجم الملف أكبر من 20 ميجابايت");return}
+  if(!window.claude){const ck=await secCheck(file,"evidence");if(!ck.ok){toast(ck.why);return}}else if(file.size>ATT_MAX){toast("حجم الملف أكبر من 20 ميجابايت");return}
   if(CLOUD()&&!U.assets){toast("رفع الملفات غير متاح لصلاحيتك الحالية في هذه الأداة");return}
   U.attBusy=id;render();
   try{const rec={name:file.name,size:file.size,type:file.type||"",at:today(),by:U.me||""};
@@ -1981,8 +2034,8 @@ function attBox(id){const L=C(id).att||[],can=canCol("ctl",id);
 // --- PDF text extraction for the policy analyzer ---
 const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
 async function pdfText(file){await loadScript(PDFJS+"pdf.min.js");const lib=window.pdfjsLib;lib.GlobalWorkerOptions.workerSrc=PDFJS+"pdf.worker.min.js";
-  const doc=await lib.getDocument({data:await file.arrayBuffer()}).promise;const out=[];
-  for(let p=1;p<=doc.numPages;p++){const pg=await doc.getPage(p);const c=await pg.getTextContent();out.push(c.items.map(i=>i.str).join(" "))}
+  const doc=await lib.getDocument({data:await file.arrayBuffer(),isEvalSupported:false,stopAtErrors:false}).promise;const out=[];
+  for(let p=1;p<=Math.min(doc.numPages,500);p++){const pg=await doc.getPage(p);const c=await pg.getTextContent();out.push(c.items.map(i=>i.str).join(" "))}
   return out.join("\n\n").replace(/[ \t]+/g," ").trim()}
 
 // --- Arabic (unofficial) translation of the GECC guide items, Claude version only ---
@@ -2047,7 +2100,7 @@ const RD_TYPES=[
  ["money","المبالغ المالية","مبلغ",/(?:\d[\d,٬.]*\s?(?:ريالًا|ريالا|ريال|ر\.س|SAR|SR)(?![A-Za-z]))|(?:\b(?:SAR|SR)\s?\d(?:[\d,.]*\d)?)/gi]];
 U.rd=U.rd||{on:true,types:{email:1,url:1,iban:1,ip:1,mac:1,phone:1,nid:1,host:1,money:1},terms:[],ents:{},view:"mark"};
 try{const sv=JSON.parse(localStorage.getItem("ecc_rd")||"null");if(sv){U.rd.terms=sv.terms||[];Object.assign(U.rd.types,sv.types||{});U.rd.on=sv.on!==false}}catch(e){}
-const rdSave=()=>{try{localStorage.setItem("ecc_rd",JSON.stringify({terms:U.rd.terms,types:U.rd.types,on:U.rd.on}))}catch(e){}};
+const rdSave=()=>{if(typeof lockMeta==="function"&&lockMeta()&&!window.claude){saveLocal();return}try{localStorage.setItem("ecc_rd",JSON.stringify({terms:U.rd.terms,types:U.rd.types,on:U.rd.on}))}catch(e){}};
 const rdOn=()=>U.rd.on!==false;
 // Arabic-Indic digits → Latin, one character for one, so positions stay aligned with the original text
 const rdDigits=s=>s.replace(/[٠-٩]/g,d=>String(d.charCodeAt(0)-1632)).replace(/[۰-۹]/g,d=>String(d.charCodeAt(0)-1776));
@@ -2410,6 +2463,70 @@ function pwaBtn(){let b=document.getElementById("instbtn");const row=document.qu
     b.onclick=async()=>{if(!pwaEvt)return;pwaEvt.prompt();try{await pwaEvt.userChoice}catch(e){}pwaEvt=null;pwaBtn()};row.insertBefore(b,row.firstChild.nextSibling)}
   b.title=b.ariaLabel=LX("تثبيت كتطبيق يعمل دون إنترنت","Install as an app that works offline")}
 
+// ===== Results by domain, comparison between periods, highest-risk list, GRC detailed report =====
+const domStats=perFn=>ECC.map(d=>{const ids=d.subs.flatMap(x=>x.c).map(c=>c.id);const r={id:d.id,name:tx(d),app:0,c:0,p:0,x:0,none:0,paper:0};
+  ids.forEach(id=>{const s=perFn(id);if(s==="na")return;r.app++;if(s==="c")r.c++;else if(s==="p")r.p++;else if(s==="x")r.x++;else r.none++;if(!perFn.snap&&isPaper(id))r.paper++});
+  r.done=r.c+r.p+r.x;r.comp=r.done?Math.round(r.c/r.done*1000)/10:null;r.gaps=r.p+r.x;return r});
+const curPer=Object.assign(id=>dst(id),{snap:false});
+// ---------- results by main domain (home) ----------
+function vDomainDist(){const D=domStats(curPer);if(!D.some(d=>d.done))return "";
+  return `<section class="card c12"><h2>${LX("توزيع النتائج حسب المكونات الأساسية","Results by main domain")}</h2>
+   <div class="ddist">${D.map(d=>`<div class="dd-row"><span class="dd-n"><b>${d.id}.</b> ${esc(d.name)}</span><span class="dd-bar"><i style="width:${d.comp??0}%"></i></span><span class="num dd-v">${d.comp==null?"—":d.comp+"%"}</span></div>`).join("")}</div>
+   <div class="tw" style="margin-top:12px"><table><thead><tr><th>${LX("المكوّن","Domain")}</th><th>${LX("منطبق","Applicable")}</th><th>${LX("مُقيَّم","Assessed")}</th><th>${LX("ملتزم","Compliant")}</th><th>${LX("جزئي","Partial")}</th><th>${LX("غير ملتزم","Non-compliant")}</th><th>${LX("لم يُقيَّم","Not assessed")}</th><th>${LX("التزام ورقي","Paper")}</th><th>${LX("الالتزام","Compliance")}</th></tr></thead>
+   <tbody>${D.map(d=>`<tr><td><b>${d.id}.</b> ${esc(d.name)}</td><td class="num">${d.app}</td><td class="num">${d.done}</td><td class="num">${d.c}</td><td class="num">${d.p}</td><td class="num">${d.x}</td><td class="num">${d.none}</td><td class="num">${d.paper||"—"}</td><td class="num"><b>${d.comp==null?"—":d.comp+"%"}</b></td></tr>`).join("")}</tbody></table></div></section>`}
+// ---------- highest-risk controls (home) ----------
+function vTopRisks(){const R=riskRows().slice(0,10);if(!R.length)return "";
+  return `<section class="card c12"><h2>${LX("الضوابط الأعلى خطورة","Highest-risk controls")} <span class="tag meth">${LX("الدرجة: منهجية الأداة","Score: tool method")}</span><span class="act"><button class="btn sm ghost" data-act="tab" data-v="risk">${LX("سجل المخاطر كاملًا","Full risk register")}</button></span></h2>
+   <div class="tw"><table><thead><tr><th>#</th><th>${LX("الضابط","Control")}</th><th>${LX("الخطر","Risk")}</th><th>${LX("الدرجة","Score")}</th><th>${LX("الحالة","Status")}</th><th>${LX("المسؤول","Owner")}</th></tr></thead>
+   <tbody>${R.map((r,i)=>`<tr><td class="num">${i+1}</td><td>${idb(r.id)}</td><td>${esc(shortT(r.stmt,120))}${r.exc?` <span class="flag exc">${LX("مستثنى","Excepted")}</span>`:""}</td><td class="nw"><span class="sev ${r.lvl[0]}">${r.s} · ${r.lvl[1]}</span></td><td>${pill(dst(r.id))}</td><td class="nw">${esc(r.own||"—")}</td></tr>`).join("")}</tbody></table></div></section>`}
+// ---------- comparison between periods: snapshots or the current state ----------
+const snapGet=k=>k==="__now"?{at:today(),label:LX("الوضع الحالي","Current state"),per:Object.fromEntries(CTLS.map(c=>[c.id,dst(c.id)]))}:S.snaps[k];
+function vDomainCompare(){const A=snapGet(U.cmpA),B=snapGet(U.cmpB);if(!A||!B)return "";
+  const pa=Object.assign(id=>(A.per||{})[id]||"",{snap:true}),pb=Object.assign(id=>(B.per||{})[id]||"",{snap:true});
+  const DA=domStats(pa),DB=domStats(pb);const tot=p=>{let c=0,d=0;CTLS.forEach(x=>{const s=p(x.id);if(s==="c")c++;if(s==="c"||s==="p"||s==="x")d++});return d?Math.round(c/d*1000)/10:null};
+  const ta=tot(pa),tb=tot(pb),dlt=(a,b)=>a==null||b==null?"—":`<b class="${b>a?"up":b<a?"down":""}">${b>a?"▲ +":b<a?"▼ ":""}${Math.round((b-a)*10)/10}</b>`;
+  return `<div class="box" style="margin-top:12px"><h4>${LX("المقارنة حسب المكونات الأساسية","Comparison by main domain")}</h4><div class="tw"><table class="cmp-t"><thead><tr><th>${LX("المكوّن","Domain")}</th><th>${esc(A.at)} ${esc(A.label||"")}</th><th>${esc(B.at)} ${esc(B.label||"")}</th><th>${LX("التغيّر (نقطة)","Change (pts)")}</th></tr></thead>
+   <tbody>${DA.map((d,i)=>`<tr><td><b>${d.id}.</b> ${esc(d.name)}</td><td class="num">${d.comp==null?"—":d.comp+"%"}</td><td class="num">${DB[i].comp==null?"—":DB[i].comp+"%"}</td><td class="num">${dlt(d.comp,DB[i].comp)}</td></tr>`).join("")}
+   <tr class="tot"><td><b>${LX("الإجمالي","Overall")}</b></td><td class="num"><b>${ta==null?"—":ta+"%"}</b></td><td class="num"><b>${tb==null?"—":tb+"%"}</b></td><td class="num">${dlt(ta,tb)}</td></tr></tbody></table></div></div>`}
+
+// ---------- detailed report for the GRC team (Word) ----------
+async function grcReport(){const en=U.lang==="en",s=stats(CTLS),D=domStats(curPer),rp=S.cfg.rep||{},yn=v=>({y:LX("نعم","Yes"),p:LX("جزئي","Partial"),n:LX("لا","No")})[v]||"—";
+  const B=[{h1:LX("التقرير التفصيلي لفريق الحوكمة والمخاطر والالتزام","Detailed report for the GRC team")},{p:`ECC-2:2024 · ${S.cfg.entity||"—"} · ${today()}`},
+   {note:LX("يعرض هذا التقرير كل ضابط بتقييمه وأدلته وفجواته ومخاطره. ترتيب الأولويات ودرجات المخاطر منهجية الأداة وليست نصًا رسميًا.","Every control with its assessment, evidence, gaps and risk. Priorities and risk scores are the tool's method, not official text.")},
+   {table:[[LX("البند","Item"),LX("القيمة","Value")],[LX("الجهة","Entity"),S.cfg.entity||"—"],[LX("تاريخ التقييم","Assessment date"),S.cfg.date||today()],[LX("أعدّه","Prepared by"),rp.prep||S.cfg.assessor||"—"],[LX("التصنيف","Classification"),((CLS.find(x=>x[0]===(rp.cls||"internal"))||CLS[0])[en?2:1])]]},
+   {h2:"1. "+LX("المؤشرات الرئيسية","Key indicators")},
+   {table:[[LX("المؤشر","Indicator"),LX("القيمة","Value")],[LX("نسبة الالتزام","Compliance rate"),(s.comp??"—")+"%"],[LX("ملتزم / جزئي / غير ملتزم","Compliant / Partial / Non-compliant"),`${s.c} / ${s.p} / ${s.x}`],[LX("لم يُقيَّم","Not assessed"),String(s.none+s.w)],[LX("التزام ورقي","Paper compliance"),String(s.paper)],[LX("ممارسة غير موثقة","Undocumented practice"),String(s.undoc)],[LX("فجوات مفتوحة","Open gaps"),String(gapList().length)],[LX("استثناءات","Exceptions"),String(excRows().length)]]},
+   {h2:"2. "+LX("التوزيع حسب المكونات الأساسية","Distribution by main domain")},
+   {table:[[LX("المكوّن","Domain"),LX("منطبق","Applicable"),LX("ملتزم","Compliant"),LX("جزئي","Partial"),LX("غير ملتزم","Non-compliant"),LX("الالتزام","Compliance")]].concat(D.map(d=>[`${d.id}. ${d.name}`,String(d.app),String(d.c),String(d.p),String(d.x),d.comp==null?"—":d.comp+"%"]))},
+   {h2:"3. "+LX("تفاصيل الضوابط","Control details")}];
+  const RM=Object.fromEntries(riskRows().map(r=>[r.id,r]));
+  ECC.forEach(d=>{B.push({h2:`${d.id}. ${tx(d)}`});d.subs.forEach(x=>{B.push({h3:`${x.id} ${tx(x)}`});
+    x.c.forEach(c=>{const o=C(c.id),a=appOf(c.id),gap=isGap(c.id),g=GD(c.id),miss=gdMissing(c.id),risk=gap?RM[c.id]:null;
+      B.push({p:`${c.id} — ${shortT(en?(c.en||c.ar):c.ar,400)}`,b:1});
+      if(a.v==="na"){B.push({note:LX("لا ينطبق","Not applicable")+(a.why?": "+a.why:"")});return}
+      const rows=[[LX("البند","Item"),LX("القيمة","Value")],[LX("الانطباق","Applicability"),en?AP_EN[a.v]:AP[a.v][0]],[LX("الحالة","Status"),stName(c.id)+(isPaper(c.id)?" · "+LX("التزام ورقي","Paper compliance"):"")+(isUndoc(c.id)?" · "+LX("ممارسة غير موثقة","Undocumented"):"")],
+        [LX("موثّق / مطبّق / فعّال","Documented / Implemented / Effective"),`${yn(o.d)} / ${yn(o.i)} / ${yn(o.e)}`]];
+      if(g.d.length)rows.push([LX("أدلة الدليل الإرشادي","Guide deliverables"),`${gdHave(c.id)}/${g.d.length}`]);
+      if(o.ev_d)rows.push([LX("دليل التوثيق","Documentation evidence"),o.ev_d]);if(o.ev_i)rows.push([LX("دليل التطبيق","Implementation evidence"),o.ev_i]);if(o.ev_e)rows.push([LX("دليل الفاعلية","Effectiveness evidence"),o.ev_e]);
+      if((o.att||[]).length)rows.push([LX("المرفقات","Attachments"),o.att.map(r=>r.name).join("، ")]);
+      if(gap)rows.push([LX("المعالجة","Remediation"),`${LX("المرحلة","Phase")} ${phaseOf(c.id)} · ${LX("المسؤول","Owner")}: ${o.own||"—"} · ${LX("الموعد","Due")}: ${o.due||"—"} · ${o.rs?(RS.find(r=>r[0]===o.rs)||[0,""])[1]:LX("لم تبدأ","Not started")}`]);
+      if(risk)rows.push([LX("الخطر","Risk"),`${risk.s} (${risk.lvl[1]}) · ${risk.trt}`]);
+      if(o.exw||o.exu)rows.push([LX("استثناء","Exception"),`${o.exw||""}${o.exc?" · "+LX("بديل","Compensating")+": "+o.exc:""}${o.exu?" · "+LX("حتى","until")+" "+o.exu:""}`]);
+      if(o.n)rows.push([LX("ملاحظات","Notes"),o.n]);if(o.rem)rows.push([LX("خطة المعالجة","Remediation plan"),o.rem]);
+      B.push({table:rows});
+      if(gap&&miss.length){B.push({p:LX("أدلة مطلوبة لم تُجمع بعد:","Evidence still needed:"),b:1});miss.slice(0,10).forEach(m=>B.push({li:m.t,mark:"☐"}))}})})});
+  const RR=riskRows();B.push({h2:"4. "+LX("سجل المخاطر","Risk register")});
+  B.push(RR.length?{table:[[LX("الضابط","Control"),LX("الخطر","Risk"),LX("الدرجة","Score"),LX("المعالجة","Treatment"),LX("المسؤول","Owner")]].concat(RR.map(r=>[r.id,shortT(r.stmt,140),`${r.s} · ${r.lvl[1]}`,r.trt,r.own||"—"]))}:{p:LX("لا مخاطر مفتوحة.","No open risks.")});
+  const EX=excRows();B.push({h2:"5. "+LX("سجل الاستثناءات","Exceptions register")});
+  B.push(EX.length?{table:[[LX("الضابط","Control"),LX("المبرر","Justification"),LX("الإجراء البديل","Compensating measure"),LX("اعتمده","Approved by"),LX("ينتهي","Expires"),LX("الحالة","Status")]].concat(EX.map(e=>[e.id,e.why||"—",e.comp||"—",e.appr||"—",e.until||"—",e.st[1]]))}:{p:LX("لا استثناءات.","No exceptions.")});
+  const DOC=Object.values(S.docs);B.push({h2:"6. "+LX("سجل الوثائق","Document register")});
+  B.push(DOC.length?{table:[[LX("الوثيقة","Document"),LX("الإصدار","Version"),LX("الاعتماد","Approved"),LX("المراجعة القادمة","Next review")]].concat(DOC.map(d=>[d.name||"",d.ver||"—",d.ad||"—",docNext(d)||"—"]))}:{p:LX("لا وثائق مسجلة.","No documents recorded.")});
+  const SN=Object.values(S.snaps).sort((a,b)=>a.at<b.at?-1:1);B.push({h2:"7. "+LX("التقدم عبر الزمن","Progress over time")});
+  B.push(SN.length?{table:[[LX("التاريخ","Date"),LX("اللقطة","Snapshot"),LX("الالتزام","Compliance"),LX("فجوات","Gaps")]].concat(SN.map(x=>[x.at,x.label||"—",(x.comp??"—")+"%",String(x.gaps)]))}:{p:LX("لا لقطات محفوظة.","No snapshots saved.")});
+  await saveBlob(`ECC-${LX("تقرير-تفصيلي","detailed-report")}-${fileStamp()}.docx`,await buildDocx(B,{rtl:!en}));toast(LX("نُزّل التقرير التفصيلي","Detailed report downloaded"))}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-r2]");if(!t)return;const a=t.dataset.r2;
+  if(a==="grc")grcReport();else if(a==="exec")makePDF("exec");else if(a==="cmpnow"){const k=Object.entries(S.snaps).sort((a,b)=>a[1].at<b[1].at?1:-1)[0];if(k){U.cmpA=k[0];U.cmpB="__now";render()}}});
+
 // ===== Standalone version: no database. Visits are counted with GoatCounter (no cookies, no personal data). =====
 // Only the page name and an optional, opt-in list of control IDs with gaps are sent. Never names, emails, entity data or text.
 const GC_URL="https://ecc-map.goatcounter.com/count",GC_JS="https://gc.zgo.at/count.js";
@@ -2428,7 +2545,7 @@ function sbStart(){if(window.claude)return;guestTrack()}
 // Leftovers of the removed database version (sign-in session, chosen entity, guest profile): deleted from this browser.
 (function(){try{const ks=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(/^sb-|^supabase\./.test(k)||["ecc_org","ecc_guest","ecc_device","ecc_local_mode"].includes(k))ks.push(k)}ks.forEach(k=>localStorage.removeItem(k))}catch(e){}})();
 document.addEventListener("change",async e=>{if(e.target.id!=="impfile")return;const f=e.target.files[0];e.target.value="";if(!f)return;
-  try{importJSON(await f.text());setTimeout(()=>{const c=document.querySelector(".confirm");if(c)c.scrollIntoView({behavior:"smooth",block:"center"})},60)}catch(x){toast("تعذّرت قراءة الملف")}});
+  bkRestore(f)});
 document.addEventListener("click",e=>{if(!e.target.closest("[data-act=bkhow]"))return;U.tab="report";render();setTimeout(()=>{const b=$("#backup");if(b)b.scrollIntoView({behavior:"smooth",block:"start"})},80)});
 document.querySelectorAll("[data-mail]").forEach(a=>{const [u,d]=a.dataset.mail.split("|");a.href="mailto:"+u+"@"+d;a.title=u+"@"+d});
 // ===== Public gap index: opt-in sharing of gap control IDs only =====
@@ -2478,7 +2595,7 @@ async function tsPack(){const z=new JSZip();z.file("state.json",JSON.stringify(S
   const lids=new Set();Object.values(S.ctl).forEach(o=>(o.att||[]).forEach(r=>{if(r.lid)lids.add(r.lid)}));
   for(const k of lids){try{const b=await fdbGet(k);if(b)z.file("att/"+k,b)}catch(e){}}
   return z.generateAsync({type:"uint8array",compression:"DEFLATE"})}
-async function tsUnpack(bytes){const z=await JSZip.loadAsync(bytes);const st=JSON.parse(await z.file("state.json").async("string"));
+async function tsUnpack(bytes){const z=await JSZip.loadAsync(bytes);const st=secSanitize(JSON.parse(await z.file("state.json").async("string")));
   const types={};Object.values(st.ctl||{}).forEach(o=>(o.att||[]).forEach(r=>{if(r.lid)types[r.lid]=r.type||""}));
   let files=0;for(const p of Object.keys(z.files).filter(p=>p.startsWith("att/")&&!z.files[p].dir)){const k=p.slice(4);
     try{if(!(await fdbGet(k))){const ab=await z.file(p).async("arraybuffer");await fdbPut(k,new Blob([ab],{type:types[k]||""}));files++}}catch(e){}}
@@ -2510,7 +2627,7 @@ async function tsPerm(h){const o={mode:"readwrite"};if((await h.queryPermission(
 async function tsRead(h){const f=await h.getFile();return f.size?await f.arrayBuffer():null}
 async function tsWrite(h,bytes){const w=await h.createWritable();await w.write(bytes);await w.close()}
 
-async function tsSync(quiet){const T=U.ts;if(!T.h||!T.pw||T.busy)return;T.busy=true;if(!quiet)render();
+async function tsSync(quiet){const T=U.ts;if(U.locked||!T.h||!T.pw||T.busy)return;T.busy=true;if(!quiet)render();
   try{const buf=await tsRead(T.h);let r={add:0,upd:0,keep:0},files=0;
     if(buf){const p=await tsUnpack(await tsDecrypt(buf,T.pw));r=tsMerge(p.st);files=p.files}
     await tsWrite(T.h,await tsEncrypt(await tsPack(),T.pw));
@@ -2539,7 +2656,7 @@ async function tsClose(){await tsForget();U.ts={h:null,name:"",pw:"",at:"",busy:
 // fallback: download / upload the package (phones, Safari, Firefox)
 async function tsExport(){const pw=tsCheckNew("tsx");if(!pw)return;try{const b=await tsEncrypt(await tsPack(),pw);
   const nm="ECC-team-"+today()+".ecc";if(window.claude&&U.dl)await U.dl.save({filename:nm,data:new Blob([b])});else dlFile(nm,new Blob([b],{type:"application/octet-stream"}));toast("صُدّرت الحزمة المشفّرة")}catch(e){toast("تعذّر التصدير")}}
-async function tsImport(f){const pw=tsPw("tsx");if(!pw){toast("اكتب كلمة مرور الحزمة أولًا");return}
+async function tsImport(f){const ck=await secCheck(f,"team");if(!ck.ok){toast(ck.why);return}const pw=tsPw("tsx");if(!pw){toast("اكتب كلمة مرور الحزمة أولًا");return}
   try{const p=await tsUnpack(await tsDecrypt(await f.arrayBuffer(),pw));const r=tsMerge(p.st);render();
     toast(`دُمجت الحزمة: ${r.add} جديد و${r.upd} محدّث${p.files?`، و${p.files} مرفق`:""}. ما عدّلته أنت لاحقًا بقي كما هو.`)}
   catch(e){toast(e.message==="password"?"كلمة المرور غير صحيحة":e.message==="format"?"هذا الملف ليس حزمة فريق":"تعذّر قراءة الحزمة")}}
@@ -2574,6 +2691,147 @@ function vTeamSpace(){const T=U.ts,con=T.h&&T.pw;
    <div class="ts-two"><div class="box"><h4>تصدير</h4><p class="note">ملف واحد مشفّر فيه التقييم كاملًا والمرفقات.</p>${pwf(true,"tsx")}<button class="btn" data-ts="export" style="margin-top:8px">تصدير الحزمة</button></div>
     <div class="box"><h4>استيراد ودمج</h4><p class="note">اكتب كلمة مرور الحزمة في خانة التصدير المجاورة، ثم اختر الملف. تُدمج مع تقييمك ولا تحل محله.</p><label class="btn ghost attpick" style="margin-top:8px">اختيار حزمة .ecc<input type="file" id="ts-file" accept=".ecc" hidden></label></div></div></section>`;
   return `<div class="grid"><section class="card c12"><h2>ملف مساحة الفريق <span class="tag off">دون خادم · داخل تخزين جهتكم</span></h2>${main}</section>${me}${how}${TS_FS&&(con||T.need)?"":pkg}</div>`}
+
+// ===== Security layer: file checks, import sanitising, encryption at rest, encrypted backup, full wipe =====
+
+// ---------- 1) File validation: allowed type by extension AND by content signature, plus size limits ----------
+const SEC_TYPES={
+  pdf:{ext:["pdf"],sig:b=>b[0]===0x25&&b[1]===0x50&&b[2]===0x44&&b[3]===0x46},                 // %PDF
+  ooxml:{ext:["docx","xlsx","pptx"],sig:b=>b[0]===0x50&&b[1]===0x4B&&b[2]===0x03&&b[3]===0x04},  // ZIP (Office)
+  png:{ext:["png"],sig:b=>b[0]===0x89&&b[1]===0x50&&b[2]===0x4E&&b[3]===0x47},
+  jpg:{ext:["jpg","jpeg"],sig:b=>b[0]===0xFF&&b[1]===0xD8&&b[2]===0xFF},
+  webp:{ext:["webp"],sig:b=>b[0]===0x52&&b[1]===0x49&&b[2]===0x46&&b[3]===0x46&&b[8]===0x57&&b[9]===0x45&&b[10]===0x42&&b[11]===0x50},
+  text:{ext:["txt","md"],sig:b=>!b.slice(0,4096).includes(0)},                                   // no binary bytes
+  json:{ext:["json"],sig:b=>{let i=0;if(b[0]===0xEF&&b[1]===0xBB&&b[2]===0xBF)i=3;while(i<b.length&&/\s/.test(String.fromCharCode(b[i])))i++;return b[i]===0x7B}},
+  ecc:{ext:["ecc"],sig:b=>new TextDecoder().decode(b.slice(0,8))==="ECCTEAM1"}};
+const SEC_RULES={ // what each place accepts, and its maximum size
+  analyzer:{types:["pdf","ooxml","text"],ooxml:["docx"],max:25*1024*1024,label:"PDF أو Word أو نص"},
+  evidence:{types:["pdf","ooxml","png","jpg","webp"],max:20*1024*1024,label:"PDF أو Word أو Excel أو PowerPoint أو صورة PNG/JPG/WEBP"},
+  backup:{types:["json","ecc"],max:300*1024*1024,label:"نسخة احتياطية JSON أو ECC"},
+  team:{types:["ecc"],max:300*1024*1024,label:"حزمة فريق ECC"}};
+async function secCheck(file,where){const R=SEC_RULES[where];if(!file)return {ok:false,why:"لم يُختر ملف"};
+  const ext=(String(file.name).split(".").pop()||"").toLowerCase();
+  const t=R.types.find(k=>SEC_TYPES[k].ext.includes(ext)&&(k!=="ooxml"||!R.ooxml||R.ooxml.includes(ext)));
+  if(!t)return {ok:false,why:`نوع الملف غير مسموح هنا. المسموح: ${R.label}.`};
+  if(!file.size)return {ok:false,why:"الملف فارغ."};
+  if(file.size>R.max)return {ok:false,why:`حجم الملف أكبر من الحد المسموح (${Math.round(R.max/1048576)} ميجابايت).`};
+  let head;try{head=new Uint8Array(await file.slice(0,4096).arrayBuffer())}catch(e){return {ok:false,why:"تعذّرت قراءة الملف."}}
+  if(!SEC_TYPES[t].sig(head))return {ok:false,why:"محتوى الملف لا يطابق امتداده، فرُفض احتياطًا."};
+  return {ok:true,type:t,ext}}
+
+// ---------- 2) Sanitising imported data (JSON backups and team packages) ----------
+const SEC_BAD_KEYS=new Set(["__proto__","prototype","constructor"]),SEC_ID=/^[A-Za-z0-9_\-]{1,80}$/,SEC_DATE=/^\d{4}-\d{2}-\d{2}$/;
+function secDeep(v,d){if(d>8)return undefined;if(v==null)return v;const t=typeof v;
+  if(t==="string")return v.length>250000?v.slice(0,250000):v;if(t==="number")return isFinite(v)?v:0;if(t==="boolean")return v;
+  if(Array.isArray(v))return v.slice(0,5000).map(x=>secDeep(x,d+1)).filter(x=>x!==undefined);
+  if(t==="object"){const o={};Object.keys(v).slice(0,5000).forEach(k=>{if(SEC_BAD_KEYS.has(k))return;const x=secDeep(v[k],d+1);if(x!==undefined)o[k]=x});return o}return undefined}
+const SEC_ENUM={d:["y","p","n"],i:["y","p","n"],e:["y","p","n"],app:["m","r","na"],imp:["H","M","L"],eff:["S","M","L"],rs:["prog","done"],rt:["mit","acc","trf","avd"],ph:["1","2","3"],rl:["1","2","3","4","5"],ri:["1","2","3","4","5"]};
+function secItem(o){if(!o||typeof o!=="object"||Array.isArray(o))return null;
+  Object.keys(SEC_ENUM).forEach(k=>{if(k in o&&!SEC_ENUM[k].includes(String(o[k])))delete o[k]});
+  ["due","exu","ad","at"].forEach(k=>{if(k in o&&typeof o[k]==="string"&&o[k].length===10&&!SEC_DATE.test(o[k]))delete o[k]});
+  if("gd" in o)o.gd=Array.isArray(o.gd)?o.gd.filter(n=>Number.isInteger(n)&&n>=0&&n<500):undefined;
+  if("att" in o)o.att=Array.isArray(o.att)?o.att.filter(r=>r&&typeof r==="object").map(r=>{const x={};["name","type","at","by","lid","aid"].forEach(k=>{if(typeof r[k]==="string")x[k]=r[k].slice(0,300)});if(typeof r.size==="number")x.size=r.size;if(typeof r.url==="string"&&/^(https:\/\/|sb:)/.test(r.url))x.url=r.url;return x}):undefined;
+  if("_at" in o&&typeof o._at!=="number")delete o._at;
+  Object.keys(o).forEach(k=>{if(o[k]===undefined)delete o[k]});return o}
+function secSanitize(raw){const src=secDeep(raw,0)||{},N=blank();
+  const cfg=src.cfg&&typeof src.cfg==="object"?src.cfg:{};N.cfg=Object.assign(N.cfg,cfg);
+  if(N.cfg.type&&!ETYPES.some(x=>x[0]===N.cfg.type))N.cfg.type="";if(N.cfg.date&&!SEC_DATE.test(N.cfg.date))N.cfg.date="";
+  if(typeof N.cfg.cond!=="object"||Array.isArray(N.cfg.cond))N.cfg.cond={};if(typeof N.cfg.rep!=="object"||Array.isArray(N.cfg.rep))N.cfg.rep={};
+  ["ctl","sub","docs","snaps","fw","ana","audit","team","reports","log"].forEach(col=>{const C0=src[col];if(!C0||typeof C0!=="object"||Array.isArray(C0))return;
+    Object.keys(C0).forEach(id=>{if(col==="ctl"&&!BY[id])return;if(col==="sub"&&!SUBBY[id])return;if(col!=="ctl"&&col!=="sub"&&!SEC_ID.test(id))return;
+      const it=col==="ctl"?secItem(C0[id]):(C0[id]&&typeof C0[id]==="object"&&!Array.isArray(C0[id])?C0[id]:null);if(!it)return;
+      if(col==="snaps"){if(it.at&&!SEC_DATE.test(it.at))return;if(it.per&&typeof it.per==="object")Object.keys(it.per).forEach(k=>{if(!BY[k]||!(it.per[k] in ST))delete it.per[k]})}
+      if(col==="docs"&&Array.isArray(it.subs))it.subs=it.subs.filter(x=>SUBBY[x]);
+      N[col][id]=it})});
+  return N}
+
+// ---------- 3) Encryption at rest: the assessment, the hidden-words list and evidence files, locked by a password ----------
+const LK_ENC=LK+"_enc",LOCK_META="ecc_lock",LOCK_IDLE=15*60*1000;
+const b64=u=>{let s="";new Uint8Array(u).forEach(c=>s+=String.fromCharCode(c));return btoa(s)},ub64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const lockMeta=()=>{try{return JSON.parse(localStorage.getItem(LOCK_META)||"null")}catch(e){return null}};
+U.lockKey=null;U.locked=!!lockMeta()&&!window.claude;
+async function lkDerive(pw,salt,iter){const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
+async function lkEnc(bytes){const iv=crypto.getRandomValues(new Uint8Array(12));return {iv,ct:await crypto.subtle.encrypt({name:"AES-GCM",iv},U.lockKey,bytes)}}
+async function lkDec(iv,ct,key){return crypto.subtle.decrypt({name:"AES-GCM",iv},key||U.lockKey,ct)}
+// evidence files in IndexedDB (called by fdbPut / fdbGet)
+async function secWrapPut(b){if(!U.lockKey||!(b instanceof Blob))return b;const e=await lkEnc(await b.arrayBuffer());return {__enc:1,iv:e.iv,ct:e.ct,type:b.type||""}}
+async function secUnwrapGet(v){if(!v||!v.__enc)return v;if(!U.lockKey)throw new Error("locked");return new Blob([await lkDec(v.iv,v.ct)],{type:v.type})}
+// state: called from saveLocal(); returns true when it handled saving
+let lkBusy=Promise.resolve();
+function secSave(){if(!lockMeta()||window.claude)return false;if(!U.lockKey)return true; // locked: never overwrite with plaintext
+  lkBusy=lkBusy.then(async()=>{const e=await lkEnc(new TextEncoder().encode(JSON.stringify({S,rd:U.rd.terms})));
+    try{localStorage.setItem(LK_ENC,JSON.stringify({iv:b64(e.iv),ct:b64(e.ct)}));localStorage.removeItem(LK);localStorage.removeItem("ecc_rd")}catch(x){toast("تعذّر الحفظ: مساحة التخزين ممتلئة")}}).catch(()=>{});return true}
+async function fdbAllKeys(){return fdbOp("readonly",s=>s.getAllKeys())}
+async function fdbRaw(k){return fdbOp("readonly",s=>s.get(k))}
+async function fdbRawPut(k,v){return fdbOp("readwrite",s=>s.put(v,k))}
+async function lockEnable(pw){if(pw.length<10){toast("كلمة المرور 10 أحرف على الأقل");return false}
+  const salt=crypto.getRandomValues(new Uint8Array(16)),iter=310000;U.lockKey=await lkDerive(pw,salt,iter);
+  const chk=await lkEnc(new TextEncoder().encode("ECC-LOCK-OK"));
+  for(const k of await fdbAllKeys()){const v=await fdbRaw(k);if(v instanceof Blob)await fdbRawPut(k,await secWrapPut(v))}
+  localStorage.setItem(LOCK_META,JSON.stringify({v:1,salt:b64(salt),iter,chk:{iv:b64(chk.iv),ct:b64(chk.ct)}}));
+  secSave();await lkBusy;U.locked=false;lkTouch();toast("فُعّلت الحماية. بيانات التقييم والملفات مشفّرة الآن على هذا الجهاز.");render();return true}
+async function lockDisable(){if(!U.lockKey)return;
+  for(const k of await fdbAllKeys()){const v=await fdbRaw(k);if(v&&v.__enc)await fdbRawPut(k,await secUnwrapGet(v))}
+  localStorage.removeItem(LOCK_META);localStorage.removeItem(LK_ENC);U.lockKey=null;
+  try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}rdSave();toast("أُلغيت الحماية بكلمة المرور.");render()}
+async function lockOpen(pw){const m=lockMeta();if(!m)return false;
+  try{const key=await lkDerive(pw,ub64(m.salt),m.iter);const ok=new TextDecoder().decode(await lkDec(ub64(m.chk.iv),ub64(m.chk.ct),key));if(ok!=="ECC-LOCK-OK")return false;
+    U.lockKey=key;const raw=localStorage.getItem(LK_ENC);
+    if(raw){const p=JSON.parse(raw);const o=JSON.parse(new TextDecoder().decode(await lkDec(ub64(p.iv),ub64(p.ct))));S=secSanitize(o.S||{});U.rd.terms=Array.isArray(o.rd)?o.rd.filter(t=>t&&typeof t.val==="string"):[]}
+    U.locked=false;lkTouch();return true}catch(e){return false}}
+async function lockNow(){if(!U.lockKey)return;secSave();await lkBusy;
+  U.lockKey=null;U.locked=true;S=blank();U.anaTxt="";U.anaName="";U.anaRes=null;U.cvRes=null;U.rd.ents={};U.aiOut={};U.confirm=null;if(U.ts){U.ts.pw=""}
+  render();lockShow()}
+// lock screen
+function lockShow(msg){let el=document.getElementById("lockov");if(!el){el=document.createElement("div");el.id="lockov";el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");document.body.appendChild(el)}
+  el.dir=U.lang==="en"?"ltr":"rtl";
+  el.innerHTML=`<form class="lock-card" data-lockf><img src="${LOGO_MARK}" alt="" width="56" height="56"><h2>التقييم محمي بكلمة مرور</h2><p class="note">بيانات التقييم والملفات على هذا الجهاز مشفّرة. اكتب كلمة المرور لفتحها.</p>
+   <input id="lock-pw" type="password" autocomplete="current-password" placeholder="كلمة المرور" required>${msg?`<p class="lock-msg" role="alert">${esc(msg)}</p>`:""}
+   <button class="btn" type="submit">فتح</button>
+   <details class="lock-forgot"><summary>نسيت كلمة المرور؟</summary><p class="note">لا يمكن استرجاع البيانات المشفّرة دون كلمة المرور، ولا نملك نسخة منها. يمكنك مسح بيانات الأداة من هذا الجهاز ثم استرجاع آخر نسخة احتياطية.</p><button type="button" class="btn danger ghost" data-sec="wipe">مسح بيانات الأداة من هذا الجهاز</button></details></form>`;
+  applyLang(el);el.dir=U.lang==="en"?"ltr":"rtl";setTimeout(()=>{const p=document.getElementById("lock-pw");if(p)p.focus()},30)}
+document.addEventListener("submit",async e=>{if(!e.target.closest("[data-lockf]"))return;e.preventDefault();const pw=($("#lock-pw")||{}).value||"";
+  const b=e.target.querySelector("button[type=submit]");b.disabled=true;
+  if(await lockOpen(pw)){const el=document.getElementById("lockov");if(el)el.remove();render();toast("فُتح التقييم")}else{lockShow("كلمة المرور غير صحيحة")}});
+// auto-lock after 15 minutes without activity
+let lkLast=Date.now();const lkTouch=()=>{lkLast=Date.now()};["pointerdown","keydown","scroll","touchstart"].forEach(ev=>window.addEventListener(ev,lkTouch,{passive:true}));
+setInterval(()=>{if(U.lockKey&&Date.now()-lkLast>LOCK_IDLE)lockNow()},30000);
+
+// ---------- 4) Encrypted backup (with evidence files) and restore ----------
+async function bkEncrypted(){const a=($("#bk-pw")||{}).value||"",b=($("#bk-pw2")||{}).value||"";
+  if(a.length<10){toast("كلمة مرور النسخة 10 أحرف على الأقل");return}if(a!==b){toast("كلمتا المرور غير متطابقتين");return}
+  try{const bytes=await tsEncrypt(await tsPack(),a);await saveBlob(`ECC-backup-${today()}.ecc`,new Blob([bytes],{type:"application/octet-stream"}));toast("حُفظت نسخة احتياطية مشفّرة مع المرفقات")}catch(e){toast("تعذّر إنشاء النسخة")}}
+async function bkRestore(file){const chk=await secCheck(file,"backup");if(!chk.ok){toast(chk.why);return}
+  try{let N;
+    if(chk.type==="ecc"){const pw=($("#bk-pw")||{}).value||"";if(!pw){toast("اكتب كلمة مرور النسخة في خانة كلمة المرور أولًا");return}
+      const p=await tsUnpack(await tsDecrypt(await file.arrayBuffer(),pw));N=secSanitize(p.st)}
+    else{N=secSanitize(JSON.parse(await file.text()))}
+    U.confirm={msg:`سيُستبدل التقييم الحالي بمحتوى النسخة (${Object.keys(N.ctl).length} ضابطًا مقيّمًا).`,yes:"استبدال",fn:()=>{replaceAll(N);logEv("import")}};render();
+    setTimeout(()=>{const c=document.querySelector(".confirm");if(c)c.scrollIntoView({behavior:"smooth",block:"center"})},60)}
+  catch(e){toast(e.message==="password"?"كلمة مرور النسخة غير صحيحة":e.message==="format"?"هذا الملف ليس نسخة احتياطية":"الملف تالف أو ليس نسخة احتياطية صالحة")}}
+
+// ---------- 5) Full wipe of everything the tool stored on this device ----------
+async function secWipe(){try{Object.keys(localStorage).filter(k=>k.startsWith("ecc_")||k===LK||k===LK_ENC).forEach(k=>localStorage.removeItem(k))}catch(e){}
+  try{sessionStorage.clear()}catch(e){}
+  await new Promise(ok=>{try{if(_fdb)_fdb.then(d=>d.close()).catch(()=>{});const r=indexedDB.deleteDatabase("ecc_files");r.onsuccess=r.onerror=r.onblocked=()=>ok()}catch(e){ok()}});
+  location.reload()}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-sec]");if(!t)return;const a=t.dataset.sec;
+  if(a==="wipe"){if(confirm(tr("سيُحذف من هذا الجهاز كل ما حفظته الأداة: التقييم، والمرفقات، والإعدادات. لا يمكن التراجع. هل تريد المتابعة؟")))secWipe()}
+  else if(a==="lockon"){const p=($("#lk-pw")||{}).value||"",q=($("#lk-pw2")||{}).value||"";if(p!==q){toast("كلمتا المرور غير متطابقتين");return}lockEnable(p)}
+  else if(a==="lockoff"){U.confirm={msg:"إلغاء الحماية؟ ستُحفظ بيانات التقييم والملفات على هذا الجهاز دون تشفير.",yes:"إلغاء الحماية",fn:lockDisable};render()}
+  else if(a==="locknow")lockNow();
+  else if(a==="bkenc")bkEncrypted()});
+function vSecurity(){if(window.claude)return "";const on=!!lockMeta();
+  return `<section class="card c12" id="security"><h2>حماية البيانات على هذا الجهاز</h2>
+   <p class="lead">بيانات التقييم محفوظة في متصفحك. فعّل الحماية لتُشفَّر (AES-256) بكلمة مرور لا تُحفظ في أي مكان، فلا يقرؤها من يفتح هذا المتصفح بعدك. تُقفل الأداة تلقائيًا بعد 15 دقيقة دون استخدام.</p>
+   ${on?`<div class="row"><span class="pill s-c">الحماية مفعّلة</span><button class="btn" data-sec="locknow">قفل الآن</button><button class="btn quiet" data-sec="lockoff">إلغاء الحماية</button></div>`
+     :`<div class="ts-pw" style="max-width:420px"><input id="lk-pw" type="password" autocomplete="new-password" placeholder="كلمة مرور جديدة (10 أحرف على الأقل)"><input id="lk-pw2" type="password" autocomplete="new-password" placeholder="أعد كتابة كلمة المرور"></div>
+       <div class="row" style="margin-top:8px"><button class="btn" data-sec="lockon">تفعيل الحماية بكلمة مرور</button></div>
+       <p class="note" style="margin:8px 0 0"><b>تنبيه:</b> إن نسيت كلمة المرور فلا يمكن استرجاع البيانات المشفّرة. احفظ نسخة احتياطية مشفّرة أولًا.</p>`}
+   <details style="margin-top:12px"><summary>مسح كل بيانات الأداة من هذا الجهاز</summary><p class="note">يحذف التقييم، والمرفقات، وكلمات الإخفاء، وإعدادات الفريق من هذا المتصفح. استخدمه عند تسليم الجهاز أو الانتهاء من العمل على جهاز مشترك.</p><button class="btn danger ghost" data-sec="wipe">مسح نهائي من هذا الجهاز</button></details></section>`}
+// show the lock screen on start if the data is protected
+if(U.locked){const go=()=>lockShow();if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",go);else setTimeout(go,0)}
 
 // ===== AI actions =====
 async function aiRem(id){const c=BY[id],o=C(id);const lay=LAYERS.map(L=>`${L[1]}: ${({y:"نعم",p:"جزئي",n:"لا"})[o[L[0]]]||"لم يُقيَّم"}${o["ev_"+L[0]]?` (الدليل: ${o["ev_"+L[0]]})`:""}`).join("\n");
@@ -2686,11 +2944,12 @@ async function save(filename,data,type){if(!window.claude){dlFile(filename,new B
   U.confirm={msg:"لا يتيح هذا العرض تنزيل الملفات. انسخ المحتوى من المربع أدناه واحفظه يدويًا.",soft:true,yes:"حسنًا",fn:()=>{}};render();const t=document.createElement("textarea");t.value=data;t.style.minHeight="200px";t.style.direction="ltr";$("#view").prepend(t);t.select()}
 function csv(){const q=v=>`"${String(v==null?"":v).replace(/"/g,'""')}"`;const rows=[["ECC","المكوّن الفرعي","النص","الانطباق","الحالة","موثّق","مطبّق","فعّال","المرحلة","الأولوية","المسؤول","الاستحقاق","حالة المعالجة","خطة المعالجة","التزام ورقي"]].concat(gapList().map(g=>{const o=C(g.c.id);return [g.c.id,SUBBY[g.c.sub].ar,g.c.ar,AP[appOf(g.c.id).v][0],ST[dst(g.c.id)][0],o.d||"",o.i||"",o.e||"",g.ph,g.sc,o.own||"",o.due||"",rsName(o.rs),o.rem||"",isPaper(g.c.id)?"نعم":""]}));
   save("ECC-roadmap-"+today()+".csv","﻿"+rows.map(r=>r.map(q).join(",")).join("\r\n"),"text/csv")}
-function importJSON(txt){let o;try{o=JSON.parse(txt)}catch(e){toast("النص ليس JSON صالحًا");return}
+function importJSON(txt){let o;try{o=secDeep(JSON.parse(txt),0)||{}}catch(e){toast("النص ليس JSON صالحًا");return}
   const N=blank();if(o.cfg&&o.cfg.cond!==undefined||o.docs||o.snaps){COLS.forEach(k=>N[k]=o[k]||{});N.cfg=Object.assign(N.cfg,o.cfg||{})}
   else if(o.ctl||o.sub){const M={c:["y","y"],p:["y","p"],x:["n","n"]};Object.entries(o.ctl||{}).forEach(([id,v])=>{if(!BY[id])return;const x={};if(M[v.s]){x.d=M[v.s][0];x.i=M[v.s][1]}if(v.s==="na"){x.app="na";x.appWhy="مستورد من الأداة السابقة"}if(v.e)x.ev_d=v.e;if(v.n)x.n=v.n;if(v.r)x.rem=v.r;N.ctl[id]=x});
     Object.entries(o.sub||{}).forEach(([id,v])=>{if(SUBBY[id]&&v.n)N.sub[id]={n:v.n}});if(o.cfg){N.cfg.entity=o.cfg.entity||"";N.cfg.assessor=o.cfg.assessor||"";N.cfg.date=o.cfg.date||""}}
   else{toast("لم نتعرف على صيغة الملف");return}
+  {const NS=secSanitize(N);Object.keys(N).forEach(k=>delete N[k]);Object.assign(N,NS)}
   U.confirm={msg:`سيُستبدل التقييم الحالي بالبيانات المستوردة (${Object.keys(N.ctl).length} ضابطًا).`,yes:"استبدال",fn:()=>{replaceAll(N);logEv("import")}};render()}
 function replaceAll(N){const old=S;S=N;if(U.db){COLS.forEach(col=>{Object.keys(old[col]).forEach(id=>{if(!N[col][id])persist(col,id)});Object.keys(N[col]).forEach(id=>persist(col,id))});persist("cfg")}saveLocal();toast("تم");render()}
 function demoData(){let sd=7;const rnd=()=>(sd=(sd*9301+49297)%233280)/233280;const D=blank();
@@ -2700,9 +2959,9 @@ function demoData(){let sd=7;const rnd=()=>(sd=(sd*9301+49297)%233280)/233280;co
   D.docs={a:{name:"سياسة التحكم بالدخول",ver:"2.0",own:"الإدارة المعنية بالأمن السيبراني",apr:"صاحب الصلاحية",ad:"2025-06-10",per:12,subs:["2-2"]},b:{name:"سياسة الاستخدام المقبول",ver:"1.3",own:"الإدارة المعنية بالأمن السيبراني",apr:"صاحب الصلاحية",ad:"2026-02-01",per:12,subs:["2-1"]},c:{name:"سياسة النسخ الاحتياطي",ver:"1.0",own:"إدارة تقنية المعلومات",apr:"صاحب الصلاحية",ad:"2026-09-15",per:24,subs:["2-9"]}};
   D.snaps={s1:{at:"2026-05-01",label:"التقييم الأول",comp:38,gaps:61,paper:22},s2:{at:"2026-08-01",label:"بعد المرحلة 1",comp:47,gaps:49,paper:17}};return D}
 function toggleDemo(){if(U.demo){S=U.real;U.real=null;U.demo=false}else{U.real=S;S=demoData();U.demo=true;const s=stats(CTLS);S.snaps.s3={at:today(),label:"اليوم",comp:s.comp,gaps:gapList().length,paper:s.paper}}U.tab="home";U.confirm=null;render()}
-async function readFile(f){if(!f)return;const n=f.name.toLowerCase();U.anaFile=f;try{if(n.endsWith(".pdf")){toast("جارٍ قراءة ملف PDF…");U.anaTxt=await pdfText(f);if(U.anaTxt.length<200)toast("الملف لا يحوي نصًا قابلًا للقراءة (قد يكون صورًا ممسوحة). الصق النص يدويًا.")}else if(n.endsWith(".docx")){if(!window.JSZip){toast("تعذّر تحميل قارئ ملفات Word. الصق النص يدويًا.");return}
+async function readFile(f){if(!f)return;const n=f.name.toLowerCase();if(!window.claude){const ck=await secCheck(f,"analyzer");if(!ck.ok){toast(ck.why);return}}else if(f.size>25*1024*1024){toast("حجم الملف أكبر من 25 ميجابايت");return}U.anaFile=f;try{if(n.endsWith(".pdf")){toast("جارٍ قراءة ملف PDF…");U.anaTxt=await pdfText(f);if(U.anaTxt.length<200)toast("الملف لا يحوي نصًا قابلًا للقراءة (قد يكون صورًا ممسوحة). الصق النص يدويًا.")}else if(n.endsWith(".docx")){if(!window.JSZip){toast("تعذّر تحميل قارئ ملفات Word. الصق النص يدويًا.");return}
     const z=await JSZip.loadAsync(f);const x=await z.file("word/document.xml").async("string");const t=x.replace(/<w:p[ >][\s\S]*?<\/w:p>/g,p=>p.replace(/<w:tab\/>/g,"\t").replace(/<[^>]+>/g,"")+"\n").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&apos;/g,"'");U.anaTxt=t.replace(/\n{3,}/g,"\n\n").trim()}
-   else U.anaTxt=await f.text();if(!U.anaName)U.anaName=f.name.replace(/\.[^.]+$/,"");U.anaRes=null;render();toast("قُرئ الملف: "+U.anaTxt.length.toLocaleString("en")+" حرفًا")}catch(e){toast("تعذّرت قراءة الملف. الصق النص يدويًا.")}}
+   else U.anaTxt=await f.text();if(!U.anaName)U.anaName=f.name.replace(/\.[^.]+$/,"");if(U.anaTxt.length>2000000)U.anaTxt=U.anaTxt.slice(0,2000000);U.anaRes=null;render();toast("قُرئ الملف: "+U.anaTxt.length.toLocaleString("en")+" حرفًا")}catch(e){U.anaFile=null;toast(e&&e.name==="PasswordException"?"ملف PDF محمي بكلمة مرور. أزل الحماية ثم أعد رفعه.":"الملف تالف أو لا يمكن قراءته. الصق النص يدويًا.")}}
 function go(id){const c=BY[id]||null,s=c?c.sub:id;if(!SUBBY[s])return;U.tab="review";U.q="";U.f="all";U.dom=SUBBY[s].dom;U.open[s]=true;if(c)U.open[id]=true;render();setTimeout(()=>{const e=document.getElementById(c?"c-"+id:"s-"+s);if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},40)}
 
 // ===== Event wiring =====
@@ -2808,5 +3067,5 @@ render();
 
 sbStart();
 // first visit: intro tour
-setTimeout(()=>{try{if(!localStorage.getItem("ecc_tour_done")&&!U.demo&&!document.getElementById("sbauth"))startTour()}catch(e){}},1400);
+setTimeout(()=>{try{if(!localStorage.getItem("ecc_tour_done")&&!U.demo&&!U.locked&&!document.getElementById("sbauth"))startTour()}catch(e){}},1400);
 </script>

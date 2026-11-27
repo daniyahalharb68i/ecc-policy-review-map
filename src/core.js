@@ -105,7 +105,7 @@ function logEv(what,id,extra){if(U.demo||!U.db)return;try{U.db.collection("log")
 
 // ===== Persistence (shared db when available, else this browser) =====
 let lsT=null;const wq={},wt={};
-function saveLocal(){if(U.demo||U.supa)return;clearTimeout(lsT);lsT=setTimeout(()=>{try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}},300)}
+function saveLocal(){if(U.demo||U.supa)return;clearTimeout(lsT);lsT=setTimeout(()=>{if(typeof secSave==="function"&&secSave())return;try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}},300)}
 function persist(col,id){if(U.demo)return;if(!U.db){const o=col==="cfg"?S.cfg:S[col]&&S[col][id];if(o&&typeof o==="object"){o._at=Date.now();if(U.tsMe)o._by=U.tsMe}if(typeof tsTouch==="function")tsTouch()}if(U.db&&!canCol(col,id)){toast("ليست لديك صلاحية تعديل هذا الجزء. تواصل مع مدير التقييم.");return}saveLocal();if(!U.db)return;const p=col==="cfg"?"meta/cfg":col+"/"+id;wq[p]=1;clearTimeout(wt[p]);
   wt[p]=setTimeout(async()=>{const v=col==="cfg"?S.cfg:S[col][id];
     try{if(v==null)await U.db.doc(p).delete();else await U.db.doc(p).set(Object.assign({},v,{_by:U.me||"",_at:Date.now()}))}catch(e){writeErr(e)}finally{delete wq[p]}},650)}

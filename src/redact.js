@@ -14,7 +14,7 @@ const RD_TYPES=[
  ["money","المبالغ المالية","مبلغ",/(?:\d[\d,٬.]*\s?(?:ريالًا|ريالا|ريال|ر\.س|SAR|SR)(?![A-Za-z]))|(?:\b(?:SAR|SR)\s?\d(?:[\d,.]*\d)?)/gi]];
 U.rd=U.rd||{on:true,types:{email:1,url:1,iban:1,ip:1,mac:1,phone:1,nid:1,host:1,money:1},terms:[],ents:{},view:"mark"};
 try{const sv=JSON.parse(localStorage.getItem("ecc_rd")||"null");if(sv){U.rd.terms=sv.terms||[];Object.assign(U.rd.types,sv.types||{});U.rd.on=sv.on!==false}}catch(e){}
-const rdSave=()=>{try{localStorage.setItem("ecc_rd",JSON.stringify({terms:U.rd.terms,types:U.rd.types,on:U.rd.on}))}catch(e){}};
+const rdSave=()=>{if(typeof lockMeta==="function"&&lockMeta()&&!window.claude){saveLocal();return}try{localStorage.setItem("ecc_rd",JSON.stringify({terms:U.rd.terms,types:U.rd.types,on:U.rd.on}))}catch(e){}};
 const rdOn=()=>U.rd.on!==false;
 // Arabic-Indic digits → Latin, one character for one, so positions stay aligned with the original text
 const rdDigits=s=>s.replace(/[٠-٩]/g,d=>String(d.charCodeAt(0)-1632)).replace(/[۰-۹]/g,d=>String(d.charCodeAt(0)-1776));

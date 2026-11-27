@@ -23,7 +23,7 @@ async function tsPack(){const z=new JSZip();z.file("state.json",JSON.stringify(S
   const lids=new Set();Object.values(S.ctl).forEach(o=>(o.att||[]).forEach(r=>{if(r.lid)lids.add(r.lid)}));
   for(const k of lids){try{const b=await fdbGet(k);if(b)z.file("att/"+k,b)}catch(e){}}
   return z.generateAsync({type:"uint8array",compression:"DEFLATE"})}
-async function tsUnpack(bytes){const z=await JSZip.loadAsync(bytes);const st=JSON.parse(await z.file("state.json").async("string"));
+async function tsUnpack(bytes){const z=await JSZip.loadAsync(bytes);const st=secSanitize(JSON.parse(await z.file("state.json").async("string")));
   const types={};Object.values(st.ctl||{}).forEach(o=>(o.att||[]).forEach(r=>{if(r.lid)types[r.lid]=r.type||""}));
   let files=0;for(const p of Object.keys(z.files).filter(p=>p.startsWith("att/")&&!z.files[p].dir)){const k=p.slice(4);
     try{if(!(await fdbGet(k))){const ab=await z.file(p).async("arraybuffer");await fdbPut(k,new Blob([ab],{type:types[k]||""}));files++}}catch(e){}}
@@ -55,7 +55,7 @@ async function tsPerm(h){const o={mode:"readwrite"};if((await h.queryPermission(
 async function tsRead(h){const f=await h.getFile();return f.size?await f.arrayBuffer():null}
 async function tsWrite(h,bytes){const w=await h.createWritable();await w.write(bytes);await w.close()}
 
-async function tsSync(quiet){const T=U.ts;if(!T.h||!T.pw||T.busy)return;T.busy=true;if(!quiet)render();
+async function tsSync(quiet){const T=U.ts;if(U.locked||!T.h||!T.pw||T.busy)return;T.busy=true;if(!quiet)render();
   try{const buf=await tsRead(T.h);let r={add:0,upd:0,keep:0},files=0;
     if(buf){const p=await tsUnpack(await tsDecrypt(buf,T.pw));r=tsMerge(p.st);files=p.files}
     await tsWrite(T.h,await tsEncrypt(await tsPack(),T.pw));
@@ -84,7 +84,7 @@ async function tsClose(){await tsForget();U.ts={h:null,name:"",pw:"",at:"",busy:
 // fallback: download / upload the package (phones, Safari, Firefox)
 async function tsExport(){const pw=tsCheckNew("tsx");if(!pw)return;try{const b=await tsEncrypt(await tsPack(),pw);
   const nm="ECC-team-"+today()+".ecc";if(window.claude&&U.dl)await U.dl.save({filename:nm,data:new Blob([b])});else dlFile(nm,new Blob([b],{type:"application/octet-stream"}));toast("صُدّرت الحزمة المشفّرة")}catch(e){toast("تعذّر التصدير")}}
-async function tsImport(f){const pw=tsPw("tsx");if(!pw){toast("اكتب كلمة مرور الحزمة أولًا");return}
+async function tsImport(f){const ck=await secCheck(f,"team");if(!ck.ok){toast(ck.why);return}const pw=tsPw("tsx");if(!pw){toast("اكتب كلمة مرور الحزمة أولًا");return}
   try{const p=await tsUnpack(await tsDecrypt(await f.arrayBuffer(),pw));const r=tsMerge(p.st);render();
     toast(`دُمجت الحزمة: ${r.add} جديد و${r.upd} محدّث${p.files?`، و${p.files} مرفق`:""}. ما عدّلته أنت لاحقًا بقي كما هو.`)}
   catch(e){toast(e.message==="password"?"كلمة المرور غير صحيحة":e.message==="format"?"هذا الملف ليس حزمة فريق":"تعذّر قراءة الحزمة")}}

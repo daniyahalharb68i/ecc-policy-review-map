@@ -1,6 +1,6 @@
 // ECC Policy Review Map — offline support. Caches the app and its libraries so it opens without internet.
 // Nothing the user enters passes through here: assessment data lives in the browser storage, not in this cache.
-const CACHE="ecc-map-v1";
+const CACHE="ecc-map-v2";
 const CORE=["./","./index.html","./manifest.webmanifest","./icons/icon-192.png","./icons/icon-512.png"];
 const LIBS=[
   "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js",

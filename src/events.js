@@ -109,11 +109,12 @@ async function save(filename,data,type){if(!window.claude){dlFile(filename,new B
   U.confirm={msg:"لا يتيح هذا العرض تنزيل الملفات. انسخ المحتوى من المربع أدناه واحفظه يدويًا.",soft:true,yes:"حسنًا",fn:()=>{}};render();const t=document.createElement("textarea");t.value=data;t.style.minHeight="200px";t.style.direction="ltr";$("#view").prepend(t);t.select()}
 function csv(){const q=v=>`"${String(v==null?"":v).replace(/"/g,'""')}"`;const rows=[["ECC","المكوّن الفرعي","النص","الانطباق","الحالة","موثّق","مطبّق","فعّال","المرحلة","الأولوية","المسؤول","الاستحقاق","حالة المعالجة","خطة المعالجة","التزام ورقي"]].concat(gapList().map(g=>{const o=C(g.c.id);return [g.c.id,SUBBY[g.c.sub].ar,g.c.ar,AP[appOf(g.c.id).v][0],ST[dst(g.c.id)][0],o.d||"",o.i||"",o.e||"",g.ph,g.sc,o.own||"",o.due||"",rsName(o.rs),o.rem||"",isPaper(g.c.id)?"نعم":""]}));
   save("ECC-roadmap-"+today()+".csv","﻿"+rows.map(r=>r.map(q).join(",")).join("\r\n"),"text/csv")}
-function importJSON(txt){let o;try{o=JSON.parse(txt)}catch(e){toast("النص ليس JSON صالحًا");return}
+function importJSON(txt){let o;try{o=secDeep(JSON.parse(txt),0)||{}}catch(e){toast("النص ليس JSON صالحًا");return}
   const N=blank();if(o.cfg&&o.cfg.cond!==undefined||o.docs||o.snaps){COLS.forEach(k=>N[k]=o[k]||{});N.cfg=Object.assign(N.cfg,o.cfg||{})}
   else if(o.ctl||o.sub){const M={c:["y","y"],p:["y","p"],x:["n","n"]};Object.entries(o.ctl||{}).forEach(([id,v])=>{if(!BY[id])return;const x={};if(M[v.s]){x.d=M[v.s][0];x.i=M[v.s][1]}if(v.s==="na"){x.app="na";x.appWhy="مستورد من الأداة السابقة"}if(v.e)x.ev_d=v.e;if(v.n)x.n=v.n;if(v.r)x.rem=v.r;N.ctl[id]=x});
     Object.entries(o.sub||{}).forEach(([id,v])=>{if(SUBBY[id]&&v.n)N.sub[id]={n:v.n}});if(o.cfg){N.cfg.entity=o.cfg.entity||"";N.cfg.assessor=o.cfg.assessor||"";N.cfg.date=o.cfg.date||""}}
   else{toast("لم نتعرف على صيغة الملف");return}
+  {const NS=secSanitize(N);Object.keys(N).forEach(k=>delete N[k]);Object.assign(N,NS)}
   U.confirm={msg:`سيُستبدل التقييم الحالي بالبيانات المستوردة (${Object.keys(N.ctl).length} ضابطًا).`,yes:"استبدال",fn:()=>{replaceAll(N);logEv("import")}};render()}
 function replaceAll(N){const old=S;S=N;if(U.db){COLS.forEach(col=>{Object.keys(old[col]).forEach(id=>{if(!N[col][id])persist(col,id)});Object.keys(N[col]).forEach(id=>persist(col,id))});persist("cfg")}saveLocal();toast("تم");render()}
 function demoData(){let sd=7;const rnd=()=>(sd=(sd*9301+49297)%233280)/233280;const D=blank();
@@ -123,9 +124,9 @@ function demoData(){let sd=7;const rnd=()=>(sd=(sd*9301+49297)%233280)/233280;co
   D.docs={a:{name:"سياسة التحكم بالدخول",ver:"2.0",own:"الإدارة المعنية بالأمن السيبراني",apr:"صاحب الصلاحية",ad:"2025-06-10",per:12,subs:["2-2"]},b:{name:"سياسة الاستخدام المقبول",ver:"1.3",own:"الإدارة المعنية بالأمن السيبراني",apr:"صاحب الصلاحية",ad:"2026-02-01",per:12,subs:["2-1"]},c:{name:"سياسة النسخ الاحتياطي",ver:"1.0",own:"إدارة تقنية المعلومات",apr:"صاحب الصلاحية",ad:"2026-09-15",per:24,subs:["2-9"]}};
   D.snaps={s1:{at:"2026-05-01",label:"التقييم الأول",comp:38,gaps:61,paper:22},s2:{at:"2026-08-01",label:"بعد المرحلة 1",comp:47,gaps:49,paper:17}};return D}
 function toggleDemo(){if(U.demo){S=U.real;U.real=null;U.demo=false}else{U.real=S;S=demoData();U.demo=true;const s=stats(CTLS);S.snaps.s3={at:today(),label:"اليوم",comp:s.comp,gaps:gapList().length,paper:s.paper}}U.tab="home";U.confirm=null;render()}
-async function readFile(f){if(!f)return;const n=f.name.toLowerCase();U.anaFile=f;try{if(n.endsWith(".pdf")){toast("جارٍ قراءة ملف PDF…");U.anaTxt=await pdfText(f);if(U.anaTxt.length<200)toast("الملف لا يحوي نصًا قابلًا للقراءة (قد يكون صورًا ممسوحة). الصق النص يدويًا.")}else if(n.endsWith(".docx")){if(!window.JSZip){toast("تعذّر تحميل قارئ ملفات Word. الصق النص يدويًا.");return}
+async function readFile(f){if(!f)return;const n=f.name.toLowerCase();if(!window.claude){const ck=await secCheck(f,"analyzer");if(!ck.ok){toast(ck.why);return}}else if(f.size>25*1024*1024){toast("حجم الملف أكبر من 25 ميجابايت");return}U.anaFile=f;try{if(n.endsWith(".pdf")){toast("جارٍ قراءة ملف PDF…");U.anaTxt=await pdfText(f);if(U.anaTxt.length<200)toast("الملف لا يحوي نصًا قابلًا للقراءة (قد يكون صورًا ممسوحة). الصق النص يدويًا.")}else if(n.endsWith(".docx")){if(!window.JSZip){toast("تعذّر تحميل قارئ ملفات Word. الصق النص يدويًا.");return}
     const z=await JSZip.loadAsync(f);const x=await z.file("word/document.xml").async("string");const t=x.replace(/<w:p[ >][\s\S]*?<\/w:p>/g,p=>p.replace(/<w:tab\/>/g,"\t").replace(/<[^>]+>/g,"")+"\n").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&apos;/g,"'");U.anaTxt=t.replace(/\n{3,}/g,"\n\n").trim()}
-   else U.anaTxt=await f.text();if(!U.anaName)U.anaName=f.name.replace(/\.[^.]+$/,"");U.anaRes=null;render();toast("قُرئ الملف: "+U.anaTxt.length.toLocaleString("en")+" حرفًا")}catch(e){toast("تعذّرت قراءة الملف. الصق النص يدويًا.")}}
+   else U.anaTxt=await f.text();if(!U.anaName)U.anaName=f.name.replace(/\.[^.]+$/,"");if(U.anaTxt.length>2000000)U.anaTxt=U.anaTxt.slice(0,2000000);U.anaRes=null;render();toast("قُرئ الملف: "+U.anaTxt.length.toLocaleString("en")+" حرفًا")}catch(e){U.anaFile=null;toast(e&&e.name==="PasswordException"?"ملف PDF محمي بكلمة مرور. أزل الحماية ثم أعد رفعه.":"الملف تالف أو لا يمكن قراءته. الصق النص يدويًا.")}}
 function go(id){const c=BY[id]||null,s=c?c.sub:id;if(!SUBBY[s])return;U.tab="review";U.q="";U.f="all";U.dom=SUBBY[s].dom;U.open[s]=true;if(c)U.open[id]=true;render();setTimeout(()=>{const e=document.getElementById(c?"c-"+id:"s-"+s);if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},40)}
 
 // ===== Event wiring =====
@@ -231,4 +232,4 @@ render();
 
 sbStart();
 // first visit: intro tour
-setTimeout(()=>{try{if(!localStorage.getItem("ecc_tour_done")&&!U.demo&&!document.getElementById("sbauth"))startTour()}catch(e){}},1400);
+setTimeout(()=>{try{if(!localStorage.getItem("ecc_tour_done")&&!U.demo&&!U.locked&&!document.getElementById("sbauth"))startTour()}catch(e){}},1400);

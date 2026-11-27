@@ -22,14 +22,14 @@ const ATT_MAX=20*1024*1024;
 let _fdb=null;
 const fdb=()=>_fdb||(_fdb=new Promise((ok,no)=>{try{const r=indexedDB.open("ecc_files",1);r.onupgradeneeded=()=>r.result.createObjectStore("f");r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){no(e)}}));
 const fdbOp=(mode,fn)=>fdb().then(d=>new Promise((ok,no)=>{const t=d.transaction("f",mode),st=t.objectStore("f"),rq=fn(st);t.oncomplete=()=>ok(rq&&rq.result);t.onerror=()=>no(t.error)}));
-const fdbPut=(k,b)=>fdbOp("readwrite",s=>s.put(b,k));
-const fdbGet=k=>fdbOp("readonly",s=>s.get(k));
+const fdbPut=(k,b)=>Promise.resolve(typeof secWrapPut==="function"?secWrapPut(b):b).then(v=>fdbOp("readwrite",s=>s.put(v,k)));
+const fdbGet=k=>fdbOp("readonly",s=>s.get(k)).then(v=>typeof secUnwrapGet==="function"?secUnwrapGet(v):v);
 const fdbDel=k=>fdbOp("readwrite",s=>s.delete(k));
 const fmtSize=n=>n>=1048576?(n/1048576).toFixed(1)+" MB":Math.max(1,Math.round(n/1024))+" KB";
 const extOf=n=>(String(n).split(".").pop()||"").slice(0,4).toUpperCase();
 const attAccept=()=>window.claude?".pdf,.png,.jpg,.jpeg,.webp":".pdf,.png,.jpg,.jpeg,.webp,.docx,.xlsx,.pptx";
 async function attAdd(id,file){if(!file)return;if(!canCol("ctl",id)){toast("ليست لديك صلاحية تعديل هذا الضابط");return}
-  if(file.size>ATT_MAX){toast("حجم الملف أكبر من 20 ميجابايت");return}
+  if(!window.claude){const ck=await secCheck(file,"evidence");if(!ck.ok){toast(ck.why);return}}else if(file.size>ATT_MAX){toast("حجم الملف أكبر من 20 ميجابايت");return}
   if(CLOUD()&&!U.assets){toast("رفع الملفات غير متاح لصلاحيتك الحالية في هذه الأداة");return}
   U.attBusy=id;render();
   try{const rec={name:file.name,size:file.size,type:file.type||"",at:today(),by:U.me||""};
@@ -54,8 +54,8 @@ function attBox(id){const L=C(id).att||[],can=canCol("ctl",id);
 // --- PDF text extraction for the policy analyzer ---
 const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
 async function pdfText(file){await loadScript(PDFJS+"pdf.min.js");const lib=window.pdfjsLib;lib.GlobalWorkerOptions.workerSrc=PDFJS+"pdf.worker.min.js";
-  const doc=await lib.getDocument({data:await file.arrayBuffer()}).promise;const out=[];
-  for(let p=1;p<=doc.numPages;p++){const pg=await doc.getPage(p);const c=await pg.getTextContent();out.push(c.items.map(i=>i.str).join(" "))}
+  const doc=await lib.getDocument({data:await file.arrayBuffer(),isEvalSupported:false,stopAtErrors:false}).promise;const out=[];
+  for(let p=1;p<=Math.min(doc.numPages,500);p++){const pg=await doc.getPage(p);const c=await pg.getTextContent();out.push(c.items.map(i=>i.str).join(" "))}
   return out.join("\n\n").replace(/[ \t]+/g," ").trim()}
 
 // --- Arabic (unofficial) translation of the GECC guide items, Claude version only ---

@@ -155,3 +155,17 @@ footer .contact{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:8px}
 footer .contact a{display:inline-flex;align-items:center;gap:6px;color:var(--accent);text-decoration:none;font-size:.86rem;padding:4px 0}
 footer .contact a:hover span{text-decoration:underline;text-underline-offset:3px}
 footer .contact svg{width:16px;height:16px;fill:currentColor}
+
+/* ===== lock screen ===== */
+#lockov{position:fixed;inset:0;z-index:400;display:grid;place-items:center;padding:16px;background:radial-gradient(900px 480px at 80% -10%,rgba(217,164,134,.18),transparent 60%),var(--bg)}
+.lock-card{width:min(400px,100%);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:22px;display:grid;gap:10px;justify-items:start}
+.lock-card img{border-radius:12px}.lock-card h2{margin:0;font-weight:500;color:var(--head)}.lock-card .note{margin:0}.lock-card input{width:100%}
+.lock-msg{margin:0;color:var(--bad);font-size:.86rem}.lock-forgot{font-size:.86rem;width:100%}.lock-forgot summary{cursor:pointer;color:var(--muted)}
+.bk details{margin-top:2px}.bk details summary{cursor:pointer}
+
+.ddist{display:grid;gap:8px}
+.dd-row{display:grid;grid-template-columns:minmax(0,1.4fr) 2fr auto;gap:10px;align-items:center}
+.dd-n{font-size:.88rem;overflow-wrap:anywhere}.dd-bar{height:10px;border-radius:5px;background:var(--surface2);overflow:hidden}
+.dd-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--sage),var(--ok));border-radius:5px}.dd-v{min-width:48px;text-align:end}
+@media(max-width:600px){.dd-row{grid-template-columns:1fr auto}.dd-bar{grid-column:1/-1;grid-row:2}}
+.cmp-t .up{color:var(--ok)}.cmp-t .down{color:var(--bad)}.cmp-t tr.tot td{border-top:2px solid var(--line)}
