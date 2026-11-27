@@ -178,3 +178,6 @@ details.priv-note ol{margin:4px 0;padding-inline-start:20px;font-size:.84rem;lin
 .rd-groups{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
 .rd-g{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:.86rem}
 .rd-g .num{color:var(--muted)}
+
+/* risk register and other tables: drop-downs keep a readable width; the table scrolls sideways instead */
+.tw select{min-width:92px}

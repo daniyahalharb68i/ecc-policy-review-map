@@ -58,7 +58,7 @@ async function grcReport(){const en=U.lang==="en",s=stats(CTLS),D=domStats(curPe
   B.push(DOC.length?{table:[[LX("الوثيقة","Document"),LX("الإصدار","Version"),LX("الاعتماد","Approved"),LX("المراجعة القادمة","Next review")]].concat(DOC.map(d=>[d.name||"",d.ver||"—",d.ad||"—",docNext(d)||"—"]))}:{p:LX("لا وثائق مسجلة.","No documents recorded.")});
   const SN=Object.values(S.snaps).sort((a,b)=>a.at<b.at?-1:1);B.push({h2:"7. "+LX("التقدم عبر الزمن","Progress over time")});
   B.push(SN.length?{table:[[LX("التاريخ","Date"),LX("اللقطة","Snapshot"),LX("الالتزام","Compliance"),LX("فجوات","Gaps")]].concat(SN.map(x=>[x.at,x.label||"—",(x.comp??"—")+"%",String(x.gaps)]))}:{p:LX("لا لقطات محفوظة.","No snapshots saved.")});
-  await saveBlob(`ECC-${LX("تقرير-تفصيلي","detailed-report")}-${fileStamp()}.docx`,await buildDocx(B,{rtl:!en}));toast(LX("نُزّل التقرير التفصيلي","Detailed report downloaded"))}
+  await saveBlob(`${S.cfg.entity?"ECC-":""}${LX("تقرير-تفصيلي","detailed-report")}-${fileStamp()}.docx`,await buildDocx(B,{rtl:!en}));toast(LX("نُزّل التقرير التفصيلي","Detailed report downloaded"))}
 document.addEventListener("click",e=>{const t=e.target.closest("[data-r2]");if(!t)return;const a=t.dataset.r2;
   if(a==="grc")grcReport();else if(a==="exec")makePDF("exec");else if(a==="cmpnow"){const k=Object.entries(S.snaps).sort((a,b)=>a[1].at<b[1].at?1:-1)[0];if(k){U.cmpA=k[0];U.cmpB="__now";render()}}});
 

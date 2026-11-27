@@ -762,6 +762,9 @@ details.priv-note ol{margin:4px 0;padding-inline-start:20px;font-size:.84rem;lin
 .rd-g{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:.86rem}
 .rd-g .num{color:var(--muted)}
 
+/* risk register and other tables: drop-downs keep a readable width; the table scrolls sideways instead */
+.tw select{min-width:92px}
+
 /* ===== Forest & copper design system (style reference: segmentsix.de; own implementation) =====
    Dark forest is the default; the theme button switches to the light "paper" variant.
    Type: Inter Tight (Latin) + IBM Plex Sans Arabic. Headlines regular weight; tight tracking for Latin only. */
@@ -2119,7 +2122,26 @@ async function pdfText(file){const lib=await pdfLib();
   const doc=await lib.getDocument({data:await file.arrayBuffer(),isEvalSupported:false,stopAtErrors:false}).promise;const out=[];
   const scanned=[];for(let p=1;p<=Math.min(doc.numPages,500);p++){const pg=await doc.getPage(p);const c=await pg.getTextContent();const t=c.items.map(i=>i.str).join(" ");if(t.replace(/\s/g,"").length<15)scanned.push(p);out.push(t)}
   U.anaScanned=scanned;U.anaPages=doc.numPages;
-  return out.join("\n\n").replace(/[ \t]+/g," ").trim()}
+  return arPdfFix(out.join("\n\n").replace(/[ \t]+/g," ").trim())}
+
+// Arabic PDFs (Word and others) draw lam-alef as one ligature glyph; pdf.js re-orders RTL text glyph by glyph,
+// so the two letters come out swapped: «الإدارة» → «اإلدارة», «الالتزام» → «االلتزام», «علاقة» → «عالقة».
+// Step 1 fixes patterns that never occur in real Arabic (two alifs in a row, alif + hamza-alif, a lone alif).
+// Step 2 swaps an ambiguous pair only when the word as read is unknown and the swapped form is a word
+// found in the tool's own Arabic control texts, so genuine words such as «أعمال» or «خلال» are left alone.
+let AR_VOCAB=null;
+function arVocab(){if(AR_VOCAB)return AR_VOCAB;AR_VOCAB=new Set();
+  const src=JSON.stringify([typeof ECC!=="undefined"?ECC:0,typeof XDOC!=="undefined"?XDOC:0,typeof GUIDE!=="undefined"?GUIDE:0,typeof CCC_AR!=="undefined"?CCC_AR:0]).replace(/[ً-ْـ]/g,"");
+  for(const w of src.match(/[ء-ي]{2,}/g)||[])AR_VOCAB.add(w);return AR_VOCAB}
+function arKnown(x){const V=arVocab(),k=y=>y.length>1&&(V.has(y)||V.has("ال"+y));
+  return k(x)||("وبفلك".includes(x[0])&&k(x.slice(1)))||(x.startsWith("لل")&&V.has("ال"+x.slice(2)))}
+function arPdfFix(t){if(!/[ء-ي]/.test(t))return t;
+  t=t.replace(/ا([أإآ])ل/g,"ال$1").replace(/اال/g,"الا").replace(/(^|\s)ا\s+([ء-ي]*ل)(?=[\s.,،:;!?)]|$)/g,"$1$2ا");
+  return t.replace(/[ء-ي]{3,}/g,w=>{if(arKnown(w))return w;
+    const pairs=[["ال","لا"],["إل","لإ"],["أل","لأ"],["آل","لآ"]];
+    const all=pairs.reduce((s,[a,b])=>s.split(a).join(b),w);if(all!==w&&arKnown(all))return all;
+    for(const [a,b] of pairs){let i=w.indexOf(a);while(i>=0){const c=w.slice(0,i)+b+w.slice(i+2);if(arKnown(c))return c;i=w.indexOf(a,i+1)}}
+    return w})}
 
 // --- Arabic (unofficial) translation of the GECC guide items, Claude version only ---
 async function aiGuideTr(id){const g=GD(id);if(!g.d.length&&!g.g.length)return;
@@ -2635,7 +2657,7 @@ async function grcReport(){const en=U.lang==="en",s=stats(CTLS),D=domStats(curPe
   B.push(DOC.length?{table:[[LX("الوثيقة","Document"),LX("الإصدار","Version"),LX("الاعتماد","Approved"),LX("المراجعة القادمة","Next review")]].concat(DOC.map(d=>[d.name||"",d.ver||"—",d.ad||"—",docNext(d)||"—"]))}:{p:LX("لا وثائق مسجلة.","No documents recorded.")});
   const SN=Object.values(S.snaps).sort((a,b)=>a.at<b.at?-1:1);B.push({h2:"7. "+LX("التقدم عبر الزمن","Progress over time")});
   B.push(SN.length?{table:[[LX("التاريخ","Date"),LX("اللقطة","Snapshot"),LX("الالتزام","Compliance"),LX("فجوات","Gaps")]].concat(SN.map(x=>[x.at,x.label||"—",(x.comp??"—")+"%",String(x.gaps)]))}:{p:LX("لا لقطات محفوظة.","No snapshots saved.")});
-  await saveBlob(`ECC-${LX("تقرير-تفصيلي","detailed-report")}-${fileStamp()}.docx`,await buildDocx(B,{rtl:!en}));toast(LX("نُزّل التقرير التفصيلي","Detailed report downloaded"))}
+  await saveBlob(`${S.cfg.entity?"ECC-":""}${LX("تقرير-تفصيلي","detailed-report")}-${fileStamp()}.docx`,await buildDocx(B,{rtl:!en}));toast(LX("نُزّل التقرير التفصيلي","Detailed report downloaded"))}
 document.addEventListener("click",e=>{const t=e.target.closest("[data-r2]");if(!t)return;const a=t.dataset.r2;
   if(a==="grc")grcReport();else if(a==="exec")makePDF("exec");else if(a==="cmpnow"){const k=Object.entries(S.snaps).sort((a,b)=>a[1].at<b[1].at?1:-1)[0];if(k){U.cmpA=k[0];U.cmpB="__now";render()}}});
 
@@ -2690,7 +2712,8 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-act=gishar
 // One encrypted file (.ecc) lives in the entity's own shared storage (OneDrive, SharePoint, Google Drive, network folder).
 // Everyone opens the same file with the same password; on every sync the tool reads it, merges by last edit, and writes it back.
 // Encryption: PBKDF2-SHA256 (310,000 rounds) → AES-256-GCM, in the browser. The password never leaves the device and is never stored.
-const TS_MAGIC="ECCTEAM1",TS_ITER=310000,TS_HKEY="__team_handle";
+const TS_MAGIC="ECCTEAM2",TS_MAGIC_V1="ECCTEAM1",TS_ITER=600000,TS_ITER_V1=310000,TS_HKEY="__team_handle";
+IC.team='<circle cx="9" cy="8" r="3.2"/><path d="M3 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 13.7c.5-.1 1-.2 1.5-.2 2.5 0 4.5 1.7 4.5 4.5"/>';
 const TS_FS=typeof window.showOpenFilePicker==="function"&&typeof window.showSaveFilePicker==="function"&&!window.claude;
 U.ts=U.ts||{h:null,name:"",pw:"",at:"",busy:false,st:null,need:null};
 try{U.tsMe=localStorage.getItem("ecc_ts_me")||""}catch(e){U.tsMe=""}
@@ -2698,13 +2721,14 @@ if(!window.claude){const tt=NAV.flatMap(g=>g[1]).find(x=>x[0]==="team");if(tt)tt
 
 // --- crypto ---
 const enc=new TextEncoder();
-async function tsKey(pw,salt){const base=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveKey"]);
-  return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:TS_ITER,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
+async function tsKey(pw,salt,iter){const base=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:iter||TS_ITER,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
 async function tsEncrypt(bytes,pw){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
-  const ct=new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv},await tsKey(pw,salt),bytes));
-  const out=new Uint8Array(8+16+12+ct.length);out.set(enc.encode(TS_MAGIC),0);out.set(salt,8);out.set(iv,24);out.set(ct,36);return out}
-async function tsDecrypt(buf,pw){const b=new Uint8Array(buf);if(new TextDecoder().decode(b.slice(0,8))!==TS_MAGIC)throw new Error("format");
-  try{return new Uint8Array(await crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(24,36)},await tsKey(pw,b.slice(8,24)),b.slice(36)))}catch(e){throw new Error("password")}}
+  const head=new Uint8Array(36);head.set(enc.encode(TS_MAGIC),0);head.set(salt,8);head.set(iv,24);
+  const ct=new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv,additionalData:head},await tsKey(pw,salt,TS_ITER),bytes));
+  const out=new Uint8Array(36+ct.length);out.set(head,0);out.set(ct,36);return out}
+async function tsDecrypt(buf,pw){const b=new Uint8Array(buf);const m=new TextDecoder().decode(b.slice(0,8));if(m!==TS_MAGIC&&m!==TS_MAGIC_V1)throw new Error("format");const v2=m===TS_MAGIC;
+  try{return new Uint8Array(await crypto.subtle.decrypt(Object.assign({name:"AES-GCM",iv:b.slice(24,36)},v2?{additionalData:b.slice(0,36)}:{}),await tsKey(pw,b.slice(8,24),v2?TS_ITER:TS_ITER_V1),b.slice(36)))}catch(e){throw new Error("password")}}
 
 // --- package: state + evidence files ---
 async function tsPack(meta){const z=new JSZip();z.file("state.json",JSON.stringify(S));z.file("about.txt","ECC Policy Review Map team file. Open it with the tool and the team password.");
@@ -2874,7 +2898,7 @@ const SEC_TYPES={
   webp:{ext:["webp"],sig:b=>b[0]===0x52&&b[1]===0x49&&b[2]===0x46&&b[3]===0x46&&b[8]===0x57&&b[9]===0x45&&b[10]===0x42&&b[11]===0x50},
   text:{ext:["txt","md"],sig:b=>!b.slice(0,4096).includes(0)},                                   // no binary bytes
   json:{ext:["json"],sig:b=>{let i=0;if(b[0]===0xEF&&b[1]===0xBB&&b[2]===0xBF)i=3;while(i<b.length&&/\s/.test(String.fromCharCode(b[i])))i++;return b[i]===0x7B}},
-  ecc:{ext:["ecc"],sig:b=>new TextDecoder().decode(b.slice(0,8))==="ECCTEAM1"}};
+  ecc:{ext:["ecc"],sig:b=>/^ECCTEAM[12]$/.test(new TextDecoder().decode(b.slice(0,8)))}};
 const SEC_RULES={ // what each place accepts, and its maximum size
   analyzer:{types:["pdf","ooxml","text"],ooxml:["docx"],max:25*1024*1024,label:"PDF أو Word أو نص"},
   evidence:{types:["pdf","ooxml","png","jpg","webp"],max:20*1024*1024,label:"PDF أو Word أو Excel أو PowerPoint أو صورة PNG/JPG/WEBP"},
@@ -2946,7 +2970,7 @@ async function fdbAllKeys(){return fdbOp("readonly",s=>s.getAllKeys())}
 async function fdbRaw(k){return fdbOp("readonly",s=>s.get(k))}
 async function fdbRawPut(k,v){return fdbOp("readwrite",s=>s.put(v,k))}
 async function lockEnable(pw){if(pw.length<10){toast("كلمة المرور 10 أحرف على الأقل");return false}
-  const salt=crypto.getRandomValues(new Uint8Array(16)),iter=310000;U.lockKey=await lkDerive(pw,salt,iter);
+  const salt=crypto.getRandomValues(new Uint8Array(16)),iter=600000;U.lockKey=await lkDerive(pw,salt,iter);
   const chk=await lkEnc(new TextEncoder().encode("ECC-LOCK-OK"));
   for(const k of await fdbAllKeys()){const v=await fdbRaw(k);if(v instanceof Blob)await fdbRawPut(k,await secWrapPut(v))}
   localStorage.setItem(LOCK_META,JSON.stringify({v:1,salt:b64(salt),iter,chk:{iv:b64(chk.iv),ct:b64(chk.ct)}}));

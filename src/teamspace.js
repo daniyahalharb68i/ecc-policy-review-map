@@ -2,7 +2,8 @@
 // One encrypted file (.ecc) lives in the entity's own shared storage (OneDrive, SharePoint, Google Drive, network folder).
 // Everyone opens the same file with the same password; on every sync the tool reads it, merges by last edit, and writes it back.
 // Encryption: PBKDF2-SHA256 (310,000 rounds) → AES-256-GCM, in the browser. The password never leaves the device and is never stored.
-const TS_MAGIC="ECCTEAM1",TS_ITER=310000,TS_HKEY="__team_handle";
+const TS_MAGIC="ECCTEAM2",TS_MAGIC_V1="ECCTEAM1",TS_ITER=600000,TS_ITER_V1=310000,TS_HKEY="__team_handle";
+IC.team='<circle cx="9" cy="8" r="3.2"/><path d="M3 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 13.7c.5-.1 1-.2 1.5-.2 2.5 0 4.5 1.7 4.5 4.5"/>';
 const TS_FS=typeof window.showOpenFilePicker==="function"&&typeof window.showSaveFilePicker==="function"&&!window.claude;
 U.ts=U.ts||{h:null,name:"",pw:"",at:"",busy:false,st:null,need:null};
 try{U.tsMe=localStorage.getItem("ecc_ts_me")||""}catch(e){U.tsMe=""}
@@ -10,13 +11,14 @@ if(!window.claude){const tt=NAV.flatMap(g=>g[1]).find(x=>x[0]==="team");if(tt)tt
 
 // --- crypto ---
 const enc=new TextEncoder();
-async function tsKey(pw,salt){const base=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveKey"]);
-  return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:TS_ITER,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
+async function tsKey(pw,salt,iter){const base=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:iter||TS_ITER,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
 async function tsEncrypt(bytes,pw){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
-  const ct=new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv},await tsKey(pw,salt),bytes));
-  const out=new Uint8Array(8+16+12+ct.length);out.set(enc.encode(TS_MAGIC),0);out.set(salt,8);out.set(iv,24);out.set(ct,36);return out}
-async function tsDecrypt(buf,pw){const b=new Uint8Array(buf);if(new TextDecoder().decode(b.slice(0,8))!==TS_MAGIC)throw new Error("format");
-  try{return new Uint8Array(await crypto.subtle.decrypt({name:"AES-GCM",iv:b.slice(24,36)},await tsKey(pw,b.slice(8,24)),b.slice(36)))}catch(e){throw new Error("password")}}
+  const head=new Uint8Array(36);head.set(enc.encode(TS_MAGIC),0);head.set(salt,8);head.set(iv,24);
+  const ct=new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv,additionalData:head},await tsKey(pw,salt,TS_ITER),bytes));
+  const out=new Uint8Array(36+ct.length);out.set(head,0);out.set(ct,36);return out}
+async function tsDecrypt(buf,pw){const b=new Uint8Array(buf);const m=new TextDecoder().decode(b.slice(0,8));if(m!==TS_MAGIC&&m!==TS_MAGIC_V1)throw new Error("format");const v2=m===TS_MAGIC;
+  try{return new Uint8Array(await crypto.subtle.decrypt(Object.assign({name:"AES-GCM",iv:b.slice(24,36)},v2?{additionalData:b.slice(0,36)}:{}),await tsKey(pw,b.slice(8,24),v2?TS_ITER:TS_ITER_V1),b.slice(36)))}catch(e){throw new Error("password")}}
 
 // --- package: state + evidence files ---
 async function tsPack(meta){const z=new JSZip();z.file("state.json",JSON.stringify(S));z.file("about.txt","ECC Policy Review Map team file. Open it with the tool and the team password.");

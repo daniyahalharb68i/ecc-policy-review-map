@@ -9,7 +9,7 @@ const SEC_TYPES={
   webp:{ext:["webp"],sig:b=>b[0]===0x52&&b[1]===0x49&&b[2]===0x46&&b[3]===0x46&&b[8]===0x57&&b[9]===0x45&&b[10]===0x42&&b[11]===0x50},
   text:{ext:["txt","md"],sig:b=>!b.slice(0,4096).includes(0)},                                   // no binary bytes
   json:{ext:["json"],sig:b=>{let i=0;if(b[0]===0xEF&&b[1]===0xBB&&b[2]===0xBF)i=3;while(i<b.length&&/\s/.test(String.fromCharCode(b[i])))i++;return b[i]===0x7B}},
-  ecc:{ext:["ecc"],sig:b=>new TextDecoder().decode(b.slice(0,8))==="ECCTEAM1"}};
+  ecc:{ext:["ecc"],sig:b=>/^ECCTEAM[12]$/.test(new TextDecoder().decode(b.slice(0,8)))}};
 const SEC_RULES={ // what each place accepts, and its maximum size
   analyzer:{types:["pdf","ooxml","text"],ooxml:["docx"],max:25*1024*1024,label:"PDF أو Word أو نص"},
   evidence:{types:["pdf","ooxml","png","jpg","webp"],max:20*1024*1024,label:"PDF أو Word أو Excel أو PowerPoint أو صورة PNG/JPG/WEBP"},
@@ -81,7 +81,7 @@ async function fdbAllKeys(){return fdbOp("readonly",s=>s.getAllKeys())}
 async function fdbRaw(k){return fdbOp("readonly",s=>s.get(k))}
 async function fdbRawPut(k,v){return fdbOp("readwrite",s=>s.put(v,k))}
 async function lockEnable(pw){if(pw.length<10){toast("كلمة المرور 10 أحرف على الأقل");return false}
-  const salt=crypto.getRandomValues(new Uint8Array(16)),iter=310000;U.lockKey=await lkDerive(pw,salt,iter);
+  const salt=crypto.getRandomValues(new Uint8Array(16)),iter=600000;U.lockKey=await lkDerive(pw,salt,iter);
   const chk=await lkEnc(new TextEncoder().encode("ECC-LOCK-OK"));
   for(const k of await fdbAllKeys()){const v=await fdbRaw(k);if(v instanceof Blob)await fdbRawPut(k,await secWrapPut(v))}
   localStorage.setItem(LOCK_META,JSON.stringify({v:1,salt:b64(salt),iter,chk:{iv:b64(chk.iv),ct:b64(chk.ct)}}));

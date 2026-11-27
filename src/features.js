@@ -61,7 +61,26 @@ async function pdfText(file){const lib=await pdfLib();
   const doc=await lib.getDocument({data:await file.arrayBuffer(),isEvalSupported:false,stopAtErrors:false}).promise;const out=[];
   const scanned=[];for(let p=1;p<=Math.min(doc.numPages,500);p++){const pg=await doc.getPage(p);const c=await pg.getTextContent();const t=c.items.map(i=>i.str).join(" ");if(t.replace(/\s/g,"").length<15)scanned.push(p);out.push(t)}
   U.anaScanned=scanned;U.anaPages=doc.numPages;
-  return out.join("\n\n").replace(/[ \t]+/g," ").trim()}
+  return arPdfFix(out.join("\n\n").replace(/[ \t]+/g," ").trim())}
+
+// Arabic PDFs (Word and others) draw lam-alef as one ligature glyph; pdf.js re-orders RTL text glyph by glyph,
+// so the two letters come out swapped: «الإدارة» → «اإلدارة», «الالتزام» → «االلتزام», «علاقة» → «عالقة».
+// Step 1 fixes patterns that never occur in real Arabic (two alifs in a row, alif + hamza-alif, a lone alif).
+// Step 2 swaps an ambiguous pair only when the word as read is unknown and the swapped form is a word
+// found in the tool's own Arabic control texts, so genuine words such as «أعمال» or «خلال» are left alone.
+let AR_VOCAB=null;
+function arVocab(){if(AR_VOCAB)return AR_VOCAB;AR_VOCAB=new Set();
+  const src=JSON.stringify([typeof ECC!=="undefined"?ECC:0,typeof XDOC!=="undefined"?XDOC:0,typeof GUIDE!=="undefined"?GUIDE:0,typeof CCC_AR!=="undefined"?CCC_AR:0]).replace(/[ً-ْـ]/g,"");
+  for(const w of src.match(/[ء-ي]{2,}/g)||[])AR_VOCAB.add(w);return AR_VOCAB}
+function arKnown(x){const V=arVocab(),k=y=>y.length>1&&(V.has(y)||V.has("ال"+y));
+  return k(x)||("وبفلك".includes(x[0])&&k(x.slice(1)))||(x.startsWith("لل")&&V.has("ال"+x.slice(2)))}
+function arPdfFix(t){if(!/[ء-ي]/.test(t))return t;
+  t=t.replace(/ا([أإآ])ل/g,"ال$1").replace(/اال/g,"الا").replace(/(^|\s)ا\s+([ء-ي]*ل)(?=[\s.,،:;!?)]|$)/g,"$1$2ا");
+  return t.replace(/[ء-ي]{3,}/g,w=>{if(arKnown(w))return w;
+    const pairs=[["ال","لا"],["إل","لإ"],["أل","لأ"],["آل","لآ"]];
+    const all=pairs.reduce((s,[a,b])=>s.split(a).join(b),w);if(all!==w&&arKnown(all))return all;
+    for(const [a,b] of pairs){let i=w.indexOf(a);while(i>=0){const c=w.slice(0,i)+b+w.slice(i+2);if(arKnown(c))return c;i=w.indexOf(a,i+1)}}
+    return w})}
 
 // --- Arabic (unofficial) translation of the GECC guide items, Claude version only ---
 async function aiGuideTr(id){const g=GD(id);if(!g.d.length&&!g.g.length)return;
