@@ -6,26 +6,34 @@ const RD_TYPES=[
  ["email","البريد الإلكتروني","بريد",/[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g],
  ["url","الروابط","رابط",/\bhttps?:\/\/[^\s<>"'،)]+|\bwww\.[^\s<>"'،)]+/gi],
  ["iban","أرقام الآيبان","آيبان",/\bSA\d{2}[ ]?(?:[0-9A-Z]{4}[ ]?){4}[0-9A-Z]{4}\b/gi],
- ["ip","عناوين IP","عنوان-IP",/\b(?:25[0-5]|2[0-4]\d|1?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|1?\d?\d)){3}(?:\/\d{1,2})?\b/g],
+ ["ip","عناوين IP","عنوان-IP",/\b(?:25[0-5]|2[0-4]\d|1?\d?\d)(?:\.(?:25[0-5]|2[0-4]\d|1?\d?\d)){3}(?:\/\d{1,2})?\b|\b(?:[0-9A-Fa-f]{1,4}:){4,7}[0-9A-Fa-f]{1,4}\b/g],
+ ["path","مسارات الشبكة والحسابات","مسار",/\\\\[A-Za-z0-9._$\-]+(?:\\[^\s\\،]+)+|\b[A-Za-z]:\\(?:[^\s\\،]+\\)*[^\s\\،]*|\b[A-Za-z][A-Za-z0-9_\-]{1,19}\\[A-Za-z][A-Za-z0-9._\-]{1,30}\b/g],
+ ["intid","المعرّفات الداخلية","معرّف",/\b(?:EMP|SRV|SVR|PC|LAP|WS|AST|ASSET|HR|TKT|INC|CHG|REQ|CR|VLAN)[-_ ]?\d{2,8}\b|(?:الرقم الوظيفي|رقم وظيفي|رقم الموظف|السجل التجاري|سجل تجاري)\s*[:：]?\s*[0-9٠-٩]{3,12}/gi],
+ ["person","أسماء بعد الألقاب","شخص",/(?:(?:السيد|السيدة|الأستاذ|الأستاذة|المهندس|المهندسة|الدكتور|الدكتورة|م\.|أ\.|د\.)\s+[\u0621-\u064A]{2,}(?:\s+(?:بن|بنت|آل|ال)?\s*[\u0621-\u064A]{2,}){1,2})|\b(?:Mr|Mrs|Ms|Dr|Eng)\.?\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2}/g],
  ["mac","عناوين MAC","MAC",/\b(?:[0-9A-F]{2}[:\-]){5}[0-9A-F]{2}\b/gi],
  ["phone","أرقام الجوال والهاتف","هاتف",/(?<!\d)(?:\+966|00966|966|0)?[ \-]?(?:5\d[ \-]?\d{3}[ \-]?\d{4}|1[1-7][ \-]?\d{3}[ \-]?\d{4})(?!\d)/g],
  ["nid","أرقام الهوية والإقامة","هوية",/(?<!\d)[12]\d{9}(?!\d)/g],
  ["host","النطاقات وأسماء الخوادم","نطاق",/\b(?:[A-Za-z0-9\-]+\.)+(?:sa|com|net|org|gov|edu|local|internal|corp|lan|intra)\b/gi],
  ["money","المبالغ المالية","مبلغ",/(?:\d[\d,٬.]*\s?(?:ريالًا|ريالا|ريال|ر\.س|SAR|SR)(?![A-Za-z]))|(?:\b(?:SAR|SR)\s?\d(?:[\d,.]*\d)?)/gi]];
-U.rd=U.rd||{on:true,types:{email:1,url:1,iban:1,ip:1,mac:1,phone:1,nid:1,host:1,money:1},terms:[],ents:{},view:"mark"};
+U.rd=U.rd||{on:true,types:{email:1,url:1,iban:1,ip:1,mac:1,phone:1,nid:1,host:1,money:1,path:1,intid:1,person:1},terms:[],ents:{},view:"mark"};
 try{const sv=JSON.parse(localStorage.getItem("ecc_rd")||"null");if(sv){U.rd.terms=sv.terms||[];Object.assign(U.rd.types,sv.types||{});U.rd.on=sv.on!==false}}catch(e){}
 const rdSave=()=>{if(typeof lockMeta==="function"&&lockMeta()&&!window.claude){saveLocal();return}try{localStorage.setItem("ecc_rd",JSON.stringify({terms:U.rd.terms,types:U.rd.types,on:U.rd.on}))}catch(e){}};
 const rdOn=()=>U.rd.on!==false;
 // Arabic-Indic digits → Latin, one character for one, so positions stay aligned with the original text
 const rdDigits=s=>s.replace(/[٠-٩]/g,d=>String(d.charCodeAt(0)-1632)).replace(/[۰-۹]/g,d=>String(d.charCodeAt(0)-1776));
 const rdEsc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-let RD_CACHE={k:"",spans:[]};
-function rdSpans(txt){const key=txt.length+"|"+txt.slice(0,200)+"|"+txt.slice(-200)+"|"+JSON.stringify([U.rd.types,U.rd.terms,S.cfg.entity||""]);
-  if(RD_CACHE.k===key)return RD_CACHE.spans;
+// Arabic-tolerant pattern for the user's words: any alef/hamza form matches any other, and "لا/لإ/لأ/لآ" also
+// matches the reversed order that PDF text extraction often produces for the lam-alef ligature (e.g. "اإلقليمية").
+const rdTermRe=v=>{const A="[اأإآ]";let p=rdEsc(rdDigits(v)).replace(/[اأإآ]/g,"\u0001");
+  p=p.replace(/ل\u0001/g,`(?:ل${A}|${A}ل)`).replace(/\u0001/g,A).replace(/[ةه](?=\s|$)/g,"[ةه]").replace(/ى(?=\s|$)/g,"[ىي]").replace(/\s+/g,"\\s+");return new RegExp(p,"gi")};
+let RD_CACHE={txt:null,cfg:"",spans:[]};
+function rdSpans(txt){const cfg=JSON.stringify([U.rd.types,U.rd.terms,S.cfg.entity||""]);
+  // the cache is reused only for exactly the same text and settings (full string comparison)
+  if(RD_CACHE.txt===txt&&RD_CACHE.cfg===cfg)return RD_CACHE.spans;
   const src=rdDigits(txt),found=[];
   // 1) the user's own words and the entity name come first
   const terms=U.rd.terms.slice();if(S.cfg.entity&&S.cfg.entity.trim().length>1&&!terms.some(t=>t.val===S.cfg.entity.trim()))terms.unshift({val:S.cfg.entity.trim(),label:"الجهة",auto:1});
-  terms.forEach((t,ti)=>{if(!t.val||t.val.length<2)return;const re=new RegExp(rdEsc(rdDigits(t.val)),"gi");let m;while((m=re.exec(src))){found.push({s:m.index,e:m.index+m[0].length,type:"term",t,label:t.label,pr:0});if(!m[0].length)re.lastIndex++}});
+  terms.forEach((t,ti)=>{if(!t.val||t.val.length<2)return;const re=rdTermRe(t.val);let m;while((m=re.exec(src))){found.push({s:m.index,e:m.index+m[0].length,type:"term",t,label:t.label,pr:0});if(!m[0].length)re.lastIndex++}});
   // 2) rule-based detectors
   RD_TYPES.forEach(([k,,,re],pi)=>{if(!U.rd.types[k])return;re.lastIndex=0;let m;while((m=re.exec(src))){found.push({s:m.index,e:m.index+m[0].length,type:k,pr:pi+1});if(!m[0].length)re.lastIndex++}});
   found.sort((a,b)=>a.s-b.s||a.pr-b.pr||(b.e-b.s)-(a.e-a.s));
@@ -35,7 +43,7 @@ function rdSpans(txt){const key=txt.length+"|"+txt.slice(0,200)+"|"+txt.slice(-2
     let en=U.rd.ents[id];if(!en){let tok;if(f.type==="term")tok=f.label||"مخفي";else{const T=RD_TYPES.find(x=>x[0]===f.type);cnt[f.type]=(cnt[f.type]||Object.values(U.rd.ents).filter(x=>x.type===f.type).length)+1;tok=T[2]+"-"+cnt[f.type]}
       en=U.rd.ents[id]={id,type:f.type,val,tok,on:true}}
     f.id=id});
-  RD_CACHE={k:key,spans:out};return out}
+  RD_CACHE={txt,cfg,spans:out};return out}
 function rdClean(txt){if(!txt)return "";const sp=rdSpans(txt);let o="",i=0;sp.forEach(f=>{const en=U.rd.ents[f.id];if(!en||!en.on)return;o+=txt.slice(i,f.s)+"["+en.tok+"]";i=f.e});return o+txt.slice(i)}
 function rdMap(){const m={};Object.values(U.rd.ents).forEach(e=>{if(e.on)m["["+e.tok+"]"]=m["["+e.tok+"]"]||e.val});return m}
 // put the real values back into AI results, locally

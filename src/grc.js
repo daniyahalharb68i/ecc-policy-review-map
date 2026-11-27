@@ -63,7 +63,7 @@ async function calIcs(){const E=[];
 // ---------- 5) Risk register & heat map; 6) exceptions register ----------
 const RISK_LVL=s=>s>=15?["crit",LX("حرج","Critical")]:s>=10?["high",LX("عالٍ","High")]:s>=5?["mod",LX("متوسط","Medium")]:["low",LX("منخفض","Low")];
 const TRT=[["mit","معالجة","Mitigate"],["acc","قبول","Accept"],["trf","نقل","Transfer"],["avd","تجنّب","Avoid"]];
-const rDefL=id=>dst(id)==="x"?4:3,rDefI=id=>({H:5,M:3,L:2})[C(id).imp||"M"]+(appOf(id).v==="m"?0:-1);
+const rDefL=id=>dst(id)==="x"?4:3,rDefI=id=>({H:5,M:3,L:2})[C(id).imp||"M"]+(["m","u"].includes(appOf(id).v)?0:-1);
 function riskRows(){return gapList().map(g=>{const id=g.c.id,o=C(id),l=+o.rl||rDefL(id),i=Math.max(1,+o.ri||rDefI(id)),s=l*i;
   return {id,l,i,s,lvl:RISK_LVL(s),stmt:o.rk||`${LX("عدم الالتزام بالضابط","Non-compliance with")} ${id}: ${shortT(ctlTxt(id),120)}`,trt:(TRT.find(t=>t[0]===(o.rt||"mit"))||TRT[0])[U.lang==="en"?2:1],own:o.own||"",exc:excActive(id)}}).sort((a,b)=>b.s-a.s)}
 const excActive=id=>{const o=C(id);return !!(o.exw||o.exu)&&(!o.exu||o.exu>=today())};

@@ -61,3 +61,9 @@ async function grcReport(){const en=U.lang==="en",s=stats(CTLS),D=domStats(curPe
   await saveBlob(`ECC-${LX("تقرير-تفصيلي","detailed-report")}-${fileStamp()}.docx`,await buildDocx(B,{rtl:!en}));toast(LX("نُزّل التقرير التفصيلي","Detailed report downloaded"))}
 document.addEventListener("click",e=>{const t=e.target.closest("[data-r2]");if(!t)return;const a=t.dataset.r2;
   if(a==="grc")grcReport();else if(a==="exec")makePDF("exec");else if(a==="cmpnow"){const k=Object.entries(S.snaps).sort((a,b)=>a[1].at<b[1].at?1:-1)[0];if(k){U.cmpA=k[0];U.cmpB="__now";render()}}});
+
+// ---------- controls that still need assessment (roadmap page) ----------
+function vUnassessed(){const L=CTLS.filter(c=>appOf(c.id).v!=="na"&&(!dst(c.id)||dst(c.id)==="w"));if(!L.length)return "";
+  return `<section class="card"><h2>${LX("ضوابط تحتاج إلى تقييم","Controls that need assessment")} (${L.length})</h2>
+   <p class="lead">${LX("هذه الضوابط لا تظهر في خارطة الفجوات لأنها لم تُقيَّم بعد أو قُيّمت طبقة واحدة منها فقط. قيّمها حتى لا تختفي فجوات حقيقية عن أنظار الفريق.","These controls don't appear in the gap roadmap because they haven't been assessed, or only one layer was. Assess them so real gaps don't stay hidden.")}</p>
+   ${ECC.map(d=>{const x=L.filter(c=>c.dom===d.id);return x.length?`<div class="ua"><div class="note"><b>${d.id}.</b> ${esc(tx(d))} (${x.length})</div><div class="row">${x.map(c=>idb(c.id)+(dst(c.id)==="w"?'<span class="note">½</span>':"")).join(" ")}</div></div>`:""}).join("")}</section>`}

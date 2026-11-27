@@ -32,7 +32,13 @@ function secDeep(v,d){if(d>8)return undefined;if(v==null)return v;const t=typeof
   if(Array.isArray(v))return v.slice(0,5000).map(x=>secDeep(x,d+1)).filter(x=>x!==undefined);
   if(t==="object"){const o={};Object.keys(v).slice(0,5000).forEach(k=>{if(SEC_BAD_KEYS.has(k))return;const x=secDeep(v[k],d+1);if(x!==undefined)o[k]=x});return o}return undefined}
 const SEC_ENUM={d:["y","p","n"],i:["y","p","n"],e:["y","p","n"],app:["m","r","na"],imp:["H","M","L"],eff:["S","M","L"],rs:["prog","done"],rt:["mit","acc","trf","avd"],ph:["1","2","3"],rl:["1","2","3","4","5"],ri:["1","2","3","4","5"]};
-function secItem(o){if(!o||typeof o!=="object"||Array.isArray(o))return null;
+const SEC_STR={n:20000,ev_d:5000,ev_i:5000,ev_e:5000,own:200,rem:20000,appWhy:2000,rk:2000,exw:5000,exc:5000,exa:200,_by:80,name:300,ver:40,label:300,at:40,ad:10,txt:250000,by:80,what:40,id:80,v:500};
+function secTypes(o){Object.keys(o).forEach(k=>{if(k in SEC_STR){if(typeof o[k]!=="string"){if(typeof o[k]==="number"&&k!=="at")o[k]=String(o[k]);else if(!(k==="at"&&typeof o[k]==="number"))delete o[k]}if(typeof o[k]==="string"&&o[k].length>SEC_STR[k])o[k]=o[k].slice(0,SEC_STR[k])}});
+  if("_f" in o&&(typeof o._f!=="object"||Array.isArray(o._f)))delete o._f;if(o._f)Object.keys(o._f).forEach(k=>{if(typeof o._f[k]!=="number")delete o._f[k]});
+  ["subs","items","res","ai","gtr","cond","rep"].forEach(k=>{if(k in o&&(o[k]===null||typeof o[k]!=="object"))delete o[k]});
+  // "per" is a number (review cycle, documents) or an object (status per control, snapshots)
+  if("per" in o&&!(typeof o.per==="number"&&isFinite(o.per)&&o.per>=0&&o.per<=120)&&!(o.per&&typeof o.per==="object"&&!Array.isArray(o.per)))delete o.per;return o}
+function secItem(o){if(!o||typeof o!=="object"||Array.isArray(o))return null;secTypes(o);
   Object.keys(SEC_ENUM).forEach(k=>{if(k in o&&!SEC_ENUM[k].includes(String(o[k])))delete o[k]});
   ["due","exu","ad","at"].forEach(k=>{if(k in o&&typeof o[k]==="string"&&o[k].length===10&&!SEC_DATE.test(o[k]))delete o[k]});
   if("gd" in o)o.gd=Array.isArray(o.gd)?o.gd.filter(n=>Number.isInteger(n)&&n>=0&&n<500):undefined;
@@ -40,13 +46,16 @@ function secItem(o){if(!o||typeof o!=="object"||Array.isArray(o))return null;
   if("_at" in o&&typeof o._at!=="number")delete o._at;
   Object.keys(o).forEach(k=>{if(o[k]===undefined)delete o[k]});return o}
 function secSanitize(raw){const src=secDeep(raw,0)||{},N=blank();
+  ["ctl","sub","docs","snaps","fw","ana","audit","team","reports","log"].forEach(c=>{if(src[c]&&typeof src[c]==="object"&&Object.keys(src[c]).length>5000)src[c]=Object.fromEntries(Object.entries(src[c]).slice(0,5000))});
+  if(src.cfg&&typeof src.cfg==="object"){["entity","assessor","exec","execEn","date","type"].forEach(k=>{if(k in src.cfg&&typeof src.cfg[k]!=="string")delete src.cfg[k]});if(typeof src.cfg.exec==="string")src.cfg.exec=src.cfg.exec.slice(0,20000);if(typeof src.cfg.entity==="string")src.cfg.entity=src.cfg.entity.slice(0,300)}
   const cfg=src.cfg&&typeof src.cfg==="object"?src.cfg:{};N.cfg=Object.assign(N.cfg,cfg);
   if(N.cfg.type&&!ETYPES.some(x=>x[0]===N.cfg.type))N.cfg.type="";if(N.cfg.date&&!SEC_DATE.test(N.cfg.date))N.cfg.date="";
   if(typeof N.cfg.cond!=="object"||Array.isArray(N.cfg.cond))N.cfg.cond={};if(typeof N.cfg.rep!=="object"||Array.isArray(N.cfg.rep))N.cfg.rep={};
   ["ctl","sub","docs","snaps","fw","ana","audit","team","reports","log"].forEach(col=>{const C0=src[col];if(!C0||typeof C0!=="object"||Array.isArray(C0))return;
     Object.keys(C0).forEach(id=>{if(col==="ctl"&&!BY[id])return;if(col==="sub"&&!SUBBY[id])return;if(col!=="ctl"&&col!=="sub"&&!SEC_ID.test(id))return;
       const it=col==="ctl"?secItem(C0[id]):(C0[id]&&typeof C0[id]==="object"&&!Array.isArray(C0[id])?C0[id]:null);if(!it)return;
-      if(col==="snaps"){if(it.at&&!SEC_DATE.test(it.at))return;if(it.per&&typeof it.per==="object")Object.keys(it.per).forEach(k=>{if(!BY[k]||!(it.per[k] in ST))delete it.per[k]})}
+      if(col!=="ctl")secTypes(it);
+      if(col==="snaps"){if(it.at&&!SEC_DATE.test(it.at))return;["comp","c","p","x","gaps","paper"].forEach(k=>{if(k in it&&typeof it[k]!=="number"&&it[k]!==null)delete it[k]});if(it.per&&typeof it.per==="object")Object.keys(it.per).forEach(k=>{if(!BY[k]||!(it.per[k] in ST))delete it.per[k]})}
       if(col==="docs"&&Array.isArray(it.subs))it.subs=it.subs.filter(x=>SUBBY[x]);
       N[col][id]=it})});
   return N}
@@ -67,7 +76,7 @@ async function secUnwrapGet(v){if(!v||!v.__enc)return v;if(!U.lockKey)throw new 
 let lkBusy=Promise.resolve();
 function secSave(){if(!lockMeta()||window.claude)return false;if(!U.lockKey)return true; // locked: never overwrite with plaintext
   lkBusy=lkBusy.then(async()=>{const e=await lkEnc(new TextEncoder().encode(JSON.stringify({S,rd:U.rd.terms})));
-    try{localStorage.setItem(LK_ENC,JSON.stringify({iv:b64(e.iv),ct:b64(e.ct)}));localStorage.removeItem(LK);localStorage.removeItem("ecc_rd")}catch(x){toast("تعذّر الحفظ: مساحة التخزين ممتلئة")}}).catch(()=>{});return true}
+    try{localStorage.setItem(LK_ENC,JSON.stringify({iv:b64(e.iv),ct:b64(e.ct)}));localStorage.removeItem(LK);localStorage.removeItem("ecc_rd");if(typeof saveDone==="function")saveDone(true)}catch(x){if(typeof saveDone==="function")saveDone(false,x);else toast("تعذّر الحفظ: مساحة التخزين ممتلئة")}}).catch(()=>{});return true}
 async function fdbAllKeys(){return fdbOp("readonly",s=>s.getAllKeys())}
 async function fdbRaw(k){return fdbOp("readonly",s=>s.get(k))}
 async function fdbRawPut(k,v){return fdbOp("readwrite",s=>s.put(v,k))}

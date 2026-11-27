@@ -53,9 +53,13 @@ function attBox(id){const L=C(id).att||[],can=canCol("ctl",id);
 
 // --- PDF text extraction for the policy analyzer ---
 const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
-async function pdfText(file){await loadScript(PDFJS+"pdf.min.js");const lib=window.pdfjsLib;lib.GlobalWorkerOptions.workerSrc=PDFJS+"pdf.worker.min.js";
+let pdfWorkerUrl=null;async function pdfWorker(){if(pdfWorkerUrl)return pdfWorkerUrl;const u=PDFJS+"pdf.worker.min.js";
+  try{const r=await fetch(u,{integrity:SRI[u],mode:"cors"});if(!r.ok)throw 0;pdfWorkerUrl=URL.createObjectURL(new Blob([await r.text()],{type:"text/javascript"}))}catch(e){throw new Error("integrity")}return pdfWorkerUrl}
+async function pdfLib(){await loadScript(PDFJS+"pdf.min.js");const lib=window.pdfjsLib;lib.GlobalWorkerOptions.workerSrc=await pdfWorker();return lib}
+async function pdfText(file){const lib=await pdfLib();
   const doc=await lib.getDocument({data:await file.arrayBuffer(),isEvalSupported:false,stopAtErrors:false}).promise;const out=[];
-  for(let p=1;p<=Math.min(doc.numPages,500);p++){const pg=await doc.getPage(p);const c=await pg.getTextContent();out.push(c.items.map(i=>i.str).join(" "))}
+  const scanned=[];for(let p=1;p<=Math.min(doc.numPages,500);p++){const pg=await doc.getPage(p);const c=await pg.getTextContent();const t=c.items.map(i=>i.str).join(" ");if(t.replace(/\s/g,"").length<15)scanned.push(p);out.push(t)}
+  U.anaScanned=scanned;U.anaPages=doc.numPages;
   return out.join("\n\n").replace(/[ \t]+/g," ").trim()}
 
 // --- Arabic (unofficial) translation of the GECC guide items, Claude version only ---

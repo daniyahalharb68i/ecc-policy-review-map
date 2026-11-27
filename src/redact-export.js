@@ -24,12 +24,19 @@ async function rdDocx(file){const z=await JSZip.loadAsync(file);const W="http://
     x=x.replace(/<(dc:creator|cp:lastModifiedBy|Company|Manager)>[\s\S]*?<\/\1>/g,"<$1></$1>").replace(/<(dc:title|dc:subject|cp:keywords|dc:description)>([\s\S]*?)<\/\1>/g,(m,t,v)=>`<${t}>${esc(rdClean(v.replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">")))}</${t}>`);z.file(p,x)}
   return {blob:await z.generateAsync({type:"blob",mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"}),n}}
 async function rdPdf(file,onp){await loadScript(PDFJS+"pdf.min.js");for(const s of PDF_LIBS.slice(1))await loadScript(s);
-  const lib=window.pdfjsLib;lib.GlobalWorkerOptions.workerSrc=PDFJS+"pdf.worker.min.js";
+  const lib=await pdfLib();const blankPages=new Set((onp&&onp.blank)||[]);
   const src=await lib.getDocument({data:await file.arrayBuffer()}).promise;let pdf=null,n=0;
   const ink=getComputedStyle(document.documentElement).getPropertyValue("--bg").trim()||"#10291F";
   for(let pn=1;pn<=src.numPages;pn++){if(onp)onp(pn,src.numPages);const page=await src.getPage(pn);const vp=page.getViewport({scale:2});
     const cv=document.createElement("canvas");cv.width=Math.ceil(vp.width);cv.height=Math.ceil(vp.height);const ctx=cv.getContext("2d");
-    ctx.fillStyle="#fff";ctx.fillRect(0,0,cv.width,cv.height);await page.render({canvasContext:ctx,viewport:vp}).promise;
+    ctx.fillStyle="#fff";ctx.fillRect(0,0,cv.width,cv.height);
+    if(blankPages.has(pn)){ // scanned page: withheld instead of exported unchecked
+      ctx.fillStyle="#10291F";ctx.font='600 30px "IBM Plex Sans Arabic","Inter Tight",sans-serif';ctx.textAlign="center";ctx.direction="rtl";
+      ctx.fillText("صفحة محجوبة: ممسوحة ضوئيًا ولم يُتحقق من خلوّها من المعلومات الحساسة",cv.width/2,cv.height/2);
+      ctx.font='400 24px "Inter Tight",sans-serif';ctx.fillText("Page withheld: scanned image, not checked for sensitive data",cv.width/2,cv.height/2+44);
+      const wmm0=vp.width/2*25.4/72,hmm0=vp.height/2*25.4/72;if(!pdf)pdf=new window.jspdf.jsPDF({unit:"mm",format:[wmm0,hmm0],orientation:wmm0>hmm0?"l":"p",compress:true});else pdf.addPage([wmm0,hmm0],wmm0>hmm0?"l":"p");
+      pdf.addImage(cv.toDataURL("image/jpeg",.9),"JPEG",0,0,wmm0,hmm0);continue}
+    await page.render({canvasContext:ctx,viewport:vp}).promise;
     const tc=await page.getTextContent();const items=tc.items.filter(i=>i.str);
     // page text with item boundaries, so a hit can be traced back to the items it covers
     let full="";const pos=items.map(it=>{const s=full.length;full+=it.str+" ";return s});
@@ -56,9 +63,15 @@ async function rdDownload(){const f=U.anaFile,base=(rdClean(U.anaName||"")||"pol
   const ext=(f.name.split(".").pop()||"").toLowerCase();U.rdBusy="…";render();
   try{let r;
     if(ext==="docx"){if(!window.JSZip)throw new Error("zip");r=await rdDocx(f)}
-    else if(ext==="pdf"){r=await rdPdf(f,(i,t)=>{U.rdBusy=`${i}/${t}`;const b=$("#rd-busy");if(b)b.textContent=U.rdBusy})}
+    else if(ext==="pdf"){const sc=await rdScanned(f);
+      if(sc.length&&!U.rdScanOk){U.rdBusy=null;U.confirm={msg:`${sc.length} صفحة لا تحوي نصًا قابلًا للاستخراج (ممسوحة ضوئيًا: ${sc.slice(0,12).join("، ")}${sc.length>12?"…":""})، فلا يمكن إخفاء ما فيها آليًا. ستُستبدل بصفحة «محجوبة» في النسخة المنقّاة. راجع الأصل يدويًا أو استخدم OCR قبل مشاركة هذه الصفحات.`,yes:"تصدير مع حجب الصفحات الممسوحة",soft:true,fn:()=>{U.rdScanOk=sc;rdDownload()}};render();return}
+      const op=(i,t)=>{U.rdBusy=`${i}/${t}`;const b=$("#rd-busy");if(b)b.textContent=U.rdBusy};op.blank=U.rdScanOk||[];U.rdScanOk=null;r=await rdPdf(f,op)}
     else{const t=rdClean(await f.text());r={blob:new Blob(["﻿"+t],{type:"text/plain;charset=utf-8"}),n:1}}
     U.rdBusy=null;render();
     if(window.claude&&U.dl){await U.dl.save({filename:base+"."+ext,data:r.blob})}else dlFile(base+"."+ext,r.blob);
     toast(ext==="pdf"?"نُزّلت نسخة PDF منقّاة بنفس شكل الأصل":ext==="docx"?"نُزّل ملف Word منقّى بنفس التنسيق":"نُزّلت النسخة المنقّاة")}
   catch(e){U.rdBusy=null;render();toast("تعذّر إنشاء الملف بنفس الصيغة، فنُزّلت نسخة نصية.");save(base+".txt","﻿"+rdClean(U.anaTxt),"text/plain;charset=utf-8")}}
+
+// pages with (almost) no extractable text are treated as scanned images
+async function rdScanned(file){const lib=await pdfLib();const d=await lib.getDocument({data:await file.arrayBuffer(),isEvalSupported:false}).promise;const out=[];
+  for(let p=1;p<=d.numPages;p++){const t=(await (await d.getPage(p)).getTextContent()).items.map(i=>i.str).join("");if(t.replace(/\s/g,"").length<15)out.push(p)}return out}

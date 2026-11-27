@@ -29,7 +29,7 @@ const FOUND=new Set(["1-1","1-2","1-3","1-4","1-5","2-1"]);
 const LAYERS=[["d","موثّق","المتطلب مكتوب في وثيقة معتمدة من صاحب الصلاحية"],["i","مطبّق","يوجد دليل تشغيلي على أن المتطلب يُنفَّذ فعلًا"],["e","فعّال","يُراجَع دوريًا وتوجد نتائج قياس أو مراجعة موثقة"]];
 const LV=[["y","نعم"],["p","جزئي"],["n","لا"]];
 const ST={"":["لم يُقيَّم","s-"],w:["قيد التقييم","s-w"],c:["ملتزم","s-c"],p:["التزام جزئي","s-p"],x:["غير ملتزم","s-x"],na:["لا ينطبق","s-na"]};
-const AP={m:["إلزامي","a-m"],r:["موصى به","a-r"],na:["لا ينطبق","a-na"]};
+const AP={u:["لم يُحدد بعد","a-u"],m:["إلزامي","a-m"],r:["موصى به","a-r"],na:["لا ينطبق","a-na"]};
 const IMP=[["H","أثر عالٍ"],["M","أثر متوسط"],["L","أثر منخفض"]],EFF=[["S","جهد قليل"],["M","جهد متوسط"],["L","جهد كبير"]];
 const PH={1:["المرحلة 1","0 إلى 30 يومًا"],2:["المرحلة 2","31 إلى 60 يومًا"],3:["المرحلة 3","61 إلى 90 يومًا"]};
 
@@ -62,20 +62,25 @@ function ruleNA(c){for(const q of COND){if(!q.na)continue;const v=S.cfg.cond[q.k
 function appOf(id){const c=BY[id],o=C(id);
   if(o.app)return {v:o.app,src:"manual",why:o.appWhy||""};
   const r=ruleNA(c);if(r)return {v:"na",src:"rule",why:r.trig};
-  if(!S.cfg.type)return {v:"m",src:"unset",why:""};
+  if(!S.cfg.type)return {v:"u",src:"unset",why:""};
   return OBLIG.has(S.cfg.type)?{v:"m",src:"scope",why:""}:{v:"r",src:"scope",why:""}}
 // ===== Derived status =====
 function dst(id){if(appOf(id).v==="na")return "na";const o=C(id),d=o.d||"",i=o.i||"";
   if(!d&&!i)return "";if(!d||!i)return "w";if(d==="y"&&i==="y")return "c";if(d==="n"&&i==="n")return "x";return "p"}
 const isPaper=id=>{const o=C(id);return appOf(id).v!=="na"&&o.d==="y"&&o.i==="n"};
+const noEvidence=id=>{const o=C(id);return dst(id)==="c"&&!(o.att||[]).length&&!o.ev_d&&!o.ev_i&&!o.ev_e};
+const effState=id=>{const o=C(id);return dst(id)!=="c"?"":o.e==="y"?"y":o.e==="p"?"p":o.e==="n"?"n":"u"};
 const isUndoc=id=>{const o=C(id);return appOf(id).v!=="na"&&o.i==="y"&&(o.d==="n"||o.d==="p")};
 function mat(id){const o=C(id);if(o.d!=="y")return o.d==="p"?.5:0;if(o.i!=="y")return o.i==="p"?1.5:1;return o.e==="y"?3:o.e==="p"?2.5:2}
-function stats(list){const r={c:0,p:0,x:0,w:0,na:0,none:0,total:list.length,m:0,r:0,paper:0,undoc:0};
-  list.forEach(c=>{const s=dst(c.id);if(s)r[s]++;else r.none++;const a=appOf(c.id).v;if(a==="m")r.m++;if(a==="r")r.r++;if(isPaper(c.id))r.paper++;if(isUndoc(c.id))r.undoc++});
+function stats(list){const r={c:0,p:0,x:0,w:0,na:0,none:0,total:list.length,m:0,r:0,u:0,paper:0,undoc:0,eff:0,prelim:!scopeReady()};
+  list.forEach(c=>{const s=dst(c.id);if(s)r[s]++;else r.none++;const a=appOf(c.id).v;if(a==="m")r.m++;if(a==="r")r.r++;if(a==="u")r.u++;if(s==="c"&&C(c.id).e==="y")r.eff++;if(isPaper(c.id))r.paper++;if(isUndoc(c.id))r.undoc++});
   r.app=r.total-r.na;r.done=r.c+r.p+r.x;r.comp=r.done?Math.round(r.c/r.done*1000)/10:null;return r}
 // ===== Gaps & roadmap =====
+// scope is complete when the entity type is set and every applicability question is answered
+const scopeMissing=()=>COND.filter(q=>!S.cfg.cond[q.k]).length;
+const scopeReady=()=>!!S.cfg.type&&scopeMissing()===0;
 function isGap(id){const s=dst(id);return s==="p"||s==="x"}
-function score(id){const c=BY[id],o=C(id),a=appOf(id).v;return ({H:3,M:2,L:1}[o.imp||"M"])*2+(FOUND.has(c.sub)?2:0)+(a==="m"?2:0)+(c.kind==="doc"?1:0)-({S:0,M:1,L:2}[o.eff||"M"])}
+function score(id){const c=BY[id],o=C(id),a=appOf(id).v;return ({H:3,M:2,L:1}[o.imp||"M"])*2+(FOUND.has(c.sub)?2:0)+(a==="m"||a==="u"?2:0)+(c.kind==="doc"?1:0)-({S:0,M:1,L:2}[o.eff||"M"])}
 function phaseOf(id){const o=C(id);if(o.ph)return +o.ph;const s=score(id);return s>=8?1:s>=5?2:3}
 function depOf(id){const c=BY[id];if(c.kind==="doc")return null;const d=SUBBY[c.sub].c.find(x=>x.kind==="doc"&&x.id!==id);if(!d)return null;return dst(d.id)==="c"?null:d.id}
 function missingLayer(id){const o=C(id);if(o.d!=="y")return "التوثيق";if(o.i!=="y")return "التطبيق";if(o.e!=="y")return "الفاعلية";return ""}
@@ -101,18 +106,18 @@ function canCol(col,id){const r=role();if(r==="lead")return true;if(r==="viewer"
   if(["cfg","team","snaps","fw","reports"].includes(col))return false;
   if((col==="ctl"||col==="sub")&&id){const d=myDoms();if(d){const dom=(BY[id]||SUBBY[id]||{}).dom;return d.includes(dom)}}return true}
 const fsAttr=(col,id)=>canCol(col,id)?"":"disabled";
-function logEv(what,id,extra){if(U.demo||!U.db)return;try{U.db.collection("log").doc(uid()).set(Object.assign({at:Date.now(),by:U.me||"",what,id:id||""},extra||{})).catch(()=>{})}catch(e){}}
+function logEv(what,id,extra){if(U.demo)return;if(!U.db){if(typeof logLocal==="function")logLocal(what,id,extra);return}try{U.db.collection("log").doc(uid()).set(Object.assign({at:Date.now(),by:U.me||"",what,id:id||""},extra||{})).catch(()=>{})}catch(e){}}
 
 // ===== Persistence (shared db when available, else this browser) =====
 let lsT=null;const wq={},wt={};
-function saveLocal(){if(U.demo||U.supa)return;clearTimeout(lsT);lsT=setTimeout(()=>{if(typeof secSave==="function"&&secSave())return;try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}},300)}
+function saveLocal(){if(U.demo||U.supa)return;clearTimeout(lsT);lsT=setTimeout(()=>{if(typeof secSave==="function"&&secSave())return;try{localStorage.setItem(LK,JSON.stringify(S));if(typeof saveDone==="function")saveDone(true)}catch(e){if(typeof saveDone==="function")saveDone(false,e)}},300)}
 function persist(col,id){if(U.demo)return;if(!U.db){const o=col==="cfg"?S.cfg:S[col]&&S[col][id];if(o&&typeof o==="object"){o._at=Date.now();if(U.tsMe)o._by=U.tsMe}if(typeof tsTouch==="function")tsTouch()}if(U.db&&!canCol(col,id)){toast("ليست لديك صلاحية تعديل هذا الجزء. تواصل مع مدير التقييم.");return}saveLocal();if(!U.db)return;const p=col==="cfg"?"meta/cfg":col+"/"+id;wq[p]=1;clearTimeout(wt[p]);
   wt[p]=setTimeout(async()=>{const v=col==="cfg"?S.cfg:S[col][id];
     try{if(v==null)await U.db.doc(p).delete();else await U.db.doc(p).set(Object.assign({},v,{_by:U.me||"",_at:Date.now()}))}catch(e){writeErr(e)}finally{delete wq[p]}},650)}
 function writeErr(e){const c=e&&e.code;U.sync="warn";paintSync();toast(c==="not_granted"?"لا تملك صلاحية التعديل على هذه النسخة المشتركة":"تعذّر الحفظ في التخزين المشترك؛ بقي التعديل محفوظًا في هذا المتصفح")}
 // per-field edit time (standalone only), so team files merge field by field
 const stampF=(o,k)=>{if(U.db||U.demo)return;o._f=Object.assign({},o._f,{[k]:Date.now()})};
-function setF(col,id,k,v){if(col==="cfg"){if(k.includes(".")){const [a,b]=k.split(".");S.cfg[a]=Object.assign({},S.cfg[a],{[b]:v});stampF(S.cfg,a)}else{S.cfg[k]=v;stampF(S.cfg,k)}persist("cfg");return}const o=S[col][id]=S[col][id]||{};if(v===""||v==null)delete o[k];else o[k]=v;stampF(o,k);persist(col,id)}
+function setF(col,id,k,v){if(col==="cfg"){if(k.includes(".")){const [a,b]=k.split(".");S.cfg[a]=Object.assign({},S.cfg[a],{[b]:v});stampF(S.cfg,a)}else{S.cfg[k]=v;stampF(S.cfg,k)}persist("cfg");if(!U.db&&typeof logEdit==="function")logEdit("cfg","",k);return}const o=S[col][id]=S[col][id]||{};if(v===""||v==null)delete o[k];else o[k]=v;stampF(o,k);persist(col,id);if(!U.db&&typeof logEdit==="function")logEdit(col,id,k)}
 function putDoc(col,id,val){if(val==null)delete S[col][id];else S[col][id]=val;persist(col,id)}
 const clean=o=>{const x=Object.assign({},o);delete x._by;delete x._at;return x};
 function startDb(db){U.db=db;U.sync="live";let got=0;const tm=setTimeout(()=>{if(!got){U.sync="warn";paintSync()}},10000);
@@ -130,7 +135,7 @@ function startDb(db){U.db=db;U.sync="live";let got=0;const tm=setTimeout(()=>{if
 const editing=()=>{const a=document.activeElement;return !!(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))};
 function softRender(){if(editing()){U.dirty=true;return}render()}
 document.addEventListener("focusout",()=>setTimeout(()=>{if(U.dirty&&!editing()){U.dirty=false;render()}},0));
-function paintSync(){const e=$("#sync");if(!e)return;const m=U.demo?["warn","وضع المثال — لا يُحفظ شيء"]:U.db?(U.sync==="live"?["live","محفوظ في قاعدة البيانات"]:["warn","قاعدة البيانات لا تستجيب"]):(window.claude?["warn","غير متصل بقاعدة البيانات"]:["","محفوظ في هذا المتصفح فقط"]);e.className="sync "+m[0];e.innerHTML=`<i></i><span class="rf-txt">${m[1]}</span>`}
+function paintSync(){const e=$("#sync");if(!e)return;const m=U.demo?["warn","وضع المثال — لا يُحفظ شيء"]:U.db?(U.sync==="live"?["live","محفوظ في قاعدة البيانات"]:["warn","قاعدة البيانات لا تستجيب"]):(window.claude?["warn","غير متصل بقاعدة البيانات"]:U.saveErr?["bad","لم يُحفظ آخر تعديل"]:U.locked?["warn","مقفل"]:["",U.savedAt?"محفوظ في هذا المتصفح · "+U.savedAt.toTimeString().slice(0,5):"محفوظ في هذا المتصفح فقط"]);e.className="sync "+m[0];e.innerHTML=`<i></i><span class="rf-txt">${m[1]}</span>`}
 
 // Plain browser download, used when the page runs as a standalone file (no Claude viewer).
 function dlFile(name,blob){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}

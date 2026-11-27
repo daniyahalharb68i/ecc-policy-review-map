@@ -1,13 +1,13 @@
 // ===== Standalone version: no database. Visits are counted with GoatCounter (no cookies, no personal data). =====
 // Only the page name and an optional, opt-in list of control IDs with gaps are sent. Never names, emails, entity data or text.
-const GC_URL="https://ecc-map.goatcounter.com/count",GC_JS="https://gc.zgo.at/count.js";
+const GC_URL="https://ecc-map.goatcounter.com/count",GC_JS="https://gc.zgo.at/count.v4.js";
 const CLOUD=()=>!!window.claude;
 function vAdmin(){return ""}
 function sbOpen(){}
 let gcReady=null,gcLast="";
-function gcLoad(){if(gcReady||window.claude)return gcReady;
+function gcLoad(){if(window.__TEST__)return Promise.resolve(false);if(gcReady||window.claude)return gcReady;
   window.goatcounter={no_onload:true,allow_local:false};
-  gcReady=new Promise(ok=>{const s=document.createElement("script");s.async=true;s.src=GC_JS;s.dataset.goatcounter=GC_URL;s.onload=()=>ok(true);s.onerror=()=>ok(false);document.head.appendChild(s)});return gcReady}
+  gcReady=new Promise(ok=>{const s=document.createElement("script");s.async=true;s.integrity=SRI[GC_JS];s.crossOrigin="anonymous";s.src=GC_JS;s.dataset.goatcounter=GC_URL;s.onload=()=>ok(true);s.onerror=()=>ok(false);document.head.appendChild(s)});return gcReady}
 function gcCount(path,title,event){if(window.claude)return;gcLoad().then(ok=>{try{if(ok&&window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path,title:title||path,event:!!event})}catch(e){}})}
 // one page view per screen the visitor opens
 function guestTrack(){if(window.claude||U.demo)return;if(gcLast===U.tab)return;gcLast=U.tab;gcCount("/"+U.tab,(HEAD[U.tab]||[U.tab])[0])}

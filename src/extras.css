@@ -169,3 +169,11 @@ footer .contact svg{width:16px;height:16px;fill:currentColor}
 .dd-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--sage),var(--ok));border-radius:5px}.dd-v{min-width:48px;text-align:end}
 @media(max-width:600px){.dd-row{grid-template-columns:1fr auto}.dd-bar{grid-column:1/-1;grid-row:2}}
 .cmp-t .up{color:var(--ok)}.cmp-t .down{color:var(--bad)}.cmp-t tr.tot td{border-top:2px solid var(--line)}
+
+.pill.a-u::before{background:var(--muted);opacity:.6}
+.banner.bad{background:color-mix(in srgb,var(--bad) 14%,var(--surface));border-color:color-mix(in srgb,var(--bad) 45%,var(--line))}
+.sync.bad i{background:var(--bad)}.sync.bad{color:var(--bad)}
+.ab{margin-top:12px}.ab summary{cursor:pointer;font-weight:500}.ab-l{list-style:none;padding:0;margin:6px 0;display:grid;gap:6px}.ab-l li{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+.flag.eff{background:color-mix(in srgb,var(--sage) 18%,transparent);color:var(--muted);border:1px dashed color-mix(in srgb,var(--sage) 60%,var(--line))}
+.ua{margin-bottom:10px}.ua .row{gap:6px;flex-wrap:wrap;margin-top:4px}
