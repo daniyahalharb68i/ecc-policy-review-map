@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-/noEXHiLaoab6+XY8UpTC1JVxo0/6fJw+g88Cim76NY=' 'sha256-3iFKlR54OjEsv6lcJ8Tp+hb9TQuUnGfVwEseRZjYUHo=' https://cdnjs.cloudflare.com https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://ecc-map.goatcounter.com; connect-src 'self' https://ecc-map.goatcounter.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; worker-src 'self' blob: https://cdnjs.cloudflare.com; manifest-src 'self'; media-src 'self' blob:; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><meta name="referrer" content="no-referrer"><style>:root{color-scheme:light}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>خارطة مراجعة سياسات ECC</title>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-7SNR5CGwHtyu4etyZbsxoe8kI6hj+c0gUqssCMHUJ20=' 'sha256-tsZIkr8mLPkY4+88gGjRBhY2nZkJT0ire8+KscL+qi8=' https://cdnjs.cloudflare.com https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://ecc-map.goatcounter.com; connect-src 'self' https://ecc-map.goatcounter.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; worker-src 'self' blob: https://cdnjs.cloudflare.com; manifest-src 'self'; media-src 'self' blob:; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><meta name="referrer" content="no-referrer"><style>:root{color-scheme:light}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>خارطة مراجعة سياسات ECC</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="author" content="Daniyah Alharbi">
 <meta name="copyright" content="© 2026 Daniyah Alharbi">
@@ -761,6 +761,15 @@ footer .contact svg{width:16px;height:16px;fill:currentColor}
 .flag.eff{background:color-mix(in srgb,var(--sage) 18%,transparent);color:var(--muted);border:1px dashed color-mix(in srgb,var(--sage) 60%,var(--line))}
 .ua{margin-bottom:10px}.ua .row{gap:6px;flex-wrap:wrap;margin-top:4px}
 
+details.priv-note{background:transparent;border:0;padding:0;margin-top:10px}
+details.priv-note summary{cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-weight:500;font-size:.86rem;list-style:none}
+details.priv-note summary::-webkit-details-marker{display:none}
+details.priv-note summary:hover{text-decoration:underline;text-underline-offset:3px}
+details.priv-note[open]{padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:color-mix(in srgb,var(--ok) 7%,transparent)}
+details.priv-note[open] summary{margin-bottom:6px}
+details.priv-note p{margin:4px 0;font-size:.84rem;line-height:1.8}
+details.priv-note ol{margin:4px 0;padding-inline-start:20px;font-size:.84rem;line-height:1.8}
+
 /* ===== Forest & copper design system (style reference: segmentsix.de; own implementation) =====
    Dark forest is the default; the theme button switches to the light "paper" variant.
    Type: Inter Tight (Latin) + IBM Plex Sans Arabic. Headlines regular weight; tight tracking for Latin only. */
@@ -883,7 +892,15 @@ button.kpi:hover,.gcard:hover{border-color:color-mix(in srgb,var(--accent) 55%,v
     <footer><b>مصادر المحتوى:</b> نصوص الضوابط والأهداف من النسختين العربية والإنجليزية لوثيقة ECC-2:2024 الصادرة عن الهيئة الوطنية للأمن السيبراني، والإحالات إلى CCC من نص وثيقة CCC-2:2024 الإنجليزية، والمخرجات المتوقعة وإرشادات التطبيق من «الدليل الإرشادي لتطبيق الضوابط الأساسية» GECC-2:2026 (النسخة الإنجليزية). كل حكم في الأداة يحمل وسم مصدره:
       <span class="tag off">نص رسمي</span> <span class="tag der">مستنَد إلى نص الضابط</span> <span class="tag meth">منهجية الأداة، غير رسمية</span> <span class="tag ai">مقترح ذكاء اصطناعي</span>.
       الأداة لا تمثل الهيئة ولا تحل محل أدوات التقييم الرسمية.
-      <div class="priv-note"><b>خصوصيتك:</b> تقييمك وملفاتك ونص سياساتك تبقى على جهازك ولا تُرسل إلى أي خادم. <b>ما يغادر جهازك فقط:</b> (1) عند فتح الأداة يُحمّل المتصفح المكتبات من cdnjs والخطوط من Google Fonts، فيصلهم عنوان IP الخاص بك كأي موقع؛ (2) عدّاد الزيارات GoatCounter يستلم اسم الصفحة التي تفتحها ونوع المتصفح وحجم الشاشة والدولة التقريبية، دون ملفات تعريف ارتباط ودون اسم أو بريد؛ (3) أرقام الضوابط فقط، إذا اخترت بنفسك المشاركة في «مؤشر الفجوات العام»؛ (4) ما تنسخه أنت بنفسك إلى مساعد ذكاء اصطناعي.</div>
+      <details class="priv-note" id="privacy"><summary><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="stroke:currentColor;fill:none;stroke-width:1.9;vertical-align:-2px"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg> بيان الخصوصية</summary>
+        <p>تقييمك وملفاتك ونص سياساتك تبقى على جهازك ولا تُرسل إلى أي خادم.</p>
+        <p><b>ما يغادر جهازك فقط:</b></p>
+        <ol>
+          <li>عند فتح الأداة يُحمّل المتصفح المكتبات من cdnjs والخطوط من Google Fonts، فيصلهم عنوان IP الخاص بك كأي موقع.</li>
+          <li>عدّاد الزيارات GoatCounter يستلم اسم الصفحة التي تفتحها ونوع المتصفح وحجم الشاشة والدولة التقريبية، دون ملفات تعريف ارتباط ودون اسم أو بريد.</li>
+          <li>أرقام الضوابط فقط، إذا اخترت بنفسك المشاركة في «مؤشر الفجوات العام».</li>
+          <li>ما تنسخه أنت بنفسك إلى مساعد ذكاء اصطناعي.</li>
+        </ol></details>
       <div class="nca-links"><b>الوثائق الرسمية على موقع الهيئة:</b> <a data-nca="ecc" target="_blank" rel="noopener" href="https://nca.gov.sa/ar/regulatory-documents/controls-list/ecc/">الضوابط الأساسية ECC-2:2024 ودليلها الإرشادي <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" style="stroke:currentColor;fill:none;stroke-width:2;vertical-align:-1px"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a> <a data-nca="ccc" target="_blank" rel="noopener" href="https://nca.gov.sa/ar/regulatory-documents/controls-list/ccc/">ضوابط الحوسبة السحابية CCC-2:2024 وأدلتها <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" style="stroke:currentColor;fill:none;stroke-width:2;vertical-align:-1px"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></div>
       <div class="copy"><span>© 2026</span><b>Daniyah Alharbi</b><span>جميع الحقوق محفوظة.</span></div>
       <div class="contact" aria-label="تواصل مع Daniyah Alharbi">
@@ -1391,6 +1408,13 @@ Object.assign(I18N.d,{"استكمال قائمة المخرجات (الدليل 
 
 Object.assign(I18N.d,{"مسارات الشبكة والحسابات":"Network paths and accounts","المعرّفات الداخلية":"Internal identifiers","أسماء بعد الألقاب":"Names after titles","تصدير مع حجب الصفحات الممسوحة":"Export with scanned pages withheld","المحتوى أكبر من # ميجابايت":"Content is larger than # MB",
 "خصوصيتك:":"Your privacy:","ما يغادر جهازك فقط:":"The only things that leave your device:"});
+
+Object.assign(I18N.d,{"بيان الخصوصية":"Privacy notice","تقييمك وملفاتك ونص سياساتك تبقى على جهازك ولا تُرسل إلى أي خادم.":"Your assessment, files and policy text stay on your device and are not sent to any server.",
+"ما يغادر جهازك فقط:":"The only things that leave your device:",
+"عند فتح الأداة يُحمّل المتصفح المكتبات من cdnjs والخطوط من Google Fonts، فيصلهم عنوان IP الخاص بك كأي موقع.":"When the tool opens, the browser loads libraries from cdnjs and fonts from Google Fonts, so they receive your IP address, as with any website.",
+"عدّاد الزيارات GoatCounter يستلم اسم الصفحة التي تفتحها ونوع المتصفح وحجم الشاشة والدولة التقريبية، دون ملفات تعريف ارتباط ودون اسم أو بريد.":"The GoatCounter visit counter receives the page you open, the browser type, screen size and approximate country, with no cookies and no name or email.",
+"أرقام الضوابط فقط، إذا اخترت بنفسك المشاركة في «مؤشر الفجوات العام».":"Control IDs only, if you choose to contribute to the “public gap index”.",
+"ما تنسخه أنت بنفسك إلى مساعد ذكاء اصطناعي.":"Whatever you copy yourself into an AI assistant."});
 </script>
 <script>document.documentElement.lang="ar";document.documentElement.dir="rtl";
 // ===== Index =====
@@ -1626,7 +1650,7 @@ function renderNav(){const g=gapList().filter(x=>x.ph===1).length,late=Object.va
   const t=ETYPES.find(x=>x[0]===S.cfg.type);$("#ent").innerHTML=`<b>${esc(S.cfg.entity||"جهة بلا اسم")}</b>${t?esc(t[1])+" · "+(OBLIG.has(t[0])?"ملزمة بالضوابط":"غير ملزمة بـ ECC"):"النطاق غير محدد بعد"}${U.db&&!U.demo?`<span class="who"><span data-notr>${esc(U.myName||"")}</span> · <span>${ROLES[role()][0]}</span></span>`:""}`;
   paintSync()}
 function render(){
-  const y=window.scrollY;renderNav();const h=HEAD[U.tab];$("#ptitle").textContent=h[0];$("#psub").textContent=h[1];{const L=NAV.flatMap(g=>g[1].map(x=>[x[0],g[0]])),i=L.findIndex(x=>x[0]===U.tab),pe=$("#peye");if(pe)pe.innerHTML=i<0?"":`${esc(L[i][1])}<span class="num">${String(i+1).padStart(2,"0")} — ${String(L.filter(x=>x[0]!=="admin").length).padStart(2,"0")}</span>`}
+  const y=window.scrollY;renderNav();const h=HEAD[U.tab];$("#ptitle").textContent=h[0];$("#psub").textContent=h[1];{const L=NAV.flatMap(g=>g[1].map(x=>[x[0],g[0]])),i=L.findIndex(x=>x[0]===U.tab),pe=$("#peye");if(pe)pe.innerHTML=i<0?"":`${esc(L[i][1])}<span class="num" dir="ltr">${String(i+1).padStart(2,"0")} — ${String(L.filter(x=>x[0]!=="admin").length).padStart(2,"0")}</span>`}
   const V={home:vHome,scope:vScope,review:vReview,ana:vAna,road:vRoad,audit:vAudit,docs:vDocs,map:vMap,snaps:vSnaps,report:vReport,team:vTeam,admin:vAdmin,risk:vRisk}[U.tab];
   let top="";if(U.demo)top+=`<div class="banner demo"><span><b>وضع المثال.</b> بيانات توضيحية لجهة افتراضية، لا تُحفظ ولا تمسّ تقييمك.</span><button class="btn sm quiet" data-act="demo">العودة إلى تقييمي</button></div>`;
   if(!U.demo&&U.db&&U.localCopy&&!U.localDone&&!Object.keys(S.ctl).length)top+=`<div class="banner info"><span>وجدنا تقييمًا محفوظًا في هذا المتصفح من قبل. هل تنقله إلى التخزين المشترك؟</span><span class="row"><button class="btn sm" data-act="pushlocal">نقل البيانات</button><button class="btn sm quiet" data-act="droplocal">تجاهل</button></span></div>`;

@@ -234,3 +234,10 @@ Object.assign(I18N.d,{"استكمال قائمة المخرجات (الدليل 
 
 Object.assign(I18N.d,{"مسارات الشبكة والحسابات":"Network paths and accounts","المعرّفات الداخلية":"Internal identifiers","أسماء بعد الألقاب":"Names after titles","تصدير مع حجب الصفحات الممسوحة":"Export with scanned pages withheld","المحتوى أكبر من # ميجابايت":"Content is larger than # MB",
 "خصوصيتك:":"Your privacy:","ما يغادر جهازك فقط:":"The only things that leave your device:"});
+
+Object.assign(I18N.d,{"بيان الخصوصية":"Privacy notice","تقييمك وملفاتك ونص سياساتك تبقى على جهازك ولا تُرسل إلى أي خادم.":"Your assessment, files and policy text stay on your device and are not sent to any server.",
+"ما يغادر جهازك فقط:":"The only things that leave your device:",
+"عند فتح الأداة يُحمّل المتصفح المكتبات من cdnjs والخطوط من Google Fonts، فيصلهم عنوان IP الخاص بك كأي موقع.":"When the tool opens, the browser loads libraries from cdnjs and fonts from Google Fonts, so they receive your IP address, as with any website.",
+"عدّاد الزيارات GoatCounter يستلم اسم الصفحة التي تفتحها ونوع المتصفح وحجم الشاشة والدولة التقريبية، دون ملفات تعريف ارتباط ودون اسم أو بريد.":"The GoatCounter visit counter receives the page you open, the browser type, screen size and approximate country, with no cookies and no name or email.",
+"أرقام الضوابط فقط، إذا اخترت بنفسك المشاركة في «مؤشر الفجوات العام».":"Control IDs only, if you choose to contribute to the “public gap index”.",
+"ما تنسخه أنت بنفسك إلى مساعد ذكاء اصطناعي.":"Whatever you copy yourself into an AI assistant."});
