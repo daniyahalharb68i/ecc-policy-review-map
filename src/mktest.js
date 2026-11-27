@@ -6,7 +6,7 @@ const fs=require('fs'),crypto=require('crypto'),B=process.argv[2];
 const h=fs.readFileSync(B+'/out/index.html','utf8').replace(/\r\n?/g,"\n");
 const hashes=[...h.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m=>"'sha256-"+crypto.createHash('sha256').update(m[1],'utf8').digest('base64')+"'");
 const csp=["default-src 'self'",
-  "script-src 'self' "+hashes.join(" ")+" https://cdnjs.cloudflare.com https://gc.zgo.at",
+  "script-src 'self' "+hashes.join(" ")+" https://cdnjs.cloudflare.com https://gc.zgo.at https://cdn.jsdelivr.net/npm/html2canvas-pro@2.6.5/dist/html2canvas-pro.min.js",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com data:",
   "img-src 'self' data: blob: https://ecc-map.goatcounter.com",
