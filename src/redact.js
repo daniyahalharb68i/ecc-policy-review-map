@@ -62,9 +62,9 @@ function vRedact(){const txt=U.anaTxt||"";const has=txt.length>0;const L=has?rdL
     <span class="act"><label class="rd-sw"><input type="checkbox" data-rd="on" ${rdOn()?"checked":""}> أخفِها قبل أي تحليل</label></span></h2>
    <p class="lead">قبل أن يخرج أي نص من جهازك، تستبدل الأداة المعلومات الحساسة برموز مثل <span class="mono">[بريد-1]</span>. التحليل يرى الرموز فقط، ثم تُعاد الأسماء الحقيقية في النتائج على جهازك.</p>
    <div class="rd-grid">
-    <div class="box"><h4>ما تكتشفه الأداة تلقائيًا</h4><div class="chk">${RD_TYPES.map(([k,l])=>`<label class="${U.rd.types[k]?"on":""}"><input type="checkbox" data-rd="type" data-v="${k}" ${U.rd.types[k]?"checked":""}>${l}</label>`).join("")}</div>
+    <div class="box"><h3>ما تكتشفه الأداة تلقائيًا</h3><div class="chk">${RD_TYPES.map(([k,l])=>`<label class="${U.rd.types[k]?"on":""}"><input type="checkbox" data-rd="type" data-v="${k}" ${U.rd.types[k]?"checked":""}>${l}</label>`).join("")}</div>
      <p class="note" style="margin:8px 0 0">اسم الجهة من «النطاق والانطباق» يُخفى تلقائيًا أيضًا.</p></div>
-    <div class="box"><h4>أضف كلمة تخفيها بنفسك</h4>
+    <div class="box"><h3>أضف كلمة تخفيها بنفسك</h3>
      <div class="rd-add"><input id="rd-val" placeholder="الكلمة أو العبارة، مثل اسم نظام أو موظف" autocomplete="off"><input id="rd-lab" placeholder="الاسم البديل، مثل: النظام المالي" autocomplete="off"><button class="btn sm" data-rd="add">إخفاء</button></div>
      <p class="note" style="margin:6px 0 0">أو ظلّل أي نص في المعاينة أدناه بالماوس أو بإصبعك، واختر له اسمًا.</p>
      ${U.rd.terms.length?`<div class="rd-terms">${U.rd.terms.map((t,i)=>`<span class="tag">${esc(t.val)} ← [${esc(t.label||"مخفي")}]<button class="rd-x" data-rd="delterm" data-v="${i}" aria-label="إزالة">×</button></span>`).join("")}</div>`:""}</div></div>

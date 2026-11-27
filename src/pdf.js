@@ -27,6 +27,7 @@ function reportPages(lang,no,kind){
       <div style="height:5px;width:96px;border-radius:3px;background:linear-gradient(90deg,#945B46,#B7896F);margin:14px 0 26px"></div>
       <h1 style="font-family:'Inter Tight','IBM Plex Sans Arabic',sans-serif;font-size:31px;line-height:1.3;margin:0 0 10px;font-weight:500;color:#1A382B">${(kind==="exec"?R("التقرير التنفيذي: الالتزام بالضوابط الأساسية للأمن السيبراني","Executive report: Essential Cybersecurity Controls compliance"):R("تقرير مراجعة الالتزام بالضوابط الأساسية للأمن السيبراني","Essential Cybersecurity Controls Compliance Review Report"))}</h1>
       <div style="font-size:15px;color:#3b4757">ECC-2:2024</div>
+      <div style="margin-top:10px;font-size:10.5px;color:#5b6676;line-height:1.7;max-width:560px">${R("تقرير مُعدّ بأداة مستقلة لأغراض المراجعة الداخلية. لا يمثّل الهيئة الوطنية للأمن السيبراني، ولا يُعد تقييمًا رسميًا صادرًا عنها أو بديلًا عن أدوات التقييم الرسمية.","Prepared with an independent tool for internal review. It does not represent the National Cybersecurity Authority and is not an official NCA assessment or a substitute for official assessment tools.")}</div>
       <div style="margin-top:40px;font-size:22px;font-weight:600">${esc(c.entity||R("اسم الجهة","Entity name"))}</div></div>
     <div>${tbl([R("البند","Item"),R("القيمة","Value")],[[R("رقم التقرير","Report number"),no],[R("الإصدار","Version"),esc(rp.ver||"1.0")],[R("تاريخ التقييم","Assessment date"),date],[R("تاريخ الإصدار","Issue date"),today()],[R("التصنيف","Classification"),`<b>${clsT}</b>`]])}
       <div style="margin-top:22px">${tbl([R("الدور","Role"),R("الاسم","Name"),R("التوقيع","Signature"),R("التاريخ","Date")],[[R("أعدّه","Prepared by"),esc(rp.prep||c.assessor||""),"",""],[R("راجعه","Reviewed by"),esc(rp.rev||""),"",""],[R("اعتمده","Approved by"),esc(rp.appr||""),"",""]].map(r=>r.map((x,i)=>i===2||i===3?`<div style="height:26px"></div>`:x)))}</div><div style="margin-top:16px;font-size:9.5px;color:#7b8e8a">${R("أُعدّ باستخدام أداة «خارطة مراجعة سياسات ECC» — © 2026 Daniyah Alharbi. جميع الحقوق محفوظة.","Prepared with the ECC Policy Review Map — © 2026 Daniyah Alharbi. All rights reserved.")}</div></div></div>`});
@@ -70,8 +71,8 @@ async function makePDF(kind){kind=kind==="exec"?"exec":"";const lang=U.repLang||
   try{if(document.fonts&&document.fonts.ready)await document.fonts.ready;
     const pages=reportPages(lang,no,kind);const pdf=new window.jspdf.jsPDF(Object.assign({unit:"mm",format:"a4",compress:true},U.pw?{encryption:{userPassword:U.pw,ownerPassword:U.pw+"#"+uid(),userPermissions:["print"]}}:{}));
     for(let i=0;i<pages.length;i++){U.pdfMsg=`${i+1} / ${pages.length}`;const m=$("#pdfmsg");if(m)m.textContent=U.pdfMsg;
-      host.innerHTML=plainAr(pages[i]);const cv=await window.html2canvas(host.firstElementChild,{scale:2,backgroundColor:"#ffffff",logging:false,useCORS:true});
-      if(i)pdf.addPage();pdf.addImage(cv.toDataURL("image/jpeg",0.92),"JPEG",0,0,210,297)}
+      host.innerHTML=plainAr(pages[i]);const cv=await window.html2canvas(host.firstElementChild,{scale:1.6,backgroundColor:"#ffffff",logging:false,useCORS:true});
+      if(i)pdf.addPage();pdf.addImage(cv.toDataURL("image/jpeg",0.88),"JPEG",0,0,210,297)}
     pdf.setProperties({title:`${no} ECC-2:2024`,subject:"ECC-2:2024 review report",creator:"ECC Policy Review Map — © 2026 Daniyah Alharbi",author:"ECC Policy Review Map (Daniyah Alharbi)"});
     const blob=pdf.output("blob"),name=`${no}-${lang}.pdf`;
     // archive in the database (editors only: assets need the admin level)

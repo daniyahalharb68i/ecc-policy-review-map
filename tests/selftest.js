@@ -110,6 +110,14 @@ await test("كل مكتبة خارجية لها بصمة سلامة (SRI)",()=>{
 await test("PDF ممسوح ضوئيًا (بلا نص) يُرصد ولا يُعامل كنسخة آمنة",async()=>{await loadScript(PDF_LIBS[1]);const d=new window.jspdf.jsPDF();d.setFillColor(40,40,40);d.rect(20,20,120,60,"F");
   const sc=await rdScanned(new File([d.output("blob")],"scan.pdf"));eq(sc,[1])});
 
+// ---------- 8) accessibility ----------
+cur="8. إمكانية الوصول";
+await test("كل حقل ظاهر له اسم مقروء في كل الصفحات",()=>{toggleDemo();const miss=[];try{for(const t of TABS_OK){U.tab=t;if(t==="review")U.open[SUBS[0].id]=true;render();
+  document.querySelectorAll("#view input:not([type=hidden]):not([type=file]),#view select,#view textarea").forEach(i=>{if(i.offsetParent&&!(i.labels&&i.labels.length||i.getAttribute("aria-label")||i.closest("label")))miss.push(t+":"+(i.id||i.type))})}}finally{toggleDemo();render()}
+  eq(miss,[])});
+await test("لا قفزات في ترتيب العناوين",()=>{toggleDemo();const bad=[];try{for(const t of TABS_OK){U.tab=t;render();let last=1;document.querySelectorAll("#view h1,#view h2,#view h3,#view h4").forEach(h=>{const l=+h.tagName[1];if(l>last+1)bad.push(t+":h"+last+"→h"+l);last=l})}}finally{toggleDemo();render()}eq(bad,[])});
+await test("رابط «تخطَّ إلى المحتوى» أول عنصر، ووصف القائمة يعود للعربية",()=>{ok(document.querySelector("body > a.skip, .skip"),"skip");setLang("en");setLang("ar");eq(document.querySelector("#nav").getAttribute("aria-label"),"أقسام الأداة")});
+
 // ---------- report ----------
 const pass=R.filter(r=>r[2]).length,fail=R.length-pass;
 const out=document.createElement("pre");out.id="test-results";out.dir="rtl";

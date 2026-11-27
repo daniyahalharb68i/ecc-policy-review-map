@@ -93,9 +93,6 @@ a{color:var(--accent)}
 .sbar{border-radius:3px}
 
 /* --- sign-in overlay, tour --- */
-#sbauth{background:radial-gradient(1000px 520px at 80% -10%,rgba(217,164,134,.2),transparent 60%),#10291F}
-#sbauth .sb-card{border-radius:8px;border:1px solid var(--line)}
-#sbauth .sb-banner{border-radius:8px 8px 0 0}
 #tour .hole{outline-color:#D9A486;border-radius:6px}
 #tour .tcard{border-radius:8px}
 

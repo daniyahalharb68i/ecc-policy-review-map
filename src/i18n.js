@@ -26,7 +26,7 @@ function applyLang(root){const en=U.lang==="en";document.documentElement.lang=en
 // Static shell text (footer, brand, rail buttons) is not re-rendered, so remember its original Arabic
 // and put it back before every language switch; otherwise English would stick after returning to Arabic.
 const SHELL_ORIG=[];
-(function(){document.querySelectorAll("footer, .brand, .rail-foot, .head .tag, #menu").forEach(root=>{
+(function(){document.querySelectorAll("footer, .brand, .rail-foot, .head .tag, #menu, #nav, .skip").forEach(root=>{
   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);while(w.nextNode())SHELL_ORIG.push([w.currentNode,"#text",w.currentNode.nodeValue]);
   [root,...root.querySelectorAll("[title],[aria-label],[placeholder]")].forEach(el=>["title","aria-label","placeholder"].forEach(a=>{if(el.hasAttribute&&el.hasAttribute(a))SHELL_ORIG.push([el,a,el.getAttribute(a)])}))})})();
 function restoreShell(){SHELL_ORIG.forEach(([n,k,v])=>{if(k==="#text")n.nodeValue=v;else n.setAttribute(k,v)})}

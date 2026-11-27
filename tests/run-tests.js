@@ -22,5 +22,5 @@ server.listen(0,"127.0.0.1",()=>{const url="http://localhost:"+server.address().
   if(open){console.log("Open "+url+" (Ctrl+C to stop)");return}
   const browsers=["C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe","C:/Program Files/Microsoft/Edge/Application/msedge.exe","C:/Program Files/Google/Chrome/Application/chrome.exe","/usr/bin/google-chrome","/usr/bin/chromium","/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"];
   const exe=browsers.find(b=>fs.existsSync(b));if(!exe){console.error("No Edge/Chrome found. Run with --open and use any browser.");finish(2)}
-  browser=spawn(exe,["--headless=new","--disable-gpu","--no-first-run","--no-default-browser-check","--user-data-dir="+prof,url],{stdio:"ignore"});
+  browser=spawn(exe,["--headless=new",...(process.env.CI?["--no-sandbox"]:[]),"--disable-gpu","--no-first-run","--no-default-browser-check","--user-data-dir="+prof,url],{stdio:"ignore"});
   setTimeout(()=>finish(2,"Timed out: the tests did not report back within 180 s."),180000)});

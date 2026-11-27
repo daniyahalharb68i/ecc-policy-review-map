@@ -605,35 +605,12 @@ a{color:var(--accent)}
 #tour .tstep{font-size:.74rem;color:var(--accent);font-weight:600}
 #tour .tbtns{display:flex;gap:6px;align-items:center;margin-top:6px}
 @media(prefers-reduced-motion:reduce){#view.enter{animation:none}#tour .hole{transition:none}}
-/* ===== Sign-in overlay & platform dashboard (standalone version) ===== */
-#sbauth{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:16px;background:radial-gradient(1200px 600px at 80% -10%,rgba(23,107,115,.35),transparent 60%),#101F35;overflow:auto}
-#sbauth .sb-card{width:min(420px,100%);background:var(--surface);color:var(--ink);border-radius:16px;padding:22px 22px 14px;box-shadow:0 30px 80px rgba(0,0,0,.4);display:grid;gap:10px;font-family:var(--body)}
-#sbauth .sb-brand{display:flex;gap:10px;align-items:center;margin-bottom:4px}
-#sbauth .sb-brand .mark{font-family:var(--display);font-weight:700;font-size:.72rem;background:#176B73;color:#fff;border-radius:8px;padding:7px 8px}
-#sbauth .sb-brand b{font-family:var(--display);color:var(--head)}
-#sbauth h2{margin:4px 0 0;font-family:var(--display);color:var(--head);font-size:1.2rem}
-#sbauth form{display:grid;gap:10px}
-#sbauth label{display:grid;gap:4px;font-size:.86rem;color:var(--muted)}
-#sbauth input{width:100%}
-#sbauth .note{margin:0}
-#sbauth .sb-msg{margin:0;padding:8px 10px;border-radius:8px;background:rgba(220,38,38,.1);color:#B91C1C;font-size:.86rem}
-#sbauth .sb-links{display:flex;gap:14px;flex-wrap:wrap}
-#sbauth .lnk{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font:inherit;font-size:.88rem;text-decoration:underline;text-underline-offset:3px}
-#sbauth .sb-local{font-size:.8rem;white-space:normal;line-height:1.5}
-#sbauth .sb-orgs{display:grid;gap:6px}
-#sbauth .sb-org{display:flex;justify-content:space-between;gap:10px;align-items:center;text-align:start;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;font:inherit;color:var(--ink)}
-#sbauth .sb-org:hover{border-color:var(--accent)}
-#sbauth .sb-org span{color:var(--muted);font-size:.8rem}
-#sbauth .sb-foot{margin:6px 0 0;text-align:center;color:var(--muted);font-size:.72rem}
+/* stat tiles (shared) */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
 .kpi{display:grid;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface2)}
 .kpi b{font-family:var(--display);font-size:1.6rem;color:var(--head)}
 .kpi span{color:var(--muted);font-size:.82rem}
-.adm-bars{width:100%;height:120px;display:block}
-.adm-bars rect{fill:var(--accent)}
-.adm-axis{display:flex;justify-content:space-between;color:var(--muted);font-size:.72rem;direction:ltr}
-.adm-list{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:.86rem}
-.adm-list li{display:flex;gap:8px;align-items:baseline}.adm-list li b{margin-inline-start:auto}
+
 
 .phx{margin:0 0 14px;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--surface2)}
 .phx summary{cursor:pointer;font-weight:600;color:var(--head);font-family:var(--display)}
@@ -662,16 +639,10 @@ a{color:var(--accent)}
 @media(max-width:600px){.pager{grid-template-columns:1fr 1fr}.pager .pg-n{display:none}.pager .pg{padding:8px 10px}.pager b{font-size:.85rem}}
 
 .brand img.mark.logo{width:38px;height:38px;flex:0 0 38px;padding:0;border-radius:10px;object-fit:cover;background:#05101C;box-shadow:0 0 0 1px rgba(47,163,173,.35),0 4px 14px rgba(23,107,115,.35)}
-#sbauth .sb-banner{display:block;width:calc(100% + 44px);margin:-22px -22px 4px;border-radius:16px 16px 0 0;aspect-ratio:800/330;object-fit:cover;background:#05101C}
-#sbauth .sb-brand{margin:0}
 
-.adm-bars rect.g{fill:#B8CBAA}
-.adm-leg{margin-top:6px}
 
 .ccc-who{display:grid;gap:4px;margin:0 0 12px;padding:10px 12px;border-radius:10px;background:var(--surface2);border:1px solid var(--line);font-size:.88rem;line-height:1.7}
 .ccc-en{margin-top:4px}.ccc-en summary{cursor:pointer;color:var(--muted);font-size:.78rem}.ccc-en p{margin:4px 0 0;color:var(--muted);font-size:.84rem;text-align:left}
-.adm-per{margin-inline-start:auto}
-#sbauth .sb-priv{font-size:.78rem;line-height:1.6}
 
 /* ===== sanitiser ===== */
 .rd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:12px}
@@ -770,6 +741,23 @@ details.priv-note[open] summary{margin-bottom:6px}
 details.priv-note p{margin:4px 0;font-size:.84rem;line-height:1.8}
 details.priv-note ol{margin:4px 0;padding-inline-start:20px;font-size:.84rem;line-height:1.8}
 
+/* ===== accessibility ===== */
+.box h3{margin:0 0 4px;font-size:.76rem;color:var(--muted);font-weight:500;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.bk h3,.ts-two h3{margin:0}
+.sub-hd{margin:0;font:inherit;font-size:inherit;font-weight:inherit;line-height:inherit;color:inherit}
+.skip{position:fixed;top:8px;inset-inline-start:8px;z-index:500;padding:10px 14px;border-radius:6px;background:var(--spark);color:var(--spark-ink);font-weight:600;transform:translateY(-200%);transition:transform .2s}
+.skip:focus{transform:none;outline:2px solid var(--head);outline-offset:2px}
+#view:focus{outline:none}
+@media (max-width:760px){ /* touch targets: at least 44 px */
+  .idb{min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center}
+  #view select,#view input:not([type=checkbox]):not([type=radio]):not([type=file]),#view .btn.sm{min-height:44px}
+  #view input[type=checkbox]{width:22px;height:22px}
+  .lnk{min-height:44px;display:inline-flex;align-items:center}}
+@media (max-width:760px){
+  #view .btn,#view .seg button,.pager .pg{min-height:44px}
+  #view .idb{min-height:44px!important;min-width:44px!important}
+  #view select,#view input[type=text],#view input[type=search],#view input[type=date],#view input[type=password],#view input[type=email],#view input:not([type]){min-height:44px!important}}
+
 /* ===== Forest & copper design system (style reference: segmentsix.de; own implementation) =====
    Dark forest is the default; the theme button switches to the light "paper" variant.
    Type: Inter Tight (Latin) + IBM Plex Sans Arabic. Headlines regular weight; tight tracking for Latin only. */
@@ -864,9 +852,6 @@ a{color:var(--accent)}
 .sbar{border-radius:3px}
 
 /* --- sign-in overlay, tour --- */
-#sbauth{background:radial-gradient(1000px 520px at 80% -10%,rgba(217,164,134,.2),transparent 60%),#10291F}
-#sbauth .sb-card{border-radius:8px;border:1px solid var(--line)}
-#sbauth .sb-banner{border-radius:8px 8px 0 0}
 #tour .hole{outline-color:#D9A486;border-radius:6px}
 #tour .tcard{border-radius:8px}
 
@@ -877,6 +862,7 @@ a{color:var(--accent)}
 button.kpi:hover,.gcard:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
 @media(prefers-reduced-motion:reduce){#view.enter{animation:none}.btn:hover{transform:none}}
 </style>
+<a class="skip" href="#view" data-skip>تخطَّ إلى المحتوى</a>
 <div class="app" dir="rtl">
   <aside class="rail" id="rail">
     <div class="brand"><img class="mark logo" src="data:image/webp;base64,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" alt="" aria-hidden="true" width="38" height="38"><div class="bt"><b>خارطة مراجعة سياسات ECC</b><span>NCA ECC-2:2024</span></div></div>
@@ -888,7 +874,7 @@ button.kpi:hover,.gcard:hover{border-color:color-mix(in srgb,var(--accent) 55%,v
   </aside>
   <div class="main"><div class="main-in">
     <header class="head"><div><span class="eyebrow" id="peye"></span><h1 id="ptitle"></h1><p id="psub"></p></div><span class="tag mono" title="مكونات أساسية · فرعية · ضوابط · ضوابط فرعية">4 · 28 · 108 · 92</span></header>
-    <main id="view"></main>
+    <main id="view" tabindex="-1"></main>
     <footer><b>مصادر المحتوى:</b> نصوص الضوابط والأهداف من النسختين العربية والإنجليزية لوثيقة ECC-2:2024 الصادرة عن الهيئة الوطنية للأمن السيبراني، والإحالات إلى CCC من نص وثيقة CCC-2:2024 الإنجليزية، والمخرجات المتوقعة وإرشادات التطبيق من «الدليل الإرشادي لتطبيق الضوابط الأساسية» GECC-2:2026 (النسخة الإنجليزية). كل حكم في الأداة يحمل وسم مصدره:
       <span class="tag off">نص رسمي</span> <span class="tag der">مستنَد إلى نص الضابط</span> <span class="tag meth">منهجية الأداة، غير رسمية</span> <span class="tag ai">مقترح ذكاء اصطناعي</span>.
       الأداة لا تمثل الهيئة ولا تحل محل أدوات التقييم الرسمية.
@@ -981,7 +967,7 @@ const I18N={d:{
 "حدّد نطاق الجهة وانطباق الضوابط":"Set the entity scope and control applicability","سجّل سياساتك ووثائقك المعتمدة":"Register your approved policies and documents","حلّل سياسة واحدة على الأقل مقابل الضوابط":"Analyze at least one policy against the controls","قيّم الطبقات الثلاث لنصف الضوابط المنطبقة على الأقل":"Assess the three layers for at least half of the applicable controls","عيّن مسؤولًا لكل فجوة في خارطة المعالجة":"Assign an owner to every gap in the roadmap","احفظ أول لقطة لتتبّع التقدّم":"Save a first snapshot to track progress",
 "تريد رؤية الأداة وهي تعمل أولًا؟":"Want to see the tool in action first?","استعرض مثالًا توضيحيًا":"View a demo","استعرض المثال":"View demo",
 "نسبة الالتزام (ملتزم ÷ المُقيَّم من المنطبق)":"Compliance rate (compliant ÷ assessed applicable)","متوسط النضج عبر الطبقات الثلاث":"Average maturity across the three layers",
-"استكمال قائمة المخرجات: # من # مخرجًا يتوقعها الدليل الإرشادي":"Deliverables checklist completion: # of # deliverables expected by the guide","التزام ورقي: موثّق وغير مطبّق":"Paper compliance: documented, not implemented","ممارسة مطبّقة غير موثقة":"Implemented but undocumented practice",
+"جاهزية الأدلة: # من # مخرجًا يتوقعها الدليل الإرشادي":"Evidence readiness: # of # deliverables expected by the guide","التزام ورقي: موثّق وغير مطبّق":"Paper compliance: documented, not implemented","ممارسة مطبّقة غير موثقة":"Implemented but undocumented practice",
 "فجوة مفتوحة، منها # في المرحلة الأولى":"open gaps, # in phase 1","إلزامي / موصى به / لا ينطبق":"Mandatory / recommended / not applicable",
 "من الورق إلى الواقع":"From paper to practice","الطبقات الثلاث":"Three layers","كم ضابطًا يصمد في كل طبقة؟ الفرق بين صفّين هو المسافة بين ما تقوله السياسات وما يحدث فعلًا.":"How many controls hold at each layer? The drop between two rows is the distance between what policies say and what actually happens.",
 "ضوابط منطبقة":"Applicable controls","قُيّمت":"Assessed","موثّقة":"Documented","موثّقة ومطبّقة":"Documented and implemented","فعّالة (تُراجَع وتُقاس)":"Effective (reviewed and measured)",
@@ -1164,10 +1150,10 @@ const I18N={d:{
 "حرجة":"Critical","عالية":"High","متوسطة":"Moderate","منخفضة":"Low","قيد التنفيذ":"In progress","منجزة":"Done","لم تبدأ":"Not started","حالة المعالجة":"Remediation status",
 "عرّف بجهتك":"Define your entity","النطاق وطبيعة العمل":"Scope and nature of work","قيّم الضوابط":"Assess the controls","ثلاث طبقات ودليل لكل طبقة":"Three layers with evidence for each","احصل على تقريرك":"Get your report","تقرير PDF رسمي وخارطة معالجة":"Official PDF report and remediation roadmap",
 "التزام الضوابط":"Controls compliance","# ملتزم من # مُقيَّم · # منطبق":"# compliant of # assessed · # applicable","نظرة على خطة المعالجة":"Action plan overview","تظهر هنا حالة معالجة الفجوات.":"Gap remediation status appears here.","# فجوة بلا مسؤول":"# gaps without an owner",
-"الجاهزية":"Readiness","استكمال قائمة المخرجات (الدليل الإرشادي)":"Deliverables checklist completion (implementation guide)","متوسط النضج (من #)":"Average maturity (of #)","أهم الفجوات":"Top gaps","الأولوية: منهجية الأداة":"Priority: tool method","كل الفجوات":"All gaps","الأولوية":"Priority","المعالجة":"Remediation","حالة الضوابط حسب المكوّن":"Control status by domain","تحقق":"Verify","تنبيه:":"Note:","خارج نطاق هذه الأداة":"Outside this tool's scope","هذه الأداة تغطي ECC-# فقط.":"This tool covers ECC-2:2024 only.",
+"الجاهزية":"Readiness","جاهزية الأدلة (الدليل الإرشادي)":"Evidence readiness (implementation guide)","متوسط النضج (من #)":"Average maturity (of #)","أهم الفجوات":"Top gaps","الأولوية: منهجية الأداة":"Priority: tool method","كل الفجوات":"All gaps","الأولوية":"Priority","المعالجة":"Remediation","حالة الضوابط حسب المكوّن":"Control status by domain","تحقق":"Verify","تنبيه:":"Note:","خارج نطاق هذه الأداة":"Outside this tool's scope","هذه الأداة تغطي ECC-# فقط.":"This tool covers ECC-2:2024 only.",
 "الإطار الإلزامي لجهات القطاع الخاص من غير ذات البنى التحتية الحساسة هو «ضوابط الأمن السيبراني لجهات القطاع الخاص من غير ذات البنى التحتية الحساسة» NCNICC-#.":"The mandatory framework for private-sector entities without CNI is the Cybersecurity Controls for Private-Sector Entities without CNI (NCNICC-1:2025).",
 "أصدرت الهيئة أيضًا «ضوابط الأمن السيبراني لجهات القطاع الخاص من غير ذات البنى التحتية الحساسة» NCNICC-#، وقد تكون ملزمة لجهتك. راجع الوثيقة الرسمية.":"NCA has also issued the Cybersecurity Controls for Private-Sector Entities without CNI (NCNICC-1:2025), which may be mandatory for your entity. Check the official document.",
-"القائمة":"Menu","استكمال قائمة المخرجات":"Deliverables checklist completion","اكتمال التقييم":"Assessment coverage","# ضابطًا ملتزمًا من # مُقيَّم":"# compliant controls of # assessed","متوسط النضج # من # · # التزام ورقي · # ممارسة غير موثقة":"Average maturity # of # · # paper compliance · # undocumented practices",
+"القائمة":"Menu","جاهزية الأدلة":"Evidence readiness","اكتمال التقييم":"Assessment coverage","# ضابطًا ملتزمًا من # مُقيَّم":"# compliant controls of # assessed","متوسط النضج # من # · # التزام ورقي · # ممارسة غير موثقة":"Average maturity # of # · # paper compliance · # undocumented practices",
 "ابدأ التقييم لتكتمل الصورة هنا":"Start the assessment to complete the picture here","حدّد نطاق الجهة، ثم قيّم الطبقات الثلاث لكل ضابط.":"Set the entity scope, then assess the three layers of each control.",
 "جميع الحقوق محفوظة.":"All rights reserved.","فكرة الأداة وتصميمها وتطويرها: Daniyah Alharbi.":"Concept, design and development: Daniyah Alharbi."},
 p:{"لم تُربط وثيقة بهذا المكوّن.":"No document is linked to this subdomain.","مثال لما يُتوقع:":"Example of what is expected:","حذف «":"Delete “","» من السجل؟":"” from the register?","قُرئ الملف:":"File read:","حرفًا ":"characters ","اقترح Claude":"Claude suggested","مكونًا. راجعها قبل التحليل.":"subdomains. Review them before analyzing.","حُدّثت طبقة التوثيق لـ":"Documentation layer updated for"," ضابطًا من نتيجة التحليل":" controls from the analysis result","سيُستبدل التقييم الحالي بالبيانات المستوردة":"The current assessment will be replaced by the imported data","سيُضبط «موثّق» لـ":"“Documented” will be set for","من نتيجة التحليل، ويُكتب اسم الوثيقة في دليل التوثيق. القيم الحالية لهذه الطبقة ستُستبدل.":"from the analysis result, and the document name is written as documentation evidence. Current values of this layer will be replaced.","استُورد":"Imported","، وتُجوهل":", skipped","سطرًا (رقم ECC غير صحيح أو بلا مصدر)":"lines (invalid ECC ID or no source)","نتيجة التحليل:":"Analysis result:","سياسة بلا اسم":"Unnamed policy"}};
@@ -1415,6 +1401,14 @@ Object.assign(I18N.d,{"بيان الخصوصية":"Privacy notice","تقييمك
 "عدّاد الزيارات GoatCounter يستلم اسم الصفحة التي تفتحها ونوع المتصفح وحجم الشاشة والدولة التقريبية، دون ملفات تعريف ارتباط ودون اسم أو بريد.":"The GoatCounter visit counter receives the page you open, the browser type, screen size and approximate country, with no cookies and no name or email.",
 "أرقام الضوابط فقط، إذا اخترت بنفسك المشاركة في «مؤشر الفجوات العام».":"Control IDs only, if you choose to contribute to the “public gap index”.",
 "ما تنسخه أنت بنفسك إلى مساعد ذكاء اصطناعي.":"Whatever you copy yourself into an AI assistant."});
+
+Object.assign(I18N.d,{"تخطَّ إلى المحتوى":"Skip to content","تصفية الضوابط":"Filter controls",
+"لم يُحدَّد نوع الجهة، فانطباق الضوابط «لم يُحدد بعد» والنسب ليست نهائية.":"The entity type isn't set, so applicability is “not yet determined” and percentages are not final.",
+"بقي # من أسئلة الانطباق، فانطباق الضوابط «لم يُحدد بعد» والنسب ليست نهائية.":"# applicability questions remain, so applicability is “not yet determined” and percentages are not final.",
+"المسؤول #":"Owner #","موعد المعالجة #":"Remediation due date #","حالة المعالجة #":"Remediation status #","المرحلة #":"Phase #","الاحتمالية #":"Likelihood #","الأثر #":"Impact #","المعالجة #":"Treatment #","وصف الخطر #":"Risk statement #","مبرر الاستثناء #":"Exception justification #","الإجراء البديل #":"Compensating measure #","معتمد الاستثناء #":"Exception approver #","تاريخ انتهاء الاستثناء #":"Exception expiry date #","ملاحظات #":"Notes #","دليل التوثيق #":"Documentation evidence #","دليل التطبيق #":"Implementation evidence #","دليل الفاعلية #":"Effectiveness evidence #","خطة المعالجة #":"Remediation plan #","الجهد #":"Effort #","الانطباق #":"Applicability #","سبب الانطباق #":"Applicability reason #","اسم الوثيقة #":"Document name #","الإصدار #":"Version #","تاريخ الاعتماد #":"Approval date #","دورة المراجعة بالأشهر #":"Review cycle in months #","اسم الجهة":"Entity name","تاريخ التقييم":"Assessment date","المقيّم":"Assessor","الملخص التنفيذي بالإنجليزية":"Executive summary in English",
+"تقرير مُعدّ بأداة مستقلة لأغراض المراجعة الداخلية. لا يمثّل الهيئة الوطنية للأمن السيبراني، ولا يُعد تقييمًا رسميًا صادرًا عنها أو بديلًا عن أدوات التقييم الرسمية.":"Prepared with an independent tool for internal review."});
+
+Object.assign(I18N.d,{"حجم العينة":"Sample size","طريقة اختيار العينة":"Sampling method","قارن من لقطة":"Compare from snapshot","قارن إلى لقطة":"Compare to snapshot"});
 </script>
 <script>document.documentElement.lang="ar";document.documentElement.dir="rtl";
 // ===== Index =====
@@ -1477,7 +1471,8 @@ const C=id=>S.ctl[id]||{};
 // ===== Applicability =====
 function ruleNA(c){for(const q of COND){if(!q.na)continue;const v=S.cfg.cond[q.k];if(!v||!q.na(v))continue;
   if((q.subs&&q.subs.includes(c.sub))||(q.ctls&&q.ctls.includes(c.id)))return q}return null}
-function appOf(id){const c=BY[id],o=C(id);
+function appOf(id){if(U._inRender){const m=U._rc.app||(U._rc.app={});return m[id]||(m[id]=appOf0(id))}return appOf0(id)}
+function appOf0(id){const c=BY[id],o=C(id);
   if(o.app)return {v:o.app,src:"manual",why:o.appWhy||""};
   const r=ruleNA(c);if(r)return {v:"na",src:"rule",why:r.trig};
   if(!S.cfg.type)return {v:"u",src:"unset",why:""};
@@ -1502,7 +1497,8 @@ function score(id){const c=BY[id],o=C(id),a=appOf(id).v;return ({H:3,M:2,L:1}[o.
 function phaseOf(id){const o=C(id);if(o.ph)return +o.ph;const s=score(id);return s>=8?1:s>=5?2:3}
 function depOf(id){const c=BY[id];if(c.kind==="doc")return null;const d=SUBBY[c.sub].c.find(x=>x.kind==="doc"&&x.id!==id);if(!d)return null;return dst(d.id)==="c"?null:d.id}
 function missingLayer(id){const o=C(id);if(o.d!=="y")return "التوثيق";if(o.i!=="y")return "التطبيق";if(o.e!=="y")return "الفاعلية";return ""}
-function gapList(){return CTLS.filter(c=>isGap(c.id)&&(!U.gm||appOf(c.id).v==="m")).map(c=>({c,ph:phaseOf(c.id),sc:score(c.id)})).sort((a,b)=>a.ph-b.ph||b.sc-a.sc||a.c.id.localeCompare(b.c.id,undefined,{numeric:true}))}
+function gapList(){if(U._inRender&&U._rc.gl&&U._rc.gm===U.gm)return U._rc.gl;const r=gapList0();if(U._inRender){U._rc.gl=r;U._rc.gm=U.gm}return r}
+function gapList0(){return CTLS.filter(c=>isGap(c.id)&&(!U.gm||appOf(c.id).v==="m")).map(c=>({c,ph:phaseOf(c.id),sc:score(c.id)})).sort((a,b)=>a.ph-b.ph||b.sc-a.sc||a.c.id.localeCompare(b.c.id,undefined,{numeric:true}))}
 // ===== Official implementation guide (GECC-2:2026) =====
 const GD=id=>GUIDE[id]||{t:[],g:[],d:[]};
 const gdHave=id=>{const n=GD(id).d.length;return (C(id).gd||[]).filter(i=>i<n).length};
@@ -1603,7 +1599,7 @@ function applyLang(root){const en=U.lang==="en";document.documentElement.lang=en
 // Static shell text (footer, brand, rail buttons) is not re-rendered, so remember its original Arabic
 // and put it back before every language switch; otherwise English would stick after returning to Arabic.
 const SHELL_ORIG=[];
-(function(){document.querySelectorAll("footer, .brand, .rail-foot, .head .tag, #menu").forEach(root=>{
+(function(){document.querySelectorAll("footer, .brand, .rail-foot, .head .tag, #menu, #nav, .skip").forEach(root=>{
   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);while(w.nextNode())SHELL_ORIG.push([w.currentNode,"#text",w.currentNode.nodeValue]);
   [root,...root.querySelectorAll("[title],[aria-label],[placeholder]")].forEach(el=>["title","aria-label","placeholder"].forEach(a=>{if(el.hasAttribute&&el.hasAttribute(a))SHELL_ORIG.push([el,a,el.getAttribute(a)])}))})})();
 function restoreShell(){SHELL_ORIG.forEach(([n,k,v])=>{if(k==="#text")n.nodeValue=v;else n.setAttribute(k,v)})}
@@ -1633,9 +1629,14 @@ const lm=(id,lg)=>{const o=C(id);return `<span class="lm ${lg?"lg":""}" title="�
 const flags=id=>({p:`<span class="flag eff" title="الطبقة الثالثة: فعّال جزئيًا">فاعلية جزئية</span>`,n:`<span class="flag eff" title="الطبقة الثالثة: غير فعّال">فاعلية غير مثبتة</span>`,u:`<span class="flag eff" title="لم تُقيَّم الطبقة الثالثة (الفاعلية) بعد">الفاعلية لم تُقيَّم</span>`}[effState(id)]||"")+(typeof excActive==="function"&&excActive(id)?`<span class="flag exc" title="${esc(C(id).exw||"")}">مستثنى${C(id).exu?" حتى "+C(id).exu:""}</span>`:"")+(isPaper(id)?`<span class="flag paper" title="موثّق في السياسة، ولا دليل على تطبيقه">التزام ورقي</span>`:"")+(isUndoc(id)?`<span class="flag undoc" title="يُطبَّق فعليًا دون توثيق معتمد">ممارسة غير موثقة</span>`:"");
 const seg=(arr,cur,act,id,k,cls)=>`<div class="seg ${cls||""}" role="group">${arr.map(o=>`<button type="button" class="${cur===o[0]?"on ":""}v-${o[0]}" data-act="${act}" data-id="${esc(id)}" data-k="${k}" data-v="${o[0]}" aria-pressed="${cur===o[0]}">${o[1]}</button>`).join("")}</div>`;
 const bind=(col,id,k)=>`data-b="${col}|${esc(id)}|${k}"`;
-const inp=(col,id,k,v,type,ph,idp)=>`<input id="${idp||("f-"+col+"-"+id+"-"+k)}" ${type?`type="${type}"`:""} ${bind(col,id,k)} value="${esc(v||"")}" ${ph?`placeholder="${esc(ph)}"`:""}>`;
-const ta=(col,id,k,v,ph)=>`<textarea id="f-${col}-${esc(id)}-${k}" ${bind(col,id,k)} ${ph?`placeholder="${esc(ph)}"`:""}>${esc(v||"")}</textarea>`;
-const sel=(col,id,k,opts,cur,ph)=>`<select id="f-${col}-${esc(id)}-${k}" ${bind(col,id,k)}>${ph!=null?`<option value="">${ph}</option>`:""}${opts.map(o=>`<option value="${o[0]}" ${String(cur||"")===String(o[0])?"selected":""}>${o[1]}</option>`).join("")}</select>`;
+const FLABEL={own:"المسؤول",due:"موعد المعالجة",rs:"حالة المعالجة",ph:"المرحلة",rl:"الاحتمالية",ri:"الأثر",rt:"المعالجة",rk:"وصف الخطر",exw:"مبرر الاستثناء",exc:"الإجراء البديل",exa:"معتمد الاستثناء",exu:"تاريخ انتهاء الاستثناء",n:"ملاحظات",ev_d:"دليل التوثيق",ev_i:"دليل التطبيق",ev_e:"دليل الفاعلية",rem:"خطة المعالجة",imp:"الأثر",eff:"الجهد",app:"الانطباق",appWhy:"سبب الانطباق",entity:"اسم الجهة",date:"تاريخ التقييم",assessor:"المقيّم",exec:"الملخص التنفيذي",execEn:"الملخص التنفيذي بالإنجليزية",name:"اسم الوثيقة",ver:"الإصدار",ad:"تاريخ الاعتماد",per:"دورة المراجعة بالأشهر"};
+// safety net: any field rendered without a visible label or aria-label gets one (before translation runs)
+function a11yFix(root){root.querySelectorAll("input:not([type=hidden]),select,textarea").forEach(i=>{if(i.getAttribute("aria-label")||(i.labels&&i.labels.length)||i.closest("label"))return;
+  const b=(i.dataset.b||"").split("|");let l=b.length===3?flab(b[0],b[1],b[2]).replace(/&amp;/g,"&"):"";if(!l)l=i.placeholder||i.title||((i.parentElement&&i.parentElement.querySelector(".lbl"))||{}).textContent||"";if(l)i.setAttribute("aria-label",l.trim())})}
+const flab=(col,id,k)=>{const b=FLABEL[k]||FLABEL[String(k).split(".").pop()]||k;return esc(id&&col!=="cfg"?b+" "+id:b)};
+const inp=(col,id,k,v,type,ph,idp)=>`<input aria-label="${flab(col,id,k)}" id="${idp||("f-"+col+"-"+id+"-"+k)}" ${type?`type="${type}"`:""} ${bind(col,id,k)} value="${esc(v||"")}" ${ph?`placeholder="${esc(ph)}"`:""}>`;
+const ta=(col,id,k,v,ph)=>`<textarea aria-label="${flab(col,id,k)}" id="f-${col}-${esc(id)}-${k}" ${bind(col,id,k)} ${ph?`placeholder="${esc(ph)}"`:""}>${esc(v||"")}</textarea>`;
+const sel=(col,id,k,opts,cur,ph)=>`<select aria-label="${flab(col,id,k)}" id="f-${col}-${esc(id)}-${k}" ${bind(col,id,k)}>${ph!=null?`<option value="">${ph}</option>`:""}${opts.map(o=>`<option value="${o[0]}" ${String(cur||"")===String(o[0])?"selected":""}>${o[1]}</option>`).join("")}</select>`;
 const fld=(l,ctl)=>`<div><span class="lbl">${l}</span>${ctl}</div>`;
 const idb=id=>`<button class="idb" data-act="go" data-id="${id}">${id}</button>`;
 function sbar(s){const t=s.total||1,w=n=>(n/t*100).toFixed(2)+"%";return `<div class="sbar">${[["c",s.c],["p",s.p],["x",s.x],["w",s.w],["na",s.na]].filter(x=>x[1]).map(x=>`<i class="b-${x[0]}" style="width:${w(x[1])}"></i>`).join("")}</div>`}
@@ -1649,9 +1650,10 @@ function renderNav(){const g=gapList().filter(x=>x.ph===1).length,late=Object.va
   $("#nav").innerHTML=NAV.map(([h,items])=>`<h6>${h}</h6>`+items.map(([k,t])=>{const b=k==="road"&&g?g:k==="docs"&&late?late:0;return `<button data-act="tab" data-v="${k}" class="${U.tab===k?"on":""}" ${U.tab===k?'aria-current="page"':""}><svg viewBox="0 0 24 24">${IC[k]}</svg><span>${t}</span>${b?`<span class="bdg">${b}</span>`:""}</button>`}).join("")).join("");
   const t=ETYPES.find(x=>x[0]===S.cfg.type);$("#ent").innerHTML=`<b>${esc(S.cfg.entity||"جهة بلا اسم")}</b>${t?esc(t[1])+" · "+(OBLIG.has(t[0])?"ملزمة بالضوابط":"غير ملزمة بـ ECC"):"النطاق غير محدد بعد"}${U.db&&!U.demo?`<span class="who"><span data-notr>${esc(U.myName||"")}</span> · <span>${ROLES[role()][0]}</span></span>`:""}`;
   paintSync()}
-function render(){
+function render(){U._rc={};U._inRender=true;try{renderInner()}finally{U._inRender=false;U._rc={}}}
+function renderInner(){
   const y=window.scrollY;renderNav();const h=HEAD[U.tab];$("#ptitle").textContent=h[0];$("#psub").textContent=h[1];{const L=NAV.flatMap(g=>g[1].map(x=>[x[0],g[0]])),i=L.findIndex(x=>x[0]===U.tab),pe=$("#peye");if(pe)pe.innerHTML=i<0?"":`${esc(L[i][1])}<span class="num" dir="ltr">${String(i+1).padStart(2,"0")} — ${String(L.filter(x=>x[0]!=="admin").length).padStart(2,"0")}</span>`}
-  const V={home:vHome,scope:vScope,review:vReview,ana:vAna,road:vRoad,audit:vAudit,docs:vDocs,map:vMap,snaps:vSnaps,report:vReport,team:vTeam,admin:vAdmin,risk:vRisk}[U.tab];
+  const V={home:vHome,scope:vScope,review:vReview,ana:vAna,road:vRoad,audit:vAudit,docs:vDocs,map:vMap,snaps:vSnaps,report:vReport,team:vTeam,risk:vRisk}[U.tab];
   let top="";if(U.demo)top+=`<div class="banner demo"><span><b>وضع المثال.</b> بيانات توضيحية لجهة افتراضية، لا تُحفظ ولا تمسّ تقييمك.</span><button class="btn sm quiet" data-act="demo">العودة إلى تقييمي</button></div>`;
   if(!U.demo&&U.db&&U.localCopy&&!U.localDone&&!Object.keys(S.ctl).length)top+=`<div class="banner info"><span>وجدنا تقييمًا محفوظًا في هذا المتصفح من قبل. هل تنقله إلى التخزين المشترك؟</span><span class="row"><button class="btn sm" data-act="pushlocal">نقل البيانات</button><button class="btn sm quiet" data-act="droplocal">تجاهل</button></span></div>`;
   if(!U.demo&&!window.claude&&!U.supa)top+=`<div class="banner warn"><span><b>بياناتك تبقى على جهازك.</b> ما تدخله يُحفظ في هذا المتصفح فقط ولا يُرسل إلى أي خادم؛ لو مسحت بيانات المتصفح أو انتقلت إلى جهاز آخر فلن تجده، فصدّر نسخة احتياطية بانتظام.</span><span class="row"><button class="btn sm" data-act="dljson">حفظ نسخة احتياطية</button><button class="btn sm quiet" data-act="bkhow">كيف أسترجعها؟</button></span></div>`;
@@ -1660,7 +1662,7 @@ function render(){
   if(!window.claude&&U.saveErr)top+=`<div class="banner bad"><span><b>لم يُحفظ آخر تعديل في المتصفح.</b> احفظ نسخة احتياطية مشفّرة الآن حتى لا تفقده.</span><button class="btn sm" data-act="bkhow">حفظ نسخة</button></div>`;
   if(U.confirm)top+=`<div class="confirm ${U.confirm.soft?"soft":""}"><span>${U.confirm.msg}</span><span class="row"><button class="btn sm ${U.confirm.soft?"":"danger"}" data-act="cfy">${U.confirm.yes||"تأكيد"}</button><button class="btn sm quiet" data-act="cfn">إلغاء</button></span></div>`;
   const key=U.tab+(U.demo?"d":"");const enter=U._last!==key;U._last=key;const view=$("#view");
-  view.innerHTML=top+V()+pager();applyLang();stripMarks(document.querySelector(".app"));syncHash();if(typeof guestTrack==="function")guestTrack();window.scrollTo(0,enter?0:y);
+  view.innerHTML=top+V()+pager();a11yFix(view);applyLang();stripMarks(document.querySelector(".app"));syncHash();if(typeof guestTrack==="function")guestTrack();window.scrollTo(0,enter?0:y);
   if(enter){view.classList.remove("enter");void view.offsetWidth;view.classList.add("enter");clearTimeout(U._et);U._et=setTimeout(()=>view.classList.remove("enter"),1200);countUp()}}
 // Previous / next step along the sidebar order, so the user can walk the tool from start to finish
 function pager(){const L=NAV.flatMap(g=>g[1]).filter(x=>x[0]!=="admin"),i=L.findIndex(x=>x[0]===U.tab);if(i<0)return "";
@@ -1752,7 +1754,7 @@ function vScope(){const s=stats(CTLS),t=S.cfg.type,ob=OBLIG.has(t);
     <div class="kpis" style="margin-bottom:14px"><div class="kpi"><b>${s.m}</b><span>إلزامي</span></div><div class="kpi"><b>${s.r}</b><span>موصى به</span></div><div class="kpi"><b>${s.na}</b><span>لا ينطبق</span></div></div>
     <div class="tw"><table><thead><tr><th>المكوّن الفرعي</th><th>إلزامي</th><th>موصى به</th><th>لا ينطبق</th></tr></thead><tbody>${SUBS.map(x=>{const st=stats(x.c);return `<tr><td>${idb(x.id)} ${esc(tx(x))}</td><td class="num">${st.m||"—"}</td><td class="num">${st.r||"—"}</td><td class="num">${st.na||"—"}</td></tr>`}).join("")}</tbody></table></div></section>
    <section class="card c5"><h2>ملاحظات النطاق</h2><details class="prefd"><summary>بنود «يفضل» في نص الضوابط (${prefs.length}) <span class="tag off">نص رسمي</span></summary><p class="note">عبارات داخل ضوابط إلزامية كتبتها الهيئة بصيغة «ويفضل»، أي أنها مستحسنة وليست شرطًا. لا تُحسب فجوة إذا لم تُطبَّق، وتظهر أيضًا داخل الضابط نفسه في شاشة المراجعة.</p>
-    ${prefs.map(c=>`<div class="box" style="margin-bottom:8px"><h4>${idb(c.id)}</h4><p>${esc(U.lang==="en"?(c.prefEn||c.pref):c.pref)}</p></div>`).join("")}</details>
+    ${prefs.map(c=>`<div class="box" style="margin-bottom:8px"><h3>${idb(c.id)}</h3><p>${esc(U.lang==="en"?(c.prefEn||c.pref):c.pref)}</p></div>`).join("")}</details>
     ${!ob&&t?`<h2 style="margin-top:16px">من أين تبدأ جهة غير ملزمة؟ <span class="tag meth">منهجية الأداة، غير رسمية</span></h2><p class="note">تقترح الأداة البدء بالمكونات التأسيسية التي تعتمد عليها بقية الضوابط: ${[...FOUND].map(idb).join(" ")}. خارطة المعالجة تعطيها أولوية أعلى تلقائيًا، ويمكنك تعديل المرحلة لأي ضابط.</p>`:""}
     <h2 style="margin-top:16px">استثناءات يدوية (${ovr.length})</h2>${ovr.length?`<div class="att">${ovr.map(c=>`<div>${idb(c.id)}<span>${AP[C(c.id).app][0]} — ${esc(C(c.id).appWhy||"بلا مبرر مكتوب")}${C(c.id).appWhy?"":` <span class="flag late">المدقق سيطلب مبررًا</span>`}</span><button class="btn sm quiet" data-act="appclear" data-id="${c.id}">إلغاء</button></div>`).join("")}</div>`:`<p class="note">لا توجد. يمكنك تغيير انطباق أي ضابط من شاشة المراجعة، مع كتابة المبرر.</p>`}
    </section></div></fieldset>`}
@@ -1764,21 +1766,21 @@ function ctlMatch(c){const f=U.f,s=dst(c.id),a=appOf(c.id).v;
   if(U.q){const q=normQ(U.q);if(!normQ([c.id,c.ar,c.en,...(c.s||[]).flatMap(x=>[x.id,x.ar,x.en]),SUBBY[c.sub].ar,SUBBY[c.sub].en].join(" ")).includes(q))return false}return true}
 function vReview(){const glob=U.q||U.f!=="all";const subs=SUBS.filter(x=>(glob||x.dom===U.dom)&&x.c.some(ctlMatch));
   return `<div class="dtabs">${ECC.map(d=>{const st=stats(d.subs.flatMap(x=>x.c));return `<button class="${!glob&&U.dom===d.id?"on":""}" data-act="dom" data-v="${d.id}"><b>${d.id}. ${esc(tx(d))}</b>${sbar(st)}<small>${st.c+st.p+st.x} من ${st.app} مُقيَّم · ${d.subs.length} مكونات فرعية</small></button>`}).join("")}</div>
-  <div class="tools"><input id="q" type="search" placeholder="ابحث برقم الضابط أو نصّه، مثل 2-2-3 أو «التشفير»" value="${esc(U.q)}" data-act="q"><select id="flt" data-act="f">${FILT.map(o=>`<option value="${o[0]}" ${U.f===o[0]?"selected":""}>${o[1]}</option>`).join("")}</select></div>
+  <div class="tools"><input id="q" type="search" placeholder="ابحث برقم الضابط أو نصّه، مثل 2-2-3 أو «التشفير»" value="${esc(U.q)}" data-act="q"><select id="flt" data-act="f" aria-label="تصفية الضوابط">${FILT.map(o=>`<option value="${o[0]}" ${U.f===o[0]?"selected":""}>${o[1]}</option>`).join("")}</select></div>
   ${glob?`<div class="banner"><span>${subs.reduce((n,x)=>n+x.c.filter(ctlMatch).length,0)} ضابطًا مطابقًا عبر كل المكونات.</span><button class="btn sm quiet" data-act="clrf">مسح البحث والتصفية</button></div>`:""}
   ${subs.length?subs.map(card).join(""):`<div class="card empty"><b>لا نتائج</b>جرّب كلمة أخرى أو غيّر التصفية.</div>`}`}
 function card(x){const glob=U.q||U.f!=="all",open=U.open[x.id]||glob,st=stats(x.c),so=S.sub[x.id]||{},dl=docsFor(x.id),xd=XDOC[x.id];
-  let b="";if(open){b=`<div class="sub-b"><div class="two"><div class="box"><h4>الهدف <span class="tag off">نص رسمي</span></h4><p>${esc(U.lang==="en"?x.oe:x.oa)}</p></div>
-   <div class="box"><h4>الوثائق المرتبطة من السجل <button class="btn sm ghost" data-g="polsk" data-id="${x.id}" title="مسودة سياسة من النص الرسمي لضوابط هذا المكوّن">مسودة سياسة (Word)</button></h4>${dl.length?dl.map(([k,d])=>`<p>• ${esc(d.name)} ${d.ver?`<span class="note">إصدار ${esc(d.ver)}</span>`:""} ${docState(d)==="late"?`<span class="flag late">متأخرة المراجعة</span>`:""}</p>`).join(""):`<p class="note">لم تُربط وثيقة بهذا المكوّن. ${xd?`مثال لما يُتوقع: ${esc(xd[U.lang==="en"?1:0])}. <span class="tag meth">اقتراح الأداة</span>`:""}</p><button class="btn sm ghost" data-act="tab" data-v="docs" style="margin-top:6px">افتح سجل الوثائق</button>`}</div></div>
+  let b="";if(open){b=`<div class="sub-b"><div class="two"><div class="box"><h3>الهدف <span class="tag off">نص رسمي</span></h3><p>${esc(U.lang==="en"?x.oe:x.oa)}</p></div>
+   <div class="box"><h3>الوثائق المرتبطة من السجل <button class="btn sm ghost" data-g="polsk" data-id="${x.id}" title="مسودة سياسة من النص الرسمي لضوابط هذا المكوّن">مسودة سياسة (Word)</button></h3>${dl.length?dl.map(([k,d])=>`<p>• ${esc(d.name)} ${d.ver?`<span class="note">إصدار ${esc(d.ver)}</span>`:""} ${docState(d)==="late"?`<span class="flag late">متأخرة المراجعة</span>`:""}</p>`).join(""):`<p class="note">لم تُربط وثيقة بهذا المكوّن. ${xd?`مثال لما يُتوقع: ${esc(xd[U.lang==="en"?1:0])}. <span class="tag meth">اقتراح الأداة</span>`:""}</p><button class="btn sm ghost" data-act="tab" data-v="docs" style="margin-top:6px">افتح سجل الوثائق</button>`}</div></div>
    <fieldset class="fs" ${fsAttr("sub",x.id)}>${fld("ملاحظات المراجع على هذا المكوّن",ta("sub",x.id,"n",so.n,"ملاحظات عامة، أسماء من قابلتهم، نطاق العينة…"))}</fieldset>
    <div class="ctls">${x.c.filter(c=>!glob||ctlMatch(c)).map(ctlRow).join("")}</div></div>`}
-  return `<article class="sub ${open?"open":""}" id="s-${x.id}"><button class="sub-h" data-act="tg" data-id="${x.id}" aria-expanded="${!!open}"><span class="sid">${x.id}</span><span class="sname"><b>${esc(tx(x))}</b></span><span class="mini">${sbar(st)}</span><span class="note num">${st.c+st.p+st.x}/${st.app}</span><span class="chev">▾</span></button>${b}</article>`}
+  return `<article class="sub ${open?"open":""}" id="s-${x.id}"><h2 class="sub-hd"><button class="sub-h" data-act="tg" data-id="${x.id}" aria-expanded="${!!open}"><span class="sid">${x.id}</span><span class="sname"><b>${esc(tx(x))}</b></span><span class="mini">${sbar(st)}</span><span class="note num">${st.c+st.p+st.x}/${st.app}</span><span class="chev" aria-hidden="true">▾</span></button></h2>${b}</article>`}
 function ctlRow(c){const id=c.id,o=C(id),s=dst(id),a=appOf(id),open=U.open[id];let b="";
   if(open){const cc=(CCCBY[id]||[]);const ai=U.aiOut[id]||o.ai;
    b=`<fieldset class="ctl-b fs" ${fsAttr("ctl",id)}>${c.s?`<ul class="subs">${c.s.map(z=>`<li><span class="idb">${z.id}</span><span>${esc(tx(z))}</span></li>`).join("")}</ul>`:""}
    <details><summary class="note" style="font-weight:500">النص الإنجليزي الرسمي</summary><div class="quote en">${esc(c.en)}</div></details>
    ${guideBox(id)}${attBox(id)}
-   ${c.pref?`<div class="box"><h4>جزء «يفضل» في نص الضابط <span class="tag off">غير إلزامي</span></h4><p>${esc(U.lang==="en"?(c.prefEn||c.pref):c.pref)}</p></div>`:""}
+   ${c.pref?`<div class="box"><h3>جزء «يفضل» في نص الضابط <span class="tag off">غير إلزامي</span></h3><p>${esc(U.lang==="en"?(c.prefEn||c.pref):c.pref)}</p></div>`:""}
    ${COND.filter(q=>q.note&&q.note[c.sub]&&S.cfg.cond[q.k]==="no").map(q=>`<div class="banner info"><span>${esc(q.note[c.sub])}</span></div>`).join("")}
    <div class="layers">${LAYERS.map(L=>`<div class="layer"><div class="ln"><b>${L[1]}</b><span>${L[2]}</span></div>${seg(LV,o[L[0]]||"","lay",id,L[0],"l")}<input id="f-ev-${id}-${L[0]}" ${bind("ctl",id,"ev_"+L[0])} value="${esc(o["ev_"+L[0]]||"")}" placeholder="${L[0]==="d"?"اسم الوثيقة ورقم البند، مثل: سياسة التحكم بالدخول v2 — البند 4.3":L[0]==="i"?"الدليل التشغيلي، مثل: تقرير مراجعة الصلاحيات 2026-Q3":"نتيجة المراجعة أو القياس، مثل: محضر اللجنة الإشرافية 2026-10-05"}"></div>`).join("")}</div>
    <div class="fg">${fld("المسؤول",inp("ctl",id,"own",o.own,"","الإدارة أو الشخص"))}${fld("حالة المعالجة",sel("ctl",id,"rs",RS,o.rs,"لم تبدأ"))}${fld("الاستحقاق",inp("ctl",id,"due",o.due,"date"))}${fld("الأثر",sel("ctl",id,"imp",IMP,o.imp||"M"))}${fld("الجهد",sel("ctl",id,"eff",EFF,o.eff||"M"))}${fld("المرحلة",sel("ctl",id,"ph",[["1","المرحلة 1"],["2","المرحلة 2"],["3","المرحلة 3"]],o.ph,`تلقائي (${phaseOf(id)})`))}</div>
@@ -1792,7 +1794,7 @@ function ctlRow(c){const id=c.id,o=C(id),s=dst(id),a=appOf(id),open=U.open[id];l
   return `<div class="ctl s-${s||"none"} ${open?"open":""} ${U.flash===id?"flash":""}" id="c-${id}"><button class="ctl-h" data-act="tc" data-id="${id}" aria-expanded="${!!open}"><span class="cid">${id}</span><span class="ctxt">${esc(tx(c))}<span class="flags">${flags(id)}${C(id).ai?`<span class="tag ai">فيه مقترح</span>`:""}</span></span><span class="side">${apill(a)}${lm(id)}${pill(s)}<span class="chev">▾</span></span></button>${b}</div>`}
 function guideBox(id){const g=GD(id),k=new Set(C(id).gd||[]);if(!g.d.length&&!g.g.length)return "";
   const tr=U.lang!=="en"?gtrOf(id):null,dl=tr?tr.d:g.d,gl=tr&&tr.g.length?tr.g:g.g,dir=tr?"rtl":"ltr";
-  return `<div class="box"><h4>الدليل الإرشادي لتطبيق الضوابط GECC-2:2026 <span class="tag off">نص رسمي</span>${tr?`<span class="tag ai">ترجمة آلية غير رسمية</span>`:""}<span class="note">${gdHave(id)} من ${g.d.length} مخرجات متوفرة</span></h4>
+  return `<div class="box"><h3>الدليل الإرشادي لتطبيق الضوابط GECC-2:2026 <span class="tag off">نص رسمي</span>${tr?`<span class="tag ai">ترجمة آلية غير رسمية</span>`:""}<span class="note">${gdHave(id)} من ${g.d.length} مخرجات متوفرة</span></h3>
   ${U.lang!=="en"&&!tr?`<div class="row" style="margin:2px 0 8px"><span class="note">النص الرسمي للدليل متاح بالإنجليزية فقط.</span>${true?aiBtn("aigtr",id,"ترجم إلى العربية","ghost sm"):""}</div>`:""}
   ${g.t.length?`<div class="row" style="margin:4px 0 6px"><span class="note">أدوات الهيئة المرتبطة:</span>${g.t.map(x=>`<span class="tag" dir="ltr">${esc(x)}</span>`).join("")}</div>`:""}
   <span class="lbl">المخرجات المتوقعة: علّم ما هو متوفر لديك</span><div class="gdl">${dl.map((x,i)=>`<label class="${k.has(i)?"on":""}"><input type="checkbox" data-act="gd" data-id="${id}" data-v="${i}" ${k.has(i)?"checked":""}><span dir="${dir}">${esc(x)}</span></label>`).join("")}</div>
@@ -1828,7 +1830,7 @@ function anaResult(a){const r=a.res,c=cnt(r),src=norm(a.txt||"");const HY=[["app
   return `<section class="card c12 raise"><h2>نتيجة التحليل: ${esc(a.name||"سياسة بلا اسم")} <span class="act">${aiTag}</span></h2>
    <div class="kpis" style="margin-bottom:12px"><div class="kpi good"><b>${c.covered}</b><span>مغطى</span></div><div class="kpi"><b style="color:var(--warn)">${c.weak}</b><span>مذكور بصيغة ضعيفة</span></div><div class="kpi alert"><b>${c.missing}</b><span>غير مغطى</span></div></div>
    ${r.summary?`<p style="margin:0 0 12px">${esc(r.summary)}</p>`:""}
-   ${r.hygiene?`<div class="box" style="margin-bottom:12px"><h4>سلامة الوثيقة نفسها</h4><div class="att">${HY.map(h=>{const v=r.hygiene[h[0]];return `<div><span class="pill ${v==="yes"?"s-c":v==="no"?"s-x":"s-w"}">${v==="yes"?"نعم":v==="no"?"لا":"غير واضح"}</span><span>${h[1]}</span><span class="tag ${h[2]}">${h[3]?"الضابط "+h[3]:"ممارسة جيدة"}</span></div>`}).join("")}</div>${r.hygiene_notes?`<p class="note" style="margin:6px 0 0">${esc(r.hygiene_notes)}</p>`:""}</div>`:""}
+   ${r.hygiene?`<div class="box" style="margin-bottom:12px"><h3>سلامة الوثيقة نفسها</h3><div class="att">${HY.map(h=>{const v=r.hygiene[h[0]];return `<div><span class="pill ${v==="yes"?"s-c":v==="no"?"s-x":"s-w"}">${v==="yes"?"نعم":v==="no"?"لا":"غير واضح"}</span><span>${h[1]}</span><span class="tag ${h[2]}">${h[3]?"الضابط "+h[3]:"ممارسة جيدة"}</span></div>`}).join("")}</div>${r.hygiene_notes?`<p class="note" style="margin:6px 0 0">${esc(r.hygiene_notes)}</p>`:""}</div>`:""}
    <div class="verd">${(r.items||[]).filter(i=>BY[i.id]||i.id.split("-").length===4).map(i=>{const v=VD[i.verdict]||["؟",""];const found=i.quote?src.includes(norm(i.quote).slice(0,80)):null;const ref=BY[i.id]||BY[i.id.split("-").slice(0,3).join("-")];const txt=BY[i.id]?tx(BY[i.id]):tx((ref&&ref.s||[]).find(z=>z.id===i.id)||{ar:""})||"";
      return `<div><span class="idb">${esc(i.id)}</span><div style="display:grid;gap:4px;min-width:0"><div class="row"><span class="pill ${v[1]}">${v[0]}</span><span class="note">${esc(short(txt,140))}</span></div>
      ${i.quote?`<div class="quote">${esc(i.quote)}${i.clause?` <span class="note">— ${esc(i.clause)}</span>`:""}</div><span class="src">${found?`<span class="tag off">الاقتباس موجود حرفيًا في نص السياسة</span>`:`<span class="tag meth">لم يُعثر على الاقتباس حرفيًا — تحقّق يدويًا</span>`}</span>`:""}
@@ -1867,13 +1869,13 @@ function auditFindings(id){const o=C(id),f=[];LAYERS.forEach(L=>{const v=o[L[0]]
   const g=GD(id);if(g.d.length&&(o.d==="y"||o.i==="y")){const miss=g.d.length-gdHave(id);if(miss)f.push(`${miss} من ${g.d.length} مخرجات يتوقعها الدليل الإرشادي الرسمي غير متوفرة بعد.`)}return f}
 function vAudit(){const A=S.audit.cur;const pool=CTLS.filter(c=>appOf(c.id).v!=="na"&&(C(c.id).d||C(c.id).i));
   const head=`<section class="card"><h2>جولة تدقيق جديدة</h2><p class="lead">تسحب الأداة عيّنة عشوائية من الضوابط التي قيّمتها، وتفحص أدلتك كما يفعل المدقق: هل كل ادعاء له دليل محدد؟</p>
-   <div class="row"><select id="aud-n" style="width:auto">${[5,10,15,20].map(n=>`<option value="${n}">${n} ضوابط</option>`).join("")}</select><select id="aud-f" style="width:auto"><option value="c">التي تدّعي الالتزام أولًا</option><option value="all">من كل المُقيَّم</option></select><button class="btn spark" data-act="audstart" ${pool.length?"":"disabled"}>ابدأ الجولة</button><span class="note">${pool.length} ضابطًا متاحًا للعيّنة.</span></div></section>`;
+   <div class="row"><select id="aud-n" style="width:auto" aria-label="حجم العينة">${[5,10,15,20].map(n=>`<option value="${n}">${n} ضوابط</option>`).join("")}</select><select id="aud-f" style="width:auto" aria-label="طريقة اختيار العينة"><option value="c">التي تدّعي الالتزام أولًا</option><option value="all">من كل المُقيَّم</option></select><button class="btn spark" data-act="audstart" ${pool.length?"":"disabled"}>ابدأ الجولة</button><span class="note">${pool.length} ضابطًا متاحًا للعيّنة.</span></div></section>`;
   if(!A||!A.ids)return head+`<div class="card empty"><b>لا جولة جارية</b>${pool.length?"ابدأ جولة لترى أين تضعف أدلتك.":"قيّم بعض الضوابط في شاشة المراجعة أولًا."}</div>`;
   const ids=A.ids.filter(i=>BY[i]),mk=A.marks||{},done=ids.filter(i=>mk[i]).length,sc=ids.length?Math.round(ids.reduce((n,i)=>n+(mk[i]==="ok"?1:mk[i]==="part"?.5:0),0)/ids.length*100):0;
   return head+`<section class="card"><h2>الجولة الحالية <span class="note">${A.at||""}</span><span class="act"><span class="pill ${sc>=80?"s-c":sc>=50?"s-p":"s-x"}">جاهزية ${done?sc+"%":"—"}</span><span class="note">${done} من ${ids.length} مكتمل</span></span></h2>
    ${ids.map(id=>{const c=BY[id],o=C(id),f=auditFindings(id),q=(U.aiOut["q:"+id]||(A.q||{})[id]);return `<div class="ctl" style="margin-bottom:10px"><div class="ctl-h" style="cursor:default"><span class="cid">${id}</span><span class="ctxt">${esc(tx(c))}</span><span class="side">${lm(id)}${pill(dst(id))}</span></div><div class="ctl-b">
      <div class="tw"><table><thead><tr><th>الطبقة</th><th>الادعاء</th><th>الدليل المسجّل</th></tr></thead><tbody>${LAYERS.map(L=>`<tr><td>${L[1]}</td><td>${({y:"نعم",p:"جزئي",n:"لا"})[o[L[0]]]||"—"}</td><td>${esc(o["ev_"+L[0]]||"—")}</td></tr>`).join("")}</tbody></table></div>
-     ${f.length?`<div class="box"><h4>ملاحظات التدقيق الآلية</h4>${list(f)}</div>`:`<p class="note" style="margin:0">لا ملاحظات آلية على الأدلة المسجّلة.</p>`}
+     ${f.length?`<div class="box"><h3>ملاحظات التدقيق الآلية</h3>${list(f)}</div>`:`<p class="note" style="margin:0">لا ملاحظات آلية على الأدلة المسجّلة.</p>`}
      ${guideBox(id)}${attBox(id)}
      <div class="row">${aiBtn("aiq",id,"ما الذي سيسأله المدقق؟","ghost")}</div>
      ${q?`<div class="aiout"><div class="row">${aiTag}</div>${q.questions?`<h5>أسئلة متوقعة</h5>${list(q.questions)}`:""}${q.samples?`<h5>عيّنات قد تُطلب</h5>${list(q.samples)}`:""}${q.red_flags?`<h5>ما يُضعف موقفك</h5>${list(q.red_flags)}`:""}</div>`:""}
@@ -1900,7 +1902,7 @@ function vMap(){const FW=Object.entries(S.fw);const fws=[...new Set(FW.map(([k,r
    <div class="tw"><table><thead><tr><th>ضابط ECC</th><th>الطرف</th><th>نص CCC الذي يحيل إليه ${U.lang==="en"?"":'<span class="tag meth">ترجمة الأداة، غير رسمية</span>'}</th></tr></thead><tbody>${keys.flatMap(k=>grp[k].filter(r=>!U.cw||U.cw==="all"||!r.w||r.w===U.cw).map(r=>`<tr><td>${BY[k]?idb(k):`<span class="idb">${k}</span>`}</td><td class="nw" title="${r.w==="P"?"مقدّم الخدمات السحابية":r.w==="T"?"المشترك في الخدمات السحابية":"مقدّم الخدمة والمشترك"}">${r.w==="P"?"مقدّم الخدمة<br><small class=\"note\">CSP</small>":r.w==="T"?"المشترك<br><small class=\"note\">CST</small>":"الطرفان"}</td>${U.lang==="en"||!r.qa?`<td class="en" style="text-align:left">${esc(r.q)}</td>`:`<td>${esc(r.qa)}<details class="ccc-en"><summary>النص الرسمي بالإنجليزية (المرجع المعتمد)</summary><p dir="ltr" data-notr>${esc(r.q)}</p></details></td>`}</tr>`)).join("")}</tbody></table></div></section>
   <section class="card"><h2>أطر أخرى ${fws.length?`<span class="note">${fws.join("، ")}</span>`:""}</h2>
    ${FW.length?`<div class="tw"><table><thead><tr><th>ECC</th><th>الإطار</th><th>المرجع</th><th>المصدر</th><th>ملاحظة</th><th></th></tr></thead><tbody>${FW.sort((a,b)=>a[1].ecc.localeCompare(b[1].ecc,undefined,{numeric:true})).map(([k,r])=>`<tr><td>${BY[r.ecc]||SUBBY[r.ecc]?idb(r.ecc):esc(r.ecc)}</td><td>${esc(r.fw)}</td><td class="mono">${esc(r.ref)}</td><td>${esc(r.src)}</td><td>${esc(r.note||"")}</td><td><button class="btn sm danger ghost" data-act="fwdel" data-id="${k}">حذف</button></td></tr>`).join("")}</tbody></table></div>`:
-   `<div class="box"><h4>لم تُضف علاقات بعد، ولن تضيف الأداة علاقة بلا مصدر</h4><p>لربط ECC بـ ISO/IEC 27001:2022 أو NIST CSF 2.0 أو نظام حماية البيانات الشخصية أو SAMA CSF، تحتاج جدول ربط من مصدر معتمد (من الهيئة، أو الجهة المصدرة للإطار، أو جدول اعتمدته جهتك). الصقه بالصيغة أدناه.</p></div>`}
+   `<div class="box"><h3>لم تُضف علاقات بعد، ولن تضيف الأداة علاقة بلا مصدر</h3><p>لربط ECC بـ ISO/IEC 27001:2022 أو NIST CSF 2.0 أو نظام حماية البيانات الشخصية أو SAMA CSF، تحتاج جدول ربط من مصدر معتمد (من الهيئة، أو الجهة المصدرة للإطار، أو جدول اعتمدته جهتك). الصقه بالصيغة أدناه.</p></div>`}
    <fieldset class="fs" ${fsAttr("fw")}><details style="margin-top:12px" ${FW.length?"":"open"}><summary>استيراد علاقات (CSV)</summary><p class="note">عمود لكل من: ضابط ECC، اسم الإطار، المرجع في الإطار، <b>المصدر</b> (إلزامي)، ملاحظة. سطر لكل علاقة.</p>
     <textarea id="fwcsv" data-act="fwtxt" style="min-height:110px;direction:ltr;text-align:left" placeholder="ECC,Framework,Ref,Source,Note&#10;2-2-3,ISO/IEC 27001:2022,A.5.15,<official mapping document>,">${esc(U.fwText)}</textarea><div class="row" style="margin-top:8px"><button class="btn" data-act="fwimp">استيراد</button>${fws.length?`<button class="btn danger ghost" data-act="fwclr">حذف كل العلاقات المستوردة</button>`:""}</div></details></fieldset></section>`}
 
@@ -1908,11 +1910,11 @@ function vMap(){const FW=Object.entries(S.fw);const fws=[...new Set(FW.map(([k,r
 function vSnaps(){const sn=Object.entries(S.snaps).sort((a,b)=>a[1].at<b[1].at?-1:1);const s=stats(CTLS);
   let cmp="";if(U.cmpA&&U.cmpB&&snapGet(U.cmpA)&&snapGet(U.cmpB)){const A=snapGet(U.cmpA),B=snapGet(U.cmpB),rk={"":0,w:0,x:1,p:2,c:3,na:-1};const up=[],dn=[];
    CTLS.forEach(c=>{const a=(A.per||{})[c.id]||"",b=(B.per||{})[c.id]||"";if(a===b||a==="na"||b==="na")return;(rk[b]>rk[a]?up:rk[b]<rk[a]?dn:[]).push([c.id,a,b])});
-   cmp=`<div class="two" style="margin-top:12px"><div class="box"><h4>تحسّن (${up.length})</h4>${up.map(x=>`<p>${idb(x[0])} ${ST[x[1]][0]} ← ${ST[x[2]][0]}</p>`).join("")||"<p class=note>لا شيء</p>"}</div><div class="box"><h4>تراجع (${dn.length})</h4>${dn.map(x=>`<p>${idb(x[0])} ${ST[x[1]][0]} ← ${ST[x[2]][0]}</p>`).join("")||"<p class=note>لا شيء</p>"}</div></div>`}
+   cmp=`<div class="two" style="margin-top:12px"><div class="box"><h3>تحسّن (${up.length})</h3>${up.map(x=>`<p>${idb(x[0])} ${ST[x[1]][0]} ← ${ST[x[2]][0]}</p>`).join("")||"<p class=note>لا شيء</p>"}</div><div class="box"><h3>تراجع (${dn.length})</h3>${dn.map(x=>`<p>${idb(x[0])} ${ST[x[1]][0]} ← ${ST[x[2]][0]}</p>`).join("")||"<p class=note>لا شيء</p>"}</div></div>`}
   return `${roNote("snaps")}<fieldset class="fs fsb" ${fsAttr("snaps")}><section class="card"><h2>لقطة جديدة</h2><div class="row"><input id="sn-l" style="max-width:340px" placeholder="عنوان اللقطة، مثل: قبل التدقيق الخارجي"><button class="btn" data-act="snap">احفظ لقطة الآن</button><span class="note">الوضع الحالي: التزام ${s.comp??"—"}%، ${gapList().length} فجوة.</span></div></section></fieldset>
   ${sn.length>=2?`<section class="card"><h2>الاتجاه</h2>${trend(sn.map(x=>x[1]))}</section>`:""}
   <section class="card"><h2>اللقطات (${sn.length})</h2>${sn.length?`<div class="tw"><table><thead><tr><th>التاريخ</th><th>العنوان</th><th>الالتزام</th><th>فجوات</th><th>ورقي</th><th></th></tr></thead><tbody>${sn.slice().reverse().map(([k,x])=>`<tr><td class="num">${esc(x.at)}</td><td>${esc(x.label||"—")}</td><td class="num">${x.comp??"—"}%</td><td class="num">${x.gaps}</td><td class="num">${x.paper}</td><td><button class="btn sm danger ghost" data-act="sndel" data-id="${k}">حذف</button></td></tr>`).join("")}</tbody></table></div>
-   ${sn.length>=1?`<div class="row" style="margin-top:12px"><button class="btn sm" data-r2="cmpnow">قارن الوضع الحالي بآخر لقطة</button><span class="note">أو اختر:</span><select id="cmpA" data-act="cmp" data-k="A" style="width:auto"><option value="">من لقطة…</option>${sn.map(([k,x])=>`<option value="${esc(k)}" ${U.cmpA===k?"selected":""}>${esc(x.at)} ${esc(x.label||"")}</option>`).join("")}</select><select id="cmpB" data-act="cmp" data-k="B" style="width:auto"><option value="">إلى لقطة…</option><option value="__now" ${U.cmpB==="__now"?"selected":""}>الوضع الحالي</option>${sn.map(([k,x])=>`<option value="${esc(k)}" ${U.cmpB===k?"selected":""}>${esc(x.at)} ${esc(x.label||"")}</option>`).join("")}</select></div>${cmp}${vDomainCompare()}`:""}`:`<div class="empty"><b>لا لقطات بعد</b>احفظ لقطة الآن، ثم أخرى بعد كل مرحلة معالجة لترى الفرق.</div>`}</section>`}
+   ${sn.length>=1?`<div class="row" style="margin-top:12px"><button class="btn sm" data-r2="cmpnow">قارن الوضع الحالي بآخر لقطة</button><span class="note">أو اختر:</span><select id="cmpA" data-act="cmp" data-k="A" style="width:auto" aria-label="قارن من لقطة"><option value="">من لقطة…</option>${sn.map(([k,x])=>`<option value="${esc(k)}" ${U.cmpA===k?"selected":""}>${esc(x.at)} ${esc(x.label||"")}</option>`).join("")}</select><select id="cmpB" data-act="cmp" data-k="B" style="width:auto" aria-label="قارن إلى لقطة"><option value="">إلى لقطة…</option><option value="__now" ${U.cmpB==="__now"?"selected":""}>الوضع الحالي</option>${sn.map(([k,x])=>`<option value="${esc(k)}" ${U.cmpB===k?"selected":""}>${esc(x.at)} ${esc(x.label||"")}</option>`).join("")}</select></div>${cmp}${vDomainCompare()}`:""}`:`<div class="empty"><b>لا لقطات بعد</b>احفظ لقطة الآن، ثم أخرى بعد كل مرحلة معالجة لترى الفرق.</div>`}</section>`}
 
 // ===== Report & data =====
 function reportHTML(){const s=stats(CTLS),gl=gapList(),c=S.cfg,t=ETYPES.find(x=>x[0]===c.type),D=Object.values(S.docs);
@@ -1948,12 +1950,12 @@ function vReport(){const c=S.cfg,rp=c.rep||{},L=U.repLang||U.lang,arch=Object.en
   <section class="card c12" id="backup"><h2>النسخ الاحتياطي والاسترجاع</h2>
    <p class="lead">بياناتك محفوظة في هذا المتصفح فقط. النسخة الاحتياطية ملف واحد على جهازك، تسترجع منه تقييمك متى شئت، أو تنقله إلى جهاز آخر.</p>
    <div class="bk-grid">
-    <div class="box bk"><span class="bk-n num">1</span><h4>احفظ نسخة مشفّرة <span class="tag off">موصى بها</span></h4><p>اختر كلمة مرور للنسخة، فيُنزَّل ملف <span class="mono" dir="ltr">ECC-backup-${today()}.ecc</span> مشفّر (AES-256) ويشمل المرفقات.</p>
+    <div class="box bk"><span class="bk-n num">1</span><h3>احفظ نسخة مشفّرة <span class="tag off">موصى بها</span></h3><p>اختر كلمة مرور للنسخة، فيُنزَّل ملف <span class="mono" dir="ltr">ECC-backup-${today()}.ecc</span> مشفّر (AES-256) ويشمل المرفقات.</p>
      <div class="ts-pw"><input id="bk-pw" type="password" autocomplete="new-password" placeholder="كلمة مرور النسخة (10 أحرف على الأقل)"><input id="bk-pw2" type="password" autocomplete="new-password" placeholder="أعد كتابة كلمة المرور"></div>
      <button class="btn" data-sec="bkenc">حفظ نسخة مشفّرة</button>
      <details><summary class="note">نسخة غير مشفّرة (JSON)</summary><p class="note">مفيدة للنقل السريع، لكن يقرؤها أي أحد يصل إلى الملف، ولا تشمل المرفقات.</p><button class="btn sm quiet" data-act="dljson">تنزيل JSON غير مشفّر</button></details></div>
-    <div class="box bk"><span class="bk-n num">2</span><h4>احتفظ بها في مكان آمن</h4><p>انقل الملف إلى OneDrive أو Google Drive أو مجلد العمل، لتجده إن مسحت بيانات المتصفح أو غيّرت الجهاز. احفظ نسخة جديدة بعد كل جلسة تقييم.</p></div>
-    <div class="box bk"><span class="bk-n num">3</span><h4>استرجعها عند الحاجة</h4><p>افتح الأداة في أي متصفح. للنسخة المشفّرة اكتب كلمة مرورها في خانة الخطوة 1، ثم اضغط «استرجاع نسخة» واختر الملف. يحل محتواه محل التقييم الحالي بعد تأكيدك.</p>
+    <div class="box bk"><span class="bk-n num">2</span><h3>احتفظ بها في مكان آمن</h3><p>انقل الملف إلى OneDrive أو Google Drive أو مجلد العمل، لتجده إن مسحت بيانات المتصفح أو غيّرت الجهاز. احفظ نسخة جديدة بعد كل جلسة تقييم.</p></div>
+    <div class="box bk"><span class="bk-n num">3</span><h3>استرجعها عند الحاجة</h3><p>افتح الأداة في أي متصفح. للنسخة المشفّرة اكتب كلمة مرورها في خانة الخطوة 1، ثم اضغط «استرجاع نسخة» واختر الملف. يحل محتواه محل التقييم الحالي بعد تأكيدك.</p>
      <label class="btn ghost attpick" ${fsAttr("cfg")}>استرجاع نسخة<input type="file" id="impfile" accept=".ecc,.json,application/json" hidden></label></div></div>
    <p class="note" style="margin:10px 0 0">تحتاج نسخة كاملة مع المرفقات ومشفّرة بكلمة مرور؟ <button class="lnk" data-act="tab" data-v="team">استخدم حزمة الفريق المشفّرة</button>.</p>
    ${typeof vAutoBackups==="function"?vAutoBackups():""}
@@ -1991,6 +1993,7 @@ function reportPages(lang,no,kind){
       <div style="height:5px;width:96px;border-radius:3px;background:linear-gradient(90deg,#945B46,#B7896F);margin:14px 0 26px"></div>
       <h1 style="font-family:'Inter Tight','IBM Plex Sans Arabic',sans-serif;font-size:31px;line-height:1.3;margin:0 0 10px;font-weight:500;color:#1A382B">${(kind==="exec"?R("التقرير التنفيذي: الالتزام بالضوابط الأساسية للأمن السيبراني","Executive report: Essential Cybersecurity Controls compliance"):R("تقرير مراجعة الالتزام بالضوابط الأساسية للأمن السيبراني","Essential Cybersecurity Controls Compliance Review Report"))}</h1>
       <div style="font-size:15px;color:#3b4757">ECC-2:2024</div>
+      <div style="margin-top:10px;font-size:10.5px;color:#5b6676;line-height:1.7;max-width:560px">${R("تقرير مُعدّ بأداة مستقلة لأغراض المراجعة الداخلية. لا يمثّل الهيئة الوطنية للأمن السيبراني، ولا يُعد تقييمًا رسميًا صادرًا عنها أو بديلًا عن أدوات التقييم الرسمية.","Prepared with an independent tool for internal review. It does not represent the National Cybersecurity Authority and is not an official NCA assessment or a substitute for official assessment tools.")}</div>
       <div style="margin-top:40px;font-size:22px;font-weight:600">${esc(c.entity||R("اسم الجهة","Entity name"))}</div></div>
     <div>${tbl([R("البند","Item"),R("القيمة","Value")],[[R("رقم التقرير","Report number"),no],[R("الإصدار","Version"),esc(rp.ver||"1.0")],[R("تاريخ التقييم","Assessment date"),date],[R("تاريخ الإصدار","Issue date"),today()],[R("التصنيف","Classification"),`<b>${clsT}</b>`]])}
       <div style="margin-top:22px">${tbl([R("الدور","Role"),R("الاسم","Name"),R("التوقيع","Signature"),R("التاريخ","Date")],[[R("أعدّه","Prepared by"),esc(rp.prep||c.assessor||""),"",""],[R("راجعه","Reviewed by"),esc(rp.rev||""),"",""],[R("اعتمده","Approved by"),esc(rp.appr||""),"",""]].map(r=>r.map((x,i)=>i===2||i===3?`<div style="height:26px"></div>`:x)))}</div><div style="margin-top:16px;font-size:9.5px;color:#7b8e8a">${R("أُعدّ باستخدام أداة «خارطة مراجعة سياسات ECC» — © 2026 Daniyah Alharbi. جميع الحقوق محفوظة.","Prepared with the ECC Policy Review Map — © 2026 Daniyah Alharbi. All rights reserved.")}</div></div></div>`});
@@ -2034,8 +2037,8 @@ async function makePDF(kind){kind=kind==="exec"?"exec":"";const lang=U.repLang||
   try{if(document.fonts&&document.fonts.ready)await document.fonts.ready;
     const pages=reportPages(lang,no,kind);const pdf=new window.jspdf.jsPDF(Object.assign({unit:"mm",format:"a4",compress:true},U.pw?{encryption:{userPassword:U.pw,ownerPassword:U.pw+"#"+uid(),userPermissions:["print"]}}:{}));
     for(let i=0;i<pages.length;i++){U.pdfMsg=`${i+1} / ${pages.length}`;const m=$("#pdfmsg");if(m)m.textContent=U.pdfMsg;
-      host.innerHTML=plainAr(pages[i]);const cv=await window.html2canvas(host.firstElementChild,{scale:2,backgroundColor:"#ffffff",logging:false,useCORS:true});
-      if(i)pdf.addPage();pdf.addImage(cv.toDataURL("image/jpeg",0.92),"JPEG",0,0,210,297)}
+      host.innerHTML=plainAr(pages[i]);const cv=await window.html2canvas(host.firstElementChild,{scale:1.6,backgroundColor:"#ffffff",logging:false,useCORS:true});
+      if(i)pdf.addPage();pdf.addImage(cv.toDataURL("image/jpeg",0.88),"JPEG",0,0,210,297)}
     pdf.setProperties({title:`${no} ECC-2:2024`,subject:"ECC-2:2024 review report",creator:"ECC Policy Review Map — © 2026 Daniyah Alharbi",author:"ECC Policy Review Map (Daniyah Alharbi)"});
     const blob=pdf.output("blob"),name=`${no}-${lang}.pdf`;
     // archive in the database (editors only: assets need the admin level)
@@ -2066,6 +2069,7 @@ function stripMarks(root){if(!root)return;
 // search: ignore diacritics, hamza forms, taa marbuta and alef maqsura
 const normQ=s=>plainAr(s).toLowerCase().replace(/[أإآٱ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ؤ/g,"و").replace(/ئ/g,"ي").replace(/\s+/g," ").trim();
 
+document.addEventListener("click",e=>{if(e.target.closest("[data-skip]")){e.preventDefault();const v=document.getElementById("view");if(v){v.focus();v.scrollIntoView()}}});
 // --- Evidence attachments: Claude asset store when available, otherwise this browser (IndexedDB) ---
 const ATT_MAX=20*1024*1024;
 let _fdb=null;
@@ -2089,13 +2093,13 @@ async function attAdd(id,file){if(!file)return;if(!canCol("ctl",id)){toast("لي
   finally{U.attBusy=null;render()}}
 async function attOpen(id,i){const r=(C(id).att||[])[i];if(!r)return;
   const open=href=>{const a=document.createElement("a");a.href=href;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove()};
-  if(r.url){if(r.url.startsWith("sb:")){sbOpen(r.url.slice(3));return}open(r.url);return}
+  if(r.url){if(/^https:\/\//.test(r.url))open(r.url);return}
   try{const b=await fdbGet(r.lid);if(!b){toast("الملف غير موجود في هذا المتصفح");return}const u=URL.createObjectURL(b);open(u);setTimeout(()=>URL.revokeObjectURL(u),120000)}catch(e){toast("تعذّر فتح الملف")}}
 function attDel(id,i){const r=(C(id).att||[])[i];if(!r)return;
   U.confirm={msg:`حذف المرفق «${esc(r.name)}»؟`,yes:"حذف",fn:async()=>{try{if(r.aid&&U.assets)await U.assets.delete(r.aid)}catch(e){}try{if(r.lid)await fdbDel(r.lid)}catch(e){}
     const o=S.ctl[id]=S.ctl[id]||{};o.att=(o.att||[]).filter((x,j)=>j!==i);if(!o.att.length)delete o.att;persist("ctl",id);logEv("att",id,{v:"حذف "+r.name});render()}};render()}
 function attBox(id){const L=C(id).att||[],can=canCol("ctl",id);
-  return `<div class="box"><h4>المرفقات (الأدلة) <span class="note">${L.length} ملف</span></h4>
+  return `<div class="box"><h3>المرفقات (الأدلة) <span class="note">${L.length} ملف</span></h3>
   ${L.length?`<ul class="atts">${L.map((r,i)=>`<li><span class="ft">${esc(extOf(r.name))}</span><span class="an">${esc(r.name)}<small>${fmtSize(r.size||0)} · ${esc(r.at||"")}${r.by&&U.names[r.by]?" · "+esc(U.names[r.by]):""}</small></span><button class="btn sm quiet" data-act="attopen" data-id="${id}" data-v="${i}">فتح</button>${can?`<button class="btn sm danger ghost" data-act="attdel" data-id="${id}" data-v="${i}">حذف</button>`:""}</li>`).join("")}</ul>`:`<p class="note" style="margin:0">لا مرفقات بعد. أرفق الوثيقة المعتمدة أو لقطة الشاشة التي تثبت الضابط.</p>`}
   ${can?(U.attBusy===id?`<span class="thinking" style="margin-top:8px"><i></i>جارٍ الرفع…</span>`:`<label class="btn sm ghost attpick">إرفاق ملف (PDF أو صورة${window.claude?"":" أو Word"})<input type="file" data-act="attfile" data-id="${id}" accept="${attAccept()}" hidden></label>`):""}
   ${!CLOUD()?`<p class="note" style="margin:6px 0 0">في النسخة المحلية تُحفظ المرفقات في هذا المتصفح فقط، ولا تدخل في النسخة الاحتياطية JSON.</p>`:""}</div>`}
@@ -2221,9 +2225,9 @@ function vRedact(){const txt=U.anaTxt||"";const has=txt.length>0;const L=has?rdL
     <span class="act"><label class="rd-sw"><input type="checkbox" data-rd="on" ${rdOn()?"checked":""}> أخفِها قبل أي تحليل</label></span></h2>
    <p class="lead">قبل أن يخرج أي نص من جهازك، تستبدل الأداة المعلومات الحساسة برموز مثل <span class="mono">[بريد-1]</span>. التحليل يرى الرموز فقط، ثم تُعاد الأسماء الحقيقية في النتائج على جهازك.</p>
    <div class="rd-grid">
-    <div class="box"><h4>ما تكتشفه الأداة تلقائيًا</h4><div class="chk">${RD_TYPES.map(([k,l])=>`<label class="${U.rd.types[k]?"on":""}"><input type="checkbox" data-rd="type" data-v="${k}" ${U.rd.types[k]?"checked":""}>${l}</label>`).join("")}</div>
+    <div class="box"><h3>ما تكتشفه الأداة تلقائيًا</h3><div class="chk">${RD_TYPES.map(([k,l])=>`<label class="${U.rd.types[k]?"on":""}"><input type="checkbox" data-rd="type" data-v="${k}" ${U.rd.types[k]?"checked":""}>${l}</label>`).join("")}</div>
      <p class="note" style="margin:8px 0 0">اسم الجهة من «النطاق والانطباق» يُخفى تلقائيًا أيضًا.</p></div>
-    <div class="box"><h4>أضف كلمة تخفيها بنفسك</h4>
+    <div class="box"><h3>أضف كلمة تخفيها بنفسك</h3>
      <div class="rd-add"><input id="rd-val" placeholder="الكلمة أو العبارة، مثل اسم نظام أو موظف" autocomplete="off"><input id="rd-lab" placeholder="الاسم البديل، مثل: النظام المالي" autocomplete="off"><button class="btn sm" data-rd="add">إخفاء</button></div>
      <p class="note" style="margin:6px 0 0">أو ظلّل أي نص في المعاينة أدناه بالماوس أو بإصبعك، واختر له اسمًا.</p>
      ${U.rd.terms.length?`<div class="rd-terms">${U.rd.terms.map((t,i)=>`<span class="tag">${esc(t.val)} ← [${esc(t.label||"مخفي")}]<button class="rd-x" data-rd="delterm" data-v="${i}" aria-label="إزالة">×</button></span>`).join("")}</div>`:""}</div></div>
@@ -2514,7 +2518,8 @@ async function calIcs(){const E=[];
 const RISK_LVL=s=>s>=15?["crit",LX("حرج","Critical")]:s>=10?["high",LX("عالٍ","High")]:s>=5?["mod",LX("متوسط","Medium")]:["low",LX("منخفض","Low")];
 const TRT=[["mit","معالجة","Mitigate"],["acc","قبول","Accept"],["trf","نقل","Transfer"],["avd","تجنّب","Avoid"]];
 const rDefL=id=>dst(id)==="x"?4:3,rDefI=id=>({H:5,M:3,L:2})[C(id).imp||"M"]+(["m","u"].includes(appOf(id).v)?0:-1);
-function riskRows(){return gapList().map(g=>{const id=g.c.id,o=C(id),l=+o.rl||rDefL(id),i=Math.max(1,+o.ri||rDefI(id)),s=l*i;
+function riskRows(){if(U._inRender&&U._rc.rr)return U._rc.rr;const r=riskRows0();if(U._inRender)U._rc.rr=r;return r}
+function riskRows0(){return gapList().map(g=>{const id=g.c.id,o=C(id),l=+o.rl||rDefL(id),i=Math.max(1,+o.ri||rDefI(id)),s=l*i;
   return {id,l,i,s,lvl:RISK_LVL(s),stmt:o.rk||`${LX("عدم الالتزام بالضابط","Non-compliance with")} ${id}: ${shortT(ctlTxt(id),120)}`,trt:(TRT.find(t=>t[0]===(o.rt||"mit"))||TRT[0])[U.lang==="en"?2:1],own:o.own||"",exc:excActive(id)}}).sort((a,b)=>b.s-a.s)}
 const excActive=id=>{const o=C(id);return !!(o.exw||o.exu)&&(!o.exu||o.exu>=today())};
 function excRows(){const t=today(),soon=addMonths(t,1);return CTLS.filter(c=>{const o=C(c.id);return o.exw||o.exc||o.exa||o.exu||U.excNew===c.id}).map(c=>{const o=C(c.id);
@@ -2579,7 +2584,7 @@ function vDomainCompare(){const A=snapGet(U.cmpA),B=snapGet(U.cmpB);if(!A||!B)re
   const pa=Object.assign(id=>(A.per||{})[id]||"",{snap:true}),pb=Object.assign(id=>(B.per||{})[id]||"",{snap:true});
   const DA=domStats(pa),DB=domStats(pb);const tot=p=>{let c=0,d=0;CTLS.forEach(x=>{const s=p(x.id);if(s==="c")c++;if(s==="c"||s==="p"||s==="x")d++});return d?Math.round(c/d*1000)/10:null};
   const ta=tot(pa),tb=tot(pb),dlt=(a,b)=>a==null||b==null?"—":`<b class="${b>a?"up":b<a?"down":""}">${b>a?"▲ +":b<a?"▼ ":""}${Math.round((b-a)*10)/10}</b>`;
-  return `<div class="box" style="margin-top:12px"><h4>${LX("المقارنة حسب المكونات الأساسية","Comparison by main domain")}</h4><div class="tw"><table class="cmp-t"><thead><tr><th>${LX("المكوّن","Domain")}</th><th>${esc(A.at)} ${esc(A.label||"")}</th><th>${esc(B.at)} ${esc(B.label||"")}</th><th>${LX("التغيّر (نقطة)","Change (pts)")}</th></tr></thead>
+  return `<div class="box" style="margin-top:12px"><h3>${LX("المقارنة حسب المكونات الأساسية","Comparison by main domain")}</h3><div class="tw"><table class="cmp-t"><thead><tr><th>${LX("المكوّن","Domain")}</th><th>${esc(A.at)} ${esc(A.label||"")}</th><th>${esc(B.at)} ${esc(B.label||"")}</th><th>${LX("التغيّر (نقطة)","Change (pts)")}</th></tr></thead>
    <tbody>${DA.map((d,i)=>`<tr><td><b>${d.id}.</b> ${esc(d.name)}</td><td class="num">${d.comp==null?"—":d.comp+"%"}</td><td class="num">${DB[i].comp==null?"—":DB[i].comp+"%"}</td><td class="num">${dlt(d.comp,DB[i].comp)}</td></tr>`).join("")}
    <tr class="tot"><td><b>${LX("الإجمالي","Overall")}</b></td><td class="num"><b>${ta==null?"—":ta+"%"}</b></td><td class="num"><b>${tb==null?"—":tb+"%"}</b></td><td class="num">${dlt(ta,tb)}</td></tr></tbody></table></div></div>`}
 
@@ -2631,8 +2636,6 @@ function vUnassessed(){const L=CTLS.filter(c=>appOf(c.id).v!=="na"&&(!dst(c.id)|
 // Only the page name and an optional, opt-in list of control IDs with gaps are sent. Never names, emails, entity data or text.
 const GC_URL="https://ecc-map.goatcounter.com/count",GC_JS="https://gc.zgo.at/count.v4.js";
 const CLOUD=()=>!!window.claude;
-function vAdmin(){return ""}
-function sbOpen(){}
 let gcReady=null,gcLast="";
 function gcLoad(){if(window.__TEST__)return Promise.resolve(false);if(gcReady||window.claude)return gcReady;
   window.goatcounter={no_onload:true,allow_local:false};
@@ -2656,7 +2659,7 @@ function vGapIndex(){if(window.claude||U.demo)return "";const g=giGaps(),s=stats
   const ready=s.done>=10;
   return `<section class="card c12 gi"><h2>شارك في مؤشر الفجوات العام <span class="tag off">بيانات مُجمّعة دون أي معلومة تعرّف بجهتك</span></h2>
    <p class="lead">يجمع المؤشر أكثر ضوابط ECC التي تتعثر فيها الجهات، ليستفيد منه الجميع. المشاركة اختيارية، ولا تحتاج حسابًا.</p>
-   ${ready?`<div class="box"><h4>هذا بالضبط ما سيُرسل، ولا شيء غيره</h4>
+   ${ready?`<div class="box"><h3>هذا بالضبط ما سيُرسل، ولا شيء غيره</h3>
      <p class="note" style="margin:0 0 6px">أرقام الضوابط التي حالتها «جزئي» أو «غير ملتزم» (${g.length}):</p>
      <div class="gi-ids" dir="ltr">${g.length?g.map(id=>`<span class="mono">${id}</span>`).join(" "):`<span class="note">لا فجوات</span>`}</div>
      <p class="note" style="margin:8px 0 0">لا يُرسل اسم الجهة، ولا اسمك، ولا نوع الجهة، ولا نصوص أو ملاحظات أو أدلة أو ملفات. لا يمكن ربط الأرقام بجهتك.</p></div>
@@ -2821,8 +2824,8 @@ function vTeamSpace(){const T=U.ts,con=T.h&&T.pw;
   else if(T.h&&T.need)main=`<div class="ts-on"><div><b>${T.need==="reconnect"?"آخر ملف استخدمته:":"الملف:"}</b> <span class="mono" dir="ltr">${esc(T.name)}</span></div>
      <p class="note">اكتب كلمة مرور الفريق لفتحه. لا تُحفظ كلمة المرور في أي مكان.</p>${pwf(false)}${T.err?`<p class="note" style="color:var(--bad)">${esc(T.err)}</p>`:""}
      <div class="row" style="margin-top:8px"><button class="btn" data-ts="unlock">فتح ومزامنة</button><button class="btn quiet" data-ts="close">ملف آخر</button></div></div>`;
-  else main=`<div class="ts-two"><div class="box"><h4>أنا أول من يبدأ</h4><p class="note">اختر كلمة مرور للفريق، ثم احفظ الملف في مجلد مشترك لجهتكم.</p>${pwf(true)}<button class="btn" data-ts="create" style="margin-top:8px">إنشاء ملف مساحة الفريق</button></div>
-     <div class="box"><h4>زميلي أنشأ الملف</h4><p class="note">افتح الملف من المجلد المشترك، ثم اكتب كلمة مرور الفريق.</p><button class="btn ghost" data-ts="open" style="margin-top:8px">فتح ملف مساحة فريق</button></div></div>`;
+  else main=`<div class="ts-two"><div class="box"><h3>أنا أول من يبدأ</h3><p class="note">اختر كلمة مرور للفريق، ثم احفظ الملف في مجلد مشترك لجهتكم.</p>${pwf(true)}<button class="btn" data-ts="create" style="margin-top:8px">إنشاء ملف مساحة الفريق</button></div>
+     <div class="box"><h3>زميلي أنشأ الملف</h3><p class="note">افتح الملف من المجلد المشترك، ثم اكتب كلمة مرور الفريق.</p><button class="btn ghost" data-ts="open" style="margin-top:8px">فتح ملف مساحة فريق</button></div></div>`;
   const how=`<section class="card c12"><h2>كيف تعمل مساحة الفريق</h2><ol class="steps2">
      <li>ينشئ مدير التقييم ملفًا مشفّرًا ويحفظه في مجلد مشترك تعتمده جهتكم، مثل OneDrive أو SharePoint أو مجلد الشبكة.</li>
      <li>يعطي الفريق مكان الملف وكلمة المرور، بقناة مختلفة عن الإيميل إن أمكن.</li>
@@ -2830,8 +2833,8 @@ function vTeamSpace(){const T=U.ts,con=T.h&&T.pw;
      <li>عند كل مزامنة تقرأ الأداة الملف، وتأخذ لكل ضابط آخر تعديل، ثم تحفظ النتيجة فيه. لا يُحذف شيء أثناء الدمج.</li></ol>
    <p class="note" style="margin:0"><b>لماذا هذا آمن:</b> الملف مشفّر بمعيار AES-256 قبل أن يغادر جهازك، ويبقى داخل تخزين جهتكم لا عندنا. من دون كلمة المرور لا يمكن قراءته. <b>تنبيه:</b> إن عدّل شخصان الضابط نفسه بين مزامنتين، يُعتمد التعديل الأحدث.</p></section>`;
   const pkg=`<section class="card c12" id="ts-pkg"><h2>حزمة الفريق المشفّرة <span class="note">للجوال، أو للإرسال بالبريد، أو كنسخة احتياطية كاملة مع المرفقات</span></h2>
-   <div class="ts-two"><div class="box"><h4>تصدير</h4><p class="note">ملف واحد مشفّر فيه التقييم كاملًا والمرفقات.</p>${pwf(true,"tsx")}<button class="btn" data-ts="export" style="margin-top:8px">تصدير الحزمة</button></div>
-    <div class="box"><h4>استيراد ودمج</h4><p class="note">اكتب كلمة مرور الحزمة في خانة التصدير المجاورة، ثم اختر الملف. تُدمج مع تقييمك ولا تحل محله.</p><label class="btn ghost attpick" style="margin-top:8px">اختيار حزمة .ecc<input type="file" id="ts-file" accept=".ecc" hidden></label></div></div></section>`;
+   <div class="ts-two"><div class="box"><h3>تصدير</h3><p class="note">ملف واحد مشفّر فيه التقييم كاملًا والمرفقات.</p>${pwf(true,"tsx")}<button class="btn" data-ts="export" style="margin-top:8px">تصدير الحزمة</button></div>
+    <div class="box"><h3>استيراد ودمج</h3><p class="note">اكتب كلمة مرور الحزمة في خانة التصدير المجاورة، ثم اختر الملف. تُدمج مع تقييمك ولا تحل محله.</p><label class="btn ghost attpick" style="margin-top:8px">اختيار حزمة .ecc<input type="file" id="ts-file" accept=".ecc" hidden></label></div></div></section>`;
   return `<div class="grid"><section class="card c12"><h2>ملف مساحة الفريق <span class="tag off">دون خادم · داخل تخزين جهتكم</span></h2>${main}${T.waitBy?`<p class="note">ينتظر انتهاء مزامنة ${esc(T.waitBy)}…</p>`:""}</section>${tsConfView()}${me}${how}${tsAuditView()}${TS_FS&&(con||T.need)?"":pkg}</div>`}
 
 // --- conflicts and audit views ---

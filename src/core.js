@@ -59,7 +59,8 @@ const C=id=>S.ctl[id]||{};
 // ===== Applicability =====
 function ruleNA(c){for(const q of COND){if(!q.na)continue;const v=S.cfg.cond[q.k];if(!v||!q.na(v))continue;
   if((q.subs&&q.subs.includes(c.sub))||(q.ctls&&q.ctls.includes(c.id)))return q}return null}
-function appOf(id){const c=BY[id],o=C(id);
+function appOf(id){if(U._inRender){const m=U._rc.app||(U._rc.app={});return m[id]||(m[id]=appOf0(id))}return appOf0(id)}
+function appOf0(id){const c=BY[id],o=C(id);
   if(o.app)return {v:o.app,src:"manual",why:o.appWhy||""};
   const r=ruleNA(c);if(r)return {v:"na",src:"rule",why:r.trig};
   if(!S.cfg.type)return {v:"u",src:"unset",why:""};
@@ -84,7 +85,8 @@ function score(id){const c=BY[id],o=C(id),a=appOf(id).v;return ({H:3,M:2,L:1}[o.
 function phaseOf(id){const o=C(id);if(o.ph)return +o.ph;const s=score(id);return s>=8?1:s>=5?2:3}
 function depOf(id){const c=BY[id];if(c.kind==="doc")return null;const d=SUBBY[c.sub].c.find(x=>x.kind==="doc"&&x.id!==id);if(!d)return null;return dst(d.id)==="c"?null:d.id}
 function missingLayer(id){const o=C(id);if(o.d!=="y")return "التوثيق";if(o.i!=="y")return "التطبيق";if(o.e!=="y")return "الفاعلية";return ""}
-function gapList(){return CTLS.filter(c=>isGap(c.id)&&(!U.gm||appOf(c.id).v==="m")).map(c=>({c,ph:phaseOf(c.id),sc:score(c.id)})).sort((a,b)=>a.ph-b.ph||b.sc-a.sc||a.c.id.localeCompare(b.c.id,undefined,{numeric:true}))}
+function gapList(){if(U._inRender&&U._rc.gl&&U._rc.gm===U.gm)return U._rc.gl;const r=gapList0();if(U._inRender){U._rc.gl=r;U._rc.gm=U.gm}return r}
+function gapList0(){return CTLS.filter(c=>isGap(c.id)&&(!U.gm||appOf(c.id).v==="m")).map(c=>({c,ph:phaseOf(c.id),sc:score(c.id)})).sort((a,b)=>a.ph-b.ph||b.sc-a.sc||a.c.id.localeCompare(b.c.id,undefined,{numeric:true}))}
 // ===== Official implementation guide (GECC-2:2026) =====
 const GD=id=>GUIDE[id]||{t:[],g:[],d:[]};
 const gdHave=id=>{const n=GD(id).d.length;return (C(id).gd||[]).filter(i=>i<n).length};

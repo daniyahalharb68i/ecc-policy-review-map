@@ -20,7 +20,7 @@ function vDomainCompare(){const A=snapGet(U.cmpA),B=snapGet(U.cmpB);if(!A||!B)re
   const pa=Object.assign(id=>(A.per||{})[id]||"",{snap:true}),pb=Object.assign(id=>(B.per||{})[id]||"",{snap:true});
   const DA=domStats(pa),DB=domStats(pb);const tot=p=>{let c=0,d=0;CTLS.forEach(x=>{const s=p(x.id);if(s==="c")c++;if(s==="c"||s==="p"||s==="x")d++});return d?Math.round(c/d*1000)/10:null};
   const ta=tot(pa),tb=tot(pb),dlt=(a,b)=>a==null||b==null?"—":`<b class="${b>a?"up":b<a?"down":""}">${b>a?"▲ +":b<a?"▼ ":""}${Math.round((b-a)*10)/10}</b>`;
-  return `<div class="box" style="margin-top:12px"><h4>${LX("المقارنة حسب المكونات الأساسية","Comparison by main domain")}</h4><div class="tw"><table class="cmp-t"><thead><tr><th>${LX("المكوّن","Domain")}</th><th>${esc(A.at)} ${esc(A.label||"")}</th><th>${esc(B.at)} ${esc(B.label||"")}</th><th>${LX("التغيّر (نقطة)","Change (pts)")}</th></tr></thead>
+  return `<div class="box" style="margin-top:12px"><h3>${LX("المقارنة حسب المكونات الأساسية","Comparison by main domain")}</h3><div class="tw"><table class="cmp-t"><thead><tr><th>${LX("المكوّن","Domain")}</th><th>${esc(A.at)} ${esc(A.label||"")}</th><th>${esc(B.at)} ${esc(B.label||"")}</th><th>${LX("التغيّر (نقطة)","Change (pts)")}</th></tr></thead>
    <tbody>${DA.map((d,i)=>`<tr><td><b>${d.id}.</b> ${esc(d.name)}</td><td class="num">${d.comp==null?"—":d.comp+"%"}</td><td class="num">${DB[i].comp==null?"—":DB[i].comp+"%"}</td><td class="num">${dlt(d.comp,DB[i].comp)}</td></tr>`).join("")}
    <tr class="tot"><td><b>${LX("الإجمالي","Overall")}</b></td><td class="num"><b>${ta==null?"—":ta+"%"}</b></td><td class="num"><b>${tb==null?"—":tb+"%"}</b></td><td class="num">${dlt(ta,tb)}</td></tr></tbody></table></div></div>`}
 

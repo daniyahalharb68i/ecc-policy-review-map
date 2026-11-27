@@ -17,6 +17,7 @@ function stripMarks(root){if(!root)return;
 // search: ignore diacritics, hamza forms, taa marbuta and alef maqsura
 const normQ=s=>plainAr(s).toLowerCase().replace(/[أإآٱ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ؤ/g,"و").replace(/ئ/g,"ي").replace(/\s+/g," ").trim();
 
+document.addEventListener("click",e=>{if(e.target.closest("[data-skip]")){e.preventDefault();const v=document.getElementById("view");if(v){v.focus();v.scrollIntoView()}}});
 // --- Evidence attachments: Claude asset store when available, otherwise this browser (IndexedDB) ---
 const ATT_MAX=20*1024*1024;
 let _fdb=null;
@@ -40,13 +41,13 @@ async function attAdd(id,file){if(!file)return;if(!canCol("ctl",id)){toast("لي
   finally{U.attBusy=null;render()}}
 async function attOpen(id,i){const r=(C(id).att||[])[i];if(!r)return;
   const open=href=>{const a=document.createElement("a");a.href=href;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove()};
-  if(r.url){if(r.url.startsWith("sb:")){sbOpen(r.url.slice(3));return}open(r.url);return}
+  if(r.url){if(/^https:\/\//.test(r.url))open(r.url);return}
   try{const b=await fdbGet(r.lid);if(!b){toast("الملف غير موجود في هذا المتصفح");return}const u=URL.createObjectURL(b);open(u);setTimeout(()=>URL.revokeObjectURL(u),120000)}catch(e){toast("تعذّر فتح الملف")}}
 function attDel(id,i){const r=(C(id).att||[])[i];if(!r)return;
   U.confirm={msg:`حذف المرفق «${esc(r.name)}»؟`,yes:"حذف",fn:async()=>{try{if(r.aid&&U.assets)await U.assets.delete(r.aid)}catch(e){}try{if(r.lid)await fdbDel(r.lid)}catch(e){}
     const o=S.ctl[id]=S.ctl[id]||{};o.att=(o.att||[]).filter((x,j)=>j!==i);if(!o.att.length)delete o.att;persist("ctl",id);logEv("att",id,{v:"حذف "+r.name});render()}};render()}
 function attBox(id){const L=C(id).att||[],can=canCol("ctl",id);
-  return `<div class="box"><h4>المرفقات (الأدلة) <span class="note">${L.length} ملف</span></h4>
+  return `<div class="box"><h3>المرفقات (الأدلة) <span class="note">${L.length} ملف</span></h3>
   ${L.length?`<ul class="atts">${L.map((r,i)=>`<li><span class="ft">${esc(extOf(r.name))}</span><span class="an">${esc(r.name)}<small>${fmtSize(r.size||0)} · ${esc(r.at||"")}${r.by&&U.names[r.by]?" · "+esc(U.names[r.by]):""}</small></span><button class="btn sm quiet" data-act="attopen" data-id="${id}" data-v="${i}">فتح</button>${can?`<button class="btn sm danger ghost" data-act="attdel" data-id="${id}" data-v="${i}">حذف</button>`:""}</li>`).join("")}</ul>`:`<p class="note" style="margin:0">لا مرفقات بعد. أرفق الوثيقة المعتمدة أو لقطة الشاشة التي تثبت الضابط.</p>`}
   ${can?(U.attBusy===id?`<span class="thinking" style="margin-top:8px"><i></i>جارٍ الرفع…</span>`:`<label class="btn sm ghost attpick">إرفاق ملف (PDF أو صورة${window.claude?"":" أو Word"})<input type="file" data-act="attfile" data-id="${id}" accept="${attAccept()}" hidden></label>`):""}
   ${!CLOUD()?`<p class="note" style="margin:6px 0 0">في النسخة المحلية تُحفظ المرفقات في هذا المتصفح فقط، ولا تدخل في النسخة الاحتياطية JSON.</p>`:""}</div>`}

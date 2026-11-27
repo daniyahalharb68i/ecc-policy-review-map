@@ -149,8 +149,8 @@ function vTeamSpace(){const T=U.ts,con=T.h&&T.pw;
   else if(T.h&&T.need)main=`<div class="ts-on"><div><b>${T.need==="reconnect"?"آخر ملف استخدمته:":"الملف:"}</b> <span class="mono" dir="ltr">${esc(T.name)}</span></div>
      <p class="note">اكتب كلمة مرور الفريق لفتحه. لا تُحفظ كلمة المرور في أي مكان.</p>${pwf(false)}${T.err?`<p class="note" style="color:var(--bad)">${esc(T.err)}</p>`:""}
      <div class="row" style="margin-top:8px"><button class="btn" data-ts="unlock">فتح ومزامنة</button><button class="btn quiet" data-ts="close">ملف آخر</button></div></div>`;
-  else main=`<div class="ts-two"><div class="box"><h4>أنا أول من يبدأ</h4><p class="note">اختر كلمة مرور للفريق، ثم احفظ الملف في مجلد مشترك لجهتكم.</p>${pwf(true)}<button class="btn" data-ts="create" style="margin-top:8px">إنشاء ملف مساحة الفريق</button></div>
-     <div class="box"><h4>زميلي أنشأ الملف</h4><p class="note">افتح الملف من المجلد المشترك، ثم اكتب كلمة مرور الفريق.</p><button class="btn ghost" data-ts="open" style="margin-top:8px">فتح ملف مساحة فريق</button></div></div>`;
+  else main=`<div class="ts-two"><div class="box"><h3>أنا أول من يبدأ</h3><p class="note">اختر كلمة مرور للفريق، ثم احفظ الملف في مجلد مشترك لجهتكم.</p>${pwf(true)}<button class="btn" data-ts="create" style="margin-top:8px">إنشاء ملف مساحة الفريق</button></div>
+     <div class="box"><h3>زميلي أنشأ الملف</h3><p class="note">افتح الملف من المجلد المشترك، ثم اكتب كلمة مرور الفريق.</p><button class="btn ghost" data-ts="open" style="margin-top:8px">فتح ملف مساحة فريق</button></div></div>`;
   const how=`<section class="card c12"><h2>كيف تعمل مساحة الفريق</h2><ol class="steps2">
      <li>ينشئ مدير التقييم ملفًا مشفّرًا ويحفظه في مجلد مشترك تعتمده جهتكم، مثل OneDrive أو SharePoint أو مجلد الشبكة.</li>
      <li>يعطي الفريق مكان الملف وكلمة المرور، بقناة مختلفة عن الإيميل إن أمكن.</li>
@@ -158,8 +158,8 @@ function vTeamSpace(){const T=U.ts,con=T.h&&T.pw;
      <li>عند كل مزامنة تقرأ الأداة الملف، وتأخذ لكل ضابط آخر تعديل، ثم تحفظ النتيجة فيه. لا يُحذف شيء أثناء الدمج.</li></ol>
    <p class="note" style="margin:0"><b>لماذا هذا آمن:</b> الملف مشفّر بمعيار AES-256 قبل أن يغادر جهازك، ويبقى داخل تخزين جهتكم لا عندنا. من دون كلمة المرور لا يمكن قراءته. <b>تنبيه:</b> إن عدّل شخصان الضابط نفسه بين مزامنتين، يُعتمد التعديل الأحدث.</p></section>`;
   const pkg=`<section class="card c12" id="ts-pkg"><h2>حزمة الفريق المشفّرة <span class="note">للجوال، أو للإرسال بالبريد، أو كنسخة احتياطية كاملة مع المرفقات</span></h2>
-   <div class="ts-two"><div class="box"><h4>تصدير</h4><p class="note">ملف واحد مشفّر فيه التقييم كاملًا والمرفقات.</p>${pwf(true,"tsx")}<button class="btn" data-ts="export" style="margin-top:8px">تصدير الحزمة</button></div>
-    <div class="box"><h4>استيراد ودمج</h4><p class="note">اكتب كلمة مرور الحزمة في خانة التصدير المجاورة، ثم اختر الملف. تُدمج مع تقييمك ولا تحل محله.</p><label class="btn ghost attpick" style="margin-top:8px">اختيار حزمة .ecc<input type="file" id="ts-file" accept=".ecc" hidden></label></div></div></section>`;
+   <div class="ts-two"><div class="box"><h3>تصدير</h3><p class="note">ملف واحد مشفّر فيه التقييم كاملًا والمرفقات.</p>${pwf(true,"tsx")}<button class="btn" data-ts="export" style="margin-top:8px">تصدير الحزمة</button></div>
+    <div class="box"><h3>استيراد ودمج</h3><p class="note">اكتب كلمة مرور الحزمة في خانة التصدير المجاورة، ثم اختر الملف. تُدمج مع تقييمك ولا تحل محله.</p><label class="btn ghost attpick" style="margin-top:8px">اختيار حزمة .ecc<input type="file" id="ts-file" accept=".ecc" hidden></label></div></div></section>`;
   return `<div class="grid"><section class="card c12"><h2>ملف مساحة الفريق <span class="tag off">دون خادم · داخل تخزين جهتكم</span></h2>${main}${T.waitBy?`<p class="note">ينتظر انتهاء مزامنة ${esc(T.waitBy)}…</p>`:""}</section>${tsConfView()}${me}${how}${tsAuditView()}${TS_FS&&(con||T.need)?"":pkg}</div>`}
 
 // --- conflicts and audit views ---

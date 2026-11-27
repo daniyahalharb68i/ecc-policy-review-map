@@ -2,8 +2,6 @@
 // Only the page name and an optional, opt-in list of control IDs with gaps are sent. Never names, emails, entity data or text.
 const GC_URL="https://ecc-map.goatcounter.com/count",GC_JS="https://gc.zgo.at/count.v4.js";
 const CLOUD=()=>!!window.claude;
-function vAdmin(){return ""}
-function sbOpen(){}
 let gcReady=null,gcLast="";
 function gcLoad(){if(window.__TEST__)return Promise.resolve(false);if(gcReady||window.claude)return gcReady;
   window.goatcounter={no_onload:true,allow_local:false};
@@ -27,7 +25,7 @@ function vGapIndex(){if(window.claude||U.demo)return "";const g=giGaps(),s=stats
   const ready=s.done>=10;
   return `<section class="card c12 gi"><h2>شارك في مؤشر الفجوات العام <span class="tag off">بيانات مُجمّعة دون أي معلومة تعرّف بجهتك</span></h2>
    <p class="lead">يجمع المؤشر أكثر ضوابط ECC التي تتعثر فيها الجهات، ليستفيد منه الجميع. المشاركة اختيارية، ولا تحتاج حسابًا.</p>
-   ${ready?`<div class="box"><h4>هذا بالضبط ما سيُرسل، ولا شيء غيره</h4>
+   ${ready?`<div class="box"><h3>هذا بالضبط ما سيُرسل، ولا شيء غيره</h3>
      <p class="note" style="margin:0 0 6px">أرقام الضوابط التي حالتها «جزئي» أو «غير ملتزم» (${g.length}):</p>
      <div class="gi-ids" dir="ltr">${g.length?g.map(id=>`<span class="mono">${id}</span>`).join(" "):`<span class="note">لا فجوات</span>`}</div>
      <p class="note" style="margin:8px 0 0">لا يُرسل اسم الجهة، ولا اسمك، ولا نوع الجهة، ولا نصوص أو ملاحظات أو أدلة أو ملفات. لا يمكن ربط الأرقام بجهتك.</p></div>

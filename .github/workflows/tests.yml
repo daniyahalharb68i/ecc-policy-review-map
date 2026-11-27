@@ -1,0 +1,28 @@
+name: tests
+# Runs the automated test suite on every push and pull request, and checks that docs/index.html
+# is the current build of src/ (so a change that breaks the tool, or a stale published page, is caught).
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build
+        run: |
+          node src/build.js src
+          node src/mktest.js src
+      - name: Published page matches the build
+        run: cmp -s src/out/test.html docs/index.html || (echo "::error::docs/index.html is not the current build of src/. Rebuild and copy src/out/test.html to docs/index.html." && exit 1)
+      - name: Run tests (headless Chrome)
+        env:
+          CI: "true"
+        run: node tests/run-tests.js
